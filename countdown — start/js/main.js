@@ -13,7 +13,10 @@ const nextYear = new Date(`January 01 ${currentYear + 1} 00:00:00`); // бере
 year.innerText = currentYear + 1;
 
 
-// текущая дата и время
+
+
+function updateCounter () {
+    // текущая дата и время
 const currentTime = new Date(); 
 // разница в миллисекундах
 const difference = nextYear - currentTime; 
@@ -37,3 +40,8 @@ days.innerText = daysLeft < 10 ? '0' + daysLeft : daysLeft;
 hours.innerText = hoursLeft < 10 ? '0' + hoursLeft : hoursLeft;
 minutes.innerText = minutesLeft < 10 ? '0' + minutesLeft : minutesLeft;
 seconds.innerText = secLeft < 10 ? '0' + secLeft : secLeft;
+}
+
+updateCounter();
+// Запускаем расчет 1 раз в секунду (каждую секунду обновляется время и дата)
+setInterval(updateCounter, 1000);
