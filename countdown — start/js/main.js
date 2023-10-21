@@ -4,7 +4,8 @@ const days = document.querySelector('#days'); //Ищем место для дн�
 const hours = document.querySelector('#hours'); // Ищем место для часов
 const minutes = document.querySelector('#minutes'); // Ищем место для минут
 const seconds = document.querySelector('#seconds'); //Ищем место для секунд
-
+const countdown = document.querySelector('#countdown'); // Ищем счетчик 
+const preloader = document.querySelector('#preloader'); // Ищем прелоадер 
 
 // Делаем расчеты
 const currentYear = new Date().getFullYear();
@@ -45,3 +46,8 @@ seconds.innerText = secLeft < 10 ? '0' + secLeft : secLeft;
 updateCounter();
 // Запускаем расчет 1 раз в секунду (каждую секунду обновляется время и дата)
 setInterval(updateCounter, 1000);
+
+setTimeout(function(){
+    preloader.remove();
+    countdown.style.display = 'flex';
+}, 1000);
