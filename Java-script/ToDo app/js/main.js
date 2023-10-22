@@ -27,5 +27,9 @@ form.addEventListener('submit', function(event){
 
     //Добавляем на страницу
 tasksList.insertAdjacentHTML('beforeend', taskHTML)
-    console.log(tasksList);
+    
+// Очищаем поле ввода и возвращаем на него фокус
+taskInput.value = "";
+taskInput.focus();
+console.log(tasksList);
 })
