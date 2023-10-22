@@ -1,0 +1,15 @@
+:root {
+    /* sunny slide */
+    --blue-background: #C2E9F6;
+    --blue-border: #72CCE3;
+    --blue-color: #96DCEE;
+    --yellow-background: #FFFAA8;
+    --yellow-border: #F5EB71;
+    /* dark side */
+    --indigo-background: #808FC7;
+    --indigo-border: #5D6BAA;
+    --gray-border: #E8E8EA;
+    --gray-dots: #E8E8EA;
+    /* general */
+    --white: #fff;
+}
