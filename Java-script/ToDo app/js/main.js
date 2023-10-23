@@ -50,8 +50,11 @@ function addTask (event) {
 //Проверяем, что клик был по кнопке "Удалить задачу"
 function deleteTask (event) {
     if(event.target.dataset.action === 'delete') {
-        const parentNode = event.target.closest('.list-group-item')
-        console.log(parentNode);
+        const parentNode = event.target.closest('.list-group-item');
         parentNode.remove();
+    };
+
+    if(tasksList.children.length === 1 ) {
+        emptyList.classList.remove('none');
     }
 }
