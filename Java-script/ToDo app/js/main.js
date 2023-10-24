@@ -4,13 +4,8 @@ const taskInput =  document.querySelector('#taskInput');
 const tasksList = document.querySelector('#tasksList');
 const emptyList = document.querySelector('#emptyList');
 
-// Добавление задачи
 form.addEventListener('submit', addTask);
-
-//Удаление задачи
 tasksList.addEventListener('click', deleteTask);
-
-// Отмечаем, чта задача выполнена 
 tasksList.addEventListener('click', doneTask);
 
 
@@ -51,25 +46,27 @@ function addTask (event) {
     }
 }
 
-//Проверяем, что клик был по кнопке "Удалить задачу"
-function deleteTask (event) {
-    if(event.target.dataset.action === 'delete') {
-        const parentNode = event.target.closest('.list-group-item');
-        parentNode.remove();
-    };
 
-//Проверка. Если в  списке задач 1-н элемент, то показываем блок "Список задач пуст"
-    if(tasksList.children.length === 1 ) {
+function deleteTask (event) {
+    //Проверяем, если клик был не по кнопке "Удалить задачу"
+    if (event.target.dataset.action !== 'delete') return;
+    //Проверяем, что клик был по кнопке "Удалить задачу"
+    const parentNode = event.target.closest('.list-group-item');
+    parentNode.remove();
+
+    //Проверка. Если в  списке задач 1-н элемент, то показываем блок "Список задач пуст"
+    if (tasksList.children.length === 1 ) {
         emptyList.classList.remove('none');
     }
+
 }
 
 //Отмечаем, что задача выполнена 
 function doneTask (event) {
+    //Проверяем, если клик был не по кнопке "Задача выполнена"
+    if (event.target.dataset.action !== 'done') return;
     // Проверяем, что клик был по кнопке "вывполнено"
-    if (event.target.dataset.action === 'done') {
-        const parentNode = event.target.closest('.list-group-item');
-        const taskTitle = parentNode.querySelector('.task-title');
-        taskTitle.classList.toggle('task-title--done');
-    }
+    const parentNode = event.target.closest('.list-group-item');
+    const taskTitle = parentNode.querySelector('.task-title');
+    taskTitle.classList.toggle('task-title--done');
 }

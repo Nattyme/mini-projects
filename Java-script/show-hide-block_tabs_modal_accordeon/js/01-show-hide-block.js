@@ -9,10 +9,6 @@ button.addEventListener('click', function(){
     } else {
         button.textContent = "Закрыть блок";
     }
-     
-
-
-
     /*
     if(content.classList.contains('content-hidden')) {
         button.textContent = "Открыть блок";
