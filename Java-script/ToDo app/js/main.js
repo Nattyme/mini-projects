@@ -10,7 +10,6 @@ tasksList.addEventListener('click', doneTask);
 
 
 //Функции
-
 function addTask (event) {
         // Отменяем отправку формы
         event.preventDefault();
@@ -61,11 +60,11 @@ function deleteTask (event) {
 
 }
 
-//Отмечаем, что задача выполнена 
+
 function doneTask (event) {
     //Проверяем, если клик был не по кнопке "Задача выполнена"
     if (event.target.dataset.action !== 'done') return;
-    // Проверяем, что клик был по кнопке "вывполнено"
+    //Отмечаем, что задача выполнена 
     const parentNode = event.target.closest('.list-group-item');
     const taskTitle = parentNode.querySelector('.task-title');
     taskTitle.classList.toggle('task-title--done');
