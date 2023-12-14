@@ -12,6 +12,7 @@
     border: 1px solid #000;
 }
 
-.mole {
-    background-color: blue;
+.square.mole {
+    background-image: url('./mole.jpg');
+    background-size: cover;
 }
