@@ -49,11 +49,9 @@ label {
     position: absolute;
     opacity: 0;
     z-index: -1;
-
     /*
     display:  none; - использовать нельзя, потому что  не будет работать tab
     */
-    
 }
 
 .custom-radio::before {
@@ -85,7 +83,17 @@ label {
 Чекбоксы
 *********** */
 .real-checkbox {
+    /* width: 0;
+    height: 0;
+    position: absolute;
+    opacity: 0;
+    z-index: -1; */
+}
 
+.real-checkbox:focus + .custom-checkbox {
+    box-shadow: 
+    0px 0px 0px 1px #38577a,
+    0px 0px 10px #7e9bbd;
 }
 
 .custom-checkbox {
@@ -115,6 +123,16 @@ label {
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(0);
     margin-top: 1px;
+
+    transition: 0.2s ease-in;
+}
+
+/*
+Активируем фейковый(декоративный) чекбокс
+*/
+
+.real-checkbox:checked + .custom-checkbox::before {
+    transform: translate(-50%, -50%) scale(1);
 }
