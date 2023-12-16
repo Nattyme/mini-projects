@@ -56,11 +56,13 @@ label {
     position: absolute;
     left: 50%;
     top:  50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(0);
 
-    display: none;
+    transition: 0.2s ease-in;
+    /* display: none; */
 }
 
 .real-radio:checked + .custom-radio::before {
-    display: block;
+    /* display: block; */
+    transform: translate(-50%, -50%) scale(1);
 }
