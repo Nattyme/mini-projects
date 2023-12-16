@@ -1,0 +1,29 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 30px;
+    font-family: sans-serif;
+    line-height: 1.5;
+}
+
+.form-group-title {
+    font-style: 22px;
+    font-weight: 700;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.form-group + .form-group {
+    margin-top: 10px;
+}
+
+label {
+    cursor: pointer;
+}
+
+/* ************************
+Радиокнопки
+************************ */
