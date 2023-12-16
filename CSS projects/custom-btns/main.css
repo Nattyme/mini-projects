@@ -80,3 +80,21 @@ label {
     /* display: block; */
     transform: translate(-50%, -50%) scale(1);
 }
+
+/* ***********
+Чекбоксы
+*********** */
+.real-checkbox {
+
+}
+
+.custom-checkbox {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border: 2px solid #7e9bbd;
+    border-radius: 4px;
+    vertical-align: sub;
+    margin-right: 5px;
+}
