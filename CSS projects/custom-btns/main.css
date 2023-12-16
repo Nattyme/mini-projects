@@ -27,3 +27,21 @@ label {
 /* ************************
 Радиокнопки
 ************************ */
+
+.custom-radio {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: #fff;
+    border: 2px solid #7e9bbd;
+    border-radius: 50%;
+    vertical-align: text-top;
+    margin-right: 5px;
+}
+
+.custom-radio::before {
+    content: "";
+
+    /*Рисуем круг*/
+    
+}
