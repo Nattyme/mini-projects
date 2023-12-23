@@ -71,7 +71,7 @@ label {
     transform: translate(-50%, -50%) scale(0);
 
     transition: 0.2s ease-in;
-    /* display: none; */
+                                     /* display: none; */
 }
 
 .real-radio:checked + .custom-radio::before {
@@ -106,7 +106,7 @@ label {
     border-radius: 4px;
     vertical-align: sub;
     margin-right: 5px;
-}
+    }
 
 .custom-checkbox::before {
     content: "";
