@@ -3,6 +3,7 @@
 
     display: grid;
     grid-template-columns: 2fr repeat(3, 3fr) 1fr;
+    column-gap: 30px;
 
     font-size: 18px;
     font-weight: 600;

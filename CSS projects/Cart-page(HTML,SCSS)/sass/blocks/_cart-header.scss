@@ -1,6 +1,7 @@
 .cart-header {
     display: grid;
     grid-template-columns: 2fr repeat(3, 3fr) 1fr;
+    column-gap: 30px;
 
     padding: 22px 0;
     background-color: #eaeff2;
@@ -10,6 +11,14 @@
     line-height: 1.2; /* 15.6px */
     letter-spacing: 0.2em;
     text-transform: uppercase;
+
+    @media (max-width: 600px) {
+        height: 1px;
+        padding: 0;
+        & > * {
+            display: none;
+        }
+    }
 }
 
 .cart-header__title {
