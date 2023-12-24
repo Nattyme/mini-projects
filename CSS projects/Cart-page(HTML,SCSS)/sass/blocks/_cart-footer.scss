@@ -15,6 +15,11 @@
         padding-right: 15px;
         grid-template-columns: 1fr 1fr;
     }
+
+    @media (max-width: $mobile-xs) {
+        grid-template-columns: 1fr;
+        row-gap: 10px;
+    }
 }
 
 .cart-footer__count {
