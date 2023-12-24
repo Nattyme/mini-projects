@@ -1,0 +1,14 @@
+.cart-footer {
+    padding: 19px 0;
+
+    display: grid;
+    grid-template-columns: 5fr 3fr 4fr;
+    background: #eaeff2;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.2; /* 21.6px */
+}
+
+.cart-footer__count {
+    grid-column-start: 2;
+}
