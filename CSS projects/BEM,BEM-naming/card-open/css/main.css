@@ -50,11 +50,18 @@ body {
 .card {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     column-gap: 30px;
 }
 
+.card--vertical {
+    flex-direction: column;
+}
+
 .card__img {
+    margin-top: 30px;
+
+    width: 540px;
+    height: 380px;
 }
 
 .card_desc {
@@ -99,27 +106,29 @@ a.card__link {
 
 .section__bottom {
 }
-
-.cards-list {
-}
-.cards-list__title {
+.section__title {
 }
 .title-2 {
 }
-.cards-list__row {
+.cards-list {
 }
-.card-little {
+.cards-list__item {
 }
-.card-little__img {
+.cards-list__link {
 }
-.card-little__title {
+.card {
 }
-.title-3 {
+.card--vertical {
 }
-.card-little__info {
+.card__img {
 }
-.card-little__price {
+.card_desc {
 }
-.card-little__button {
+.card__title {
 }
-
+.card__price {
+}
+.card__button {
+}
+.button {
+}
