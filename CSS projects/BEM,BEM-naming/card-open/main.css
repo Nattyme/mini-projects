@@ -1,0 +1,79 @@
+* {
+	box-sizing: border-box;
+}
+
+/* font-family: 'Playfair Display', serif; */
+
+html,
+body {
+	height: 100%;
+}
+
+body {
+	font-family: 'Montserrat', sans-serif;
+	margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    font-weight: 400;
+}
+
+.none {
+    display: none;
+}
+
+.section {
+}
+
+.container {
+    margin: 0 auto;
+    padding: 0 15px;
+    width: 1470px;
+}
+
+.section__row {
+}
+.section__top {
+}
+.card {
+}
+.card__img {
+}
+.card_desc {
+}
+.card__title {
+}
+.title-1 {
+}
+.card__price {
+}
+.card__button {
+}
+.card__text {
+}
+.section__bottom {
+}
+.cards-list {
+}
+.cards-list__title {
+}
+.title-2 {
+}
+.cards-list__row {
+}
+.card-little {
+}
+.card-little__img {
+}
+.card-little__title {
+}
+.title-3 {
+}
+.card-little__info {
+}
+.card-little__price {
+}
+.card-little__button {
+}
+

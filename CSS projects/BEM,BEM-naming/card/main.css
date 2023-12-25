@@ -31,6 +31,10 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: 0px 10px 40px rgba(126, 155, 189, 0.3);
 }
 
+.card--sale {
+    border: 5px solid rgba(255, 92, 92, 0.47);
+}
+
 .card__img {
     margin-bottom: 20px;
     display: block;
@@ -41,6 +45,12 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
     font-size: 20px;
     line-height: 1.2;
+}
+
+.card--sale .card__title {
+    font-size: 24px;
+    font-family: 'Playfir Display', serif;
+    color: #ff5c5c;
 }
 
 .card__details {
@@ -55,6 +65,10 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.2;
 
     color: #7e9bbd;
+}
+
+.card--sale .card__price {
+    color: #ff5c5c;
 }
 
 .read-more {
