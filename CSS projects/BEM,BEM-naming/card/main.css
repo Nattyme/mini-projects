@@ -21,3 +21,53 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0;
     font-weight: 400;
 }
+
+.card {
+    padding: 30px;
+    width: 350px;
+    height: 410px;
+    background-color: #fff;
+    box-shadow: 0px 10px 40px rgba(126, 155, 189, 0.3);
+}
+
+.card__img {
+    margin-bottom: 20px;
+    display: block;
+}
+
+.card__title {
+    margin-bottom: 10px;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 1.2;
+}
+
+.card__details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card__price {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 1.2;
+
+    color: #7e9bbd;
+}
+
+.read-more {
+    display: inline-block;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 46px;
+    border: 3px solid rgba(126, 155, 189, 0.3);
+    border-radius: 6px;
+
+    line-height: 42px;
+    font-weight: 600;
+    font-size: 16px;
+    text-decoration: none;
+
+    color: #7e9bbd;
+}
