@@ -69,8 +69,13 @@ body {
 
 .card--vertical {
     padding: 31px 30px 23px;
+
     width: 350px;
+    height: 409px;
     flex-direction: column;
+
+    box-shadow: 0px 10px 40px 0px rgba(126, 155, 189, 0.30);
+    background: #fff;
 }
 
 .card__img {
@@ -136,6 +141,12 @@ body {
 
 .card--vertical .button {
     display: inline-block;
+    border: 3px solid rgba(126, 155, 189, 0.30);
+    background-color: rgba(255, 255, 255, 0.30);
+
+    font-weight: 600;
+    line-height: 40px;
+    color: #7e9bbd;
 }
 
 .card__text {
@@ -166,10 +177,8 @@ a.card__link {
 
 .cards-list {
     display: flex;
+    justify-content: center;
     column-gap: 30px;
-}
-
-.cards-list__item {
 }
 
 .cards-list__link {
@@ -177,15 +186,3 @@ a.card__link {
     color: inherit
 }
 
-
-.card_desc {
-    
-}
-
-
-.card__price {
-}
-.card__button {
-}
-.button {
-}
