@@ -1,4 +1,3 @@
-/* font-family: 'Playfair Display', serif; */
 @import "./reset.css";
 
 body {
@@ -24,7 +23,7 @@ body {
     line-height: 1.3; /* 36.4px */
 }
 
-.title-3 {
+.card__title {
     font-size: 20px;
     font-weight: 600;
     line-height: 1.2; /* 24px */
@@ -95,25 +94,14 @@ a.link {
     text-align: center;
 }
 
-.other-products__list {
+.other-products__cards {
     display: flex;
     justify-content: space-between;
 }
 
-.other-products__item {
-    position: relative;
-}
-
-.other-products__link {
-    z-index: 1;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-}
-
+/* card */
 .card {
+    position: relative;
     padding: 31px 30px 23px;
     width: 350px;
     box-shadow: 0px 10px 40px 0px rgba(126, 155, 189, 0.30);
@@ -121,17 +109,21 @@ a.link {
     transition: all 0.2s ease-in;
 }
 
-.other-products__link:hover ~ .card {
+.card__link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.card:hover {
     transform: translateY(-5px);
-    box-shadow: 0px 10px 40px 0px rgba(51, 61, 71, 0.3);;
+    box-shadow: 0px 10px 40px 0px rgba(51, 61, 71, 0.398);
 }
 
 .card__img {
     margin-bottom: 20px;
-    width: 290px;
-    height: 231px;
-    overflow: hidden;
-    object-fit: cover;
 }
 
 .card__title {
@@ -159,9 +151,11 @@ a.link {
     line-height: 1.2;
     color: #7e9bbd;
 }
+/* // card */
 
 .button {
-    z-index: 2;
+    position: relative;
+    z-index: 1;
     padding: 0 17px;
 
     display: inline-block;
@@ -174,10 +168,13 @@ a.link {
     font-size: 16px;
     font-weight: 600;
     color: #7e9bbd;
+
+    transition: all 0.2s ease-in;
 }
 
-.button:hover {
-    background-color: #7e9bbd;
+.button:hover,
+.button:focus {
+    background-color: #7d9abcd7;
     color: #fff;
 }
 
@@ -190,8 +187,13 @@ a.link {
     color: #fff;
 }
 
-.button.button--dark:hover {
-    opacity: 0.9;
+.button.button--dark:hover,
+.button.button--dark:focus {
+    opacity: 0.8;
+}
+
+.button:active {
+    top: 1px;
 }
 
 

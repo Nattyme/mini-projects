@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>BEM naming</title>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Product</title>
 		<link rel="stylesheet" href="./css/main.css">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 	</head>
 	<body>
         <main class="products-page">
-            <!-- product -->
             <section class="product">
                 <div class="container">
                     <div class="product__row">
@@ -42,61 +41,47 @@
                 </div>
         
             </section>
-            <!--//product -->
-    
-            <!-- section-bottom -->
+        
             <section class="other-products">
                 <div class="container">
                     <div class="other-products__title">
                         <h2 class="section-title">Смотрите также</h2>
                     </div>
 
-                    <ul class="other-products__list">
+                    <div class="other-products__cards">
                         <!-- card -->
-                        <li class="other-products__item">
-                        <a class="other-products__link" href="#!"></a>
-                            <div class="card">
-                                <div class="card__img">
-                                    <img src="./img/apple-macpro-grey.jpg" alt="apple-mac-pro">
-                                </div>
-            
-                                <h3 class="card__title">Apple Mac Pro</h3>
-                            
-                                <div class="card__details">
-                                    <span class="card__price">150 000 руб.</span>
-                                    <a href="#!" class="button">Смотреть</a>
-                                </div>
+                        <div class="card">
+                            <a class="card__link" href="#!"></a>
+                            <img class="card__img" src="./img/apple-macpro-grey.jpg" alt="apple-mac-pro-black">
+                            <h3 class="card__title">Apple Mac Pro</h3>
+                            <div class="card__details">
+                                <span class="card__price">150 000 руб.</span>
+                                <a href="#!" class="button">Смотреть</a>
                             </div>
-                        </li>
+                        </div>
                        <!--// card -->
-                        <li class="other-products__item">
-                        <a class="other-products__link" href="#!"></a>
-                            <div class="card">
-                                <div class="card__img">
-                                    <img src="./img/apple-macpro-black.jpg" alt="apple-macpro-black">
-                                </div>
-                                <h3 class="card__title">Apple Mac Pro</h3>
-                                <div class="card__details">
-                                    <span class="card__price">190 000 руб.</span>
-                                    <a href="#!" class="button">Смотреть</a>
-                                </div>
+
+                        <div class="card">
+                            <a class="card__link" href="#!"></a>
+                            <img class="card__img" src="./img/apple-macpro-black.jpg" alt="apple-macpro-black">
+                            <h3 class="card__title">Apple Mac Pro</h3>
+                            <div class="card__details">
+                                <span class="card__price">190 000 руб.</span>
+                                <a href="#!" class="button">Смотреть</a>
                             </div>
-                        </li>
+                        </div>
                     <!--// card -->
-                        <li class="other-products__item">
-                        <a class="other-products__link" href="#!"></a>
-                            <div class="card">
-                                <div class="card__img">
-                                    <img src="./img/apple-imac.jpg" alt="apple-imac">
-                                </div>
-                                <h3 class="card__title">Apple Mac Pro<br>Вторая линия названия</h3>
-                                <div class="card__details">
-                                    <span class="card__price">95 000 руб.</span>
-                                    <a href="#!" class="button">Смотреть</a>
-                                </div>
+
+                        <div class="card">
+                            <a class="card__link" href="#!"></a>
+                            <img class="card__img" src="./img/apple-imac.jpg" alt="apple-imac">
+                            <h3 class="card__title">Apple Mac Pro<br>Вторая линия названия</h3>
+                            <div class="card__details">
+                                <span class="card__price">95 000 руб.</span>
+                                <a href="#!" class="button">Смотреть</a>
                             </div>
-                        </li>
-                    </ul>
+                        </div>
+                    </div>
                 </div>
 
             </section>
