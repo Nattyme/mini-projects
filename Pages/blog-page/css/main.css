@@ -11,3 +11,20 @@ body {
     background-position: center;
     background-size: cover;
 }
+
+.header__container {
+    width: 1400px;
+    height: 300px;
+    margin: 0 auto;
+    background-color: aqua;
+}
+
+.nav-wrapper {
+    
+}
+
+.logo {
+}
+
+.nav {
+}
