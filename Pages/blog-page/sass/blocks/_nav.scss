@@ -15,9 +15,15 @@
     text-transform: uppercase;
 
     &--special {
+        display: inline-block;
         font-weight: 900;
         font-size: 16px;
         letter-spacing: 1.07px;
         color: #2f2f2f;
+
+        height: 50px;
+        background-color: #fff;
     }
+
+  
 }

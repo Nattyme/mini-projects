@@ -53,8 +53,11 @@ font-family: 'Roboto', sans-serif; */
   text-transform: uppercase;
 }
 .nav__item--special {
+  display: inline-block;
   font-weight: 900;
   font-size: 16px;
   letter-spacing: 1.07px;
   color: #2f2f2f;
+  height: 50px;
+  background-color: #fff;
 }/*# sourceMappingURL=main.css.map */
