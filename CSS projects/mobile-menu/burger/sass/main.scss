@@ -6,6 +6,18 @@ body {
     align-items: center;
 }
 
+.nav-icon-wrapper {
+    position: relative;
+    width: 30px;
+    height: 25px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+}
+
 .nav-icon {
     position: relative;
     width: 30px;
@@ -21,6 +33,8 @@ body {
     width: 30px;
     height: 5px;
     background-color: #fff;
+
+    transition: transform 0.2s linear, top 0.2s ease-in 0.2s;
 }
 
 .nav-icon::after {
@@ -33,6 +47,8 @@ body {
     width: 30px;
     height: 5px;
     background-color: #fff;
+
+    transition: transform 0.2s linear, top 0.2s ease-in 0.2s;
 }
 
 .nav-icon.active {
@@ -42,9 +58,11 @@ body {
 .nav-icon.active::before {
     top: 0;
     transform: rotate(45deg);
+    transition: top 0.2s ease-in, transform 0.2s linear 0.2s;
 }
 
 .nav-icon.active::after {
     top: 0;
     transform: rotate(-45deg);
+    transition: top 0.2s ease-in, transform 0.2s linear 0.2s;
 }
