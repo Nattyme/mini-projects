@@ -1,0 +1,50 @@
+body {
+    height: 100vh;
+    background-color: rgb(13, 108, 202);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-icon {
+    position: relative;
+    width: 30px;
+    height: 5px;
+    background-color: #fff;
+}
+
+.nav-icon::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: 0;
+    width: 30px;
+    height: 5px;
+    background-color: #fff;
+}
+
+.nav-icon::after {
+    content: "";
+
+    position: absolute;
+    top: 10px;
+    left: 0;
+
+    width: 30px;
+    height: 5px;
+    background-color: #fff;
+}
+
+.nav-icon.active {
+    background-color: transparent;
+}
+
+.nav-icon.active::before {
+    top: 0;
+    transform: rotate(45deg);
+}
+
+.nav-icon.active::after {
+    top: 0;
+    transform: rotate(-45deg);
+}
