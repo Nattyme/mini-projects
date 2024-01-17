@@ -6,8 +6,7 @@ body {
   align-items: center;
 }
 
-.nav-icon-wrapper {
-  position: relative;
+.nav-icon {
   width: 30px;
   height: 25px;
   display: flex;
@@ -16,14 +15,14 @@ body {
   cursor: pointer;
 }
 
-.nav-icon {
+.nav-icon__middle {
   position: relative;
   width: 30px;
   height: 5px;
   background-color: #fff;
 }
 
-.nav-icon::before {
+.nav-icon__middle::before {
   content: "";
   position: absolute;
   top: -10px;
@@ -34,7 +33,7 @@ body {
   transition: transform 0.2s linear, top 0.2s ease-in 0.2s;
 }
 
-.nav-icon::after {
+.nav-icon__middle::after {
   content: "";
   position: absolute;
   top: 10px;
@@ -45,17 +44,17 @@ body {
   transition: transform 0.2s linear, top 0.2s ease-in 0.2s;
 }
 
-.nav-icon.active {
+.nav-icon.nav-icon--active .nav-icon__middle {
   background-color: transparent;
 }
 
-.nav-icon.active::before {
+.nav-icon.nav-icon--active .nav-icon__middle::before {
   top: 0;
   transform: rotate(45deg);
   transition: top 0.2s ease-in, transform 0.2s linear 0.2s;
 }
 
-.nav-icon.active::after {
+.nav-icon.nav-icon--active .nav-icon__middle::after {
   top: 0;
   transform: rotate(-45deg);
   transition: top 0.2s ease-in, transform 0.2s linear 0.2s;
