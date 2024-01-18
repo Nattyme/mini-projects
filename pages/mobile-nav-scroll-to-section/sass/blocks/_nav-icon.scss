@@ -49,11 +49,10 @@ $height: $lineHeight * 5;
 }
 
 /* Active state */
-
 .nav-icon.nav-icon--active {
     position: fixed;
-    right: 40px;
-    top: 15px;
+    top: 40px;
+    right: 15px;
 }
 
 .nav-icon.nav-icon--active .nav-icon__middle {
