@@ -23,20 +23,19 @@
         // display: none;
 
         position: fixed;
-        top: -100%;
-        left: 0;
-        width: 100%;
+        top: 0;
+        right: 0;
+        width: 320px;
         height: 100%;
         background-color: #2D2D2D;
+
+        transform: translateX(100%);
         opacity: 0;
 
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-
-        // transition: top 0s linear, opacity .2s ease-in;
-        transition: opacity .2s ease-in, top 0s linear 0.2s,;
     }
 
     .nav a {
@@ -47,9 +46,9 @@
     }
 
     .nav.nav--active {
-        top: 0;
         opacity: 1;
-        transition: top 0s linear, opacity .2s ease-in;
+        transform: translateX(0);
+        transition: all 0.2s ease-in;
     }
 
 }

@@ -1,0 +1,26 @@
+.search {
+}
+
+.search__input {
+    width: 340px;
+    height: 60px;
+
+    border-radius: 30px;
+    background: #fff;
+}
+
+.search__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: none;
+    cursor:  pointer;
+
+    &:hover {
+        background: #00C470;
+    }
+}
