@@ -146,7 +146,16 @@ legend {
   background-color: #fff;
   border: none;
   cursor: pointer;
+  transition: background-color 0.2s ease-in;
 }
 .search__button:hover {
   background: #00C470;
+}
+.search__button:hover .search__button-icon {
+  stroke: #fff;
+}
+
+.search__button-icon {
+  stroke: #000;
+  transition: stroke 0.2s ease-in;
 }/*# sourceMappingURL=main.css.map */
