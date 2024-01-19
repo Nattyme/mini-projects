@@ -1,12 +1,27 @@
 .search {
+    position: relative;
 }
 
 .search__input {
+    position: absolute;
+    top: 0;
+    right: 0;
+
     width: 340px;
     height: 60px;
-
+    padding-left: 30px;
+    padding-right: 70px;
     border-radius: 30px;
     background: #fff;
+
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 60px;
+    color: #000;
+
+    &::placeholder {
+        color: rgba(46, 46, 46, 0.50);
+    }
 }
 
 .search__button {
