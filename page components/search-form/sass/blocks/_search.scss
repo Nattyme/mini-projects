@@ -51,3 +51,17 @@
     stroke: #000;
     transition: stroke 0.2s ease-in;
 }
+
+.search.search--visible {
+    .search__button {
+        background-color: #00c470;
+
+        .search__button-icon {
+            stroke: #fff;
+        }
+
+        &:hover {
+            background-color: #15d784;
+        }
+    }
+}
