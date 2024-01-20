@@ -1,3 +1,8 @@
 $(document).ready(function() {
-    $('#photo-carousel').owlCarousel();
+    $('#photo-carousel').owlCarousel({
+        items: 1, 
+        loop: true,
+        nav: true,
+        navText: ['', '']
+    });
 })
