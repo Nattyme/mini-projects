@@ -14,10 +14,31 @@ h1 {
 }
 
 .slider-wrapper {
+    position: relative;
     margin-bottom: 80px;
     margin-left: auto;
     margin-right: auto;
     width: 900px;
     height: 600px;
     background-color: rgb(216, 238, 253);
+}
+
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    width: 54px;
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.nav-btn-left {
+    left: -50px;
+    transform: translate(-100%, -50%);
+}
+
+.nav-btn-right {
+    right: -50px;
+    transform: translate(100%, -50%);
 }
