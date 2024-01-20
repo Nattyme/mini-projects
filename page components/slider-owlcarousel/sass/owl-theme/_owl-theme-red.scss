@@ -1,10 +1,10 @@
 /*
- * 	Default theme - Owl Carousel CSS File
+ * 	Red theme - Owl Carousel CSS File
  */
 
- $color-base:			#08cc88 ;
- $color-white:			#FFF ;
- $color-gray:			#D6D6D6 ;
+ $color-base:			#811605;
+ $color-white:			#f52f2f;
+ $color-gray:			#902121;
  
  //nav
  
@@ -28,7 +28,7 @@
  $dot-background-active:	$color-base ;
  
  
-.owl-theme {
+.owl-theme-red {
 	// Styling Next and Prev buttons
 	.owl-nav {
 		margin-top: 10px;
