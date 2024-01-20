@@ -1,0 +1,22 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 35px 15px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.slider-wrapper {
+    margin-left: auto;
+    margin-right: auto;
+    width: 900px;
+    height: 600px;
+    background-color: rgb(216, 238, 253);
+}
