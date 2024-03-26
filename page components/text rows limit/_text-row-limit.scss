@@ -1,0 +1,13 @@
+
+.block__text {
+    height: 60px;     // Ограничение высоты текста для родителя
+    overflow: hidden; // Скрываем текст, кот может выйти за рамки контейнера
+
+    .block__desc {
+        display: -webkit-box;
+        -webkit-box-orient: vertical; // Если конец тсроки обрезан, то добавляет многоточие
+        -webkit-line-clamp: 1; // Ограничиваем кол-во строк текста
+        overflow: hidden;
+    }
+}
+
