@@ -1,0 +1,8 @@
+body {
+	padding: 3rem;
+	display: flex;
+	justify-content: center;
+}
+.card {
+	max-width: 600px;
+}
