@@ -7,7 +7,8 @@ const text = `
 const inputElement = document.querySelector('#input');
 const textExampleElement = document.querySelector('#textExample');
 const lines = getLines(text);
-let letterId = 50;
+let letterId = 500;
+update();
 lineToHtml(lines[0]);
 
 function getLines (text) {
@@ -57,6 +58,35 @@ function lineToHtml (line) {
         }
     }
     return divElement;
+}
+
+function getCurrentLineNumber () {
+    for(let i = 0; i < lines.length; i++) {
+        for(const letter of lines[i]) {
+            if(letter.id === letterId) {
+                return i;
+            }
+        }
+    }
+}
+
+function update () {
+    const currentLineNumber = getCurrentLineNumber();
+    textExampleElement.innerHTML = '';
+
+    // for (const line of lines) {
+    //     const html = lineToHtml(line);
+    //     textExampleElement.append(html);
+    // }
+
+    for (let i = 0; i < lines.length; i++) {
+        const html = lineToHtml(lines[i]);
+        textExampleElement.append(html);
+
+        if ( i < currentLineNumber || i > currentLineNumber + 2) {
+            html.classList.add('hidden')
+        }
+    }
 }
 
 
