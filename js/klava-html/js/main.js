@@ -6,20 +6,27 @@ const text = `
 `;
 const inputElement = document.querySelector('#input');
 const textExampleElement = document.querySelector('#textExample');
+const lines = getLines(text);
+let letterId = 50;
+lineToHtml(lines[0]);
 
-
-const getLines = (text) => {
+function getLines (text) {
     const lines = [];
 
-    let line = '';
-
-    for (letter of text ) {
-        line = line + letter;
+    let line = [];
+    let idCounter = 0;
+    for (const letter of text ) {
+        idCounter = idCounter + 1;
+        line.push({
+            id: idCounter,
+            label: letter,
+            success: true
+        })
 
         // Зачем здесь знак больше или равно если мы перебираем по одному символу? Почему нельзя указать ===70?
         if (line.length === 70 || letter === "/n") {
             lines.push(line);
-            line = '';
+            line = [];
         }
     }
 
@@ -28,10 +35,28 @@ const getLines = (text) => {
     }
 
     console.log(lines)
-    return lines.length;
-    console.log('hey')
- 
+    return lines;
 }
 
-getLines(text);
+function lineToHtml (line) {
+    // <div class="line">
+    //     <span class="done"> На переднем плане, прямо перед</span> 
+    //     <span class="hint">н</span>ами, расположен был дворик, где стоял
+    // </div>
+    const divElement = document.createElement('div');
+    divElement.classList.add('line');
+   
+    for (const letter of line) {
+        const spanElement = document.createElement('span');
+        spanElement.textContent = letter.label;
+        divElement.append(spanElement);
+       
+
+        if (letterId > letter.id) {
+            spanElement.classList.add('done');
+        }
+    }
+    return divElement;
+}
+
 
