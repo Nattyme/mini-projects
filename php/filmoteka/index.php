@@ -110,8 +110,10 @@ if ( $result = mysqli_query($link, $query) ) {
 	<?php
 		foreach ($films as $key => $film) { ?>
 		<div class="card mb-20">
-			<h4 class="title-4"><?=$film['title']?></h4>
-            <a href="#!" class="button button--remove">Удалить</a>
+            <div class="card__header">
+                <h4 class="title-4"><?=$film['title']?></h4>
+                <a href="?action=delete&id=5" class="button button--delete">Удалить</a>
+            </div>
 			<div class="badge"><?=$film['genre']?></div>
 			<div class="badge"><?=$film['year']?></div>
 		</div>
