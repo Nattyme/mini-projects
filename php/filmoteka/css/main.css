@@ -2530,6 +2530,13 @@ h3.main-page__aboutme {
 .strong {
   font-weight: 700;
 }
+.card__header {
+    display: flex;
+    justify-content: space-between;
+}
+.card__header>* {
+    margin-top: 0 !important;
+}
 /* Flex */
 .flex-grow {
   -webkit-box-flex: 1;
