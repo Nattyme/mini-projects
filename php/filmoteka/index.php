@@ -7,11 +7,27 @@ if ( mysqli_connect_error() ) {
 	die("Ошибка подключения к базе данных.");
 }
 
+// echo "<pre>";
+// print_r($_GET);
+// echo "</pre>";
+
+//Удаление фильма
+// if( $_GET) {
+    if (@$_GET['action'] == 'delete') {
+        $query = "DELETE FROM films WHERE id = ' " . mysqli_real_escape_string($link, $_GET['id']) . "' LIMIT 1";
+
+        mysqli_query($link, $query);
+        //Проверяем был ли удален фильм
+        mysqli_affected_rows($link);
+
+        if (mysqli_affected_rows($link) > 0) {
+            $resultInfo = "<p>Фильм был успешно удалён.</p>";
+        } 
+    }
+// }
+
 
 // Save form data to DB
-
-$resultSuccess = "";
-$resultError = "";
 $errors = array();
 
 if ( array_key_exists('add-film', $_POST) ) {
@@ -85,8 +101,8 @@ if ( $result = mysqli_query($link, $query) ) {
 	<link rel="stylesheet" href="libs/bootstrap-4-grid/grid.min.css"/>
 	<link rel="stylesheet" href="libs/jquery-custom-scrollbar/jquery.custom-scrollbar.css"/><!-- endbuild -->
 <!-- build:cssCustom css/main.css -->
-	<link rel="stylesheet" href="./css/main.css"/><!-- endbuild -->
-<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&amp;subset=cyrillic-ext" rel="stylesheet">
+	<link rel="stylesheet" href="./css/main.css"><!-- endbuild -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&amp;subset=cyrillic-ext" rel="stylesheet">
 <!--[if lt IE 9]>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script><![endif]-->
   </head>
@@ -95,11 +111,15 @@ if ( $result = mysqli_query($link, $query) ) {
 
 	
 
-	<?php if ( $resultSuccess != '' ) { ?> 
+	<?php if ( @$resultSuccess != '' ) { ?> 
 		<div class="info-success"><?=$resultSuccess?></div>
 	<?php } ?>
 
-	<?php if ( $resultError != '' ) { ?> 
+    <?php if ( @$resultInfo != '' ) { ?> 
+		<div class="info-notification"><?=$resultInfo?></div>
+	<?php } ?>
+
+	<?php if ( @$resultError != '' ) { ?> 
 		<div class="error"><?=$resultError?></div>
 	<?php } ?>
 
@@ -111,11 +131,11 @@ if ( $result = mysqli_query($link, $query) ) {
 		foreach ($films as $key => $film) { ?>
 		<div class="card mb-20">
             <div class="card__header">
-                <h4 class="title-4"><?=$film['title']?></h4>
-                <a href="?action=delete&id=5" class="button button--delete">Удалить</a>
+                <h4 class="title-4"><?php echo $film['title']?></h4>
+                <a href="?action=delete&id=<?php echo $film['id']?>" class="button button--delete">Удалить</a>
             </div>
-			<div class="badge"><?=$film['genre']?></div>
-			<div class="badge"><?=$film['year']?></div>
+			<div class="badge"><?php echo $film['genre']?></div>
+			<div class="badge"><?php echo $film['year']?></div>
 		</div>
 	<?php } ?>
 
