@@ -33,7 +33,7 @@ if ( array_key_exists('update-film', $_POST) ) {
                   WHERE id = ".mysqli_real_escape_string($link, $_GET['id'])." LIMIT 1";
 
 		if ( mysqli_query($link, $query) ) {
-			$resultInfo = "<p>Фильм был успешно обновлён!</p>";
+			$resultInfo = "<p>Фильм был успешно обновлён.</p>";
 		} else { 
       	$resultError = "<p>Что то пошло не так. Добавьте фильм еще раз!</p>";
 		}
@@ -64,83 +64,85 @@ if (@$_GET['action'] == 'delete') {
 <!DOCTYPE html>
 <html lang="ru">
   <head>
-	<meta charset="UTF-8"/>
-	<title>Фильмотека</title>
-	<!--[if IE]>
-	  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-	<![endif]-->
-	<meta name="viewport" content="width=device-width,initial-scale=1"/>
-	<meta name="keywords" content=""/>
-	<meta name="description" content=""/><!-- build:cssVendor css/vendor.css -->
-	<link rel="stylesheet" href="libs/normalize-css/normalize.css"/>
-	<link rel="stylesheet" href="libs/bootstrap-4-grid/grid.min.css"/>
-	<link rel="stylesheet" href="libs/jquery-custom-scrollbar/jquery.custom-scrollbar.css"/><!-- endbuild -->
-<!-- build:cssCustom css/main.css -->
-	<link rel="stylesheet" href="./css/main.css"><!-- endbuild -->
+    <meta charset="UTF-8"/>
+    <title>Фильмотека</title>
+    <!--[if IE]>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <![endif]-->
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/><!-- build:cssVendor css/vendor.css -->
+    <link rel="stylesheet" href="libs/normalize-css/normalize.css"/>
+    <link rel="stylesheet" href="libs/bootstrap-4-grid/grid.min.css"/>
+    <link rel="stylesheet" href="libs/jquery-custom-scrollbar/jquery.custom-scrollbar.css"/><!-- endbuild -->
+    <!-- build:cssCustom css/main.css -->
+    <link rel="stylesheet" href="./css/main.css"><!-- endbuild -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&amp;subset=cyrillic-ext" rel="stylesheet">
-<!--[if lt IE 9]>
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script><![endif]-->
+    <!--[if lt IE 9]>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script><![endif]-->
   </head>
   <body>
-	<div class="container user-content pt-35">
+    <div class="container user-content pt-35">
 
-	
+      <?php if ( @$resultSuccess != '' ) { ?> 
+        <div class="info-success"><?php echo $resultSuccess?></div>
+      <?php } ?>
 
-	<?php if ( @$resultSuccess != '' ) { ?> 
-		<div class="info-success"><?=$resultSuccess?></div>
-	<?php } ?>
+      <?php if ( @$resultInfo != '' ) { ?> 
+        <div class="info-notification"><?php echo $resultInfo?></div>
+      <?php } ?>
 
-  <?php if ( @$resultInfo != '' ) { ?> 
-		<div class="info-notification"><?=$resultInfo?></div>
-	<?php } ?>
+      <?php if ( @$resultError != '' ) { ?> 
+        <div class="error"><?php echo $resultError?></div>
+      <?php } ?>
 
-	<?php if ( @$resultError != '' ) { ?> 
-		<div class="error"><?=$resultError?></div>
-	<?php } ?>
+      <h1 class="title-1">Фильм <?php echo $film['title']?></h1>
 
-	<h1 class="title-1">Фильм <?=$film['title']?></h1>
+      <div class="panel-holder mt-0 mb-20">
+        <div class="title-4 mt-0">Редактировать фильм</div>
 
-	  <div class="panel-holder mt-0 mb-100">
-		<div class="title-4 mt-0">Редактировать фильм</div>
+        <form action="edit.php?id=<?php echo $film['id']?>" method="POST">
 
-		<form action="edit.php?id=<?=$film['id']?>" method="POST">
+          <?php 
+            if ( !empty($errors)) {
+              foreach ($errors as $key => $value) {
+                echo "<div class='error'>$value</div>";
+              }
+            }
+          ?>
 
-			<?php 
-        if ( !empty($errors)) {
-          foreach ($errors as $key => $value) {
-          echo "<div class='error'>$value</div>";
-          }
-        }
-			?>
+          <label class="label-title">Название фильма</label>
+          <input class="input" type="text" 
+                placeholder="Такси 2" name="title" 
+                value="<?php echo $film['title']?>" />
+          <div class="row">
+            <div class="col">
+              <label class="label-title">Жанр</label>
+              <input class="input" type="text" 
+                    placeholder="комедия" name="genre" 
+                    value="<?php echo $film['genre']?>" />
+            </div>
+            <div class="col">
+              <label class="label-title">Год</label>
+              <input class="input" type="text" 
+                    placeholder="2000" name="year" 
+                    value="<?php echo $film['year']?>" />
+            </div>
+          </div>
+          <input type="submit" class="button" value="Обновить информацию" name="update-film">
+        </form>
 
-			<label class="label-title">Название фильма</label>
-			<input class="input" type="text" 
-             placeholder="Такси 2" name="title" 
-             value="<?=$film['title']?>" />
-			<div class="row">
-				<div class="col">
-					<label class="label-title">Жанр</label>
-					<input class="input" type="text" 
-                 placeholder="комедия" name="genre" 
-                 value="<?=$film['genre']?>" />
-				</div>
-				<div class="col">
-					<label class="label-title">Год</label>
-					<input class="input" type="text" 
-                 placeholder="2000" name="year" 
-                 value="<?=$film['year']?>" />
-				</div>
-			</div>
-			<input type="submit" class="button" value="Обновить информацию" name="update-film">
-		</form>
+      </div>
 
-	  </div>
-	</div><!-- build:jsLibs js/libs.js -->
-	<script src="libs/jquery/jquery.min.js"></script><!-- endbuild -->
-<!-- build:jsVendor js/vendor.js -->
-	<script src="libs/jquery-custom-scrollbar/jquery.custom-scrollbar.js"></script><!-- endbuild -->
-<!-- build:jsMain js/main.js -->
-	<script src="js/main.js"></script><!-- endbuild -->
-	<script defer="defer" src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+      <div class="mb-100">
+        <a href="index.php" class="button">Вернуться на главную страницу</a>
+      </div>
+    </div><!-- build:jsLibs js/libs.js -->
+    <script src="libs/jquery/jquery.min.js"></script><!-- endbuild -->
+    <!-- build:jsVendor js/vendor.js -->
+    <script src="libs/jquery-custom-scrollbar/jquery.custom-scrollbar.js"></script><!-- endbuild -->
+    <!-- build:jsMain js/main.js -->
+    <script src="js/main.js"></script><!-- endbuild -->
+    <script defer="defer" src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
   </body>
 </html>

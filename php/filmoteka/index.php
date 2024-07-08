@@ -59,11 +59,6 @@ if ( array_key_exists('add-film', $_POST) ) {
 
 }
 
-// echo "<pre>";
-// print_r($_POST);
-// echo "</pre>";
-
-
 // Getting films from DB
 $query = "SELECT * FROM films";
 $films = array();
@@ -75,11 +70,6 @@ if ( $result = mysqli_query($link, $query) ) {
 		$films[] = $row;
 	}
 }
-
-// echo "<pre>";
-// print_r($films);
-// echo "</pre>";
-
 ?>
 
 <!DOCTYPE html>
