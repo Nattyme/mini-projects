@@ -226,7 +226,8 @@ pre code {
 input.button {
   line-height: 1;
   padding-top: 0;
-} 
+}
+
 .button:hover,
 .button:focus {
   border-color: #DDE8EE;
@@ -236,7 +237,7 @@ input.button {
   border-color: #b4dff6;
   background-color: #b4dff6;
 }
-.button--edit {
+.button--edit, input.button--edit {
   padding: 6px 20px;
  
   display: inline-block;
@@ -762,7 +763,7 @@ a.button--login:active {
 }
 .label {
   display: block;
-  vertical-align: middle;
+  /* vertical-align: middle; */
   margin-bottom: 15px;
   cursor: pointer;
 }
@@ -1315,11 +1316,13 @@ a.title,
 }
 .admin-nav__link {
   margin-right: 20px;
-  color: #000;
-  text-decoration: none;
+  color: #037ec6;
+  text-decoration: underline;
+  text-underline-offset: 7px;
+  transition: all 0.2s ease-in;
 }
 .admin-nav__link:hover {
-  color: #037ec6;
+  text-decoration-color: #B51919;
 }
 .admin-nav__link:last-child {
   margin-right: 0;
