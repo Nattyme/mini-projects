@@ -237,28 +237,28 @@ input.button {
   background-color: #b4dff6;
 }
 .button--edit {
+  padding: 6px 20px;
+ 
+  display: inline-block;
+  height: 32px;
+  line-height: 1;
+  outline: none;
+
+  border-width: 2px;
+  border-style: solid;
+  border-color: #ffba00;
+  border-radius: 22px;
+  background-color: #ffba00;
+  
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 14px;
+  color: #FFF;
+
   -webkit-transition: all 0.2s ease-in;
   -o-transition: all 0.2s ease-in;
   transition: all 0.2s ease-in;
-  display: inline-block;
-  line-height: 1;
-  outline: none;
-  border-width: 2px;
-  border-color: #dde8ee;
-  border-style: solid;
-  border-radius: 22px;
-  height: 2.75em;
-  padding-top: 0.68em;
-  padding-left: 1.25em;
-  padding-right: 1.25em;
-  color: #037EC6;
-  background: #FFF;
   cursor: pointer;
-  text-decoration: none;
-  font-weight: 700;
-  color: #FFF;
-  border-color: #ffba00;
-  background-color: #ffba00;
 }
 .button--edit:hover,
 .button--edit:focus {
@@ -328,8 +328,18 @@ a.button--delete,
 a.button--delete:hover,
 a.button--delete:focus,
 .user-content a.button--delete,
-.user-content a.button--hover,
-.user-content a.button--focus {
+.user-content a.button--delete:hover,
+.user-content a.button--delete:focus {
+  color: #FFF;
+  text-decoration: none;
+}
+
+a.button--edit,
+a.button--edit:hover,
+a.button--edit:focus,
+.user-content a.button--edit,
+.user-content a.button--edit:hover,
+.user-content a.button--edit:focus {
     color: #FFF;
     text-decoration: none;
 }
