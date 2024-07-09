@@ -25,6 +25,7 @@
         <input class="input" type="text" placeholder="2000" name="year"/>
       </div>
     </div>
+    <textarea class="textarea mb-20" name="description" placeholder="Введите описание фильма"></textarea>
     <input type="submit" class="button" value="Добавить" name="add-film">
   </form>
 </div>

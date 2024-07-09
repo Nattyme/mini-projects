@@ -20,7 +20,7 @@ if ( array_key_exists('update-film', $_POST) ) {
 
 	// Если ошщибок нет - сохраняем фильм
 	if ( empty($errors) ) {
-    $result = film_update($link, $_POST['title'], $_POST['genre'], $_POST['year'], $_GET['id']);
+    $result = film_update($link, $_POST['title'], $_POST['genre'], $_POST['year'], $_GET['id'], $_POST['description']);
     
     if ( $result) {
       $resultSuccess = "<p>Фильм был успешно обновлен</p>";

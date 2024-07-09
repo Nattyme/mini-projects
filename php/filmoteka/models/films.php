@@ -13,26 +13,14 @@
     return $films;
   }
 
-  function film_new($link, $title, $genre, $year) {
+  function film_new($link, $title, $genre, $year, $description = '') {
     if ( array_key_exists('add-film', $_POST) ) {
-	
-      // Обработка ошибок
-      if ( $title == '') {
-        $errors[] = "<p>Необходимо ввести название фильма!</p>";
-      }
-      if ( $genre == '') {
-        $errors[] = "<p>Необходимо ввести жанр фильма!</p>";
-      }
-      if ( $year == '') {
-        $errors[] = "<p>Необходимо ввести год фильма!</p>";
-      }
-    
-    
       // Запись данных в БД
-      $query = "INSERT INTO `films` (`title`, `genre`, `year`) VALUES (
+      $query = "INSERT INTO `films` (`title`, `genre`, `year`, `description`) VALUES (
         '". mysqli_real_escape_string($link, $title) ."', 
         '". mysqli_real_escape_string($link, $genre) ."', 
-        '". mysqli_real_escape_string($link, $year) ."'
+        '". mysqli_real_escape_string($link, $year) ."',
+        '". mysqli_real_escape_string($link, $description) ."'
         )";
 
       if( mysqli_query($link, $query) ) {
@@ -58,7 +46,7 @@
     return $film;
   }
 
-  function film_update($link, $title, $genre, $year, $id) {
+  function film_update($link, $title, $genre, $year, $id, $description) {
     if ( array_key_exists('update-film', $_POST) ) {
 	
       // Обработка ошибок
@@ -76,7 +64,8 @@
       $query = "UPDATE `films` 
               SET `title` = '". mysqli_real_escape_string($link, $title) ."', 
                   `genre` = '". mysqli_real_escape_string($link, $genre) ."',
-                  `year` = '". mysqli_real_escape_string($link,  $year) ."' 
+                  `year` = '". mysqli_real_escape_string($link, $year) ."', 
+                  `description` = '". mysqli_real_escape_string($link, $description) ."' 
                   WHERE `id` = ".mysqli_real_escape_string($link, $id)." LIMIT 1";
 
       if( mysqli_query($link, $query) ) {

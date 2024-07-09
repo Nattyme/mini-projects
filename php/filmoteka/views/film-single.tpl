@@ -10,5 +10,8 @@
         </div>
   <div class="badge"><?php echo $film['genre']?></div>
   <div class="badge"><?php echo $film['year']?></div>
+  <div class="user-content">
+    <p><?php echo $film['description']?></p>
+  </div>
 </div>
 	

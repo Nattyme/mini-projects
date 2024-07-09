@@ -30,6 +30,7 @@
                value="<?php echo $film['year']?>"/>
       </div>
     </div>
+    <textarea class="textarea mb-20" name="description" placeholder="Введите описание фильма"><?php echo $film['description']?></textarea>
     <input type="submit" class="button" value="Обновить" name="update-film">
   </form>
 </div>

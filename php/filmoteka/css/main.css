@@ -742,7 +742,7 @@ a.button--login:active {
   transition: -webkit-box-shadow 0.2s ease-in;
   transition: box-shadow 0.2s ease-in;
   transition: box-shadow 0.2s ease-in, -webkit-box-shadow 0.2s ease-in;
-  height: 200px;
+  height: 100px;
   resize: vertical;
 }
 .textarea:active,
