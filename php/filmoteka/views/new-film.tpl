@@ -1,15 +1,3 @@
-<?php if ( @$resultSuccess != '' ) { ?> 
-	<div class="info-success"><?=$resultSuccess?></div>
-<?php } ?>
-
-<?php if ( @$resultInfo != '' ) { ?> 
-	<div class="info-notification"><?=$resultInfo?></div>
-<?php } ?>
-
-<?php if ( @$resultError != '' ) { ?> 
-	<div class="error"><?=$resultError?></div>
-<?php } ?>
-
 <h1 class="title-1">Добавить новый фильм</h1>
 
 <div class="panel-holder mt-30 mb-100">

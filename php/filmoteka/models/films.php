@@ -93,14 +93,11 @@
   function film_delete($link, $id) {
     if (@$_GET['action'] == 'delete') {
       $query = "DELETE FROM `films` WHERE `id` = ' " . mysqli_real_escape_string($link, $id) . "' LIMIT 1";
-
+      mysqli_query($link, $query);
+      
       if (mysqli_affected_rows($link) > 0) {
-        $resultInfo = "<p>Фильм был успешно удалён.</p>";
-      } 
-
-      if( mysqli_query($link, $query) ) {
         $result = true;
-      } else {
+      }  else {
         $result = false;
       }
 

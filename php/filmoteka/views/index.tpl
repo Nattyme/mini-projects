@@ -1,15 +1,3 @@
-<?php if ( @$resultSuccess != '' ) { ?> 
-	<div class="info-success"><?=$resultSuccess?></div>
-<?php } ?>
-
-<?php if ( @$resultInfo != '' ) { ?> 
-	<div class="info-notification"><?=$resultInfo?></div>
-<?php } ?>
-
-<?php if ( @$resultError != '' ) { ?> 
-	<div class="error"><?=$resultError?></div>
-<?php } ?>
-
 <h1 class="title-1"> Фильмотека</h1>
 
 	<?php
@@ -24,5 +12,8 @@
             </div>
 			<div class="badge"><?php echo $film['genre']?></div>
 			<div class="badge"><?php echo $film['year']?></div>
+      <div class="mt-20">
+        <a href="single.php?id=<?php echo $film['id']?>" class="button">Подробнее</a>
+      </div>
 		</div>
 	<?php } ?>

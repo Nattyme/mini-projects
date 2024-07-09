@@ -38,13 +38,16 @@ if ( @$_GET['action'] == 'delete' ) {
     $result = film_delete($link, $_GET['id']);
 
     //Проверяем был ли удален фильм
-    if (mysqli_affected_rows($link) > 0) {
+    if ($result) {
       $resultInfo = "<p>Фильм был успешно удалён.</p>";
-    } 
+    } else {
+      $resultError = "<p>Что-то пошло не так..</p>";
+    }
 	}
 }
 
 include('views/head.tpl');
+include('views/notifications.tpl');
 include('views/edit-film.tpl');
 include('views/footer.tpl');
 
