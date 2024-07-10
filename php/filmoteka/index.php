@@ -4,7 +4,6 @@ require('database.php');
 $link = db_connect();
 require('models/films.php');
 
-
 if ( @$_GET['action'] == 'delete' ) {
 	// Если ошщибок нет - удаляем фильм
 	if ( empty($errors) ) {
@@ -21,7 +20,6 @@ if ( @$_GET['action'] == 'delete' ) {
 }
 
 $films = films_all($link);
-
 
 include('views/head.tpl');
 include('views/notifications.tpl');

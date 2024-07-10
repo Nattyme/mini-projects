@@ -28,7 +28,6 @@ if ( array_key_exists('add-film', $_POST) ) {
     }
   }
 
-  
 }
 
 include('views/head.tpl');

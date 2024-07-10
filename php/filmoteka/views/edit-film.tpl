@@ -5,7 +5,8 @@
     <div class="title-4 mt-0">Редактировать фильм</div>
     <a href="index.php?action=delete&id=<?php echo $film['id']?>" class="button button--delete">Удалить</a>
   </div>
-  <form action="edit.php?id=<?php echo $film['id']?>" method="POST">
+
+  <form enctype="multipart/form-data" action="edit.php?id=<?php echo $film['id']?>" method="POST">
 
     <?php 
       if ( !empty($errors)) {
@@ -30,7 +31,14 @@
                value="<?php echo $film['year']?>"/>
       </div>
     </div>
-    <textarea class="textarea mb-20" name="description" placeholder="Введите описание фильма"><?php echo $film['description']?></textarea>
+    <textarea class="textarea mb-20" name="description" placeholder="Введите описание фильма">
+      <?php echo $film['description']?>
+    </textarea>
+    <div class="mb-20"> 
+      <input type="file" name="photo"/> 
+    </div>
     <input type="submit" class="button" value="Обновить" name="update-film">
+
   </form>
+
 </div>
