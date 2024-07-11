@@ -127,10 +127,10 @@
       $errors[] = 'An unknown error occurred';
     }
 
-    $photoFolderLocation = ROOT . 'data/films/full/';
+    $photoFolderLocationFull = ROOT . 'data/films/full/';
     $photoFolderLocationMin = ROOT . 'data/films/min/';
     
-    $uploadFile = $photoFolderLocation . $db_file_name;
+    $uploadFile = $photoFolderLocationFull . $db_file_name;
     $moveResult = move_uploaded_file($fileTmpLoc, $uploadFile);
 
     if ($moveResult !=true) {
@@ -139,13 +139,18 @@
 
     require_once( ROOT . "/functions/image_resize_imagick.php");
 
-    $target_file = $photoFolderLocation . $db_file_name;
-    $resized_file = $photoFolderLocationMin . $db_file_name;
-    $wmax = 137;
-    $hmax = 200;
-    $img = createThumbnail($target_file, $wmax, $hmax);
-    $img->writeImage($resized_file);
+    $target_file = $photoFolderLocationFull . $db_file_name;
+    $resized_file_min = $photoFolderLocationMin . $db_file_name;
+    $wmax_min = 137;
+    $hmax_min = 200;
+    $img_min = createThumbnail($target_file, $wmax_min, $hmax_min);
+    $img_min->writeImage($resized_file_min);
+
+    $resized_file_full = $photoFolderLocationFull . $db_file_name;
+    $wmax_full = 236;
+    $hmax_full = 352;
+    $img_full = createThumbnail($target_file, $wmax_full, $hmax_full);
+    $img_full->writeImage($resized_file_full);
 
     return $db_file_name;
   }
-?>

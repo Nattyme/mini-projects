@@ -15,7 +15,7 @@
                     echo HOST . 'data/films/min/' . $film['photo']; 
                     if ($film['photo'] == "") { echo "default.jpeg";}
                   ?>" 
-               alt="Обложка фильма">
+               alt="<?php echo $film['title']?>">
         </div>
         <!--// col-4 -->
 
@@ -24,8 +24,12 @@
           <div class="card__header">
             <h4 class="title-4"><?php echo $film['title']?></h4>
             <div class="buttons">
-              <a href="edit.php?id=<?php echo $film['id']?>" class="button button--edit">Редактировать</a>
-              <a href="index.php?action=delete&id=<?php echo $film['id']?>" class="button button--delete">Удалить</a>
+
+              <?php if ( isAdmin () ) { ?>
+                    <a href="edit.php?id=<?php echo $film['id']?>" class="button button--edit">Редактировать</a>
+                    <a href="index.php?action=delete&id=<?php echo $film['id']?>" class="button button--delete">Удалить</a>
+              <?php } ?>
+              
             </div>
           </div>
           <div class="badge"><?php echo $film['genre']?></div>

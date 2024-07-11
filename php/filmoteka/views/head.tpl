@@ -23,7 +23,27 @@
   	<div class="container user-content pt-35">
         <div class="admin-nav mb-50">
           <a href="index.php" class="admin-nav__link">Все фильмы</a>
-          <a href="new.php" class="admin-nav__link">Добавить новый фильм</a>
+          
+          <?php if ( isAdmin () ) { ?>
+                  <a href="new.php" class="admin-nav__link">Добавить новый фильм</a>
+          <?php } ?>
+
+          <a href="request.php" class="admin-nav__link">Указать информацию</a>
+
+          <?php if ( !isAdmin () ) { ?>
+                  <a href="login.php" class="admin-nav__link">Вход для админа</a>
+          <?php } else { ?> 
+                  <a href="logout.php" class="admin-nav__link">Выход</a>
+          <?php } ?>
+          
         </div>
-      
-      
+
+      <?php if( isset($_COOKIE['user-name'])) { ?> 
+        <div class="mb-50">
+        <?php if ( isset($_COOKIE['user-city']) ) { ?> 
+            Привет, <?php echo $_COOKIE['user-name'] ?> из <?php echo $_COOKIE['user-city']; ?>
+          <?php } else {
+            echo "Привет, " . $_COOKIE['user-name']; 
+          } ?> 
+        </div>
+      <?php } ?> 

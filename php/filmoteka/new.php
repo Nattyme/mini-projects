@@ -1,8 +1,11 @@
 <?php
+
 require('config.php');
 require('database.php');
 $link = db_connect();
 require('models/films.php');
+require('functions\login-functions.php');
+
 $films = films_all($link);
 
 if ( array_key_exists('add-film', $_POST) ) {
@@ -34,7 +37,6 @@ include('views/head.tpl');
 include('views/notifications.tpl');
 include('views/new-film.tpl');
 include('views/footer.tpl');
-?>
 
 
 
