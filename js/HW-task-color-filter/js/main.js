@@ -20,10 +20,12 @@ const GetColor = function (nameEng, classColor, mode) {
 }
 
 // Создаём конструктор для инфо о машине
-const CreateCar = function (model, color,  imgName) {
+const CreateCar = function (model, color,  imgName, imgSrc) {
   this.model = model,
   this.color = color,
-  this.imgName = `https://webcademy.ru/files/js2020/solaris/${imgName}`;
+  this.imgName = imgName;
+  this.imgSrc = imgSrc;
+  this.imgPath = this.imgSrc + this.imgName;
 }
 
 // Функция обходим массив с цветами и показывает кнопки на странице
@@ -100,7 +102,7 @@ const carImageChange = function (targetButton) {
 
     // Шаблон для фото
     const imgCurrentTemplate = `
-        <img src="${carImgCurrent.imgName}" alt="${carImgCurrent.model}" />
+        <img src="${carImgCurrent.imgPath}" alt="${carImgCurrent.model}" />
     `;
 
     // В массиве цветов находим объект машины с нужным цветом. Сохраняем в переменную значение св-ва mode 
@@ -134,13 +136,13 @@ const displayCarsData = function () {
 }
 
 // Создаём парк доступных машин
-carPark.push(new CreateCar('Solaris', 'black', 'black.png'));
-carPark.push(new CreateCar('Solaris', 'blue', 'blue.png'));
-carPark.push(new CreateCar('Solaris', 'graphite', 'graphite.png'));
-carPark.push(new CreateCar('Solaris', 'orange', 'orange.png'));
-carPark.push(new CreateCar('Solaris', 'red', 'red.png'));
-carPark.push(new CreateCar('Solaris', 'white', 'white.png'));
-carPark.push(new CreateCar('Solaris', 'white-pure', 'white-pure.png '));
+carPark.push(new CreateCar('Solaris', 'black', 'black.png', 'https://webcademy.ru/files/js2020/solaris/'));
+carPark.push(new CreateCar('Solaris', 'blue', 'blue.png', 'https://webcademy.ru/files/js2020/solaris/'));
+carPark.push(new CreateCar('Solaris', 'graphite', 'graphite.png', 'https://webcademy.ru/files/js2020/solaris/'));
+carPark.push(new CreateCar('Solaris', 'orange', 'orange.png', 'https://webcademy.ru/files/js2020/solaris/'));
+carPark.push(new CreateCar('Solaris', 'red', 'red.png', 'https://webcademy.ru/files/js2020/solaris/'));
+carPark.push(new CreateCar('Solaris', 'white', 'white.png', 'https://webcademy.ru/files/js2020/solaris/'));
+carPark.push(new CreateCar('Solaris', 'white-pure', 'white-pure.png', 'https://webcademy.ru/files/js2020/solaris/'));
 
 // Создаем пак доступных цветов
 colors.push(new GetColor('black', 'colorBlack', 'light'));

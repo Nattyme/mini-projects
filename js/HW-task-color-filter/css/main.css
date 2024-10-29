@@ -22,7 +22,6 @@ body {
 }
 
 .imgHolder--dark {
-  background-blend-mode: light;
   background-color: #000;
 }
 
