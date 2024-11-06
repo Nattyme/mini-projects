@@ -12,19 +12,19 @@ body {
 }
 
 .imgHolder {
-    margin-bottom: 20px;
-
-    background-image: url("//webcademy.ru/files/js2020/solaris/text-solaris.png");
-    background-position: center 50px;
-    background-repeat: no-repeat;
-
-    transition: background-color 0.3s ease-in;
+ margin-bottom: 20px;
 }
 
-.imgHolder--dark {
+.img-bg {
+  background-image: url("//webcademy.ru/files/js2020/solaris/text-solaris.png");
+  background-position: center 50px;
+  background-repeat: no-repeat;  
+  transition: background-color 0.3s ease-in;
+}
+
+.img-bg--dark { 
   background-color: #000;
 }
-
 
 .colorsSelector {
     text-align: center;
