@@ -23,7 +23,7 @@
  * 
  * @returns {Object} Объект с доступными функциями для работы с калькулятором:
  * - setValue(value_1, value_2) - Устанавливает значения для вычислений.
- * - setSave(toSave) - Устанавливает режим сохранения результата последней операции.
+ * - setUseMemory(toSave) - Устанавливает режим сохранения результата последней операции.
  * - reset() - Сбрасывает результат в 0.
  * - sum() - Выполняет сложение.
  * - difference() - Выполняет вычитание.
@@ -39,7 +39,7 @@ const calculateModule = ( function () {
  
   let isValueSet = false;  // Переменная показывает, установлены ли начал. значения
   let result = 0; // Переменная для записи результата
-  let saveResult = false;   // В переменной храним инфо о возм-ти сброса знач-я
+  let useMemory = false;   // В переменной храним инфо о возм-ти сброса знач-я
 
  
   let a;  // Объявим переменные a и b для выполнения арифм. действий
@@ -174,8 +174,8 @@ const calculateModule = ( function () {
   }
   
   // Ф-ция устанавливает режим сохран. последнего результата
-  function setSaveMode (toSave) {
-    saveResult = toSave;
+  function setUseMemory (toSave) {
+    useMemory = toSave;
   }
   
   // Ф-ция сбрасывает текущ. результат в 0
@@ -189,7 +189,7 @@ const calculateModule = ( function () {
     // Если не установлены значения - не выполнять ф-цию
     if (!checkAreValueSet()) return;
     
-    saveResult ? accumulatedResult( a + b ) : result = a + b;
+    useMemory ? accumulatedResult( a + b ) : result = a + b;
     
     return result;
   }
@@ -199,7 +199,7 @@ const calculateModule = ( function () {
     // Если не установлены значения - не выполнять ф-цию
     if (!checkAreValueSet()) return;
   
-    saveResult ? accumulatedResult( a - b ) : result = a - b;
+    useMemory ? accumulatedResult( a - b ) : result = a - b;
     
     return result;
 
@@ -210,7 +210,7 @@ const calculateModule = ( function () {
     // Если не установлены значения - не выполнять ф-цию
     if (!checkAreValueSet()) return;
     
-    saveResult ? accumulatedResult(  a * b ) : result =  a * b;
+    useMemory ? accumulatedResult(  a * b ) : result =  a * b;
     
     return result;
   }
@@ -225,7 +225,7 @@ const calculateModule = ( function () {
       return;
     }
     
-    saveResult ? accumulatedResult( a / b ) : result = a / b;
+    useMemory ? accumulatedResult( a / b ) : result = a / b;
     
     return result;
   }
@@ -250,7 +250,7 @@ const calculateModule = ( function () {
   // Возврат ф-ций для пользователя
   return {
     setValue : setValue,
-    setSave : setSaveMode,
+    setUseMemory : setUseMemory,
     reset : reset,
     sum : sum,
     difference : difference,
@@ -263,7 +263,7 @@ const calculateModule = ( function () {
                       
                       
 calculateModule.setValue('5', '5zxz55');
-calculateModule.setSave(true);
+calculateModule.setUseMemory(true);
 // calculateModule.sum();
 // calculateModule.sum();
 calculateModule.difference();
