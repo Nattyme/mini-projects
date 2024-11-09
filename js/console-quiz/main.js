@@ -48,25 +48,31 @@ Question.prototype.getCorrectField = function () {
 // const questionBody = new Question(question1, options1, answer1);
 // const questionBody2 = new Question(question2, options2, answer2);
 
-const question3 = 'В фильме "Сквозь горизонт"("Горизонт событий") команда отправляется к короблю, который появился спустя 20 лет после пропажи. Что оказалось причиной исчезновения?';
+const question3 = 'В фильме "Сквозь горизонт"("Горизонт событий") команда отправляется к короблю, который появился спустя 20 лет после пропажи. Назовите причину исчезновения.';
 const answer3 = 'Новый вариант двигателя. Во время варп-перехода корабль оказался в другой точке пространства-времени. Возможно, в аду.';
 const options3 = ['Этот корабль захватили Создатели. Они вывели на нём первые экземпляры "Чужих". Оттуда началось их распространение', 'Корабль направлялся в Плутону. Психика экипажа не выдержала длинного полёта. Координировать действия команды стало невозможно. Это привело к летальному исходу', 'Новый вариант двигателя. Во время варп-перехода корабль оказался в другой точке пространства-времени. Возможно, в аду.'];
 const questionBody3 = new Question(question3, options3, answer3);
-console.dir(questionBody3);
-console.dir(questionBody3.checkAnswer(0));
-
-
-
-
 
 // Слушаем, когда польз-ль обновит страницу. 
-if (window.performance) {
-  console.info("window.performance works fine on this browser");
+ if (window.performance.getEntriesByType('navigation')[0].type === 'reload') {
+  function customLog (message, style) {
+    console.groupCollapsed(`%c \u2753 ${message}`, style);
+  }
+  console.groupEnd();
+
+  customLog(questionBody3.question, "padding: 5px 5px 5px 15px; font-size: 14px; color: black; background-color: #fff; font-weight: 600");
+ 
+  // Обходим массив вариантов и выводим в консоль
+  for (let i = 0; i < questionBody3.options.length; i++) {
+    console.info('%d.' + ' ' + questionBody3.options[i], i+1);
+  }
+  
+   prompt('Введите номер верного ответа');
+ 
+ } else {
+   console.info( "Что - то пошло не так.  Повторите попытку");
  }
 
- 
- if (window.performance.getEntriesByType('navigation')[0].type === 'reload') {
-   console.info( "This page is reloaded" );
- } else {
-   console.info( "This page is not reloaded");
- }
+//  console.log(window.matchMedia('(prefers-color-scheme: dark)').matches);
+//***  Очищает консоль ***
+// window.console.clear();
