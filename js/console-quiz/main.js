@@ -56,7 +56,7 @@ const questionBody3 = new Question(question3, options3, answer3);
 // Слушаем, когда польз-ль обновит страницу. 
  if (window.performance.getEntriesByType('navigation')[0].type === 'reload') {
   function customLog (message, style) {
-    console.groupCollapsed(`%c \u2753 ${message}`, style);
+    console.group(`%c \u2753 ${message}`, style);
   }
   console.groupEnd();
 
@@ -67,7 +67,28 @@ const questionBody3 = new Question(question3, options3, answer3);
     console.info('%d.' + ' ' + questionBody3.options[i], i+1);
   }
   
-   prompt('Введите номер верного ответа');
+  let userAnswer = Number(prompt('Введите номер верного ответа') - 1);
+
+  if (userAnswer.trim() === '' ) {
+    console.log('Вы не указали вариант ответа. Нужно выбрать номер из списка.')
+  }
+
+  if (isNaN(userAnswer) ) {
+   
+    if (userAnswer === NULL || userAnswer !== Infinity) {
+      console.log('Вы указали слишком большое число. Нужно выбрать номер из списка.')
+    }
+
+    console.log('Введите номер из списка.')
+  }
+  
+
+  if (userAnswer === questionBody3.question) {
+    console.log('Верный ответ')
+  } else {
+    console.log('Не верный ответ')
+  }
+ 
  
  } else {
    console.info( "Что - то пошло не так.  Повторите попытку");
