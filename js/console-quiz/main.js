@@ -6,11 +6,24 @@ const Question = function (question, options, correctAnswer) {
 }
 
 // Запишем в прототип метод проверки ответа, т.к. одинаковый для всех вопросов
-Question.prototype.checkAnswer = function (answerIndex) {
-  if (answerIndex !== this.getCorrectField()) {
-    return false;
+Question.prototype.checkAnswer = function (userAnswer) {
+  if (String(userAnswer).trim() === '' ) {
+    return console.log('Вы не указали вариант ответа. Нужно выбрать номер из списка.');
   }
-  return true;
+
+  if (isNaN(Number(userAnswer)) ) {
+    return console.log('Некорректный ввод. Выберите номер из списка.');
+  }  else if (!isFinite( Number(userAnswer) )) {
+    return console.log('Вы указали слишком большое число. Нужно выбрать номер из списка.');
+  } else if (!Number.isInteger(userAnswer) ) {
+    return onsole.log('В ответе должно быть целое число');
+  } 
+
+  if (Number(userAnswer) !== this.getCorrectField()) {
+    return console.log('Верный ответ');
+  } 
+
+  return console.log('Не верный ответ');
 };
 
 // Запишем в прототип метод для поиска индекса верного ответа, т.к. одинаковый для всех вопросов
@@ -66,33 +79,20 @@ const questionBody3 = new Question(question3, options3, answer3);
   for (let i = 0; i < questionBody3.options.length; i++) {
     console.info('%d.' + ' ' + questionBody3.options[i], i+1);
   }
-  
-  let userAnswer = Number(prompt('Введите номер верного ответа') - 1);
 
-  if (userAnswer.trim() === '' ) {
-    console.log('Вы не указали вариант ответа. Нужно выбрать номер из списка.')
-  }
+  // Запишем ответ пользователя в переменную
+  let userAnswer = prompt('Введите номер верного ответа') - 1;
 
-  if (isNaN(userAnswer) ) {
-   
-    if (userAnswer === NULL || userAnswer !== Infinity) {
-      console.log('Вы указали слишком большое число. Нужно выбрать номер из списка.')
-    }
 
-    console.log('Введите номер из списка.')
-  }
+  // Запустим функцию проверки ответа и запишем в переменную
+  let userResult = questionBody3.checkAnswer(userAnswer);
+  console.log(userResult);
+
+} else {
+  console.info( "Что - то пошло не так.  Повторите попытку");
+}
   
 
-  if (userAnswer === questionBody3.question) {
-    console.log('Верный ответ')
-  } else {
-    console.log('Не верный ответ')
-  }
- 
- 
- } else {
-   console.info( "Что - то пошло не так.  Повторите попытку");
- }
 
 //  console.log(window.matchMedia('(prefers-color-scheme: dark)').matches);
 //***  Очищает консоль ***
