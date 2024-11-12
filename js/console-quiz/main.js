@@ -9,10 +9,7 @@ const Question = function (question, correctAnswer, options) {
 Question.prototype.checkAnswer = function (userAnswer) {
   // Если пользователь выбрал "Отмена"
   if ( userAnswer === null || userAnswer === 'exit') {
-    // if ( userAnswer === null && result) {
-    //   return console.log('Поздравляем, вы закончили игру. Ваш результат:');
-    // }
-    return MESSAGES.INFO.null_value();
+    return MESSAGES.INFO.finish_value(score);
   } 
 
   if (String(userAnswer).trim() === '' ) {
@@ -39,12 +36,10 @@ Question.prototype.checkAnswer = function (userAnswer) {
 Question.prototype.getCorrectField = function (options, correctAnswer) {
   return options.findIndex(element => element === correctAnswer);
 }
-// Запишем в прототим quesiton метода стилизации консоли
+// Запишем в прототим quesiton метода стилизации консоли,  т.к. одинаковый для всех вопросов
 Question.prototype.customLog = function (message, style) {
   console.group(`%c \u2753 ${message}`, style);
 }
-
-let score = 0;
 
 const Result = function (question) {
   Question.call(this, question.question, question.correctAnswer,  question.options),
@@ -55,10 +50,10 @@ const Result = function (question) {
 }
 // // Запишем в прототип Result метод проверки ответа, т.к. одинаковый для всех вопросов
 Result.prototype = Object.create(Question.prototype);
-
 // Вернём значение Result для конструктора
 Result.prototype.constructor = Result;
 
+// Запишем в прототип функцию обновления счёта
 Result.prototype.updateScore = function(isCorrect) {
   if (isCorrect === true) {
     score = score + 1;
@@ -91,16 +86,17 @@ const dataQuiz = [
   },
 ];
 
-// Сообщения
+// Переменная с сообщениями для пользователя
 const MESSAGES = {
   INFO : {
             promt_value : function () {
               return 'Введите номер верного ответа';
             },
 
-            null_value : function () {
-              console.info('Вы отменили прохождение викторины');
+            finish_value : function (score) {
+              console.info(`Вы завершили прохождение викторины. Ваш счёт: ${score} баллов.`);
             }
+
   },
 
   ERROR : {
@@ -128,22 +124,39 @@ const MESSAGES = {
 
   SUCCESS : {
               correсt_answer : function () {
-                console.log('Верный ответ');
+                console.log('Это верный ответ');
               }
+  },
+
+  ACHIEVES : {
+    excellent  : function () {
+      console.log('Получено достижение: "Мудрец". Вы ответили правильно на все вопросы!');
+    },
+
+    skip : function () {
+      console.log('Получено достижение: "Я выше этого". Вы проскипали все вопросы!');
+    },
+
+    combo : function () {
+      console.log('Комбо из .. вопросов');
+    }
   }
 }
-  
+
 // Функция возвращает случайный вопрос
 function randomizeQuestion (questionArray) {
   let randomQuestionObj = {};
   let question = {};
+
   const randomizer = function () {
     return Math.floor(Math.random() * 3);
   };
+
   const randomIndex = randomizer();
 
-  randomIndex === question.id ? randomizer() : randomIndex;
+  randomIndex === questionArray[question] ? randomizer() : randomIndex;
   randomQuestionObj = questionArray[randomIndex];
+
   // Создадим объект вопроса
   question =  new Question( randomQuestionObj.question, randomQuestionObj.answer, randomQuestionObj.options);
 
@@ -157,7 +170,9 @@ const watchPageReload = function () {
   } 
 }
 
+// Функция показывает вопрос
 const displayQuestion = function (question) {
+  // Стили для вопроса
   question.customLog(question.question, "padding: 5px 5px 5px 15px; font-size: 14px; color: black; background-color: #fff; font-weight: 600");
  
   // Обходим массив вариантов и выводим в консоль
@@ -166,15 +181,19 @@ const displayQuestion = function (question) {
   } 
 }
 
+// Функция показывает окно для ввода ответа
 const displayChoiceField = function () {
   return prompt(MESSAGES.INFO.promt_value());
 }
 
+// Фунция обрабатывает ответ пользователя
 const handlingUserAnswer = function (question) {
   // Запишем ответ пользователя в переменную
   let userAnswer = displayChoiceField();
 
+  // Если ввели exit или "отмена" - остановить функцию
   if ( userAnswer === 'exit' || userAnswer === null ) {
+    MESSAGES.INFO.finish_value(score);
     return;
   }
 
@@ -202,11 +221,7 @@ const startingQuiz = function () {
 
 }
 
+// Переменная для хранения очков
+let score = 0;
+
 startingQuiz();
-
-
-
-
-//  console.log(window.matchMedia('(prefers-color-scheme: dark)').matches);
-//***  Очищает консоль ***
-// window.console.clear();
