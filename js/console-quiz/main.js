@@ -21,7 +21,7 @@ const consoleQuiz =  ( function () {
       return MESSAGES.ERROR.nan_value();
     } else if (!isFinite( Number(userAnswer) )) {
       return MESSAGES.ERROR.infinity_value();
-    } else if (Number.isInteger(userAnswer) ) {
+    } else if (!Number.isInteger( Number(userAnswer) ) ) {
       return MESSAGES.ERROR.no_integer_value();
     } 
 
@@ -29,8 +29,7 @@ const consoleQuiz =  ( function () {
       MESSAGES.SUCCESS.correсt_answer();
       return true;
     } 
-    
-    return  MESSAGES.ERROR.incorrect_answer();
+   return  MESSAGES.ERROR.incorrect_answer();
   };
 
   // Запишем в прототип метод для поиска индекса верного ответа, т.к. одинаковый для всех вопросов
@@ -77,16 +76,23 @@ const consoleQuiz =  ( function () {
 
     {
       id : 2,
-      question : 'Над изображением чёрной дыры "Гаргантюа" для этого фильма, работал физик Кип Торн с командой учёных. Они точно рассчитали её внешний вид за 5 лет до получения первых снимков из космоса! Как называется этот фильм?',
+      question : 'Внешний вид чёрной дыры в этом фильме было точно рассчитан за 5 лет до получения первых снимков из космоса! Как называется этот фильм?',
       answer : 'Интерстеллар',
       options : ['Пекло', 'Миссия Европа', 'Интерстеллар']
     },
     {
       id : 3,
-      question : 'В фильме "Сквозь горизонт"("Горизонт событий") команда отправляется к кораблю, который появился спустя 20 лет после пропажи. Что оказалось причиной исчезновения?',
+      question : 'В фильме "Сквозь горизонт" команда отправляется к кораблю, который появился спустя 7 лет после пропажи. Причиной его исчезновения?',
       answer : 'Дело в двигателе. Корабль оказался в другой точке пространства-времени. В аду.',
-      options : ['Произошло столкновение с', 'Психика экипажа не выдержала длинного полёта. Экипаж потерял управление кораблём', 'Дело в двигателе. Корабль оказался в другой точке пространства-времени. В аду.']
+      options : ['Корабль был захвачет создателями "чужих". Экипаж использовали для экспериментов', 'Психика экипажа не выдержала длинного полёта. Управление кораблём было потеряно', 'Дело в двигателе. Корабль оказался в другой точке пространства-времени. В аду.']
     },
+
+    {
+      id : 4,
+      question : 'Терминатор - это...',
+      answer : 'Граница тёмной и светлой стороной Луны',
+      options : ['Граница светлой и тёмной частью небесного тела.', 'Граница красного пятна Юпитера', 'Граница видимой Вселенной', `I'll be back..`]
+    }
   ];
 
   // Переменная с сообщениями для пользователя
@@ -150,14 +156,14 @@ const consoleQuiz =  ( function () {
   function randomizeQuestion (questionArray) {
     let randomQuestionObj = {};
     let question = {};
+    let questionQuantity = questionArray.length;
 
     const randomizer = function () {
-      return Math.floor(Math.random() * 3);
+      return Math.floor(Math.random() * questionQuantity);
     };
 
     const randomIndex = randomizer();
 
-    randomIndex === questionArray[question] ? randomizer() : randomIndex;
     randomQuestionObj = questionArray[randomIndex];
 
     // Создадим объект вопроса
@@ -177,7 +183,7 @@ const consoleQuiz =  ( function () {
   const displayQuestion = function (question) {
     // Стили для вопроса
     question.customLog(question.question, "padding: 5px 5px 5px 15px; font-size: 14px; color: black; background-color: #fff; font-weight: 600");
-  
+    console.groupEnd();
     // Обходим массив вариантов и выводим в консоль
     for (let i = 0; i < question.options.length; i++) {
       console.info('%d. ' + ' ' + question.options[i], i+1);
@@ -206,13 +212,13 @@ const consoleQuiz =  ( function () {
 
     // Обновляем счет на основании правильности ответа
     result.updateScore(isCorrect);
-    console.groupEnd();
 
     const nextQuestion = randomizeQuestion(dataQuiz);
     displayQuestion(nextQuestion);
     handlingUserAnswer(nextQuestion);
   }
 
+  // Функция начинает викторину
   const startingQuiz = function () {
     let isReload = watchPageReload();
 
