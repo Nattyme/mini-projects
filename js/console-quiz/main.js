@@ -8,11 +8,11 @@ const Question = function (question, correctAnswer, options) {
 // Запишем в прототип метод проверки ответа, т.к. он одинаковый для всех вопросов
 Question.prototype.checkAnswer = function (userAnswer) {
   // Если пользователь выбрал "Отмена"
-  if ( userAnswer === null) {
+  if ( userAnswer === null || userAnswer === 'exit') {
     // if ( userAnswer === null && result) {
     //   return console.log('Поздравляем, вы закончили игру. Ваш результат:');
     // }
-    return MESSAGES.ERROR.null_value();
+    return MESSAGES.INFO.null_value();
   } 
 
   if (String(userAnswer).trim() === '' ) {
@@ -44,28 +44,29 @@ Question.prototype.customLog = function (message, style) {
   console.group(`%c \u2753 ${message}`, style);
 }
 
-const Result = function (question) {
+let score = 0;
+
+const Result = function (question, userAnswer) {
   Question.call(this, question.question, question.correctAnswer,  question.options),
-  this.checkResult = function (score, userAnswer) {
-    const isCorrect = this.checkAnswer(userAnswer);
-    score = this.score(score, isCorrect);
-    return score;
+  this.checkResult = function (userAnswer) {
+    let isCorrect = this.checkAnswer(userAnswer);
+    this.scoreCount(isCorrect);
   },
-  this.score = function (score, isCorrect) {
-    if ( !isCorrect && score > 0) {
+  this.scoreCount = (isCorrect) => {
+    if ( isCorrect === false && score > 0) {
       score = score - 1;
-    } else if (isCorrect) {
+    } else if (isCorrect === true) {
       score = score + 1;
     }
-
+console.log('Текущий счет: ' + score)
     return score;
   }
-
 }
 // // Запишем в прототип Result метод проверки ответа, т.к. одинаковый для всех вопросов
 Result.prototype = Object.create(Question.prototype);
 Result.prototype.constructor = Result;
 
+// Массив всех доступныхх вопросов
 const dataQuiz = [
   {
     id : 1,
@@ -88,6 +89,7 @@ const dataQuiz = [
   },
 ];
 
+// Сообщения
 const MESSAGES = {
   INFO : {
             promt_value : function () {
@@ -132,52 +134,68 @@ const MESSAGES = {
 // Функция возвращает случайный вопрос
 function randomizeQuestion (questionArray) {
   let randomQuestionObj = {};
-  let prevIndex = 0;
   let question = {};
   const randomizer = function () {
     return Math.floor(Math.random() * 3);
   };
   const randomIndex = randomizer();
 
-  randomIndex === prevIndex ? randomizer() : randomIndex;
+  randomIndex === question.id ? randomizer() : randomIndex;
   randomQuestionObj = questionArray[randomIndex];
   // Создадим объект вопроса
   question =  new Question( randomQuestionObj.question, randomQuestionObj.answer, randomQuestionObj.options);
-  prevIndex = randomIndex;
 
   return question;
 }
 
-let score = 0;
+// Функция слушает, когда польз-ль обновит страницу. 
+const watchPageReload = function () {
+  if (window.performance.getEntriesByType('navigation')[0].type === 'reload') {
+    return true;
+  } 
+}
 
-// Слушаем, когда польз-ль обновит страницу. 
- if (window.performance.getEntriesByType('navigation')[0].type === 'reload') {
+const displayRandomQuestion = function () {
   let question = {};
-  let userAnswer = '';
-  let result = {};
-
   // Показываем случайный вопрос из массива dataQuiz. Передаём стили для консоли
   question =  randomizeQuestion(dataQuiz);
   question.customLog(question.question, "padding: 5px 5px 5px 15px; font-size: 14px; color: black; background-color: #fff; font-weight: 600");
- 
   // Обходим массив вариантов и выводим в консоль
   for (let i = 0; i < question.options.length; i++) {
     console.info('%d.' + ' ' + question.options[i], i+1);
-  }
+  } 
 
+  return question;
+}
+
+const displayChoiceField = function () {
+  return prompt(MESSAGES.INFO.promt_value());
+}
+
+const handlingUserAnswer = function (question) {
   // Запишем ответ пользователя в переменную
-  userAnswer = prompt(MESSAGES.INFO.promt_value());
+  userAnswer = displayChoiceField();
 
   // Запустим функцию проверки ответа , передадим в неё текущий вопрос и запишем в переменную
-  result = new Result (question);
+  let result = new Result (question, userAnswer);
+  score = result.scoreCount(result.checkResult(userAnswer));
+  console.log('Счет:', score);
+  console.groupEnd();
 
-  // Запишем в score обновлённый результат
-  score = score + result.checkResult(score, userAnswer);
-  console.log(score);
-
-} else {
-  console.info( "Что - то пошло не так.  Повторите попытку");
+  question = displayRandomQuestion();
+  userAnswer = handlingUserAnswer(question);
 }
+
+
+let isReload = watchPageReload();
+let userAnswer;
+
+if ( isReload) {
+  let question = displayRandomQuestion();
+  userAnswer = handlingUserAnswer(question);
+} 
+
+
 
 //  console.log(window.matchMedia('(prefers-color-scheme: dark)').matches);
 //***  Очищает консоль ***
