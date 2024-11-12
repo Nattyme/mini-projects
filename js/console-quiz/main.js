@@ -46,25 +46,27 @@ Question.prototype.customLog = function (message, style) {
 
 let score = 0;
 
-const Result = function (question, userAnswer) {
+const Result = function (question) {
   Question.call(this, question.question, question.correctAnswer,  question.options),
   this.checkResult = function (userAnswer) {
     let isCorrect = this.checkAnswer(userAnswer);
-    this.scoreCount(isCorrect);
-  },
-  this.scoreCount = (isCorrect) => {
-    if ( isCorrect === false && score > 0) {
-      score = score - 1;
-    } else if (isCorrect === true) {
-      score = score + 1;
-    }
-console.log('Текущий счет: ' + score)
-    return score;
+    return isCorrect ? true : false;
   }
 }
 // // Запишем в прототип Result метод проверки ответа, т.к. одинаковый для всех вопросов
 Result.prototype = Object.create(Question.prototype);
+
+// Вернём значение Result для конструктора
 Result.prototype.constructor = Result;
+
+Result.prototype.updateScore = function(isCorrect) {
+  if (isCorrect === true) {
+    score = score + 1;
+  } else if (isCorrect === false && score > 0) {
+    score = score - 1;
+  }
+  console.log('Текущий счет: ' + score);
+};
 
 // Массив всех доступныхх вопросов
 const dataQuiz = [
@@ -155,17 +157,13 @@ const watchPageReload = function () {
   } 
 }
 
-const displayRandomQuestion = function () {
-  let question = {};
-  // Показываем случайный вопрос из массива dataQuiz. Передаём стили для консоли
-  question =  randomizeQuestion(dataQuiz);
+const displayQuestion = function (question) {
   question.customLog(question.question, "padding: 5px 5px 5px 15px; font-size: 14px; color: black; background-color: #fff; font-weight: 600");
+ 
   // Обходим массив вариантов и выводим в консоль
   for (let i = 0; i < question.options.length; i++) {
-    console.info('%d.' + ' ' + question.options[i], i+1);
+    console.info('%d. ' + ' ' + question.options[i], i+1);
   } 
-
-  return question;
 }
 
 const displayChoiceField = function () {
@@ -174,26 +172,38 @@ const displayChoiceField = function () {
 
 const handlingUserAnswer = function (question) {
   // Запишем ответ пользователя в переменную
-  userAnswer = displayChoiceField();
+  let userAnswer = displayChoiceField();
+
+  if ( userAnswer === 'exit' || userAnswer === null ) {
+    return;
+  }
 
   // Запустим функцию проверки ответа , передадим в неё текущий вопрос и запишем в переменную
-  let result = new Result (question, userAnswer);
-  score = result.scoreCount(result.checkResult(userAnswer));
-  console.log('Счет:', score);
+  let result = new Result(question);
+  let isCorrect = result.checkResult(userAnswer);
+
+  // Обновляем счет на основании правильности ответа
+  result.updateScore(isCorrect);
   console.groupEnd();
 
-  question = displayRandomQuestion();
-  userAnswer = handlingUserAnswer(question);
+  const nextQuestion = randomizeQuestion(dataQuiz);
+  displayQuestion(nextQuestion);
+  handlingUserAnswer(nextQuestion);
 }
 
+const startingQuiz = function () {
+  let isReload = watchPageReload();
 
-let isReload = watchPageReload();
-let userAnswer;
+  if ( isReload) {
+    const firstQuestion = randomizeQuestion(dataQuiz);
+    displayQuestion(firstQuestion);
+    handlingUserAnswer(firstQuestion);
+  } 
 
-if ( isReload) {
-  let question = displayRandomQuestion();
-  userAnswer = handlingUserAnswer(question);
-} 
+}
+
+startingQuiz();
+
 
 
 
