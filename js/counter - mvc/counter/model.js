@@ -1,13 +1,16 @@
-let counter = 0;
+const model = {
+  counter : 0,
+  increase : function () {
+    this.counter = this.counter + 1;
+  },
 
-function increase () {
-  counter = counter + 1;
+  decrease : function () {
+    this.counter = this.counter - 1;
+  },
+
+  reset : function () {
+    this.counter = 0;
+  }
 }
 
-function decrease () {
-  counter = counter - 1;
-}
-
-function reset () {
-  counter = 0;
-}
+export default model;

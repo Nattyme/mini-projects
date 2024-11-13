@@ -1,5 +1,8 @@
-const input = document.querySelector('#input');
-
-function updateCounter (counter) {
-  input.value = counter;
+const view = {
+  input : document.querySelector('#input'),
+  updateCounter : function (counter) {
+    this.input.value = counter;
+  }
 }
+
+export default view;
