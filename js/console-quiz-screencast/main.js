@@ -15,14 +15,42 @@
     }
   }
 
-  // Метод для проверки корректного ответа
-  Question.prototype.checkAnswer = function (answer) {
+  // Метод для проверки корректного ответа. Принимает ф-цию callback, в кот. мы передаем keepScore
+  Question.prototype.checkAnswer = function (answer, callback) {
+    let innerScore;
     if (answer === this.correct ) {
       console.log('Это правильный ответ');
+      innerScore = callback(true);
+
     } else {
-      console.log('Неверный ответ. Попробуйте ещё раз.')
+      console.log('Неверный ответ. Попробуйте ещё раз.');
+      innerScore = callback(false);
     }
+
+    this.displayScore(innerScore);
   };
+
+  Question.prototype.displayScore = function (score) {
+    console.log('Ваш счёт равен: ' + score)
+  }
+
+  function nextQuestion () {
+    let n = Math.floor(Math.random() * questions.length);
+
+    // Распечатываем в консоль случайный вопрос с вариантами ответов
+    questions[n].displayQuestion();
+  
+    // Ответ пользователя
+    let answer = prompt('Введите номер верного ответа: ');
+  
+    // Проверка ответа с помощью метода checkAnswer
+    questions[n].checkAnswer(parseInt(answer), keepScore);
+
+    if ( answer !== 'exit' && answer !== null) {
+      nextQuestion();
+    }
+
+  }
 
   // Создаём объекты вопросов 
   const q1 = new Question(
@@ -45,14 +73,21 @@
 
   const questions = [q1, q2, q3];
 
-  let n = Math.floor(Math.random() * questions.length);
+  function score () {
+    let scoreValue = 0;
+    return function (correct) {
+      if(correct === true) {
+        scoreValue = scoreValue + 1; 
+      }
 
-  // Распечатываем в консоль случайный вопрос с вариантами ответов
-  questions[n].displayQuestion();
+      console.log(scoreValue);
+      return scoreValue;
+    }
+  }
 
-  // Ответ пользователя
-  let answer = parseInt(prompt('Введите номер верного ответа: '));
+  let keepScore = score();
 
-  // Проверка ответа с помощью метода checkAnswer
-  questions[n].checkAnswer(answer);
-});
+  nextQuestion();
+
+
+}) ();
