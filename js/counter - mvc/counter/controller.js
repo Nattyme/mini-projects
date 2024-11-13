@@ -1,25 +1,25 @@
 import model from './model.js';
 import view from './view.js';
 
+const btnGroup = document.querySelector('.btn-group');
+const btnPlus = document.querySelector('#btnPlus');
 const btnMinus = document.querySelector('#btnMinus');
 const btnReset = document.querySelector('#btnReset');
-const btnPlus = document.querySelector('#btnPlus');
-
 
 view.updateCounter(model.counter);
 
-btnPlus.addEventListener('click', function () {
-  model.increase();
+btnGroup.addEventListener('click', function (e) {
+  if (e.target === btnPlus) {
+    model.increase();
+  } 
+
+  if (e.target === btnMinus) {
+    model.decrease();
+  }
+
+  if (e.target === btnReset) {
+    model.reset();
+  }
+ 
   view.updateCounter(model.counter);
 });
-
-btnMinus.addEventListener('click', function () {
-  model.decrease();
-  view.updateCounter(model.counter);
-});
-
-btnReset.addEventListener('click', function () {
-  model.reset();
-  view.updateCounter(model.counter);
-});
-
