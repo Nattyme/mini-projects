@@ -116,16 +116,19 @@
       promt_value: () => 'Введите номер верного ответа',
       finish_value: score => console.info(`Ваш результат: ${score} баллов.`)
     },
+    
     ERROR: {
       nan_value: () => console.error('Некорректный ввод.'),
       infinity_value: () => console.error('Слишком большое число.'),
       no_integer_value: () => console.error('В ответе должно быть целое число'),
       empty_value: () => console.error('Не выбран вариант.'),
-      incorrect_answer: () => console.error('Неверный ответ')
+      incorrect_answer: () => console.error('Неверный ответ. Попробуйте еще раз.')
     },
+
     SUCCESS: {
       correct_answer: () => console.log('Это верный ответ')
     },
+
     ACHIEVES: {
       excellent: () => console.log('Достижение: "Мудрец". Все ответы верны!'),
       combo: comboCount => console.log(`Достижение: Комбо из ${comboCount} правильных ответов!`)
