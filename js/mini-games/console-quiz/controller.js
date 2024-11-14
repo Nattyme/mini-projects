@@ -35,9 +35,7 @@ const controller = {
 
         model.handlingAchieve.resetAchieve(['correctAnswers', 'comboCount']);   // Сбрасываем достижения
         model.handlingAchieve.increaseAchieve(['skipped']); // Увеличиваем счетчик пропущенных ответов
-        console.log(model.achieveValues[0].value)
-        console.log(model.achieveValues[1].value)
-        console.log(model.achieveValues[3].value)
+     
         break;
       case 'nan_value' : 
         view.MESSAGES.ERROR.nan_value();
