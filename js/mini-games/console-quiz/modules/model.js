@@ -41,12 +41,24 @@ const model = {
         return true;
       }
     },
-
+    // model.ACHIEVE.unsetAchieve(['correctAnswers', 'comboCount'])
     combo: function (comboCount) {
       if (comboCount > 1) {
         return true;
       }
-    }
+    },
+
+    resetAchieve : function (achievesArray) {
+      achievesArray.forEach(achieve => {
+          model[achieve] = 0;
+      });
+    },
+
+    increaseAchieve : function (achievesArray) {
+      achievesArray.forEach(achieve => {
+          model[achieve] = model[achieve] + 1;
+      });
+    }, 
   },
   randomizeQuestion : function (questionArray) {
     let randomQuestionObj = {};

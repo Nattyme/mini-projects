@@ -8,28 +8,29 @@ const controller = {
   
     // Запустим функцию проверки ответа , передадим в неё текущий вопрос и запишем в переменную
     let result = new model.Result(question);
-    // let isCorrect = result.checkResult(userAnswer);
+
+    // Записываем значение полученного ответа в перем. 
     let answerStatus = result.checkResult(userAnswer);
 
-
+    // В зав-ти от знач-я совершаем операции
     switch (answerStatus) {
       case 'cancel_value' : 
-        view.MESSAGES.INFO.finish_value(model.score);
-          // Проверим, получено ли достижение
+        view.MESSAGES.INFO.finish_value(model.score); 
+
+        // Проверим, получено ли достижение. Покажем сообщение
         if (model.ACHIEVE.allCorrect(model.dataQuiz.length, question.correctAnswers) === true) {
           view.MESSAGES.ACHIEVES.excellent();
         }
 
-        result.isCorrect = false;
-        return 
-        
-        break;
+        result.isCorrect = false; // Сменим флаг верного ответа 
+        model.ACHIEVE.resetAchieve(['correctAnswers', 'comboCount']); // Сбрасываем достижения
+
+        return;
       case 'empty_value' : 
         view.MESSAGES.ERROR.empty_value();
 
         // Сбрасываем достижения
-        model.correctAnswers = 0;
-        model.comboCount = 0;
+        model.ACHIEVE.resetAchieve(['correctAnswers', 'comboCount']);
         break;
       case 'nan_value' : 
         view.MESSAGES.ERROR.nan_value();
@@ -41,42 +42,41 @@ const controller = {
         view.MESSAGES.ERROR.no_integer_value();
         break;
       case true :
+        view.MESSAGES.SUCCESS.correсt_answer(); 
+
         result.isCorrect = true; // Сменим флаг ответа
-     
-        view.MESSAGES.SUCCESS.correсt_answer(); // Сообщение, что ответ верный
-        model.score = model.score + 1;   // Увеличиваем счёт
+
+        // Обновляем счёт
+        model.score = result.updateScore(model.score);
         view.MESSAGES.INFO.score_value(model.score); // Показываем текущий результат
 
         // Увеличиваем достижения
-        model.correctAnswers = model.correctAnswers + 1;
-        model.comboCount = model.comboCount + 1;
-
+        model.ACHIEVE.increaseAchieve(['correctAnswers', 'comboCount']);
+    
         // Проверим, получено ли достижение
         if (model.ACHIEVE.combo(model.comboCount) === true) {
           view.MESSAGES.ACHIEVES.combo(model.comboCount);
         } 
 
         break;
-      case false : 
-        result.isCorrect = false; // Сменим флаг
-        // Уменьшаем счёт
-        model.score = model.score > 0 ? model.score - 1 : 0;
-       
-        // Сбрасываем достижения
-        model.correctAnswers = 0;
-        model.comboCount = 0;
 
-        // Сообщение
+      case false : 
         view.MESSAGES.INFO.incorrect_answer();
+        result.isCorrect = false; // Сменим флаг
+
+        // Обновляем счёт
+        model.score = result.updateScore(model.score);
         view.MESSAGES.INFO.score_value(model.score); // Показываем текущий результат
 
-        model.displayQuestion(question);
-        controller.handlingUserAnswer(question);
+        model.ACHIEVE.resetAchieve(['correctAnswers', 'comboCount']); // Сбрасываем достижения
+
+        model.displayQuestion(question); // Овтет не верный, поэтому покажем вопрос повторно
+        controller.handlingUserAnswer(question); // Запускаем обработку ответа
 
         break;
     }
    
-    if (result.isCorrect === false ) return; //  Не показываем след вопрос
+    if (result.isCorrect === false ) return; //  Не показываем след. вопрос
 
     const nextQuestion = model.randomizeQuestion(model.dataQuiz);
     model.displayQuestion(nextQuestion);

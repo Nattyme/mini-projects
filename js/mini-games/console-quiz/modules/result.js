@@ -9,12 +9,13 @@ Result.prototype = Object.create(Question.prototype);
 // Вернём значение Result для конструктора
 Result.prototype.constructor = Result;
 // Запишем в прототип функцию обновления счёта
-Result.prototype.updateScore = function(isCorrect) {
-  if (isCorrect === true) {
-    score = score + 1;
-  } else if (isCorrect === false && score > 0) {
-    score = score - 1;
+Result.prototype.updateScore = function(currentScore) {
+  if (this.isCorrect === true) {
+    currentScore = currentScore + 1;
+  } else if (this.isCorrect === false && currentScore > 0) {
+    currentScore = currentScore - 1;
   }
+  return currentScore;
 };
 
 Result.prototype.checkResult = function(userAnswer) {
