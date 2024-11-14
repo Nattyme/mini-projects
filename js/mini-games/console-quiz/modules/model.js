@@ -133,12 +133,42 @@ const model = {
     let question = {};
     let questionQuantity = questionArray.length;
   
+    // const randomizer = function () {
+    //   return Math.floor(Math.random() * questionQuantity);
+    // };
+  
+    // const randomIndex = randomizer();
+    // const checkRepeat = function () {
+    //   let prevIndex = [];
+    //   let randomIndex = randomizer();
+    //   prevIndex.push(randomIndex);
+
+    //   return randomIndex === prevIndex.length - 2 ? checkRepeat() : randomIndex;
+    // }
+    // checkRepeat();
+    let prevIndex = 0;  // Храним индекс предыдущего вопроса
+
     const randomizer = function () {
       return Math.floor(Math.random() * questionQuantity);
     };
-  
-    const randomIndex = randomizer();
-  
+
+    const checkRepeat = function () {
+      let randomIndex = randomizer();
+
+      // Если случ. индекс совпадает с предыдущим, создаём новый индекс
+      while (randomIndex === prevIndex) {
+        randomIndex = randomizer();
+      }
+
+      // Перезапишем предыдущий индекс
+      prevIndex = randomIndex;
+
+      return randomIndex;
+    };
+
+    // Вызываем функцию, чтобы получить случайный индекс
+    const randomIndex = checkRepeat();
+
     randomQuestionObj = questionArray[randomIndex];
 
     // Создадим объект вопроса

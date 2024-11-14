@@ -37,11 +37,6 @@ Question.prototype.checkAnswer = function (userAnswer) {
 // Запишем в прототип метод для поиска индекса верного ответа, т.к. одинаковый для всех вопросов
 Question.prototype.getCorrectField = function (options, correctAnswer) {
   return options.findIndex(element => element === correctAnswer);
-}
-
-// Запишем в прототим quesiton метода стилизации консоли,  т.к. одинаковый для всех вопросов
-Question.prototype.customLog = function (message, style) {
-  console.log(`%c \u2753 ${message}`, style);
-}
+};
 
 export default Question;

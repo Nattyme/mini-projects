@@ -64,7 +64,6 @@ const controller = {
         } 
       
         break;
-
       case false : 
         view.MESSAGES.INFO.incorrect_answer();
         result.isCorrect = false; // Сменим флаг
