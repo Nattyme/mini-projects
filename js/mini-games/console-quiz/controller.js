@@ -16,21 +16,28 @@ const controller = {
     switch (answerStatus) {
       case 'cancel_value' : 
         view.MESSAGES.INFO.finish_value(model.score); 
+   
+        // Проверим, получено ли достижение, покажем сообщение
+        if (model.handlingAchieve.checkAchieve('skipped')) { 
+          view.MESSAGES.ACHIEVES.skipped(model.handlingAchieve.checkAchieve('skipped')); 
+        } 
 
-        // Проверим, получено ли достижение. Покажем сообщение
-        if (model.ACHIEVE.allCorrect(model.dataQuiz.length, question.correctAnswers) === true) {
-          view.MESSAGES.ACHIEVES.excellent();
-        }
+        if (model.handlingAchieve.checkAchieve('wisdom')) { 
+          view.MESSAGES.ACHIEVES.wisdom(model.handlingAchieve.checkAchieve('wisdom')); 
+        } 
 
         result.isCorrect = false; // Сменим флаг верного ответа 
-        model.ACHIEVE.resetAchieve(['correctAnswers', 'comboCount']); // Сбрасываем достижения
+        model.handlingAchieve.resetAchieve(['wisdom', 'combo']); // Сбрасываем достижения
 
         return;
       case 'empty_value' : 
         view.MESSAGES.ERROR.empty_value();
 
-        // Сбрасываем достижения
-        model.ACHIEVE.resetAchieve(['correctAnswers', 'comboCount']);
+        model.handlingAchieve.resetAchieve(['correctAnswers', 'comboCount']);   // Сбрасываем достижения
+        model.handlingAchieve.increaseAchieve(['skipped']); // Увеличиваем счетчик пропущенных ответов
+        console.log(model.achieveValues[0].value)
+        console.log(model.achieveValues[1].value)
+        console.log(model.achieveValues[3].value)
         break;
       case 'nan_value' : 
         view.MESSAGES.ERROR.nan_value();
@@ -50,14 +57,14 @@ const controller = {
         model.score = result.updateScore(model.score);
         view.MESSAGES.INFO.score_value(model.score); // Показываем текущий результат
 
-        // Увеличиваем достижения
-        model.ACHIEVE.increaseAchieve(['correctAnswers', 'comboCount']);
-    
-        // Проверим, получено ли достижение
-        if (model.ACHIEVE.combo(model.comboCount) === true) {
-          view.MESSAGES.ACHIEVES.combo(model.comboCount);
+        // Обновляем достижения
+        model.handlingAchieve.increaseAchieve(['wisdom', 'combo']);
+  
+        // Проверим, получено ли достижение, покажем сообщение
+        if (model.handlingAchieve.checkAchieve('combo')) { 
+          view.MESSAGES.ACHIEVES.combo(model.handlingAchieve.checkAchieve('combo')); 
         } 
-
+      
         break;
 
       case false : 
@@ -68,7 +75,9 @@ const controller = {
         model.score = result.updateScore(model.score);
         view.MESSAGES.INFO.score_value(model.score); // Показываем текущий результат
 
-        model.ACHIEVE.resetAchieve(['correctAnswers', 'comboCount']); // Сбрасываем достижения
+        model.handlingAchieve.resetAchieve(['wisdom', 'combo']); // Сбрасываем достижения
+        model.handlingAchieve.increaseAchieve(['uncorrectAnswers']);// Обновляем достижения
+        console.log('uncorr   ' + model.achieveValues[1].value)
 
         model.displayQuestion(question); // Овтет не верный, поэтому покажем вопрос повторно
         controller.handlingUserAnswer(question); // Запускаем обработку ответа

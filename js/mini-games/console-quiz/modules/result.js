@@ -24,14 +24,4 @@ Result.prototype.checkResult = function(userAnswer) {
 
 Result.prototype.isCorrect = true;
 
-Result.prototype.checkAchieve = function(isCorrect) {
-    if (isCorrect === true) {
-      correctAnswers = correctAnswers + 1;
-      comboCount = comboCount + 1;
-      return ACHIEVEMENTS.combo(comboCount); 
-    } else {
-      comboCount = 0; 
-    }
-};
-
 export default Result;
