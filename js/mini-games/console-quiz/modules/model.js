@@ -10,7 +10,7 @@ const model = {
       check : function () {
         let uncorrectAnswers = model.achieveValues.find(item => item.name === 'uncorrectAnswers');
         let skippedAnswers = model.achieveValues.find(item => item.name === 'skipped');
-        return uncorrectAnswers.value > 0 || skippedAnswers.value > 0 ? false : true;
+        return uncorrectAnswers.value > 0 || skippedAnswers.value > 0 || this.value === 0 ? false : true;
       },
       increment : function () {
         this.value = this.value + 1;
@@ -144,16 +144,6 @@ const model = {
     // Создадим объект вопроса
     question =  new Question( randomQuestionObj.question, randomQuestionObj.answer, randomQuestionObj.options);
     return question;
-  },
-  displayQuestion : function (question) {
-    // Стили для вопроса
-    question.customLog(question.question, "padding: 5px 5px 5px 15px; font-size: 14px; color: black; background-color: #fff; font-weight: 600");
-    
-    // Обходим массив вариантов и выводим в консоль
-    for (let i = 0; i < question.options.length; i++) {
-      console.info('%d. ' + ' ' + question.options[i], i+1);
-    } 
-  
   },
   watchPageReload : function () {
     if (window.performance.getEntriesByType('navigation')[0].type === 'reload') {

@@ -1,4 +1,9 @@
 const view = {
+  backgroundImg : function (url) {
+    const body = document.querySelector('body');
+    body.style = `background-color: #000; background-image: url(${url}); background-position: center center;   background-size: cover;   background-repeat: no-repeat;`
+  },
+
   MESSAGES : {
     INFO : {
               promt_value : function () {
@@ -6,7 +11,7 @@ const view = {
               },
   
               finish_value : function (score) {
-                console.info(`Поздравляем, вы завершили прохождение викторины! Ваш результат: ${score} баллов.`);
+                console.info(`Поздравляем, вы завершили прохождение викторины! 🎉 Ваш результат: ${score} баллов.`);
               },
 
               score_value : function (score) {
@@ -39,7 +44,7 @@ const view = {
   
     SUCCESS : {
                 correсt_answer : function () {
-                  console.log('Это верный ответ');
+                  console.log('Это верный ответ.');
                 }
     },
   
@@ -53,9 +58,24 @@ const view = {
                   },
 
                   skipped : function () {
-                    console.log(`Получено достижение: 💪🏻 - "Я тороплюсь". Вы пропустили все вопросы!`);
+                    console.log(`Получено достижение: 💪🏻 - "Я тороплюсь". Вы скипнули все вопросы!`);
                   }
     }
+  },
+  
+  customLog : function (message, style) {
+    console.log(`%c \u2753 ${message}`, style);
+  },
+
+  displayQuestion : function (question) {
+    // Стили для вопроса
+    question.customLog(question.question, "padding: 5px 5px 5px 15px; font-size: 14px; color: black; background-color: #fff; font-weight: 600");
+    
+    // Обходим массив вариантов и выводим в консоль
+    for (let i = 0; i < question.options.length; i++) {
+      console.info('%d. ' + ' ' + question.options[i], i+1);
+    } 
+  
   },
 
   displayChoiceField : function () {

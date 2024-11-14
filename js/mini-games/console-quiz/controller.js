@@ -79,7 +79,7 @@ const controller = {
         model.handlingAchieve.increaseAchieve(['uncorrectAnswers']);// Обновляем достижения
         console.log('uncorr   ' + model.achieveValues[1].value)
 
-        model.displayQuestion(question); // Овтет не верный, поэтому покажем вопрос повторно
+        view.displayQuestion(question); // Овтет не верный, поэтому покажем вопрос повторно
         controller.handlingUserAnswer(question); // Запускаем обработку ответа
 
         break;
@@ -88,13 +88,15 @@ const controller = {
     if (result.isCorrect === false ) return; //  Не показываем след. вопрос
 
     const nextQuestion = model.randomizeQuestion(model.dataQuiz);
-    model.displayQuestion(nextQuestion);
+    view.displayQuestion(nextQuestion);
     controller.handlingUserAnswer(nextQuestion);
   }
 }
   
 // Модуль викторины
 const consoleQuiz =  ( function () {
+  view.backgroundImg('./i.webp'); // Добавим фоновое изображение
+
   // Функция начинает викторину
   const startingQuiz = function () {
 
@@ -102,7 +104,7 @@ const consoleQuiz =  ( function () {
     if (model.watchPageReload()) {
       // Первый вопрос
       let firstQuestion = model.randomizeQuestion(model.dataQuiz);
-      model.displayQuestion(firstQuestion);
+      view.displayQuestion(firstQuestion);
       controller.handlingUserAnswer(firstQuestion);
     }
   }
