@@ -41,11 +41,12 @@ const controller = {
         view.MESSAGES.ERROR.no_integer_value();
         break;
       case true :
-        result.isCorrect === true; // Сменим флаг ответа
+        result.isCorrect = true; // Сменим флаг ответа
+     
         view.MESSAGES.SUCCESS.correсt_answer(); // Сообщение, что ответ верный
-
         model.score = model.score + 1;   // Увеличиваем счёт
         view.MESSAGES.INFO.score_value(model.score); // Показываем текущий результат
+
         // Увеличиваем достижения
         model.correctAnswers = model.correctAnswers + 1;
         model.comboCount = model.comboCount + 1;
@@ -54,8 +55,10 @@ const controller = {
         if (model.ACHIEVE.combo(model.comboCount) === true) {
           view.MESSAGES.ACHIEVES.combo(model.comboCount);
         } 
+
         break;
       case false : 
+        result.isCorrect = false; // Сменим флаг
         // Уменьшаем счёт
         model.score = model.score > 0 ? model.score - 1 : 0;
        
@@ -67,23 +70,19 @@ const controller = {
         view.MESSAGES.INFO.incorrect_answer();
         view.MESSAGES.INFO.score_value(model.score); // Показываем текущий результат
 
+        model.displayQuestion(question);
+        controller.handlingUserAnswer(question);
+
         break;
     }
    
-    if (result.isCorrect === false ) return;
+    if (result.isCorrect === false ) return; //  Не показываем след вопрос
 
     const nextQuestion = model.randomizeQuestion(model.dataQuiz);
     model.displayQuestion(nextQuestion);
     controller.handlingUserAnswer(nextQuestion);
   }
 }
-  
-// Обновляем счет на основании правильности ответа
-// model.result.updateScore(isCorrect);
-  
-// Проверка ачивок
-//  model.result.checkAchieve(isCorrect);
-
   
 // Модуль викторины
 const consoleQuiz =  ( function () {

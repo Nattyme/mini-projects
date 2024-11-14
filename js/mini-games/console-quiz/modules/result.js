@@ -21,7 +21,7 @@ Result.prototype.checkResult = function(userAnswer) {
   return this.checkAnswer(userAnswer);
 };
 
-Result.prototype.isCorrect = false;
+Result.prototype.isCorrect = true;
 
 Result.prototype.checkAchieve = function(isCorrect) {
     if (isCorrect === true) {
