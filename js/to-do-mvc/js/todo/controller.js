@@ -15,7 +15,7 @@ view.elements.form.addEventListener('submit', function (e){
 
 })
 
-// Отслеживаем чек
+// Отслеживаем клик по чекбоксу или по кнопке "удалить"
 view.elements.tasksList.addEventListener('click', function (e) {
 
   // Проверяем клик по чекбоксу
@@ -25,6 +25,16 @@ view.elements.tasksList.addEventListener('click', function (e) {
     model.changeStatus(task);
     view.changeStatus(task);
   };
+
+
+  // Слушаем клик по кнопке
+  if (e.target.hasAttribute('data-delete') ) {
+    const id = e.target.closest('.todo-item').dataset.id;
+    const task = model.findTask(id);
+    model.removeTask(task);
+    view.removeTask(task);
+    
+  }
   
 });
 

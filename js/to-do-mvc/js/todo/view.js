@@ -21,7 +21,7 @@ export default class View {
                     <label class="todo-item-label">
                       <input class="checkbox" type="checkbox" ${checked}/>
                       <span class="${completeClass}">${taskObject.text}</span>
-                      <button class="btn btn-secondary btn-sm">Удалить</button>
+                      <button class="btn btn-secondary btn-sm" data-delete>Удалить</button>
                     </label>
                   </li>
     `
@@ -35,8 +35,6 @@ export default class View {
 
   changeStatus (taskObject) {
     const taskElement = this.elements.tasksList.querySelector(`[data-id="${taskObject.id}"]`);
-    console.log(taskElement);
-    
     const taskTextEl = taskElement.querySelector('span');
 
     if (taskObject.status === 'done') {
@@ -44,5 +42,10 @@ export default class View {
     } else {
       taskTextEl.classList.remove('completed');
     }
+  }
+
+  removeTask (taskObject) {
+    const taskElement = this.elements.tasksList.querySelector(`[data-id="${taskObject.id}"]`);
+    taskElement.remove();
   }
 }
