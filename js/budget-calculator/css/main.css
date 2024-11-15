@@ -131,8 +131,7 @@ body {
 	justify-content: flex-start;
 	align-items: center;
 }
-.form__select {
-}
+
 .form__input {
 	font-family: 'Montserrat', sans-serif;
 	padding-left: 15px;
