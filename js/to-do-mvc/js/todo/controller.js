@@ -12,6 +12,8 @@ console.log(model.tasks);
 model.removeTask(model.tasks[0]);
 console.log(model.tasks);
 
+model.saveToLocalStorage();
+
 
 
 
