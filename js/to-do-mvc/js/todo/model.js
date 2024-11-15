@@ -13,19 +13,21 @@ export default class Model {
     }
 
     this.tasks.push(newTask);
+    this.saveToLocalStorage();
 
-
+    return newTask;
   }
 
   doneTask(task) {
     task.status = 'done';
+    this.saveToLocalStorage();
   }
 
   removeTask(task) {
     const index = this.tasks.indexOf(task);
     this.tasks.splice(index, 1);
-    console.log(index);
-    
+    this.saveToLocalStorage();
+
   }
 
   loadFromLocalStorage () {
