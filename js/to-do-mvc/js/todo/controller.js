@@ -17,19 +17,15 @@ view.elements.form.addEventListener('submit', function (e){
 
 // Отслеживаем чек
 view.elements.tasksList.addEventListener('click', function (e) {
-  console.log(e.target);
 
   // Проверяем клик по чекбоксу
   if (e.target.getAttribute('type') === 'checkbox') {
-
+    const id = e.target.closest('.todo-item').dataset.id;
+    const task = model.findTask(id);
+    model.changeStatus(task);
+    view.changeStatus(task);
   };
   
 });
-
-// model.addTask('Заверстать стартовый шаблон');
-// model.addTask('Написать скрипт');
-// model.addTask('Записать урок');
-// model.doneTask(model.tasks[1]);
-
 
 
