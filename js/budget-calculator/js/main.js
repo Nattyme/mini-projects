@@ -1,11 +1,11 @@
 // Data
 const budget = [];
 
-
 const form = document.querySelector('#form');  // Найдем форму
 const type = form.querySelector('#type');     // Найдём селект в форме
 const title = form.querySelector('#title');     // Найдём инпут в форме
 const value = form.querySelector('#value');
+const incomesList = document.querySelector('#incomes-list');
 
 // Добавим прослушивание события submit
 form.addEventListener('submit', function (e) {
@@ -31,6 +31,23 @@ form.addEventListener('submit', function (e) {
     value : value.value
   }
   budget.push(record);
+
+  // Показываем запись на странице
+  if (record.type === 'inc') {
+    const recordHtml = `
+          <li class="budget-list__item item item--income" data-id=${record.id}>
+            <div class="item__title">${record.title}</div>
+            <div class="item__right">
+                <div class="item__amount">+ ${record.value}</div>
+                <button class="item__remove">
+                  <img src="./img/circle-green.svg" alt="delete" />
+                </button>
+            </div>
+          </li>
+    `;
+
+    incomesList.insertAdjacentHTML('afterbegin', recordHtml);
+  }
   console.log(budget);
   
 });
