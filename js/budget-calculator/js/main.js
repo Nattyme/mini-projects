@@ -39,8 +39,35 @@ const insertTestData = function () {
 function clearForm () {
   form.reset();
 }
-insertTestData();
 
+// Считаем бюджет
+const calcBudget = function () {
+
+  // Считаем общий доход
+  const totalIncome = budget.reduce(function (total, element) {
+    if ( element.type === 'inc') {
+      return total + element.value;
+    } else {
+      return total;
+    }
+  }, 0);
+  console.log('totalInclome', totalIncome);
+
+  // Считаем общий доход
+  const totalExpense = budget.reduce(function (total, element) {
+    if ( element.type === 'exp') {
+      return total + element.value;
+    } else {
+      return total;
+    }
+  }, 0);
+  console.log('totalExpense', totalExpense);
+  
+  
+}
+
+
+insertTestData();
 
 // Добавим прослушивание события submit
 form.addEventListener('submit', function (e) {
@@ -79,7 +106,7 @@ form.addEventListener('submit', function (e) {
     id: id,
     type : type.value,
     title : title.value.trim(),
-    value : value.value
+    value : parseInt(value.value)
   }
   budget.push(record);
 
@@ -116,11 +143,16 @@ form.addEventListener('submit', function (e) {
     expensesList.insertAdjacentHTML('afterbegin', recordHtml);
   }
 
+   // Обновим бюджет
+   calcBudget();
+
   // Очистим поля формы
   clearForm();
 
   // Заполним форму новыми данными
   insertTestData();
+
+ 
 });
 
 
@@ -130,7 +162,7 @@ budgetList.forEach(list => {
     console.log('click');
     const buttonDelete = e.target.closest('[data-delete]');
 
-    if(buttonDelete) {
+    if (buttonDelete) {
       const recordParent = buttonDelete.closest('li.budget-list__item');
       const id = parseInt(recordParent.dataset.id);
       const index = budget.findIndex(function (element) {
@@ -143,6 +175,9 @@ budgetList.forEach(list => {
       
       budget.splice(index, 1); // Удаляем из массива 
       recordParent.remove(); // Удаляем со страницы
+
+       // Обновим бюджет
+      calcBudget();
     }
   });
 });
