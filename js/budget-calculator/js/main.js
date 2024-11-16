@@ -1,115 +1,26 @@
-// Data
 const budget = [];
 
-const form = document.querySelector('#form');  // Найдем форму
-const type = form.querySelector('#type');     // Найдём селект в форме
-const title = form.querySelector('#title');     // Найдём инпут в форме
-const value = form.querySelector('#value');
-const incomesList = document.querySelector('#incomes-list');
-const expensesList = document.querySelector('#expenses-list');
-// const budgetTable = document.querySelector('#budget-table'); // Найдем секцию с задачами
-const budgetList = document.querySelectorAll('[data-list]'); // Найдем секции с задачами
-
+// DOM elements
+const form = document.querySelector('#form');  
 const header = document.querySelector('header');
-const budgetElement = header.querySelector('#budget');
-const totalIncomeElement = header.querySelector('#total-income');
-const totalExpenceElement = header.querySelector('#total-expense');
-const percentsWrapper = header.querySelector('#expense-percents-wrapper');
-
-const monthElement = header.querySelector('#month');
-const yearElement = header.querySelector('#year');
-
-
-
-// Функции 
-const priceFormatter = new Intl.NumberFormat('ru-RU', {
-  style : 'currency',
-  currency : 'USD',
-  maximumFractionDigits : 0
-});
-
-const getRandomInt = function (max) {
-  return Math.floor(Math.random() * max);
+const formElements = {
+  type : form.querySelector('#type'),     // Найдём селект в форме
+  title : form.querySelector('#title'),   // Найдём инпут названия в форме
+  value : form.querySelector('#value')    // Найдём инпут значения в форме
+}
+const recordsLists = {
+  incomesList : document.querySelector('#incomes-list'),
+  expensesList : document.querySelector('#expenses-list')
+}
+const headerElements = {
+  budgetElement : header.querySelector('#budget'),
+  totalIncomeElement : header.querySelector('#total-income'),
+  totalExpenceElement : header.querySelector('#total-expense'),
+  percentsWrapper : header.querySelector('#expense-percents-wrapper'),
+  monthElement : header.querySelector('#month'),
+  yearElement : header.querySelector('#year')
 }
 
-const insertTestData = function () {
-  const testData = [
-    {type : 'inc', title : 'Зарплата', value : 1000},
-    {type : 'inc', title : 'Премия', value : 1000},
-    {type : 'inc', title : 'Фриланс', value : 1000},
-    {type : 'inc', title : 'Вклад', value : 1000},
-    {type : 'exp', title : 'Продукты', value : 1000},
-    {type : 'exp', title : 'Обед', value : 1000},
-    {type : 'exp', title : 'Транспорт', value : 1000},
-    {type : 'exp', title : 'Квартира', value : 1000}
-  ];
-
-  const randomIndex = getRandomInt(testData.length);
-  const randomTestData = testData[randomIndex];
-  
-  type.value = randomTestData['type'];
-  title.value = randomTestData['title'];
-  value.value = randomTestData['value'];
-}
-
-// Функция очищает поля формы
-const clearForm = function () {
-  form.reset();
-}
-
-// Считаем бюджет
-const calcBudget = function () {
-  // Считаем общий доход
-  const totalIncome = budget.reduce(function (total, element) {
-    if ( element.type === 'inc') {
-      return total + element.value;
-    } else {
-      return total;
-    }
-  }, 0);
-
-  // Считаем общий доход
-  const totalExpense = budget.reduce(function (total, element) {
-    if ( element.type === 'exp') {
-      return total + element.value;
-    } else {
-      return total;
-    }
-  }, 0);
-  
-  const totalBudget = totalIncome - totalExpense;
-
-  let expensePercents = 0;
-
-  if (totalIncome) {
-    expensePercents = Math.round(totalExpense * 100 / totalIncome);
-  }
-
-  // budgetElement.innerHTML = totalBudget;
-  budgetElement.innerHTML = priceFormatter.format(totalBudget);
-  totalIncomeElement.innerHTML = '+ ' + priceFormatter.format(totalIncome);
-  totalExpenceElement.innerHTML = '- ' + priceFormatter.format(totalExpense);
-
-  if (expensePercents) {
-    const badgeHtml = `<div class="badge">${expensePercents}%</div>`;
-    percentsWrapper.innerHTML = badgeHtml;
-  } else {
-    percentsWrapper.innerHTML = '';
-  }
-}
-
-const displayMonth = function () {
-  const today = new Date();
-  const todayYear = today.getFullYear();
-
-  const timeFormatter = new Intl.DateTimeFormat('ru-Ru', {
-    month : 'long'
-  })
-  const todayMonth = timeFormatter.format(today);
-
-  monthElement.innerHTML = todayMonth;
-  yearElement.innerHTML = todayYear;
-}
 displayMonth()
 insertTestData();
 calcBudget();
@@ -158,35 +69,15 @@ form.addEventListener('submit', function (e) {
 
   // Показываем запись на странице
   if (record.type === 'inc') {
-    const recordHtml = `
-          <li class="budget-list__item item item--income" data-id=${record.id}>
-            <div class="item__title">${record.title}</div>
-            <div class="item__right">
-                <div class="item__amount">+ ${priceFormatter.format(record.value)}</div>
-                <button class="item__remove" data-delete>
-                  <img src="./img/circle-green.svg" alt="delete" />
-                </button>
-            </div>
-          </li>
-    `;
-
-    incomesList.insertAdjacentHTML('afterbegin', recordHtml);
+    let recordsIncome = new RecordHtml(record, 'income', 'circle-green.svg');
+    const recordHtml = getRecordHtml(recordsIncome); 
+    recordsLists.incomesList.insertAdjacentHTML('afterbegin', recordHtml);
   }
 
   if (record.type === 'exp') {
-    const recordHtml = `
-      <li class="budget-list__item item item--expense" data-id=${record.id}>
-          <div class="item__title">${record.title}</div>
-          <div class="item__right">
-              <div class="item__amount">- ${priceFormatter.format(record.value)}</div>
-              <button class="item__remove" data-delete>
-                <img src="./img/circle-red.svg" alt="delete" />
-              </button>
-          </div>
-      </li>
-    `;
-
-    expensesList.insertAdjacentHTML('afterbegin', recordHtml);
+    let recordsExpense = new RecordHtml(record, 'expense', 'circle-red.svg');
+    const recordHtml = getRecordHtml(recordsExpense); 
+    recordsLists.expensesList.insertAdjacentHTML('afterbegin', recordHtml);
   }
 
    
@@ -199,9 +90,8 @@ form.addEventListener('submit', function (e) {
 
 
 // Удаление записи
-budgetList.forEach(list => {
+[recordsLists.incomesList, recordsLists.expensesList].forEach(list => {
   list.addEventListener('click', function (e) {
-    console.log('click');
     const buttonDelete = e.target.closest('[data-delete]');
 
     if (buttonDelete) {
@@ -209,10 +99,6 @@ budgetList.forEach(list => {
       const id = parseInt(recordParent.dataset.id);
 
       const index = budget.findIndex(function (element) {
-        console.log(element);
-        console.log(buttonDelete);
-        console.log(element.id);
-      
         return id === element.id;
       });
       
