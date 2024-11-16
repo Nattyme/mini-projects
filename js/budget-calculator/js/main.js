@@ -6,14 +6,65 @@ const type = form.querySelector('#type');     // Найдём селект в ф
 const title = form.querySelector('#title');     // Найдём инпут в форме
 const value = form.querySelector('#value');
 const incomesList = document.querySelector('#incomes-list');
+const expensesList = document.querySelector('#expenses-list');
+// const budgetTable = document.querySelector('#budget-table'); // Найдем секцию с задачами
+const budgetList = document.querySelectorAll('[data-list]'); // Найдем секции с задачами
+
+// Функции 
+const getRandomInt = function (max) {
+  return Math.floor(Math.random() * max);
+}
+
+const insertTestData = function () {
+  const testData = [
+    {type : 'inc', title : 'Зарплата', value : 1000},
+    {type : 'inc', title : 'Премия', value : 1000},
+    {type : 'inc', title : 'Фриланс', value : 1000},
+    {type : 'inc', title : 'Вклад', value : 1000},
+    {type : 'exp', title : 'Продукты', value : 1000},
+    {type : 'exp', title : 'Обед', value : 1000},
+    {type : 'exp', title : 'Транспорт', value : 1000},
+    {type : 'exp', title : 'Квартира', value : 1000}
+  ];
+
+  const randomIndex = getRandomInt(testData.length);
+  const randomTestData = testData[randomIndex];
+  
+  type.value = randomTestData['type'];
+  title.value = randomTestData['title'];
+  value.value = randomTestData['value'];
+}
+
+// Функция очищает поля формы
+function clearForm () {
+  form.reset();
+}
+insertTestData();
+
 
 // Добавим прослушивание события submit
 form.addEventListener('submit', function (e) {
   e.preventDefault();
-  
-  console.log(type.value);
-  console.log(title.value);
-  console.log(value.value);
+
+  if ( title.value.trim() === '') {    
+    title.classList.add('form__input--error');
+    title.addEventListener('focus', function () {
+      title.classList.remove('form__input--error');
+    });
+    return;
+  } else {
+    title.classList.remove('form__input--error');
+  }
+
+  if ( value.value.trim() === '' || +value.value <= 0) {
+    value.classList.add('form__input--error');
+    value.addEventListener('focus', function () {
+      value.classList.remove('form__input--error');
+    });
+    return;
+
+  }
+ 
 
   // Расчёт id
   let id = 1;
@@ -27,7 +78,7 @@ form.addEventListener('submit', function (e) {
   const record = {
     id: id,
     type : type.value,
-    title : title.value,
+    title : title.value.trim(),
     value : value.value
   }
   budget.push(record);
@@ -39,7 +90,7 @@ form.addEventListener('submit', function (e) {
             <div class="item__title">${record.title}</div>
             <div class="item__right">
                 <div class="item__amount">+ ${record.value}</div>
-                <button class="item__remove">
+                <button class="item__remove" data-delete>
                   <img src="./img/circle-green.svg" alt="delete" />
                 </button>
             </div>
@@ -48,6 +99,50 @@ form.addEventListener('submit', function (e) {
 
     incomesList.insertAdjacentHTML('afterbegin', recordHtml);
   }
-  console.log(budget);
-  
+
+  if (record.type === 'exp') {
+    const recordHtml = `
+      <li class="budget-list__item item item--expense" data-id=${record.id}>
+          <div class="item__title">${record.title}</div>
+          <div class="item__right">
+              <div class="item__amount">- ${record.value}</div>
+              <button class="item__remove" data-delete>
+                <img src="./img/circle-red.svg" alt="delete" />
+              </button>
+          </div>
+      </li>
+    `;
+
+    expensesList.insertAdjacentHTML('afterbegin', recordHtml);
+  }
+
+  // Очистим поля формы
+  clearForm();
+
+  // Заполним форму новыми данными
+  insertTestData();
+});
+
+
+// Удаление записи
+budgetList.forEach(list => {
+  list.addEventListener('click', function (e) {
+    console.log('click');
+    const buttonDelete = e.target.closest('[data-delete]');
+
+    if(buttonDelete) {
+      const recordParent = buttonDelete.closest('li.budget-list__item');
+      const id = parseInt(recordParent.dataset.id);
+      const index = budget.findIndex(function (element) {
+        console.log(element);
+        console.log(buttonDelete);
+        console.log(element.id);
+      
+        return id === element.id;
+      });
+      
+      budget.splice(index, 1); // Удаляем из массива 
+      recordParent.remove(); // Удаляем со страницы
+    }
+  });
 });
