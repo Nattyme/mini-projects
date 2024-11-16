@@ -10,7 +10,24 @@ const expensesList = document.querySelector('#expenses-list');
 // const budgetTable = document.querySelector('#budget-table'); // Найдем секцию с задачами
 const budgetList = document.querySelectorAll('[data-list]'); // Найдем секции с задачами
 
+const header = document.querySelector('header');
+const budgetElement = header.querySelector('#budget');
+const totalIncomeElement = header.querySelector('#total-income');
+const totalExpenceElement = header.querySelector('#total-expense');
+const percentsWrapper = header.querySelector('#expense-percents-wrapper');
+
+const monthElement = header.querySelector('#month');
+const yearElement = header.querySelector('#year');
+
+
+
 // Функции 
+const priceFormatter = new Intl.NumberFormat('ru-RU', {
+  style : 'currency',
+  currency : 'USD',
+  maximumFractionDigits : 0
+});
+
 const getRandomInt = function (max) {
   return Math.floor(Math.random() * max);
 }
@@ -36,13 +53,12 @@ const insertTestData = function () {
 }
 
 // Функция очищает поля формы
-function clearForm () {
+const clearForm = function () {
   form.reset();
 }
 
 // Считаем бюджет
 const calcBudget = function () {
-
   // Считаем общий доход
   const totalIncome = budget.reduce(function (total, element) {
     if ( element.type === 'inc') {
@@ -51,7 +67,6 @@ const calcBudget = function () {
       return total;
     }
   }, 0);
-  console.log('totalInclome', totalIncome);
 
   // Считаем общий доход
   const totalExpense = budget.reduce(function (total, element) {
@@ -61,13 +76,43 @@ const calcBudget = function () {
       return total;
     }
   }, 0);
-  console.log('totalExpense', totalExpense);
   
-  
+  const totalBudget = totalIncome - totalExpense;
+
+  let expensePercents = 0;
+
+  if (totalIncome) {
+    expensePercents = Math.round(totalExpense * 100 / totalIncome);
+  }
+
+  // budgetElement.innerHTML = totalBudget;
+  budgetElement.innerHTML = priceFormatter.format(totalBudget);
+  totalIncomeElement.innerHTML = '+ ' + priceFormatter.format(totalIncome);
+  totalExpenceElement.innerHTML = '- ' + priceFormatter.format(totalExpense);
+
+  if (expensePercents) {
+    const badgeHtml = `<div class="badge">${expensePercents}%</div>`;
+    percentsWrapper.innerHTML = badgeHtml;
+  } else {
+    percentsWrapper.innerHTML = '';
+  }
 }
 
+const displayMonth = function () {
+  const today = new Date();
+  const todayYear = today.getFullYear();
 
+  const timeFormatter = new Intl.DateTimeFormat('ru-Ru', {
+    month : 'long'
+  })
+  const todayMonth = timeFormatter.format(today);
+
+  monthElement.innerHTML = todayMonth;
+  yearElement.innerHTML = todayYear;
+}
+displayMonth()
 insertTestData();
+calcBudget();
 
 // Добавим прослушивание события submit
 form.addEventListener('submit', function (e) {
@@ -108,6 +153,7 @@ form.addEventListener('submit', function (e) {
     title : title.value.trim(),
     value : parseInt(value.value)
   }
+
   budget.push(record);
 
   // Показываем запись на странице
@@ -116,7 +162,7 @@ form.addEventListener('submit', function (e) {
           <li class="budget-list__item item item--income" data-id=${record.id}>
             <div class="item__title">${record.title}</div>
             <div class="item__right">
-                <div class="item__amount">+ ${record.value}</div>
+                <div class="item__amount">+ ${priceFormatter.format(record.value)}</div>
                 <button class="item__remove" data-delete>
                   <img src="./img/circle-green.svg" alt="delete" />
                 </button>
@@ -132,7 +178,7 @@ form.addEventListener('submit', function (e) {
       <li class="budget-list__item item item--expense" data-id=${record.id}>
           <div class="item__title">${record.title}</div>
           <div class="item__right">
-              <div class="item__amount">- ${record.value}</div>
+              <div class="item__amount">- ${priceFormatter.format(record.value)}</div>
               <button class="item__remove" data-delete>
                 <img src="./img/circle-red.svg" alt="delete" />
               </button>
@@ -143,14 +189,10 @@ form.addEventListener('submit', function (e) {
     expensesList.insertAdjacentHTML('afterbegin', recordHtml);
   }
 
-   // Обновим бюджет
-   calcBudget();
-
-  // Очистим поля формы
-  clearForm();
-
-  // Заполним форму новыми данными
-  insertTestData();
+   
+  calcBudget(); // Обновим бюджет
+  clearForm();   // Очистим поля формы
+  insertTestData();   // Заполним форму новыми данными
 
  
 });
@@ -165,6 +207,7 @@ budgetList.forEach(list => {
     if (buttonDelete) {
       const recordParent = buttonDelete.closest('li.budget-list__item');
       const id = parseInt(recordParent.dataset.id);
+
       const index = budget.findIndex(function (element) {
         console.log(element);
         console.log(buttonDelete);
