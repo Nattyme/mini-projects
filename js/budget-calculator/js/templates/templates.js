@@ -11,3 +11,4 @@ const getRecordHtml = function (recordValuesObj) {
           </li>
   `;
 }
+

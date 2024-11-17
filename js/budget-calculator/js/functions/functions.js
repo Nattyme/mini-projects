@@ -1,51 +1,64 @@
-// Ф-цтия удаляет рамку error c input при фокусе
+// >> Validate
+// Ф-ция удаляет рамку error c input при фокусе
 const removeErrorOnFocus = function (element, parent) {
+
+  // Слушаем событие 'focus' по форме 
   parent.addEventListener('focus', function (e) {
-    console.log('hey');
+
+    // Если фокус на инпуте - удалим класс error
+    if (e.target === element) { e.target.classList.remove('form__input--error'); }
     
-    if(e.target !== element) return;
-    e.target.classList.remove('form__input--error');
   }, true);
 }
 
-// Функция проверяет данные в input
-const validateInput = function (form) {
- 
-  // Проверка на пустую строку названия
-  if (title.value.trim() === '') {    
-    title.classList.add('form__input--error');
-    removeErrorOnFocus(title, form);
-  } else {
-    title.classList.remove('form__input--error');
-    return true;
+// Функция проверяет данные в массиве input
+const validateInput = function (form, inputArray) {
+  // Зададим флаг для валидации
+  let isValid = true;
+  const toggleErrorDisplay = function (input, form) {
+    input.classList.add('form__input--error');
+    removeErrorOnFocus(input, form);
   }
 
-
-  if ( value.value.trim() === '' || +value.value <= 0) {
-    value.classList.add('form__input--error');
-    removeErrorOnFocus(value, form);
-  } else {
-    title.classList.remove('form__input--error');
-    return true;
-  }
-
-
+  inputArray.forEach(input => {
   
-  // const isAllowed = function (elementArray) {
-  //   const allowed = /^[a-zA-Z0-9\s]+$/; // Разрешены только буквы, цифры и пробелы
+     // Проверка на пустую строку. Сменим флаг isValid в случае ошибки
+    if (input.value.trim() === '') {    
+      toggleErrorDisplay(input, form);
+      isValid = false;
+    } else {
+      input.classList.remove('form__input--error');
+    }
 
-  //   elementArray.forEach(element => {
-  //     regex.test(element);
-  //     console.log(regex.test(element));
-      
-  //   });
-  // }
+    // Если поле инпута заполнено
+    if (input.value.trim() !== '') {
+      const allowed = /^[a-zA-Zа-яА-Я0-9\s,.\?!;:"'()&+-=\\]+$/; // Разрешены только буквы, цифры и несколько символов
 
-  // isAllowed([title, value]);
+      if (allowed.test(input.value) === false) {
+        toggleErrorDisplay(input, form);
+        isValid = false;
+      }
 
-  return false;
+    }
+
+    // Если поле Input для ввода цифр, то доп. проверка
+    if (input.type === 'number') {
+      // Явно преобразуем в число с основ. 10
+      const numberValue = parseInt(input.value.trim(), 10);
+      if (isNaN(numberValue) || numberValue === Infinity || numberValue === - Infinity || numberValue <= 0) {
+        toggleErrorDisplay(input, form);
+        isValid = false;
+      }
+    } 
+  });
+
+  return isValid;
 }
 
+
+
+
+// >>> Form function
 // Функция считает id для массива с записями
 const calcArrayId = function (array, startId) {
   let id = array.length > 0 ? array[array.length - 1] + 1 : startId;
@@ -57,7 +70,7 @@ const getRandomInt = function (maxExclusive) {
   return Math.floor(Math.random() * maxExclusive);
 }
 
-// Функция заполняет фомру тестовыми данными
+// Функция заполняет форму тестовыми данными
 const insertTestData = function () {
   const testData = [
     {type : 'inc', title : 'Зарплата', value : 1000},
@@ -83,13 +96,17 @@ const clearForm = function () {
   form.reset();
 }
 
+
+
+
+// >>> Record functions
 // Создаёт объект с данными для записи 
 const createObjRecord = function (domArray, id) {
   return {
       id: id,
       type : domArray.type.value,
       title : domArray.title.value.trim(),
-      value : parseInt(domArray.value.value)
+      value : parseInt(domArray.value.value.trim(), 10)
     }
 }
 
@@ -128,6 +145,10 @@ const displayRecord = function (budget, formElements) {
   insertRecordHtml(list, record);
 }
 
+
+
+
+// >>> Calc functions
 // Ф-ция складывает value записей в листе бюджета в зав-ти от типа
 const calcValuesTtl = function (array) {
   // Запишем в объект total начальные значения income, expense
@@ -175,6 +196,9 @@ const calcBudget = function (array) {
   headerTtlElements.percentsWrapper.innerHTML = expensePercents ? `<div class="badge">${expensePercents}%</div>` : '';
 
 }
+
+
+
 
 // Функция показывает месяц и год
 const displayMonth = function () {

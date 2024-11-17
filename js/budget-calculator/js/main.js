@@ -29,9 +29,12 @@ calcBudget(budget);
 // Добавим прослушивание события submit
 form.addEventListener('submit', function (e) {
   e.preventDefault();
-  let isValid = validateInput(form); // Проверим введенные данные
+
+  // Проверяем массив ипутов с введёнными данными
+  // let inputsArray = Object.values([title, value]);
+  let isValid = validateInput( form, [title, value]);
   
-  if (isValid == false) return;
+  if (isValid === false) return;
 
   // Рассчитаем id записи, (array, startNumber)
   let id = calcArrayId(budget, 1); 
@@ -52,7 +55,7 @@ Object.values(recordsLists).forEach(list => {
 
     if (buttonDelete) {
       const recordParent = buttonDelete.closest('li.budget-list__item');
-      const id = parseInt(recordParent.dataset.id);
+      const id = parseInt(recordParent.dataset.id, 10);
 
       const index = budget.findIndex(function (element) {
         return id === element.id;
