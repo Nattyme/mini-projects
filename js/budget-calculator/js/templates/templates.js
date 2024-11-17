@@ -1,5 +1,5 @@
 const getRecordHtml = function (recordValuesObj) {
-  const recordHtml = `
+  return `
           <li class="budget-list__item item item--${recordValuesObj.classMode}" data-id=${recordValuesObj.values.id}>
             <div class="item__title">${recordValuesObj.values.title}</div>
             <div class="item__right">
@@ -10,6 +10,4 @@ const getRecordHtml = function (recordValuesObj) {
             </div>
           </li>
   `;
-
-  return recordHtml;
 }

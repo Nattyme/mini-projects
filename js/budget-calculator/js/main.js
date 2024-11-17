@@ -4,72 +4,49 @@ const budget = [];
 const form = document.querySelector('#form');  
 const header = document.querySelector('header');
 const formElements = {
-  type : form.querySelector('#type'),     // Найдём селект в форме
-  title : form.querySelector('#title'),   // Найдём инпут названия в форме
-  value : form.querySelector('#value')    // Найдём инпут значения в форме
+  type  : form.querySelector('#type'),    // Найдём селект 
+  title : form.querySelector('#title'),   // Найдём инпут названия 
+  value : form.querySelector('#value')    // Найдём инпут значения 
 }
 const recordsLists = {
   incomesList : document.querySelector('#incomes-list'),
   expensesList : document.querySelector('#expenses-list')
 }
-const headerElements = {
+const headerTtlElements = {
   budget : header.querySelector('#budget'),
-  totalIncome : header.querySelector('#total-income'),
-  totalExpence : header.querySelector('#total-expense'),
+  income : header.querySelector('#total-income'),
+  expence : header.querySelector('#total-expense'),
   percentsWrapper : header.querySelector('#expense-percents-wrapper'),
   month : header.querySelector('#month'),
   year : header.querySelector('#year')
 }
 
-displayMonth()
+// При загрузке страницы: обновим месяц > заполним форму > обновим бюджет
+displayMonth(); 
 insertTestData();
 calcBudget(budget);
 
 // Добавим прослушивание события submit
 form.addEventListener('submit', function (e) {
   e.preventDefault();
-  validateInput();      // Проверим введенные данные
+  let isValid = validateInput(form); // Проверим введенные данные
+  
+  if (isValid == false) return;
 
-  let id = calcArrayId(budget, 1); // Рассчитаем id записи, (array, startNumber)
+  // Рассчитаем id записи, (array, startNumber)
+  let id = calcArrayId(budget, 1); 
 
-  // Объект записи
-  const record = {
-    id: id,
-    type : type.value,
-    title : title.value.trim(),
-    value : parseInt(value.value)
-  }
+  // Добавляем запись за страницу (array, obj)
+  displayRecord(budget, formElements, id); 
 
-  budget.push(record);
-
-
-// const displayRecord = function () {
-
-// }
-  // Показываем запись на странице
-  if (record.type === 'inc') {
-    let recordsIncome = new RecordHtml(record, 'income', 'circle-green.svg');
-    const recordHtml = getRecordHtml(recordsIncome); 
-    recordsLists.incomesList.insertAdjacentHTML('afterbegin', recordHtml);
-  }
-
-  if (record.type === 'exp') {
-    let recordsExpense = new RecordHtml(record, 'expense', 'circle-red.svg');
-    const recordHtml = getRecordHtml(recordsExpense); 
-    recordsLists.expensesList.insertAdjacentHTML('afterbegin', recordHtml);
-  }
-
-   
-  calcBudget(budget); // Обновим бюджет
-  clearForm();   // Очистим поля формы
-  insertTestData();   // Заполним форму новыми данными
-
- 
+  // Обновим данные бюджета > очистим форму > заполним форму новыми данными
+  calcBudget(budget); 
+  clearForm();   
+  insertTestData();   
 });
 
-
 // Удаление записи
-[recordsLists.incomesList, recordsLists.expensesList].forEach(list => {
+Object.values(recordsLists).forEach(list => {
   list.addEventListener('click', function (e) {
     const buttonDelete = e.target.closest('[data-delete]');
 
