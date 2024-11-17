@@ -1,3 +1,5 @@
+import * as view from './view/view.js';
+
 // Data (array with objs)
 const budget = [];
 
