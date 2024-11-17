@@ -13,51 +13,26 @@ const recordsLists = {
   expensesList : document.querySelector('#expenses-list')
 }
 const headerElements = {
-  budgetElement : header.querySelector('#budget'),
-  totalIncomeElement : header.querySelector('#total-income'),
-  totalExpenceElement : header.querySelector('#total-expense'),
+  budget : header.querySelector('#budget'),
+  totalIncome : header.querySelector('#total-income'),
+  totalExpence : header.querySelector('#total-expense'),
   percentsWrapper : header.querySelector('#expense-percents-wrapper'),
-  monthElement : header.querySelector('#month'),
-  yearElement : header.querySelector('#year')
+  month : header.querySelector('#month'),
+  year : header.querySelector('#year')
 }
 
 displayMonth()
 insertTestData();
-calcBudget();
+calcBudget(budget);
 
 // Добавим прослушивание события submit
 form.addEventListener('submit', function (e) {
   e.preventDefault();
+  validateInput();      // Проверим введенные данные
 
-  if ( title.value.trim() === '') {    
-    title.classList.add('form__input--error');
-    title.addEventListener('focus', function () {
-      title.classList.remove('form__input--error');
-    });
-    return;
-  } else {
-    title.classList.remove('form__input--error');
-  }
+  let id = calcArrayId(budget, 1); // Рассчитаем id записи, (array, startNumber)
 
-  if ( value.value.trim() === '' || +value.value <= 0) {
-    value.classList.add('form__input--error');
-    value.addEventListener('focus', function () {
-      value.classList.remove('form__input--error');
-    });
-    return;
-
-  }
- 
-
-  // Расчёт id
-  let id = 1;
-  if (budget.length > 0) {
-    const lastElement = budget[budget.length - 1];
-    const lastElemId = lastElement.id;
-    id = lastElemId + 1;
-  }
-
-  // Формирует запись
+  // Объект записи
   const record = {
     id: id,
     type : type.value,
@@ -67,6 +42,10 @@ form.addEventListener('submit', function (e) {
 
   budget.push(record);
 
+
+// const displayRecord = function () {
+
+// }
   // Показываем запись на странице
   if (record.type === 'inc') {
     let recordsIncome = new RecordHtml(record, 'income', 'circle-green.svg');
@@ -81,7 +60,7 @@ form.addEventListener('submit', function (e) {
   }
 
    
-  calcBudget(); // Обновим бюджет
+  calcBudget(budget); // Обновим бюджет
   clearForm();   // Очистим поля формы
   insertTestData();   // Заполним форму новыми данными
 
@@ -106,7 +85,7 @@ form.addEventListener('submit', function (e) {
       recordParent.remove(); // Удаляем со страницы
 
        // Обновим бюджет
-      calcBudget();
+      calcBudget(budget);
     }
   });
 });

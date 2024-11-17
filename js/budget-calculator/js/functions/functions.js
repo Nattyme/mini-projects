@@ -1,3 +1,32 @@
+// Функция проверяет данные в input
+const validateInput = function () {
+  if ( title.value.trim() === '') {    
+    title.classList.add('form__input--error');
+    title.addEventListener('focus', function () {
+      title.classList.remove('form__input--error');
+    });
+
+    return;
+  } else {
+    title.classList.remove('form__input--error');
+  }
+
+  if ( value.value.trim() === '' || +value.value <= 0) {
+    value.classList.add('form__input--error');
+    value.addEventListener('focus', function () {
+      value.classList.remove('form__input--error');
+    });
+
+    return;
+  }
+}
+
+// Функция считает id для массива с записями
+const calcArrayId = function (array, startId) {
+  let id = array.length > 0 ? array[array.length - 1] + 1 : startId;
+  return id;
+}
+ 
 // Функция форматирует номер
 const priceFormatter = new Intl.NumberFormat('ru-RU', {
   style : 'currency',
@@ -37,36 +66,47 @@ const clearForm = function () {
 }
 
 // Функция считаем бюджет
-const calcBudget = function () {
-  // Считаем общий доход
-  const totalIncome = budget.reduce(function (total, element) {
-    if ( element.type === 'inc') {
-      return total + element.value;
-    } else {
-      return total;
-    }
-  }, 0);
-
-  // Считаем общий доход
-  const totalExpense = budget.reduce(function (total, element) {
-    if ( element.type === 'exp') {
-      return total + element.value;
-    } else {
-      return total;
-    }
-  }, 0);
+const calcBudget = function (array) {
+  console.log(array);
   
-  const totalBudget = totalIncome - totalExpense;
+  const calcValuesTtl = function (array) {
+    const total = {
+      income : 0,
+      expense : 0
+    }
+    if ( array.length === 0) return total;
+ 
+    let totals = array.reduce(function (totals, element) {
+      if (element.type === 'inc') {
+        totals.income = totals.income + element.value;
+        console.log(totals);
+      }
+
+      if (element.type === 'exp') {
+        totals.expense = totals.expense + element.value;
+        console.log(totals);
+      }
+  
+      return totals;
+    }, total);
+
+    return totals;
+  }
+
+  let total = calcValuesTtl(array);
+  
+  // const totalBudget = totalIncome - totalExpense;
+  const totalBudget = total.income - total.expense;
 
   let expensePercents = 0;
 
-  if (totalIncome) {
-    expensePercents = Math.round(totalExpense * 100 / totalIncome);
+  if (total.income) {
+    expensePercents = Math.round(total.expense * 100 / total.income);
   }
 
-  headerElements.budgetElement.innerHTML = priceFormatter.format(totalBudget);
-  headerElements.totalIncomeElement.innerHTML = '+ ' + priceFormatter.format(totalIncome);
-  headerElements.totalExpenceElement.innerHTML = '- ' + priceFormatter.format(totalExpense);
+  headerElements.budget.innerHTML = priceFormatter.format(totalBudget);
+  headerElements.totalIncome.innerHTML = '+ ' + priceFormatter.format(total.income);
+  headerElements.totalExpence.innerHTML = '- ' + priceFormatter.format(total.expense);
 
   if (expensePercents) {
     const badgeHtml = `<div class="badge">${expensePercents}%</div>`;
@@ -86,6 +126,6 @@ const displayMonth = function () {
   })
   const todayMonth = timeFormatter.format(today);
 
-  headerElements.monthElement.innerHTML = todayMonth;
-  headerElements.yearElement.innerHTML = todayYear;
+  headerElements.month.innerHTML = todayMonth;
+  headerElements.year.innerHTML = todayYear;
 }
