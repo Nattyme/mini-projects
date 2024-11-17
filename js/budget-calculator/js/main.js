@@ -31,8 +31,7 @@ form.addEventListener('submit', function (e) {
   e.preventDefault();
 
   // Проверяем массив ипутов с введёнными данными
-  // let inputsArray = Object.values([title, value]);
-  let isValid = validateInput( form, [title, value]);
+  let isValid = validateInput( form, [formElements.title, formElements.value]);
   
   if (isValid === false) return;
 
@@ -44,7 +43,7 @@ form.addEventListener('submit', function (e) {
 
   // Обновим данные бюджета > очистим форму > заполним форму новыми данными
   calcBudget(budget); 
-  clearForm();   
+  clearForm(isValid);   
   insertTestData();   
 });
 

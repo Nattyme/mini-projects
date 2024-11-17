@@ -1,5 +1,9 @@
 // >> Validate
-// Ф-ция удаляет рамку error c input при фокусе
+/**
+ * Удаляет класс ошибки с элемента при получении фокуса.
+ * @param {HTMLElement} element - Элемент формы, с которого удаляется класс ошибки.
+ * @param {HTMLElement} parent - Родительский элемент формы для обработки события focus.
+ */
 const removeErrorOnFocus = function (element, parent) {
 
   // Слушаем событие 'focus' по форме 
@@ -7,11 +11,16 @@ const removeErrorOnFocus = function (element, parent) {
 
     // Если фокус на инпуте - удалим класс error
     if (e.target === element) { e.target.classList.remove('form__input--error'); }
-    
+
   }, true);
 }
 
-// Функция проверяет данные в массиве input
+/** 
+ ** Проверяет валидность данных в массиве input.
+ * @param {HTMLFormElement} form - Форма, содержащая инпуты.
+ * @param {HTMLElement[]} inputArray - Массив инпутов для валидации.
+ * @returns {boolean} - Возвращает true, если все инпуты валидны, иначе false.
+ */
 const validateInput = function (form, inputArray) {
   // Зададим флаг для валидации
   let isValid = true;
@@ -59,18 +68,38 @@ const validateInput = function (form, inputArray) {
 
 
 // >>> Form function
-// Функция считает id для массива с записями
+/**
+ * Вычисляет id для записи в массиве.
+ * @param {Array} array - Массив данных.
+ * @param {number} startId - Начальное значение id.
+ * @returns {number} - Возвращает уникальный id для новой записи.
+ */
 const calcArrayId = function (array, startId) {
-  let id = array.length > 0 ? array[array.length - 1] + 1 : startId;
+  let id;
+
+  // Присвоим значение id в завис-ти от длинны массива
+  if ( array.length === 0) {
+    id = startId;
+  } else {
+    let lastElement = array[array.length - 1];
+    id = Number(lastElement.id + 1);
+  }
+
   return id;
 }
- 
+
+
+/**
+ * Генерирует случайное целое число от 0 до maxExclusive.
+ * @param {number} maxExclusive - Максимальное значение (не включается).
+ * @returns {number} - Случайное целое число.
+ */
 // Функция создаёт случайное число
 const getRandomInt = function (maxExclusive) {
   return Math.floor(Math.random() * maxExclusive);
 }
 
-// Функция заполняет форму тестовыми данными
+// Заполняет форму тестовыми данными.
 const insertTestData = function () {
   const testData = [
     {type : 'inc', title : 'Зарплата', value : 1000},
@@ -91,16 +120,38 @@ const insertTestData = function () {
   formElements.value.value = randomTestData['value'];
 }
 
-// Функция очищает поля формы
-const clearForm = function () {
+/**
+ * Очищает форму и сбрасывает ошибки.
+ * @param {boolean} isValid - Флаг валидности формы.
+ */
+const clearForm = function (isValid) {
   form.reset();
+
+  // Найдем ошибки (если есть)
+  const errorsArray = document.querySelectorAll('.form__input--error');
+
+  // Есть есть ошибки - сбросим
+  if (errorsArray.length !== 0 ) {
+    errorsArray.forEach(error => {
+      error.classList.remove('form__input--error');
+    });
+  }
+
+  // Вернём значение для isValid
+  isValid = true;
+
 }
 
 
 
 
 // >>> Record functions
-// Создаёт объект с данными для записи 
+/**
+ * Создаёт объект с данными для записи.
+ * @param {Object} domArray - Массив элементов DOM формы.
+ * @param {number} id - Уникальный id записи.
+ * @returns {Object} - Объект с данными записи.
+ */
 const createObjRecord = function (domArray, id) {
   return {
       id: id,
@@ -110,7 +161,11 @@ const createObjRecord = function (domArray, id) {
     }
 }
 
-// Ф-ция добавляет запись в нужный лист в зав-ти от ListType
+/**
+ * Вставляет запись в нужный список в зависимости от типа.
+ * @param {HTMLElement} listType - Тип списка (доход или расход).
+ * @param {Object} record - Объект с данными записи.
+ */
 const insertRecordHtml = function (listType, record) {
 
   // В зав-ти от типа листа выбираем иконку и модификатор класса для Li
@@ -126,12 +181,21 @@ const insertRecordHtml = function (listType, record) {
   listType.insertAdjacentHTML('afterbegin', getRecordHtml(recordData));
 }
 
-// Ф-ция определяет тип листа с записями
+/**
+ * Определяет тип списка в зависимости от типа записи.
+ * @param {string} type - Тип записи ('inc' или 'exp').
+ * @returns {HTMLElement} - Возвращает соответствующий список.
+ */
 const getRecordListType = function (type) {
   return type === 'inc' ? recordsLists.incomesList : recordsLists.expensesList;
 }
 
- // Функция добавляет запись за страницу
+
+/**
+ * Отображает запись на странице.
+ * @param {Array} budget - Массив с записями.
+ * @param {Object} formElements - Элементы формы.
+ */
 const displayRecord = function (budget, formElements) {
   let id = calcArrayId(budget, 1);
   let record = createObjRecord(formElements, id);
@@ -149,20 +213,26 @@ const displayRecord = function (budget, formElements) {
 
 
 // >>> Calc functions
-// Ф-ция складывает value записей в листе бюджета в зав-ти от типа
-const calcValuesTtl = function (array) {
+/**
+ * Подсчитывает суммы доходов и расходов.
+ * @param {Array} budget - Массив с записями.
+ * @returns {Object} - Объект с подсчитанными значениями дохода, расхода и бюджета.
+ */
+const calcValuesTtl = function (budget) {
   // Запишем в объект total начальные значения income, expense
   const total = {
     income : 0,
     expense : 0
   }
 
-  if ( array.length === 0) {
-    total.budget = total.income - total.expense; // Если в массиве нет записей - бюджет = 0
+  if ( budget.length === 0) {
+    total.budget = 0; // Если в массиве нет записей - бюджет = 0
+    total.income = 0;
+    total.income = 0;
     return total; 
   }
 
-  array.forEach ( (element) => {
+  budget.forEach ( (element) => {
     if (element.type === 'inc') {total.income = total.income + element.value;}
 
     if (element.type === 'exp') {total.expense = total.expense + element.value;}
@@ -175,15 +245,24 @@ const calcValuesTtl = function (array) {
   return total;
 }
 
-// Ф-ция считает процент от суммы
+/**
+ * Вычисляет процент от суммы.
+ * @param {number} ofWhat - Число, для которого рассчитывается процент.
+ * @param {number} fromWhat - Число, от которого вычисляется процент.
+ * @returns {number} - Процент от суммы.
+ */
 const calcPercent = function (ofWhat, fromWhat) {
   return fromWhat ? Math.round(ofWhat * 100 / fromWhat) : 0;
 }
 
+/**
+ * Рассчитывает общий бюджет.
+ * @param {Array} budget - Массив с записями.
+ */
 // Ф-ция считаем бюджет
-const calcBudget = function (array) {
+const calcBudget = function (budget) {
   // Вызовем ф-цию подсчета записей и запишем объект с новыми знач-ми в total
-  let total = calcValuesTtl(array);     
+  let total = calcValuesTtl(budget);     
   
   // Посчитаем процент total.expense
   let expensePercents = calcPercent(total.expense, total.income); 
@@ -196,8 +275,6 @@ const calcBudget = function (array) {
   headerTtlElements.percentsWrapper.innerHTML = expensePercents ? `<div class="badge">${expensePercents}%</div>` : '';
 
 }
-
-
 
 
 // Функция показывает месяц и год
