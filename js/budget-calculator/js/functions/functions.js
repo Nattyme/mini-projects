@@ -51,99 +51,19 @@ const insertTestData = function () {
   formElements.value.value = randomTestData['value'];
 }
 
+
 /**
- * Очищает форму и сбрасывает ошибки.
- * @param {boolean} isValid - Флаг валидности формы.
+ * Вычисляет процент от суммы.
+ * @param {number} ofWhat - Число, для которого рассчитывается процент.
+ * @param {number} fromWhat - Число, от которого вычисляется процент.
+ * @returns {number} - Процент от суммы.
  */
-const clearForm = function (isValid) {
-  form.reset();
-
-  // Найдем ошибки (если есть)
-  const errorsArray = document.querySelectorAll('.form__input--error');
-
-  // Есть есть ошибки - сбросим
-  if (errorsArray.length !== 0 ) {
-    errorsArray.forEach(error => {
-      error.classList.remove('form__input--error');
-    });
-  }
-
-  // Вернём значение для isValid
-  isValid = true;
-
+const calcPercent = function (ofWhat, fromWhat) {
+  // Если полуен элем., от кот. нужно посчитать % - считаем %
+  return fromWhat ? Math.round(ofWhat * 100 / fromWhat) : 0;
 }
 
 
-
-
-// >>> Record functions
-/**
- * Создаёт объект с данными для записи.
- * @param {Object} domArray - Массив элементов DOM формы.
- * @param {number} id - Уникальный id записи.
- * @returns {Object} - Объект с данными записи.
- */
-const createObjRecord = function (domArray, id) {
-  return {
-      id: id,
-      type : domArray.type.value,
-      title : domArray.title.value.trim(),
-      value : parseInt(domArray.value.value.trim(), 10)
-    }
-}
-
-/**
- * Вставляет запись в нужный список в зависимости от типа.
- * @param {HTMLElement} listType - Тип списка (доход или расход).
- * @param {Object} record - Объект с данными записи.
- */
-const insertRecordHtml = function (listType, record) {
-
-  // В зав-ти от типа листа выбираем иконку и модификатор класса для Li
-  const icon = listType === recordsLists.incomesList ? 'circle-green.svg' : 'circle-red.svg';
-
-  // В зав-ти от типа листа выбираем модификатор класса для Li
-  const classMode = listType === recordsLists.incomesList ? 'income' : 'expense';
-
-  // Создадим объект с данными записи и сохр. в recordHtml
-  let recordData =  new RecordHtml(record, classMode, icon);
-
-  // Подставим знач-я записи в шаблон и добавим на страницу
-  listType.insertAdjacentHTML('afterbegin', getRecordHtml(recordData));
-}
-
-/**
- * Определяет тип списка в зависимости от типа записи.
- * @param {string} type - Тип записи ('inc' или 'exp').
- * @returns {HTMLElement} - Возвращает соответствующий список.
- */
-const getRecordListType = function (type) {
-  return type === 'inc' ? recordsLists.incomesList : recordsLists.expensesList;
-}
-
-
-/**
- * Отображает запись на странице.
- * @param {Array} budget - Массив с записями.
- * @param {Object} formElements - Элементы формы.
- */
-const displayRecord = function (budget, formElements) {
-  let id = calcArrayId(budget, 1);
-  let record = createObjRecord(formElements, id);
-
-  // Добавим объект с данными записи в массив budget
-  budget.push(record);
-
-  // Получим тип листа с записями
-  let list = getRecordListType(record.type);
-  // Добавим запись в нужный лист 
-  insertRecordHtml(list, record);
-}
-
-
-
-
-// >>> Calc functions
 /**
  * Подсчитывает суммы доходов и расходов.
  * @param {Array} budget - Массив с записями.
@@ -178,39 +98,32 @@ const calcValuesTtl = function (budget) {
   // Посчитаем бюджет и обновим в объекте total
   total.budget = total.income - total.expense; 
 
+  // Посчитаем процент total.expense от total.income
+  total.expensePercents = calcPercent(total.expense, total.income); 
+
   return total;
 }
 
-/**
- * Вычисляет процент от суммы.
- * @param {number} ofWhat - Число, для которого рассчитывается процент.
- * @param {number} fromWhat - Число, от которого вычисляется процент.
- * @returns {number} - Процент от суммы.
- */
-const calcPercent = function (ofWhat, fromWhat) {
-  // Если полуен элем., от кот. нужно посчитать % - считаем %
-  return fromWhat ? Math.round(ofWhat * 100 / fromWhat) : 0;
-}
 
 /**
- * Рассчитывает общий бюджет.
- * @param {Array} budget - Массив с записями.
+ * Очищает форму и сбрасывает ошибки.
+ * @param {boolean} isValid - Флаг валидности формы.
  */
-// Ф-ция считаем бюджет
-const calcBudget = function (budget) {
-  // Вызовем ф-цию подсчета записей и запишем объект с новыми знач-ми в total
-  let total = calcValuesTtl(budget);     
-  
-  // Посчитаем процент total.expense от total.income
-  let expensePercents = calcPercent(total.expense, total.income); 
+const clearForm = function (isValid) {
+  form.reset();
 
-  // Покажем данные бюджета, дохода и расхода на странице
-  headerTtlElements.budget.innerHTML = view.priceFormatter.format(total.budget);
-  headerTtlElements.income.innerHTML = total.income > 0 ? '+ ' + view.priceFormatter.format(total.income) : view.priceFormatter.format(total.income);
-  headerTtlElements.expence.innerHTML = total.expense > 0 ? '- ' + view.priceFormatter.format(total.expense) : view.priceFormatter.format(total.expense);
+  // Найдем ошибки (если есть)
+  const errorsArray = document.querySelectorAll('.form__input--error');
 
-  // Показываем бейдж в зав-ти от expensePercents
-  headerTtlElements.percentsWrapper.innerHTML = expensePercents ? `<div class="badge">${expensePercents}%</div>` : '';
+  // Есть есть ошибки - сбросим
+  if (errorsArray.length !== 0 ) {
+    errorsArray.forEach(error => {
+      error.classList.remove('form__input--error');
+    });
+  }
+
+  // Вернём значение для isValid
+  isValid = true;
 
 }
 

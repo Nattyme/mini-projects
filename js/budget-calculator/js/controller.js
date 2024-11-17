@@ -3,27 +3,6 @@ import * as view from './view/view.js';
 // Data (array with objs)
 const budget = [];
 
-// DOM elements
-const form = document.querySelector('#form');  
-const header = document.querySelector('header');
-const formElements = {
-  type  : form.querySelector('#type'),    // Найдём селект 
-  title : form.querySelector('#title'),   // Найдём инпут названия 
-  value : form.querySelector('#value')    // Найдём инпут значения 
-}
-const recordsLists = {
-  incomesList : document.querySelector('#incomes-list'),
-  expensesList : document.querySelector('#expenses-list')
-}
-const headerTtlElements = {
-  budget : header.querySelector('#budget'),
-  income : header.querySelector('#total-income'),
-  expence : header.querySelector('#total-expense'),
-  percentsWrapper : header.querySelector('#expense-percents-wrapper'),
-  month : header.querySelector('#month'),
-  year : header.querySelector('#year')
-}
-
 // При загрузке страницы: обновим месяц > заполним форму > обновим бюджет
 displayMonth(); 
 insertTestData();
@@ -34,18 +13,22 @@ form.addEventListener('submit', function (e) {
   e.preventDefault();
 
   // Проверяем массив инпутов с введёнными данными
-  let isValid = validateInput( form, [formElements.title, formElements.value]);
-  
+  let isValid = validateInput( view.elements.form, [view.elements.formElements.title, view.elements.formElements.value]);
   if (isValid === false) return;
 
   // Рассчитаем id записи, (array, startNumber)
   let id = calcArrayId(budget, 1); 
 
   // Добавляем запись за страницу (array, obj, int)
-  displayRecord(budget, formElements, id); 
+  displayRecord(budget, view.elements.formElements, id); 
+
+
+  // Вызовем ф-цию подсчета записей и запишем объект с новыми знач-ми в total
+  let total = calcValuesTtl(budget);     
+
 
   // Обновим данные бюджета > очистим форму > заполним форму новыми данными
-  calcBudget(budget); 
+  view.calcBudget(total); 
   clearForm(isValid);   
   insertTestData();   
 });
