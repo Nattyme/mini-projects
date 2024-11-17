@@ -40,8 +40,8 @@ const validateInput = function (form, inputArray) {
     }
 
     // Если поле инпута заполнено
-    if (input.value.trim() !== '') {
-      const allowed = /^[a-zA-Zа-яА-Я0-9\s,.\?!;:"'()&+-=\\]+$/; // Разрешены только буквы, цифры и несколько символов
+    if (input.value.trim() !== '' && input.type === 'text') {
+      const allowed = /^[a-zA-Zа-яА-Я\s,.\?!;:"'()&+\-=\\]+$/; // Разрешены только буквы и несколько символов
 
       if (allowed.test(input.value) === false) {
         toggleErrorDisplay(input, form);
@@ -54,11 +54,13 @@ const validateInput = function (form, inputArray) {
     if (input.type === 'number') {
       // Явно преобразуем в число с основ. 10
       const numberValue = parseInt(input.value.trim(), 10);
-      if (isNaN(numberValue) || numberValue === Infinity || numberValue === - Infinity || numberValue <= 0) {
+      if (isNaN(numberValue) || numberValue <= 0 || numberValue === Infinity || numberValue === - Infinity) {
         toggleErrorDisplay(input, form);
         isValid = false;
       }
     } 
+
+  
   });
 
   return isValid;
@@ -225,22 +227,27 @@ const calcValuesTtl = function (budget) {
     expense : 0
   }
 
+  // Если в массиве нет записей
   if ( budget.length === 0) {
-    total.budget = 0; // Если в массиве нет записей - бюджет = 0
+    total.budget = 0; 
     total.income = 0;
     total.income = 0;
     return total; 
   }
 
+  // Обойдём массив budget 
   budget.forEach ( (element) => {
+    // Если элемент списка "Доход" - увелич. total.income
     if (element.type === 'inc') {total.income = total.income + element.value;}
 
+     // Если элемент списка "Расход" - увелич. total.expense
     if (element.type === 'exp') {total.expense = total.expense + element.value;}
 
     return;
   });
 
-  total.budget = total.income - total.expense; // Сразу посчитаем бюджет и запишем в объект total
+  // Посчитаем бюджет и обновим в объекте total
+  total.budget = total.income - total.expense; 
 
   return total;
 }
@@ -252,6 +259,7 @@ const calcValuesTtl = function (budget) {
  * @returns {number} - Процент от суммы.
  */
 const calcPercent = function (ofWhat, fromWhat) {
+  // Если полуен элем., от кот. нужно посчитать % - считаем %
   return fromWhat ? Math.round(ofWhat * 100 / fromWhat) : 0;
 }
 
@@ -264,9 +272,10 @@ const calcBudget = function (budget) {
   // Вызовем ф-цию подсчета записей и запишем объект с новыми знач-ми в total
   let total = calcValuesTtl(budget);     
   
-  // Посчитаем процент total.expense
+  // Посчитаем процент total.expense от total.income
   let expensePercents = calcPercent(total.expense, total.income); 
- 
+
+  // Покажем данные бюджета, дохода и расхода на странице
   headerTtlElements.budget.innerHTML = priceFormatter.format(total.budget);
   headerTtlElements.income.innerHTML = total.income > 0 ? '+ ' + priceFormatter.format(total.income) : priceFormatter.format(total.income);
   headerTtlElements.expence.innerHTML = total.expense > 0 ? '- ' + priceFormatter.format(total.expense) : priceFormatter.format(total.expense);

@@ -1,3 +1,4 @@
+// Data (array with objs)
 const budget = [];
 
 // DOM elements
@@ -30,7 +31,7 @@ calcBudget(budget);
 form.addEventListener('submit', function (e) {
   e.preventDefault();
 
-  // Проверяем массив ипутов с введёнными данными
+  // Проверяем массив инпутов с введёнными данными
   let isValid = validateInput( form, [formElements.title, formElements.value]);
   
   if (isValid === false) return;
@@ -38,7 +39,7 @@ form.addEventListener('submit', function (e) {
   // Рассчитаем id записи, (array, startNumber)
   let id = calcArrayId(budget, 1); 
 
-  // Добавляем запись за страницу (array, obj)
+  // Добавляем запись за страницу (array, obj, int)
   displayRecord(budget, formElements, id); 
 
   // Обновим данные бюджета > очистим форму > заполним форму новыми данными
@@ -50,12 +51,18 @@ form.addEventListener('submit', function (e) {
 // Удаление записи
 Object.values(recordsLists).forEach(list => {
   list.addEventListener('click', function (e) {
+    // Найдём кнопку 'delete' по атрибуту 'data-delete'
     const buttonDelete = e.target.closest('[data-delete]');
 
+    // Если клик был по этой кнопке
     if (buttonDelete) {
+      // Найдём родительский элем. Li
       const recordParent = buttonDelete.closest('li.budget-list__item');
+
+      // Запишем в переменную id элемента Li
       const id = parseInt(recordParent.dataset.id, 10);
 
+      // В массиве budget найдём индекс записи, в кот. id равен id элемента Li 
       const index = budget.findIndex(function (element) {
         return id === element.id;
       });
