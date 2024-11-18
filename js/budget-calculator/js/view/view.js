@@ -188,14 +188,12 @@ const getButtonDelete = function (e) {
 }
 
 const removeRecordHtml = function (buttonDelete) {
-  const recordParent = buttonDelete.closest('li.budget-list__item');   // Найдём родительский элем. Li
-  const id = recordParent.dataset.id;  //запишем id элем. li в перем
-  console.log('view');
-  console.log(id);
-  recordParent.remove(id); // Удаляем со страницы
+  const recordParent = buttonDelete.closest('li.budget-list__item');  
+  const id = recordParent.dataset.id;  
+
+  recordParent.remove(id); 
   
   return id; // Вернём id элемента Li
-  // return parseInt(recordParent.dataset.id, 10);
 }
 
 export { elements, validateInput, displayRecord, renderBudget, clearForm, getFormValues, renderMonth, renderTestData, getButtonDelete, removeRecordHtml, priceFormatter };

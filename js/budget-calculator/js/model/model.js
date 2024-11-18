@@ -56,19 +56,12 @@ const getTestData = function () {
 
 // Ф-ция находит в массиве budget индекс записи, в кот. id равен id элемента Li и удаляет ее
 const removeRecord = function (id) {
-  console.log('model');
-  console.log(id);
-  
+ 
   const index = budget.findIndex(function (element) {
     return parseInt(id) === element.id;
   });
     
   if (index !== -1) budget.splice(index, 1); // Удаляем из массива 
-  console.log('model removed');
-
-  console.log('budget fater remove');
-  console.log(budget);
-  
 }
 
 const calcPercent = function (ofWhat, fromWhat) {
