@@ -1,62 +1,58 @@
+import * as model from './model/model.js';
 import * as view from './view/view.js';
 
-// Data (array with objs)
-const budget = [];
+
 
 // При загрузке страницы: обновим месяц > заполним форму > обновим бюджет
-displayMonth(); 
-insertTestData();
-calcBudget(budget);
+model.displayMonth();
+let data = model.insertTestData();
+view.renderTestData(data);
+// view.calcBudget(total);
 
 // Добавим прослушивание события submit
-form.addEventListener('submit', function (e) {
+view.elements.formEl.addEventListener('submit', function (e) {
   e.preventDefault();
 
   // Проверяем массив инпутов с введёнными данными
-  let isValid = validateInput( view.elements.form, [view.elements.formElements.title, view.elements.formElements.value]);
+  let isValid = view.validateInput( view.elements.formEl, [view.elements.form.title, view.elements.form.value]);
   if (isValid === false) return;
 
-  // Рассчитаем id записи, (array, startNumber)
-  let id = calcArrayId(budget, 1); 
+  // Получим данные формы
+  const formValues = view.getFormValues();
+
+  // Рассчитаем id записи, (startNumber)
+  let id = model.calcArrayId(1); 
+
+  const record = model.createObjRecord(formValues, id);
 
   // Добавляем запись за страницу (array, obj, int)
-  displayRecord(budget, view.elements.formElements, id); 
-
+  view.displayRecord(record); 
 
   // Вызовем ф-цию подсчета записей и запишем объект с новыми знач-ми в total
-  let total = calcValuesTtl(budget);     
+  // let total = model.calcValuesTtl(model.budget); 
 
+  // view.renderMonth(todayMonth, todayYear);
 
   // Обновим данные бюджета > очистим форму > заполним форму новыми данными
-  view.calcBudget(total); 
-  clearForm(isValid);   
-  insertTestData();   
+  // view.calcBudget(total); 
+  view.clearForm(isValid);   
+  let randomTestData = model.insertTestData();
+  view.renderTestData(randomTestData);
 });
 
 // Удаление записи
-Object.values(recordsLists).forEach(list => {
+Object.values(view.elements.recordsLists).forEach(list => {
   list.addEventListener('click', function (e) {
     // Найдём кнопку 'delete' по атрибуту 'data-delete'
-    const buttonDelete = e.target.closest('[data-delete]');
+    const buttonDelete = view.getButtonDelete(e);
 
     // Если клик был по этой кнопке
     if (buttonDelete) {
-      // Найдём родительский элем. Li
-      const recordParent = buttonDelete.closest('li.budget-list__item');
-
-      // Запишем в переменную id элемента Li
-      const id = parseInt(recordParent.dataset.id, 10);
-
-      // В массиве budget найдём индекс записи, в кот. id равен id элемента Li 
-      const index = budget.findIndex(function (element) {
-        return id === element.id;
-      });
-      
-      budget.splice(index, 1); // Удаляем из массива 
-      recordParent.remove(); // Удаляем со страницы
-
-       // Обновим бюджет
-      calcBudget(budget);
+      const id = view.removeRecordHtml(buttonDelete);
+      model.removeRecord(id);
+   
+      // Обновим бюджет
+      // model.calcBudget(budget);
     }
   });
 });

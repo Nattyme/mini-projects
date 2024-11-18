@@ -1,3 +1,5 @@
+import { elements, validateInput, displayRecord, calcBudget, clearForm, getFormValues, renderMonth, renderTestData, priceFormatter } from '../view.js';
+
 const getRecordHtml = function (recordValuesObj) {
   return `
           <li class="budget-list__item item item--${recordValuesObj.classMode}" data-id=${recordValuesObj.values.id}>
@@ -12,5 +14,5 @@ const getRecordHtml = function (recordValuesObj) {
   `;
 }
 
-export { getRecordHtml };
+export {getRecordHtml} ;
 

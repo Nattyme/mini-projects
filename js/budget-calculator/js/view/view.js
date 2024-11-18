@@ -1,12 +1,13 @@
 import { getRecordHtml } from './templates/templates.js';
 
+// Объект DOM элементов страницы
 const elements = {
-  form : document.querySelector('#form'),
-  header : document.querySelector('header'),
-  formElements : {
-    type  : form.querySelector('#type'),    // Найдём селект 
-    title : form.querySelector('#title'),   // Найдём инпут названия 
-    value : form.querySelector('#value')    // Найдём инпут значения 
+  formEl : document.querySelector('#form'),
+
+  form : {
+    type  : document.querySelector('#type'),    // Найдём селект 
+    title : document.querySelector('#title'),   // Найдём инпут названия 
+    value : document.querySelector('#value')    // Найдём инпут значения 
   },
 
   recordsLists : {
@@ -15,20 +16,16 @@ const elements = {
   },
 
   header : {
-  budget : header.querySelector('#budget'),
-  income : header.querySelector('#total-income'),
-  expence : header.querySelector('#total-expense'),
-  percentsWrapper : header.querySelector('#expense-percents-wrapper'),
-  month : header.querySelector('#month'),
-  year : header.querySelector('#year')
+    budget : document.querySelector('#budget'),
+    income : document.querySelector('#total-income'),
+    expence : document.querySelector('#total-expense'),
+    percentsWrapper : document.querySelector('#expense-percents-wrapper'),
+    month : document.querySelector('#month'),
+    year : document.querySelector('#year')
   }
 }
 
-/**
- * Удаляет класс ошибки с элемента при получении фокуса.
- * @param {HTMLElement} element - Элемент формы, с которого удаляется класс ошибки.
- * @param {HTMLElement} parent - Родительский элемент формы для обработки события focus.
- */
+// Ф-ция удаляет рамку ошибку при фокусе
 const removeErrorOnFocus = function (element, parent) {
 
   // Слушаем событие 'focus' по форме 
@@ -40,13 +37,8 @@ const removeErrorOnFocus = function (element, parent) {
   }, true);
 }
 
-/** 
- ** Проверяет валидность данных в массиве input.
- * @param {HTMLFormElement} form - Форма, содержащая инпуты.
- * @param {HTMLElement[]} inputArray - Массив инпутов для валидации.
- * @returns {boolean} - Возвращает true, если все инпуты валидны, иначе false.
- */
- const validateInput = function (form, inputArray) {
+// Ф-ция проверет введённые данные формы
+const validateInput = function (form, inputArray) {
   // Зададим флаг для валидации
   let isValid = true;
   const toggleErrorDisplay = function (input, form) {
@@ -91,41 +83,30 @@ const removeErrorOnFocus = function (element, parent) {
   return isValid;
 }
 
-
-
-
-// >>> Record functions
-/**
- * Создаёт объект с данными для записи.
- * @param {Object} domArray - Массив элементов DOM формы.
- * @param {number} id - Уникальный id записи.
- * @returns {Object} - Объект с данными записи.
- */
-const createObjRecord = function (domArray, id) {
-  return {
-      id: id,
-      type : domArray.type.value,
-      title : domArray.title.value.trim(),
-      value : parseInt(domArray.value.value.trim(), 10)
-    }
+// Ф-ция записывает данные флрмы в объект
+const getFormValues = function () {
+  const formValues = {
+    type : elements.form.type.value,
+    title : elements.form.title.value,
+    value : elements.form.value.value 
+  }
+  return formValues;
 }
 
-/**
- * Определяет тип списка в зависимости от типа записи.
- * @param {string} type - Тип записи ('inc' или 'exp').
- * @returns {HTMLElement} - Возвращает соответствующий список.
- */
+// Ф-ция определяет тип списка с записями
 const getRecordListType = function (type) {
   return type === 'inc' ? elements.recordsLists.incomesList : elements.recordsLists.expensesList;
 }
 
+const RecordHtml = function (recordValues, liClassMode, imgName) {
+  this.values = recordValues;
+  this.classMode = liClassMode;
+  this.imgFolder = 'img';
+  this.imgName = imgName;
+  this.imgSrc = './' + this.imgFolder + '/' + this.imgName;
+}
 
-
-/**
- * Вставляет запись в нужный список в зависимости от типа.
- * @param {HTMLElement} listType - Тип списка (доход или расход).
- * @param {Object} record - Объект с данными записи.
- */
+// Ф-ция добавляет HTML код записей
 const insertRecordHtml = function (listType, record) {
 
   // В зав-ти от типа листа выбираем иконку и модификатор класса для Li
@@ -141,33 +122,16 @@ const insertRecordHtml = function (listType, record) {
   listType.insertAdjacentHTML('afterbegin', getRecordHtml(recordData));
 }
 
-
-/**
- * Отображает запись на странице.
- * @param {Array} budget - Массив с записями.
- * @param {Object} formElements - Элементы формы.
- */
-const displayRecord = function (budget, formElements) {
-  let id = calcArrayId(budget, 1);
-  let record = createObjRecord(formElements, id);
-
-  // Добавим объект с данными записи в массив budget
-  controller.budget.push(record);
-
+// Ф-ция отображает записи на странице
+const displayRecord = function (record) {
   // Получим тип листа с записями
   let list = getRecordListType(record.type);
+
   // Добавим запись в нужный лист 
   insertRecordHtml(list, record);
 }
 
-
-
-// >>> Calc functions
-/**
- * Рассчитывает общий бюджет.
- * @param {Array} budget - Массив с записями.
- */
-// Ф-ция считаем бюджет
+// Ф-ция отображает бюджет на странице
 const calcBudget = function ({income, expense, budget, expensePercents}) {
 
   // Покажем данные бюджета, дохода и расхода на странице
@@ -180,15 +144,57 @@ const calcBudget = function ({income, expense, budget, expensePercents}) {
 
 }
 
+// Ф-ция очищает форму и сбрасывает ошибки.
+const clearForm = function (isValid) {
+  elements.formEl.reset();
 
+  // Найдем ошибки (если есть)
+  const errorsArray = document.querySelectorAll('.form__input--error');
 
+  // Есть есть ошибки - сбросим
+  if (errorsArray.length !== 0 ) {
+    errorsArray.forEach(error => {
+      error.classList.remove('form__input--error');
+    });
+  }
 
+  // Вернём значение для isValid
+  isValid = true;
 
-// Создает объект форматтера для чисел
+}
+
+// Ф-ция отображает значения года и месяца на странице
+const renderMonth = function (todayMonth, todayYear) {
+  elements.headerTtlElements.month.innerHTML = todayMonth;
+  elements.headerTtlElements.year.innerHTML = todayYear;
+}
+
+// Ф-ция отображает тестовые данные на странице
+const renderTestData = function (randomTestData) {
+  elements.form.type.value = randomTestData['type'];
+  elements.form.title.value = randomTestData['title'];
+  elements.form.value.value = randomTestData['value'];
+}
+
+// Ф-ция создает объект форматтера для чисел
 const priceFormatter = new Intl.NumberFormat('ru-RU', {
   style : 'currency',
   currency : 'USD',
   maximumFractionDigits : 0
 });
 
-export { elements, validateInput, priceFormatter };
+const getButtonDelete = function (e) {
+  return e.target.closest('[data-delete]');
+}
+
+const removeRecordHtml = function (buttonDelete) {
+  const recordParent = buttonDelete.closest('li.budget-list__item');   // Найдём родительский элем. Li
+  const id = recordParent.dataset.id;  //запишем id элем. li в перем
+
+  recordParent.remove(id); // Удаляем со страницы
+  
+  return id; // Вернём id элемента Li
+  // return parseInt(recordParent.dataset.id, 10);
+}
+
+export { elements, validateInput, displayRecord, calcBudget, clearForm, getFormValues, renderMonth, renderTestData, getButtonDelete, removeRecordHtml, priceFormatter };
