@@ -25,17 +25,14 @@ const elements = {
   }
 }
 
-// Ф-ция удаляет рамку ошибку при фокусе
-const removeErrorOnFocus = function (element, parent) {
-
-  // Слушаем событие 'focus' по форме 
-  parent.addEventListener('focus', function (e) {
-
-    // Если фокус на инпуте - удалим класс error
-    if (e.target === element) { e.target.classList.remove('form__input--error'); }
-
-  }, true);
+// Ф-ция удаляет рамку ошибки при фокусе
+const removeErrorOnFocus = function (e, elements) {
+  // Если фокус на инпуте - удалим класс error
+  if ( elements.includes(e.target) && e.target.classList.contains('form__input--error')) { 
+    e.target.classList.remove('form__input--error'); 
+  }
 }
+
 
 // Ф-ция проверет введённые данные формы
 const validateInput = function (form, inputArray) {
@@ -43,7 +40,6 @@ const validateInput = function (form, inputArray) {
   let isValid = true;
   const toggleErrorDisplay = function (input, form) {
     input.classList.add('form__input--error');
-    removeErrorOnFocus(input, form);
   }
 
   inputArray.forEach(input => {
@@ -68,7 +64,12 @@ const validateInput = function (form, inputArray) {
     }
 
     // Если поле Input для ввода цифр, то доп. проверка
-    if (input.type === 'number') {
+    if (input.type === 'number' ) {
+      if (input.value.trim() === '') {
+        toggleErrorDisplay(input, form);
+        isValid = false;
+      }
+
       // Явно преобразуем в число с основ. 10
       const numberValue = parseInt(input.value.trim(), 10);
       if (isNaN(numberValue) || numberValue <= 0 || numberValue === Infinity || numberValue === - Infinity) {
@@ -196,4 +197,4 @@ const removeRecordHtml = function (buttonDelete) {
   return id; // Вернём id элемента Li
 }
 
-export { elements, validateInput, displayRecord, renderBudget, clearForm, getFormValues, renderMonth, renderTestData, getButtonDelete, removeRecordHtml, priceFormatter };
+export { elements, validateInput, removeErrorOnFocus, displayRecord, renderBudget, clearForm, getFormValues, renderMonth, renderTestData, getButtonDelete, removeRecordHtml, priceFormatter };

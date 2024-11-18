@@ -53,12 +53,21 @@ const deleteRecord = function (e) {
   }
 }
 
+// Ф-ция запускает прослушивание событий
 const addEventListeners = function () {
+  // Добавление записи
   view.elements.formEl.addEventListener('submit', createRecord);
 
+  // Удаление записи
   Object.values(view.elements.recordsLists).forEach(list => {
     list.addEventListener('click', deleteRecord);
   });
+
+  // Удаление рамки ошибки при фокусе на элементе
+  view.elements.formEl.addEventListener('focus', function (e) {
+    view.removeErrorOnFocus(e, [view.elements.form.type, view.elements.form.title]);
+  }, true);
+
 }
 
 
