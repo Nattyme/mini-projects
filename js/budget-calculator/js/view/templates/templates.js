@@ -1,4 +1,4 @@
-import { elements, validateInput, displayRecord, calcBudget, clearForm, getFormValues, renderMonth, renderTestData, priceFormatter } from '../view.js';
+import { priceFormatter } from '../view.js';
 
 const getRecordHtml = function (recordValuesObj) {
   return `

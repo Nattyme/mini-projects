@@ -36,7 +36,7 @@ const createObjRecord = function (formValues, id) {
 }
 
 // Заполняет форму тестовыми данными.
-const insertTestData = function () {
+const getTestData = function () {
   const testData = [
     {type : 'inc', title : 'Зарплата', value : 1000},
     {type : 'inc', title : 'Премия', value : 1000},
@@ -56,11 +56,17 @@ const insertTestData = function () {
 
 // Ф-ция находит в массиве budget индекс записи, в кот. id равен id элемента Li и удаляет ее
 const removeRecord = function (id) {
+  console.log('model');
+  console.log(id);
+  
   const index = budget.findIndex(function (element) {
-    parseInt(id) === element.id;
+    return parseInt(id) === element.id;
   });
     
-  budget.splice(index, 1); // Удаляем из массива 
+  if (index !== -1) budget.splice(index, 1); // Удаляем из массива 
+  console.log('model removed');
+
+  console.log('budget fater remove');
   console.log(budget);
   
 }
@@ -70,7 +76,7 @@ const calcPercent = function (ofWhat, fromWhat) {
   return fromWhat ? Math.round(ofWhat * 100 / fromWhat) : 0;
 }
 
-const calcValuesTtl = function (budget) {
+const calcBudgetTtl = function () {
   // Запишем в объект total начальные значения income, expense
   const total = {
     income : 0,
@@ -105,17 +111,19 @@ const calcValuesTtl = function (budget) {
   return total;
 }
 
-
 // Ф-ция  оздает объект форматтера для даты
 const timeFormatter = new Intl.DateTimeFormat('ru-Ru', {
   month : 'long'
 });
 
 // Ф-ция вычисляет текущий месяц и год 
-const displayMonth = function () {
+const getMonthAndYear = function () {
   const today = new Date();
-  const todayYear = today.getFullYear();
   const todayMonth = timeFormatter.format(today);
+  const todayYear = today.getFullYear();
+ 
+  return {todayMonth, todayYear};
 }
 
-export { calcArrayId, getRandomInt, calcValuesTtl, createObjRecord, insertTestData, removeRecord, displayMonth };
+
+export { calcArrayId, getRandomInt, calcBudgetTtl, createObjRecord, getTestData, removeRecord, getMonthAndYear };

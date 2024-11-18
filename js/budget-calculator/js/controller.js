@@ -4,10 +4,11 @@ import * as view from './view/view.js';
 
 
 // При загрузке страницы: обновим месяц > заполним форму > обновим бюджет
-model.displayMonth();
-let data = model.insertTestData();
-view.renderTestData(data);
-// view.calcBudget(total);
+view.renderMonth( model.getMonthAndYear() );
+view.renderTestData( model.getTestData() );
+
+// Обновляем бюджет и показываем на странице
+view.renderBudget( model.calcBudgetTtl() );
 
 // Добавим прослушивание события submit
 view.elements.formEl.addEventListener('submit', function (e) {
@@ -28,16 +29,13 @@ view.elements.formEl.addEventListener('submit', function (e) {
   // Добавляем запись за страницу (array, obj, int)
   view.displayRecord(record); 
 
-  // Вызовем ф-цию подсчета записей и запишем объект с новыми знач-ми в total
-  // let total = model.calcValuesTtl(model.budget); 
+  // Обновляем бюджет и показываем на странице
+  view.renderBudget( model.calcBudgetTtl() );
+  view.renderMonth( model.getMonthAndYear() );
 
-  // view.renderMonth(todayMonth, todayYear);
-
-  // Обновим данные бюджета > очистим форму > заполним форму новыми данными
-  // view.calcBudget(total); 
+  // Очистим форму > заполним форму новыми данными
   view.clearForm(isValid);   
-  let randomTestData = model.insertTestData();
-  view.renderTestData(randomTestData);
+  view.renderTestData( model.getTestData() );
 });
 
 // Удаление записи
@@ -47,12 +45,12 @@ Object.values(view.elements.recordsLists).forEach(list => {
     const buttonDelete = view.getButtonDelete(e);
 
     // Если клик был по этой кнопке
-    if (buttonDelete) {
+    if (buttonDelete ) {
       const id = view.removeRecordHtml(buttonDelete);
       model.removeRecord(id);
    
-      // Обновим бюджет
-      // model.calcBudget(budget);
+      // Обновляем бюджет и показываем на странице
+      view.renderBudget( model.calcBudgetTtl() );
     }
   });
 });

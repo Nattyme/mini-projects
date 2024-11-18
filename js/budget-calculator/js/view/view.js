@@ -132,7 +132,7 @@ const displayRecord = function (record) {
 }
 
 // Ф-ция отображает бюджет на странице
-const calcBudget = function ({income, expense, budget, expensePercents}) {
+const renderBudget = function ({income, expense, budget, expensePercents}) {
 
   // Покажем данные бюджета, дохода и расхода на странице
   elements.header.budget.innerHTML = priceFormatter.format(budget);
@@ -164,9 +164,9 @@ const clearForm = function (isValid) {
 }
 
 // Ф-ция отображает значения года и месяца на странице
-const renderMonth = function (todayMonth, todayYear) {
-  elements.headerTtlElements.month.innerHTML = todayMonth;
-  elements.headerTtlElements.year.innerHTML = todayYear;
+const renderMonth = function ({todayMonth, todayYear}) {
+  elements.header.month.innerHTML = todayMonth;
+  elements.header.year.innerHTML = todayYear;
 }
 
 // Ф-ция отображает тестовые данные на странице
@@ -190,11 +190,12 @@ const getButtonDelete = function (e) {
 const removeRecordHtml = function (buttonDelete) {
   const recordParent = buttonDelete.closest('li.budget-list__item');   // Найдём родительский элем. Li
   const id = recordParent.dataset.id;  //запишем id элем. li в перем
-
+  console.log('view');
+  console.log(id);
   recordParent.remove(id); // Удаляем со страницы
   
   return id; // Вернём id элемента Li
   // return parseInt(recordParent.dataset.id, 10);
 }
 
-export { elements, validateInput, displayRecord, calcBudget, clearForm, getFormValues, renderMonth, renderTestData, getButtonDelete, removeRecordHtml, priceFormatter };
+export { elements, validateInput, displayRecord, renderBudget, clearForm, getFormValues, renderMonth, renderTestData, getButtonDelete, removeRecordHtml, priceFormatter };
