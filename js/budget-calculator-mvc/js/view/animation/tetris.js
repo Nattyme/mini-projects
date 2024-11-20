@@ -1,4 +1,4 @@
-const  START_BLOCK_NUMBERS = [1, 3, 6, 7, 10, 13, 19];
+const START_BLOCK_NUMBERS = [1, 3, 6, 7, 10, 13, 19];
 
 const elements = {
   headerEl : document.querySelector('#header')
@@ -12,7 +12,6 @@ const MAPSET = {
   COLUMNS_NUMBERS : 60,
   PADDING : 0,
   downtime: getDowntime(),
-  block : getBlock(getRandomFrom(START_BLOCK_NUMBERS)),
   blockTypes: 19,
   get fieldWidth () {
     return this.CANVAS_WIDTH / this.COLUMNS_NUMBERS; // fieldWidth
@@ -41,11 +40,6 @@ const canvas = {
   },
 }
 
-function getRandomFrom (array) {
-  const index = Math.floor(Math.random() * array.length);
-  return array[index];
-}
-
 // Ф-ция устанавливает размеры canvas
 const setCanvasSize = function (size) {
   canvas.width = size.width;
@@ -64,7 +58,7 @@ const clearCanvas = function () {
   const { CANVAS_BACKGROUND, CANVAS_WIDTH, CANVAS_HEIGHT } = MAPSET;
 
   canvas.context.fillStyle = CANVAS_BACKGROUND;
-  canvas.context.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+  canvas.context.strokeStyle = `rgba(255, 255, 255, 0.5)`;
 
   canvas.context.rect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
   canvas.context.fill();
@@ -158,14 +152,14 @@ function saveBlock (map) {
       // Добавляем блок
       setField(part.x, part.y, MAPSET.block.color, map);
       // Удаляем блок
-      unsetBlockLater(20000, part.x, part.y, map);
+      unsetBlockLater(40000, part.x, part.y, map);
     }, 0);
   }
 
 }
 
 // Ф-ция получает 4 аргумента: тип блока. цвет, координаты
-function getBlock (type, color = 'white', x = 0, y = 0) {
+function getBlock (type, color = `rgba(255, 255, 255, 0.5)`, x = 0, y = 0) {
 
   // Создаём блок
   const block = { type, x, y, color }
@@ -376,7 +370,8 @@ const clearLines = function () {
 }
 
 // Ф-ция непрерывно совершает действия 
-const tick = function (timestamp, map) {
+const tick = function (timestamp, map, randomBlockType, randomPlace) {
+
   // Если время с начала игры >= downtime 
   if (timestamp >= MAPSET.downtime) {
     // Созда1м копию и проверяем, можно ли сдвинуть
@@ -389,11 +384,11 @@ const tick = function (timestamp, map) {
       MAPSET.block = blockCopy;
     } else {
  
-      // в иноч случае блок 'уперся', значит , превращаем его в статич. структуру
+      // в иноь случае блок 'уперся', значит , превращаем его в статич. структуру
       saveBlock(MAPSET.map);
 
       clearLines();
-      MAPSET.block = getBlock( getRandomFrom(START_BLOCK_NUMBERS), 'white',  Math.floor(Math.random() * 61));
+      MAPSET.block = getBlock( randomBlockType, `rgba(255, 255, 255, 0.5)`, randomPlace);
     }
  
     MAPSET.downtime = timestamp + getDowntime();
@@ -425,9 +420,9 @@ function changeBlockColorTemporarily (color) {
   // Вернем цвет на стандартный через 1 секунду
   setTimeout(() => {
     MAPSET.CANVAS_BACKGROUND = '#000'; // возвращаем стандартный цвет
-  }, 5000);
+  }, 1000);
 }
 
 
 
-export { MAPSET, canvas, elements, getCanvasFigureColor,  clearCanvas, drawField, drawBlock, getMap, drawState, setCanvasSize, getBlock, tick, getField, setField, changeBlockColorTemporarily  };
+export { START_BLOCK_NUMBERS, MAPSET, canvas, elements, getCanvasFigureColor,  clearCanvas, drawField, drawBlock, getMap, drawState, setCanvasSize, getBlock, tick, getField, setField, changeBlockColorTemporarily  };

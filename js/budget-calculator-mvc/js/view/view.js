@@ -4,7 +4,7 @@ import { getButtonDelete } from './UI/buttons.js';
 import { getRecordHtml } from './UI/templates.js';
 import { getFormValues, clearForm } from './UI/form.js';
 import { displayRecord, removeRecordHtml } from './UI/lists.js';
-import { MAPSET, canvas, clearCanvas, drawField, drawBlock, getMap, drawState, setCanvasSize, getBlock, tick, getField, getCanvasFigureColor, setField, changeBlockColorTemporarily} from './animation/tetris.js';
+import { START_BLOCK_NUMBERS, MAPSET, canvas, clearCanvas, drawField, drawBlock, getMap, drawState, setCanvasSize, getBlock, tick, getField, getCanvasFigureColor, setField, changeBlockColorTemporarily} from './animation/tetris.js';
 
 // Объект с переменными DOM элементов страницы
 const elements = {
@@ -58,4 +58,4 @@ const renderTestData = function (randomTestData) {
 }
 
 
-export { elements, MAPSET, canvas, elements as tetrisEl, getCanvasFigureColor, validateInput, removeErrorOnFocus, displayRecord, renderBudget, clearForm, getFormValues, renderMonth, renderTestData, getButtonDelete, removeRecordHtml, RecordHtml, getRecordHtml, priceFormatter, clearCanvas, drawField, drawBlock, getMap, drawState, setCanvasSize, getBlock, tick, getField, setField, changeBlockColorTemporarily};
+export { elements, START_BLOCK_NUMBERS, MAPSET, canvas, elements as tetrisEl, getCanvasFigureColor, validateInput, removeErrorOnFocus, displayRecord, renderBudget, clearForm, getFormValues, renderMonth, renderTestData, getButtonDelete, removeRecordHtml, RecordHtml, getRecordHtml, priceFormatter, clearCanvas, drawField, drawBlock, getMap, drawState, setCanvasSize, getBlock, tick, getField, setField, changeBlockColorTemporarily};

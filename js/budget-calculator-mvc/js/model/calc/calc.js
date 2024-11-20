@@ -1,6 +1,6 @@
 // Ф-ция создаёт случайное число
-const getRandomInt = function (maxExclusive) {
-  return Math.floor(Math.random() * maxExclusive);
+const getRandomInt = function (min, max) {
+  return min + Math.floor(Math.random() * (max - min ));
 };
 
 // Ф-ция считает процент от суммы
@@ -10,4 +10,10 @@ const calcPercent = function (ofWhat, fromWhat) {
   return Math.round((ofWhat * 100) / fromWhat);
 }
 
-export { getRandomInt, calcPercent };
+// Ф-ция считает случайный индекс из массива (для блоков анимации)
+function getRandomFrom (array) {
+  const index = Math.floor(Math.random() * array.length);
+  return array[index];
+}
+
+export { getRandomInt, getRandomFrom, calcPercent };

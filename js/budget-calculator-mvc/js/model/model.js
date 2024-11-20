@@ -1,5 +1,5 @@
 import { getMonthAndYear } from './date_time/date_time.js';
-import { getRandomInt, calcPercent } from './calc/calc.js';
+import { getRandomInt, getRandomFrom, calcPercent } from './calc/calc.js';
 
 // Данные
 const budget = [];
@@ -39,17 +39,17 @@ const createObjRecord = function (formValues, id) {
 // Ф-ция заполняет форму тестовыми данными.
 const getTestData = function () {
   const testData = [
-    {type : 'inc', title : 'Зарплата', value : 1000},
-    {type : 'inc', title : 'Премия', value : 1000},
-    {type : 'inc', title : 'Фриланс', value : 1000},
-    {type : 'inc', title : 'Вклад', value : 1000},
-    {type : 'exp', title : 'Продукты', value : 1000},
-    {type : 'exp', title : 'Обед', value : 1000},
-    {type : 'exp', title : 'Транспорт', value : 1000},
-    {type : 'exp', title : 'Квартира', value : 1000}
+    {type : 'inc', title : 'Зарплата', value : 700},
+    {type : 'inc', title : 'Премия', value : 600},
+    {type : 'inc', title : 'Фриланс', value : 80},
+    {type : 'inc', title : 'Вклад', value : 10},
+    {type : 'exp', title : 'Продукты', value : 100},
+    {type : 'exp', title : 'Обед', value : 15},
+    {type : 'exp', title : 'Транспорт', value : 40},
+    {type : 'exp', title : 'Квартира', value : 100}
   ];
 
-  const randomIndex = getRandomInt(testData.length);
+  const randomIndex = getRandomInt(0, testData.length);
   const randomTestData = testData[randomIndex];
 
   return randomTestData;
@@ -65,8 +65,6 @@ const removeRecord = function (id) {
   if (index !== -1) budget.splice(index, 1); // Удаляем из массива 
 }
 
-
-// >>> Работа с подсчетом бюджета <<<
 // Ф-ция считает бюджет
 const calcBudgetTtl = function () {
   // Запишем в объект total начальные значения income, expense, budget
@@ -95,4 +93,4 @@ const calcBudgetTtl = function () {
 }
 
 
-export { calcArrayId, getRandomInt, calcBudgetTtl, createObjRecord, getTestData, removeRecord, getMonthAndYear };
+export { calcArrayId, getRandomInt, getRandomFrom, calcBudgetTtl, createObjRecord, getTestData, removeRecord, getMonthAndYear };
