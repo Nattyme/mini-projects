@@ -1,19 +1,15 @@
-const addForm = document.querySelector('#addForm');  // Находим форму отправки по id
-const mainContainer = document.querySelector('#main'); // Находим контейнер, в кот. хранится форма задач и вывод списка
-let itemsList = document.querySelector('#items'); // Найдем тег списка ul для отображения списка задач на странице
+import { successHtml,  errorHtml } from './templates/templates.js';
 
-const newItemInput = document.querySelector('#newItemText'); // Находим поле ввода input по id
-const filter = document.querySelector('#filter');  // Найдем поле поиска
-
-const buttonSubmit = document.querySelector('#buttonSubmit'); // Находим кнопку отправки формы
-
-// Шаблон. 
-let itemTemplateWrapper = document.querySelector('#tmpl-list-group-item'); // Находим шаблон для отображения списка задач
-
-// Находим заголовок списка задач
-let taskListTitle = document.querySelector('#taskListTitle');   // Заголовок списка задач
-changeTitle (); // При загрузке страницы изменяем заголовок, если список задач пуст
-
+const elements = {
+  addForm : document.querySelector('#addForm'),  
+  mainContainer : document.querySelector('#main'), 
+  itemsList : document.querySelector('#items'), 
+  newItemInput : document.querySelector('#newItemText'), 
+  filter : document.querySelector('#filter'),  
+  buttonSubmit : document.querySelector('#buttonSubmit'),
+  itemTemplateWrapper : document.querySelector('#tmpl-list-group-item'),
+  taskListTitle : document.querySelector('#taskListTitle'),
+}
 
 // Функция проверяет, в списке есть задачи или он пуст. По результату выводим нужный текст в заголовок.
 function changeTitle () {
@@ -142,7 +138,6 @@ const editTask = function (e) {
   });
 }
 
-
 // = Уведомление об ошибке =
 const error = function (container) {
   let errorTemplate = itemTemplateWrapper.content.querySelector('.alert-danger'); // Находим div с уведомления
@@ -174,7 +169,6 @@ const success = function (container) {
     container.after(success);
   }
 }
-
 
 // ::: Поиск по задачам :::
 const doFilter = function (e) {
@@ -258,13 +252,7 @@ const taskHandling = function (e) {
   changeTitle ();
 };
 
-// Прослушивание событий фильтра, запускаем функцию  фильтра
-filter.addEventListener('keyup', doFilter);
 
-// Отмена стандарт. поведение формы - по нажатию на submit страница не будет обновляться
-addForm.addEventListener('submit', function(e) {
-  e.preventDefault();
-});
 
-// Добавляем прослушивание контейнеру с задачами, запускаем функцию обработки задач
-mainContainer.addEventListener('click', taskHandling);
+
+export { elements, changeTitle, addTask, saveTask, removeTask, editTask, error, success, taskHandling, doFilter };
