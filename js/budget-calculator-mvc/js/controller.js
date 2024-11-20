@@ -8,6 +8,7 @@ const init = function () {
   view.renderBudget( model.calcBudgetTtl() );
 
   addEventListeners(); // Запускает прослушивание событий по клику
+  animatedHeader(); // Запускает анимацию header
 }
 
 // Ф-ция создаёт запись после отправки формы
@@ -79,45 +80,49 @@ const addEventListeners = function () {
 
 }
 
+// Ф-ция запускает анимайцию
+const animatedHeader = function () {
+  
+    // Настройка размеров canvas
+    const canvasSize = view.setCanvasSize( {width : view.MAPSET.CANVAS_WIDTH, height : view.MAPSET.CANVAS_HEIGHT} );
+
+    // Ф-ция запускает tick , создаётся цикл
+    const start = function (tick, map) {
+      // Получим случ. место появления блока
+      let randomPlace = model.getRandomInt(4, (view.MAPSET.COLUMNS_NUMBERS - 4));
+      // Получим случ. тип блока
+      let randomBlockType = model.getRandomFrom(view.START_BLOCK_NUMBERS);
+
+      view.MAPSET.block = view.getBlock(randomBlockType, `rgba(255, 255, 255, 0.5)`, randomPlace);
+      view.MAPSET.block.x = randomPlace;
+
+      // Запустим функцию тик, передадим timestamp, карту
+      const wrappedTick = function (timestamp) {
+        // Получим случ. место появления блока
+        let randomPlace = model.getRandomInt(4, (view.MAPSET.COLUMNS_NUMBERS - 4));
+        // Получим случ. тип блока
+        let randomBlockType = model.getRandomFrom(view.START_BLOCK_NUMBERS);
+
+        tick(timestamp, map, randomBlockType, randomPlace); // Передаём timestamp, карту, случ. тип блока и случ место появления
+        requestAnimationFrame(wrappedTick); // Вызываем wrappedTick
+      };
+      requestAnimationFrame(wrappedTick); // Запускаем первый кадр
+    }
+
+    // // Получаем матрицу карты
+    view.MAPSET.map = view.getMap();
+
+    // // Сохраним в переменную
+    const map = view.MAPSET.map;
+
+    // // Отрисовываем состояние карты
+    view.drawState(map);
+
+    // // Запустим ф-цию старт, передаем ей на запуск ф-цию tick и массив действий
+    start(view.tick, map);
+
+}
+
 // Старт работы
 init();
 
-
-// Настройка размеров canvas
-const canvasSize = view.setCanvasSize( {width : view.MAPSET.CANVAS_WIDTH, height : view.MAPSET.CANVAS_HEIGHT} );
-
-
-// Ф-ция запускает tick , создаётся цикл
-const start = function (tick, map) {
-  // Получим случ. место появления блока
-  let randomPlace = model.getRandomInt(4, (view.MAPSET.COLUMNS_NUMBERS - 4));
-  // Получим случ. тип блока
-  let randomBlockType = model.getRandomFrom(view.START_BLOCK_NUMBERS);
-
-  view.MAPSET.block = view.getBlock(randomBlockType, `rgba(255, 255, 255, 0.5)`, randomPlace);
-  view.MAPSET.block.x = randomPlace;
-
-  // Запустим функцию тик, передадим timestamp, карту
-  const wrappedTick = function (timestamp) {
-    // Получим случ. место появления блока
-    let randomPlace = model.getRandomInt(4, (view.MAPSET.COLUMNS_NUMBERS - 4));
-    // Получим случ. тип блока
-    let randomBlockType = model.getRandomFrom(view.START_BLOCK_NUMBERS);
-
-    tick(timestamp, map, randomBlockType, randomPlace); // Передаём timestamp, карту, случ. тип блока и случ место появления
-    requestAnimationFrame(wrappedTick); // Вызываем wrappedTick
-  };
-  requestAnimationFrame(wrappedTick); // Запускаем первый кадр
-}
-
-// // Получаем матрицу карты
-view.MAPSET.map = view.getMap();
-
-// // Сохраним в переменную
-const map = view.MAPSET.map;
-
-// // Отрисовываем состояние карты
-view.drawState(map);
-
-// // Запустим ф-цию старт, передаем ей на запуск ф-цию tick и массив действий
-start(view.tick, map);

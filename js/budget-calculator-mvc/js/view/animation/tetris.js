@@ -1,9 +1,12 @@
+// Допустимые типы блоков
 const START_BLOCK_NUMBERS = [1, 3, 6, 7, 10, 13, 19];
 
+// Объект элементов
 const elements = {
   headerEl : document.querySelector('#header')
 }
 
+// Объект с настройками карты
 const MAPSET = {
   CANVAS_WIDTH : 1200 * window.devicePixelRatio,
   CANVAS_HEIGHT : 340 * window.devicePixelRatio, 
@@ -21,6 +24,7 @@ const MAPSET = {
   }
 }
 
+// Настройки canvas
 const canvas = {
   canvas : document.querySelector('#canvas'),
   get width() {
@@ -113,7 +117,7 @@ const drawBlock = function () {
   }
 }
 
-// Ф-ция возвращает карту всех клеток поля, матрицу, 'массив массивовэ
+// Ф-ция возвращает карту всех клеток поля, матрицу, 'массив массивов'
 const getMap = function () {
   const map = [];
 
@@ -336,39 +340,6 @@ const setField = function (x, y, value, map) {
   return map[y][x] = value;
 }
 
-// Ф-ция очищает поля
-const clearLines = function () {
-  let lines = 0;
-
-  const {ROW_NUMBERS, COLUMNS_NUMBERS, map} = MAPSET;
-  for (let y = ROW_NUMBERS - 1; y >= 0; y--) {
-    let isFullLine = true;
-
-    for ( let x = 0; x < COLUMNS_NUMBERS; x++) {
-      if (!getField(x, y, map)) {
-        isFullLine = false;
-        break;
-      }
-    }
-
-    // Если ряд заполнен
-    if (isFullLine) {
-      lines = lines + 1;
-      for ( let t = y; t >= 1 ; t--) {
-        for ( let x = 0; x < COLUMNS_NUMBERS; x++) {
-          map[t][x] = map[t - 1][x];
-          map[t - 1][x] = null;
-        }
-      }
-
-      y = y + 1; // Увелич. на 1, чтобы повторно проверить ряд
-    }
-
-  }
-
-  return lines;
-}
-
 // Ф-ция непрерывно совершает действия 
 const tick = function (timestamp, map, randomBlockType, randomPlace) {
 
@@ -383,14 +354,13 @@ const tick = function (timestamp, map, randomBlockType, randomPlace) {
     if (canBlockExists( blockCopy, map ) ) {
       MAPSET.block = blockCopy;
     } else {
- 
-      // в иноь случае блок 'уперся', значит , превращаем его в статич. структуру
+      // в ином случае блок 'уперся', значит , превращаем его в статич. структуру
       saveBlock(MAPSET.map);
 
-      clearLines();
       MAPSET.block = getBlock( randomBlockType, `rgba(255, 255, 255, 0.5)`, randomPlace);
     }
- 
+
+    // Считаем время падения блока
     MAPSET.downtime = timestamp + getDowntime();
   }
 
@@ -401,8 +371,9 @@ const tick = function (timestamp, map, randomBlockType, randomPlace) {
 
 // Ф-ция определяет цвет блока в зав-ти от типа записи ( расход или доход)
 const getCanvasFigureColor = function (recordType) {
-  // Установим цвет stroke
+  // Установим цвет stroke, на который будем менять цвет блоков при доб. записи
   let strokeColor;
+
   if (recordType === "inc") {
     strokeColor = `#dd5151`;
   } else if (recordType === "exp") {
@@ -414,15 +385,14 @@ const getCanvasFigureColor = function (recordType) {
 
 // Функция для временного изменения цвета блоков
 function changeBlockColorTemporarily (color) {
-  // Изменяем цвет на канвасе
+  // Изменяем цвет блоков
   MAPSET.CANVAS_BACKGROUND = color;
 
-  // Вернем цвет на стандартный через 1 секунду
+  // Вернем цвет на стандартный через 2 секунды
   setTimeout(() => {
     MAPSET.CANVAS_BACKGROUND = '#000'; // возвращаем стандартный цвет
-  }, 1000);
+  }, 2000);
 }
-
 
 
 export { START_BLOCK_NUMBERS, MAPSET, canvas, elements, getCanvasFigureColor,  clearCanvas, drawField, drawBlock, getMap, drawState, setCanvasSize, getBlock, tick, getField, setField, changeBlockColorTemporarily  };

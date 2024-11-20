@@ -4,8 +4,6 @@ import { getRandomInt, getRandomFrom, calcPercent } from './calc/calc.js';
 // Данные
 const budget = [];
 
-
-// >>> Работа с записями <<<
 // Ф-ция считает id для записи
 const calcArrayId = function (startId) {
   let id;
