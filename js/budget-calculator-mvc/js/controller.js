@@ -30,14 +30,10 @@ const createRecord = function (e) {
   view.displayRecord(record); 
 
   // Получим цвет границы фигуры в зав-ти от типа добавленной записи
- let strokeColor = view.getCanvasFigureColor(record.type);
-   // Временно изменим цвет
-  
-   
-   view.drawField(view.MAPSET);
+  let strokeColor = view.getCanvasFigureColor(record.type);
+  // Временно изменим цвет
+  view.changeBlockColorTemporarily(strokeColor);
 
-   // Вернем стандартный цвет через 1 секунду
-   setTimeout(() => view.drawField(), 1000);
 
   // Обновляем бюджет и показываем на странице
   view.renderBudget( model.calcBudgetTtl() );
@@ -83,23 +79,18 @@ const addEventListeners = function () {
 
 }
 
-
 // Старт работы
 init();
-
 
 
 // Настройка размеров canvas
 const canvasSize = view.setCanvasSize( {width : view.MAPSET.CANVAS_WIDTH, height : view.MAPSET.CANVAS_HEIGHT} );
 
-// view.canvas.canvas.context.stroke();
-
-
-// // Ф-ция запускает tick , создаётся цикл
+// Ф-ция запускает tick , создаётся цикл
 const start = function (tick, map) {
-  // Поулчим случ место появления блока
+  // Получим случ. место появления блока
   let randomBlockPos = model.getRandomInt(view.MAPSET.COLUMNS_NUMBERS);
-  // Поулчим случ тип блока
+  // Получим случ. тип блока
   let randomBlockType = model.getRandomInt(view.MAPSET.blockTypes);
   
   view.MAPSET.block.type = randomBlockType;
@@ -109,12 +100,10 @@ const start = function (tick, map) {
   // Запустим функцию тик, передадим timestamp, карту
   const wrappedTick = function (timestamp) {
     tick(timestamp, map); // Передаём timestamp и actions в tick
-    requestAnimationFrame(wrappedTick); // Рекурсивно вызываем wrappedTick
+    requestAnimationFrame(wrappedTick); // Вызываем wrappedTick
   };
   requestAnimationFrame(wrappedTick); // Запускаем первый кадр
 }
-
-
 
 // // Получаем матрицу карты
 view.MAPSET.map = view.getMap();

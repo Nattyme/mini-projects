@@ -14,5 +14,5 @@ const getRecordHtml = function (recordValuesObj) {
   `;
 }
 
-export {getRecordHtml} ;
+export { getRecordHtml }  ;
 

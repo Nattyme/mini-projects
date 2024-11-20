@@ -1,5 +1,10 @@
-import { getRecordHtml } from './templates/templates.js';
-import { MAPSET, canvas, elements as tetrisEl, clearCanvas, drawField, drawBlock, getMap, drawState, setCanvasSize, getBlock, tick, getField, getCanvasFigureColor, setField} from './animation/tetris.js';
+import { priceFormatter, RecordHtml } from './constructor/constructor.js';
+import { removeErrorOnFocus, validateInput } from './UI/validate.js';
+import { getButtonDelete } from './UI/buttons.js';
+import { getRecordHtml } from './UI/templates.js';
+import { getFormValues, clearForm } from './UI/form.js';
+import { displayRecord, removeRecordHtml } from './UI/lists.js';
+import { MAPSET, canvas, clearCanvas, drawField, drawBlock, getMap, drawState, setCanvasSize, getBlock, tick, getField, getCanvasFigureColor, setField, changeBlockColorTemporarily} from './animation/tetris.js';
 
 // Объект с переменными DOM элементов страницы
 const elements = {
@@ -26,113 +31,6 @@ const elements = {
   }
 }
 
-// Ф-ция удаляет рамку ошибки при фокусе
-const removeErrorOnFocus = function (e, elements) {
-  // Если фокус на инпуте - удалим класс error
-  if ( elements.includes(e.target) && e.target.classList.contains('form__input--error')) { 
-    e.target.classList.remove('form__input--error'); 
-  }
-}
-
-// Ф-ция проверет введённые данные формы
-const validateInput = function (inputArray) {
-  // Зададим флаг для валидации
-  let isValid = true;
-  const toggleErrorDisplay = function (input) {
-    input.classList.add('form__input--error');
-  }
-
-  inputArray.forEach(input => {
-  
-     // Проверка на пустую строку. Сменим флаг isValid в случае ошибки
-    if (input.value.trim() === '') {    
-      toggleErrorDisplay(input);
-      isValid = false;
-    } else {
-      input.classList.remove('form__input--error');
-    }
-
-    // Если поле инпута заполнено
-    if (input.value.trim() !== '' && input.type === 'text') {
-      const allowed = /^[a-zA-Zа-яА-Я\s,.\?!;:"'()&+\-=\\]+$/; // Разрешены только буквы и несколько символов
-
-      if (allowed.test(input.value) === false) {
-        toggleErrorDisplay(input);
-        isValid = false;
-      }
-
-    }
-
-    // Если поле Input для ввода цифр, то доп. проверка
-    if (input.type === 'number' ) {
-      if (input.value.trim() === '') {
-        toggleErrorDisplay(input);
-        isValid = false;
-      }
-
-      // Явно преобразуем в число с основ. 10
-      const numberValue = parseInt(input.value.trim(), 10);
-      if (isNaN(numberValue) || numberValue <= 0 || numberValue === Infinity || numberValue === - Infinity) {
-        toggleErrorDisplay(input);
-        isValid = false;
-      }
-    } 
-
-  
-  });
-
-  return isValid;
-}
-
-// Ф-ция записывает данные флрмы в объект
-const getFormValues = function () {
-  const formValues = {
-    type : elements.form.type.value,
-    title : elements.form.title.value,
-    value : elements.form.value.value 
-  }
-  return formValues;
-}
-
-// Ф-ция определяет тип списка с записями
-const getRecordListType = function (type) {
-  return type === 'inc' ? elements.recordsLists.incomesList : elements.recordsLists.expensesList;
-}
-
-// Констр-р создаёт объект с данными записи 
-const RecordHtml = function (recordValues, liClassMode, imgName) {
-  this.values = recordValues;
-  this.classMode = liClassMode;
-  this.imgFolder = 'img';
-  this.imgName = imgName;
-  this.imgSrc = './' + this.imgFolder + '/' + this.imgName;
-}
-
-// Ф-ция добавляет HTML код записей
-const insertRecordHtml = function (listType, record) {
-
-  // В зав-ти от типа листа выбираем иконку и модификатор класса для Li
-  const icon = listType === elements.recordsLists.incomesList ? 'circle-green.svg' : 'circle-red.svg';
-
-  // В зав-ти от типа листа выбираем модификатор класса для Li
-  const classMode = listType === elements.recordsLists.incomesList ? 'income' : 'expense';
-
-  // Создадим объект с данными записи и сохр. в recordHtml
-  let recordData =  new RecordHtml(record, classMode, icon);
-
-  // Подставим знач-я записи в шаблон и добавим на страницу
-  listType.insertAdjacentHTML('afterbegin', getRecordHtml(recordData));
-}
-
-// Ф-ция отображает записи на странице
-const displayRecord = function (record) {
-  // Получим тип листа с записями
-  let list = getRecordListType(record.type);
-
-  // Добавим запись в нужный лист 
-  insertRecordHtml(list, record);
-}
-
 // Ф-ция отображает бюджет на странице
 const renderBudget = function ({income, expense, budget, expensePercents}) {
 
@@ -143,25 +41,6 @@ const renderBudget = function ({income, expense, budget, expensePercents}) {
 
   // Показываем бейдж в зав-ти от expensePercents
   elements.header.percentsWrapper.innerHTML = expensePercents ? `<div class="badge">${expensePercents}%</div>` : '';
-
-}
-
-// Ф-ция очищает форму и сбрасывает ошибки.
-const clearForm = function (isValid) {
-  elements.formEl.reset();
-
-  // Найдем ошибки (если есть)
-  const errorsArray = document.querySelectorAll('.form__input--error');
-
-  // Есть есть ошибки - сбросим
-  if (errorsArray.length !== 0 ) {
-    errorsArray.forEach(error => {
-      error.classList.remove('form__input--error');
-    });
-  }
-
-  // Вернём значение для isValid
-  isValid = true;
 
 }
 
@@ -178,26 +57,5 @@ const renderTestData = function (randomTestData) {
   elements.form.value.value = randomTestData['value'];
 }
 
-// Ф-ция создает объект форматтера для чисел
-const priceFormatter = new Intl.NumberFormat('ru-RU', {
-  style : 'currency',
-  currency : 'USD',
-  maximumFractionDigits : 0
-});
 
-// Ф-ция находит кнопку 'удалить'
-const getButtonDelete = function (e) {
-  return e.target.closest('[data-delete]');
-}
-
-// Ф-ция удаляет запись со страницы
-const removeRecordHtml = function (buttonDelete) {
-  const recordParent = buttonDelete.closest('li.budget-list__item');  
-  const id = recordParent.dataset.id;  
-
-  if (recordParent) recordParent.remove(id); 
-  
-  return id; // Вернём id элемента Li
-}
-
-export { elements, MAPSET, canvas, elements as tetrisEl, getCanvasFigureColor, validateInput, removeErrorOnFocus, displayRecord, renderBudget, clearForm, getFormValues, renderMonth, renderTestData, getButtonDelete, removeRecordHtml, priceFormatter, clearCanvas, drawField, drawBlock, getMap, drawState, setCanvasSize, getBlock, tick, getField, setField};
+export { elements, MAPSET, canvas, elements as tetrisEl, getCanvasFigureColor, validateInput, removeErrorOnFocus, displayRecord, renderBudget, clearForm, getFormValues, renderMonth, renderTestData, getButtonDelete, removeRecordHtml, RecordHtml, getRecordHtml, priceFormatter, clearCanvas, drawField, drawBlock, getMap, drawState, setCanvasSize, getBlock, tick, getField, setField, changeBlockColorTemporarily};

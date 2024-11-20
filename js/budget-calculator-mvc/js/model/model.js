@@ -1,10 +1,9 @@
+import { getMonthAndYear } from './date_time/date_time.js';
+import { getRandomInt, calcPercent } from './calc/calc.js';
+
 // Данные
 const budget = [];
 
-// Ф-ция создаёт случайное число
-const getRandomInt = function (maxExclusive) {
-  return Math.floor(Math.random() * maxExclusive);
-};
 
 // >>> Работа с записями <<<
 // Ф-ция считает id для записи
@@ -22,7 +21,7 @@ const calcArrayId = function (startId) {
   return id;
 };
 
-// Ф-ция создаёт объект записи
+// Ф-ция создаёт объект записи и добавляет в budget
 const createObjRecord = function (formValues, id) {
   const record = {
       id: id,
@@ -68,13 +67,6 @@ const removeRecord = function (id) {
 
 
 // >>> Работа с подсчетом бюджета <<<
-// Ф-ция считает процент от суммы
-const calcPercent = function (ofWhat, fromWhat) {
-  if (!fromWhat) return 0;
-  // Если полуен элем., от кот. нужно посчитать % - считаем %
-  return Math.round((ofWhat * 100) / fromWhat);
-}
-
 // Ф-ция считает бюджет
 const calcBudgetTtl = function () {
   // Запишем в объект total начальные значения income, expense, budget
@@ -100,22 +92,6 @@ const calcBudgetTtl = function () {
   total.expensePercents = calcPercent(total.expense, total.income); 
 
   return total;
-}
-
-
-// >>> Работа с датой <<<
-// Ф-ция  cоздает объект форматтера для даты
-const timeFormatter = new Intl.DateTimeFormat('ru-Ru', {
-  month : 'long'
-});
-
-// Ф-ция вычисляет текущий месяц и год 
-const getMonthAndYear = function () {
-  const today = new Date();
-  const todayMonth = timeFormatter.format(today);
-  const todayYear = today.getFullYear();
- 
-  return {todayMonth, todayYear};
 }
 
 

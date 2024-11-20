@@ -1,12 +1,18 @@
+const  START_BLOCK_NUMBERS = [1, 3, 6, 7, 10, 13, 19];
+
+const elements = {
+  headerEl : document.querySelector('#header')
+}
+
 const MAPSET = {
-  CANVAS_WIDTH : 1200,
-  CANVAS_HEIGHT : 340, 
+  CANVAS_WIDTH : 1200 * window.devicePixelRatio,
+  CANVAS_HEIGHT : 340 * window.devicePixelRatio, 
   CANVAS_BACKGROUND : '#000',
   ROW_NUMBERS : 17,
   COLUMNS_NUMBERS : 60,
   PADDING : 0,
   downtime: getDowntime(),
-  block : getBlock(1),
+  block : getBlock(getRandomFrom(START_BLOCK_NUMBERS)),
   blockTypes: 19,
   get fieldWidth () {
     return this.CANVAS_WIDTH / this.COLUMNS_NUMBERS; // fieldWidth
@@ -35,8 +41,9 @@ const canvas = {
   },
 }
 
-const elements = {
-  body : document.body
+function getRandomFrom (array) {
+  const index = Math.floor(Math.random() * array.length);
+  return array[index];
 }
 
 // Ф-ция устанавливает размеры canvas
@@ -47,7 +54,7 @@ const setCanvasSize = function (size) {
   return size;
 }
 
-// Фн=-ция считает время 'падения' блока
+// Ф-ция считает время 'падения' блока
 function getDowntime () {
   return 200;
 }
@@ -92,10 +99,11 @@ const drawField = function (x, y, color) {
 
   canvas.context.strokestyle = color;
   canvas.context.strokeRect(
-    x * fieldWidth + PADDING, 
-    y * fieldHeight + PADDING, 
-    fieldWidth - PADDING * 2, 
-    fieldHeight - PADDING * 2);
+        x * fieldWidth + PADDING, 
+        y * fieldHeight + PADDING, 
+        fieldWidth - PADDING * 2, 
+      fieldHeight - PADDING * 2);
+
 }
 
 // Ф-ция рисует блок
@@ -309,7 +317,6 @@ const canBlockExists = function (block, map) {
 
   for ( const part of parts) {
     if (getField(part.x, part.y, map)) {  
-      console.error('Unexpected value "black" in field[19]');    
       return false;
     }
   }
@@ -317,6 +324,7 @@ const canBlockExists = function (block, map) {
   return true;
 }
 
+// Ф-ция возвращает NULL , если поле свободно. В ином случае - 'white'
 const getField = function (x, y, map) {
   if (map[y] === undefined || map[y][x] === undefined) {
     return 'white';
@@ -334,6 +342,7 @@ const setField = function (x, y, value, map) {
   return map[y][x] = value;
 }
 
+// Ф-ция очищает поля
 const clearLines = function () {
   let lines = 0;
 
@@ -384,11 +393,9 @@ const tick = function (timestamp, map) {
       saveBlock(MAPSET.map);
 
       clearLines();
-      MAPSET.block = getBlock(Math.floor(Math.random() * 20), 'white', (Math.floor(Math.random() * 60)));
-
+      MAPSET.block = getBlock( getRandomFrom(START_BLOCK_NUMBERS), 'white',  Math.floor(Math.random() * 61));
     }
-    console.log( MAPSET.block.x)
-    console.log( MAPSET.block.y)
+ 
     MAPSET.downtime = timestamp + getDowntime();
   }
 
@@ -397,17 +404,30 @@ const tick = function (timestamp, map) {
   drawState(map)
 }
 
+// Ф-ция определяет цвет блока в зав-ти от типа записи ( расход или доход)
 const getCanvasFigureColor = function (recordType) {
   // Установим цвет stroke
   let strokeColor;
   if (recordType === "inc") {
-    strokeColor = "green";
+    strokeColor = `#dd5151`;
   } else if (recordType === "exp") {
-    strokeColor = "red";
+    strokeColor = `#2fcc81`;
   }
 
   return strokeColor;
 }
 
+// Функция для временного изменения цвета блоков
+function changeBlockColorTemporarily (color) {
+  // Изменяем цвет на канвасе
+  MAPSET.CANVAS_BACKGROUND = color;
 
-export { MAPSET, canvas, elements, getCanvasFigureColor,  clearCanvas, drawField, drawBlock, getMap, drawState, setCanvasSize, getBlock, tick, getField, setField  };
+  // Вернем цвет на стандартный через 1 секунду
+  setTimeout(() => {
+    MAPSET.CANVAS_BACKGROUND = '#000'; // возвращаем стандартный цвет
+  }, 5000);
+}
+
+
+
+export { MAPSET, canvas, elements, getCanvasFigureColor,  clearCanvas, drawField, drawBlock, getMap, drawState, setCanvasSize, getBlock, tick, getField, setField, changeBlockColorTemporarily  };
