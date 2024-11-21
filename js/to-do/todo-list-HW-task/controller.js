@@ -18,9 +18,9 @@ const startEventListeners = function () {
     let id = model.Task.getID();
     
     // Создадим объект задачи (startNumber)
-    let taskData = model.createTaskData(id, userText, ['delete', 'edit']); 
-    view.addTask(taskData);
-    // isValid ? view.addTask(taskData) : console.log('error');
+    let taskData = model.createTaskData(id, userText); 
+    
+    isValid ? view.addTask(taskData, ['delete', 'edit']) : console.log('error');
    
   });
 
@@ -32,15 +32,19 @@ const startEventListeners = function () {
 const taskHandling = function (e) {
   // Если клик по кнопке 'delete' - удаляем задачу
   if (e.target.getAttribute("data-action") && e.target.getAttribute("data-action") === 'delete') {
-    let removedTask = view.removeTask(e);
-    console.log(removedTask);
-    model.removeTaskData(removedTask);
-    
+    let removedTask = view.removeTask(e); // удаляем задачу со страницы
+    model.removeTaskData(removedTask); // удаляем данные задачи из объекта
   }
 
   // Если клик по кнопке 'edit' - редактируем задачу
   if (e.target.getAttribute("data-action") && e.target.getAttribute("data-action") === 'edit') {
-    view.editTask(e);
+    const taskId =  e.target.closest('li').dataset.id;
+
+    // Замени кнопки в данных задачи и запишем в переменную
+    let buttonTypes = model.findTask(taskId).buttonTypes = ['cancel', 'save'];
+
+    // Запустим функцию рендера и передадим кнопки
+    view.editTask(taskId, buttonTypes);
   }
 
   // Прослушивание события инпута для ввода новой задачи. Если после уведомления он снова в фокусе - скрыть уведомление

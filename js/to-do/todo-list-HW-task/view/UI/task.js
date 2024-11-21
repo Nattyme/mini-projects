@@ -1,7 +1,7 @@
 import { buttons } from './buttons.js';
 
 class TaskHTML {
-  constructor ({ id, text, buttonTypes }) {
+  constructor ({ id, text}, buttonTypes) {
     this.id = id,
     this.text = text,
     this.buttonTypes = buttonTypes;

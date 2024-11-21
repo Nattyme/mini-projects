@@ -63,8 +63,8 @@ const removeTask = function (e, message) {
 }
 
 // = Добавление задачи на страницу =
-const addTask = function (taskData) {
-  const task = new UI.TaskHTML(taskData).getHTML();// получаем шаблон задачи
+const addTask = function (taskData, buttonTypes) {
+  const task = new UI.TaskHTML(taskData, buttonTypes).getHTML();// получаем шаблон задачи
 
   // Добавим задачу в список задач на странице
   elements.tasksList.insertAdjacentHTML('afterbegin', task);
@@ -73,23 +73,16 @@ const addTask = function (taskData) {
   elements.newTaskInput.value = '';
 }
 
-
-
 // Функция редактирования текста задачи
-const editTask = function (e) {
-  const task =  e.target.closest('li');
-  console.log(task);
-  
-  toggleButtons(e.target);
-  // Скрываем кнопку, по которой был клик
-  // e.target.style.display = 'none';
+const editTask = function (taskId, buttonTypes) {
+  console.log(buttonTypes);
+  console.log(taskId);
+  const task = new UI.TaskHTML(taskData).getHTML(); // получаем шаблон задачи
 
-  // const buttons = getButtons(e.target); //array
-
-  // // Скрываем кнопки "Удалить", "Сохранить", "Отмена"
-  // buttons.buttonDelete.style.display = 'none';
-  // buttons.buttonSave.style.display = 'block';
-  // buttons.buttonCancel.style.display = 'block';
+  // Добавим задачу в список задач на странице
+  elements.tasksList.insertAdjacentHTML('afterbegin', task);
+  // console.log(UI.getHTML());
+  return
 
   // Находим список задач
   let tasks = elements.tasksList.querySelectorAll('li');
@@ -137,30 +130,30 @@ const editTask = function (e) {
   });
 }
 
-const toggleButtons = function (target) {
-  // Скрываем кнопку, по которой был клик
-  console.log( target.nextElementSibling);
-  // target.remove();
+// const toggleButtons = function (target) {
+//   // Скрываем кнопку, по которой был клик
+//   console.log( target.nextElementSibling);
+//   // target.remove();
  
-  const classList = UI.buttons.edit.classList;
-  console.log(classList)
-  console.log(classList.push('display: none'))
-  console.log(classList)
+//   const classList = UI.buttons.edit.classList;
+//   console.log(classList)
+//   console.log(classList.push('display: none'))
+//   console.log(classList)
   
-  const buttons = getButtons(target); //array
+//   const buttons = getButtons(target); //array
   
-  let type = target.getAttribute('data-action');
-  switch (type) {
-    case 'edit' :
-      buttons.buttonDelete.style.display = 'none';
-      buttons.buttonSave.style.display = 'block';
-      buttons.buttonCancel.style.display = 'block';
-      break;
-    case 'save' :
+//   let type = target.getAttribute('data-action');
+//   switch (type) {
+//     case 'edit' :
+//       buttons.buttonDelete.style.display = 'none';
+//       buttons.buttonSave.style.display = 'block';
+//       buttons.buttonCancel.style.display = 'block';
+//       break;
+//     case 'save' :
 
-   }
+//    }
 
-}
+// }
 
 // Функция сохранения задачи
 const saveTask = function (e) {

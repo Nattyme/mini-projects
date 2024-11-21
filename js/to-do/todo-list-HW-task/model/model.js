@@ -2,9 +2,9 @@ import { MESSAGES } from './data/messages.js';
 
 const tasks = [];
 
-const createTaskData = function (id, text, buttonTypes) {
+const createTaskData = function (id, text) {
 
-  const taskData = new Task(id, text, buttonTypes);
+  const taskData = new Task(id, text);
   tasks.push(taskData);
 
   return taskData;
@@ -19,11 +19,19 @@ const removeTaskData = function (id) {
 
 }
 
+const findTask = function (id) {
+  
+  let taskId = tasks.findIndex( function (taskData) {
+    return parseInt(id) === taskData.id;
+  });
+
+  return tasks[taskId];
+}
+
 class Task {
-  constructor ( id, text, buttonTypes) {
+  constructor ( id, text) {
     this.id = id,
-    this.text = text,
-    this.buttonTypes = buttonTypes
+    this.text = text
   }
 
   static getID = function ( startId = 1) {
@@ -34,16 +42,12 @@ class Task {
     } else {
       let lastElement = tasks[tasks.length - 1];
       id = lastElement.id + 1;
-      console.log('lastElement.id');
-      console.log(lastElement);
-      console.log(lastElement.id);
-      
     }
 
     return id;
   }
 }
 
-console.log(tasks);
 
-export { MESSAGES, Task, createTaskData, removeTaskData };
+
+export { MESSAGES, Task, createTaskData, removeTaskData, findTask };
