@@ -68,21 +68,4 @@ const buttons = {
   }
 }
 
-// Ф-ция ищет html кнопкок массива buttonsNeed в св-вах объекта buttonsAll. Возвращает массив 
-const getButtons = function (buttonsAll, buttonsNeed) {
-  const buttons = [];
- 
-   buttonsNeed.forEach ( button => {
-    for (let key in buttonsAll) {
-      if (key === button) {
-        buttons.push(buttonsAll[key].html);
-      }
-     }
-  });
-
- return buttons.join(' ');
-  
-}
-
-
-export { buttons, getButtons };
+export { buttons };

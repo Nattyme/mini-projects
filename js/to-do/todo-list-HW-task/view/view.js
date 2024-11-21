@@ -51,8 +51,9 @@ const addTask = function () {
   // Получим текст задачи
   let userText = elements.newTaskInput.value.trim();
 
-  // Получим шаблон li и добавим текст
-  const taskHTML =  UI.taskLi.replace('{{taskText}}', userText);
+
+  const task = new UI.Task(userText, ['delete', 'edit']); // создаем объект задачт
+  const taskHTML = task.getHTML(); // получаем шаблон задачи
 
   // Добавим задачу в список задач на странице
   elements.tasksList.insertAdjacentHTML('afterbegin', taskHTML);
