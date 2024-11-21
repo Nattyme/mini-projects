@@ -1,12 +1,11 @@
-import { buttons } from './buttons.js';
+import { buttons, getButtons } from './buttons.js';
+
+
 
 const taskLi = `
                   <li class="list-group-item">
                       {{taskText}}
-                      ${buttons.save}
-                      ${buttons.cancel}
-                      ${buttons.delete}
-                      ${buttons.edit}
+                      ${getButtons(buttons, ['delete', 'edit'])}
                   </li>
                 `;
 

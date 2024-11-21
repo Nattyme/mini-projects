@@ -60,7 +60,6 @@ const addTask = function () {
   // Очищаем поле ввода для текста 
   elements.newTaskInput.value = '';
 }
-
 // Функция сохранения задачи
 const saveTask = function (e) {
   // Получаем задачи
@@ -99,27 +98,59 @@ const removeTask = function (e, message) {
   }
 }
 
-const getButtons = function () {
-   // Находим кнопки по 'родителю' кнопки первого клика
-   let buttonSave = e.target.parentNode.querySelector('[data-action = "save"]');
-   let buttonDelete = e.target.parentNode.querySelector('[data-action="delete"]');
-   let buttonCancel = e.target.parentNode.querySelector('[data-action="cancel"]');
-   let buttonEdit = e.target.parentNode.querySelector('[data-action="edit"]');
 
-   return {buttonSave, buttonDelete, buttonCancel, buttonEdit};
+// const getButtons = function (target) {
+//   const buttons = [];
+//    switch (target) {
+//     case 'edit' :
+//       buttons.push(buttons.save, buttons.cancel);
+//       break;
+//    }
+// console.log(buttons);
+
+//    return {buttons};
+// }
+
+const toggleButtons = function (target) {
+  // Скрываем кнопку, по которой был клик
+  console.log( target.nextElementSibling);
+  // target.remove();
+ 
+  const classList = UI.buttons.edit.classList;
+  console.log(classList)
+  console.log(classList.push('display: none'))
+  console.log(classList)
+  
+  const buttons = getButtons(target); //array
+  
+  let type = target.getAttribute('data-action');
+  switch (type) {
+    case 'edit' :
+      buttons.buttonDelete.style.display = 'none';
+      buttons.buttonSave.style.display = 'block';
+      buttons.buttonCancel.style.display = 'block';
+      break;
+    case 'save' :
+
+   }
+   
+  
 }
 
 // Функция редактирования текста задачи
 const editTask = function (e) {
+
+
+  toggleButtons(e.target);
   // Скрываем кнопку, по которой был клик
-  e.target.style.display = 'none';
+  // e.target.style.display = 'none';
 
-  const buttons = getButtons();
+  // const buttons = getButtons(e.target); //array
 
-  // Скрываем кнопки "Удалить", "Сохранить", "Отмена"
-  buttons.buttonDelete.style.display = 'none';
-  buttons.buttonSave.style.display = 'block';
-  buttons.buttonCancel.style.display = 'block';
+  // // Скрываем кнопки "Удалить", "Сохранить", "Отмена"
+  // buttons.buttonDelete.style.display = 'none';
+  // buttons.buttonSave.style.display = 'block';
+  // buttons.buttonCancel.style.display = 'block';
 
   // Находим список задач
   let tasks = elements.tasksList.querySelectorAll('li');

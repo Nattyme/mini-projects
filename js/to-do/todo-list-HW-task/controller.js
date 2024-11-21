@@ -29,9 +29,9 @@ const taskHandling = function (e) {
     removeTask(e);
   }
 
-  // Если клик по кнопке 'edit' - удаляем задачу
+  // Если клик по кнопке 'edit' - редактируем задачу
   if (e.target.getAttribute("data-action") && e.target.getAttribute("data-action") === 'edit') {
-    editTask(e);
+    view.editTask(e);
   }
 
   // Прослушивание события инпута для ввода новой задачи. Если после уведомления он снова в фокусе - скрыть уведомление
