@@ -3,15 +3,15 @@ import * as UI from './UI/index.js';
 
 const elements = {
   addForm : document.querySelector('#addForm'),  
-  mainContainer : document.querySelector('#main'), 
+  newTaskInput : addForm.querySelector('#newItemText'), 
+  buttonSubmit : addForm.querySelector('#buttonSubmit'),
 
-  newItemInput : document.querySelector('#newItemText'), 
+  mainContainer : document.querySelector('#main'), 
   filter : document.querySelector('#filter'),  
 
-  buttonSubmit : document.querySelector('#buttonSubmit'),
 
   taskListTitle : document.querySelector('#taskListTitle'),
-  itemsList : document.querySelector('#items'), 
+  tasksList : document.querySelector('#items'), 
 }
 
 // = Уведомление 
@@ -29,7 +29,7 @@ const displayNotification = function (type, message, container) {
 }
 
 const validateInput = function () {
-  if (elements.newItemInput.value === '' && elements.newItemInput.value.length < 4 ) {
+  if (elements.newTaskInput.value === '' && elements.newTaskInput.value.length < 4 ) {
     return false;
   }
 
@@ -39,7 +39,7 @@ const validateInput = function () {
 
 // Функция проверяет, в списке есть задачи или он пуст. По результату выводим нужный текст в заголовок.
 function changeTitle () {
-  if (elements.itemsList.clientHeight > 0) {
+  if ( elements.tasksList.clientHeight > 0) {
     elements.taskListTitle.textContent = 'Список дел';
   } else {
     elements.taskListTitle.textContent = 'Список дел пуст';
@@ -48,16 +48,23 @@ function changeTitle () {
 
 // = Добавление задачи на страницу =
 const addTask = function () {
+  // Получим текст задачи
+  let userText = elements.newTaskInput.value.trim();
 
+  // Получим шаблон li и добавим текст
+  const taskHTML =  UI.taskLi.replace('{{taskText}}', userText);
+
+  // Добавим задачу в список задач на странице
+  elements.tasksList.insertAdjacentHTML('afterbegin', taskHTML);
 
   // Очищаем поле ввода для текста 
-  elements.newItemInput.value = '';
+  elements.newTaskInput.value = '';
 }
 
 // Функция сохранения задачи
 const saveTask = function (e) {
   // Получаем задачи
-  let tasks = elements.itemsList.querySelectorAll('li');
+  let tasks =  elements.tasksList.querySelectorAll('li');
 
   // Обходим задачи
   tasks.forEach(function (task) {
@@ -115,7 +122,7 @@ const editTask = function (e) {
   buttons.buttonCancel.style.display = 'block';
 
   // Находим список задач
-  let tasks = elements.itemsList.querySelectorAll('li');
+  let tasks = elements.tasksList.querySelectorAll('li');
 
   // Обходим задачи
   tasks.forEach(function (task) {
@@ -170,7 +177,7 @@ const doFilter = function (e) {
   let searchRequest = e.target.value.toLowerCase();
 
   // Находим все задачи
-  let tasks = elements.itemsList.querySelectorAll('li');
+  let tasks = elements.tasksList.querySelectorAll('li');
 
   tasks.forEach(function (task) {
     

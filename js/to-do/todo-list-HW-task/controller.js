@@ -13,7 +13,7 @@ const startEventListeners = function () {
     view.changeTitle();
 
     const isValid = view.validateInput();
-    console.log(isValid);
+  
     isValid ? view.addTask() : console.log('error');
 
   });
@@ -35,7 +35,7 @@ const taskHandling = function (e) {
   }
 
   // Прослушивание события инпута для ввода новой задачи. Если после уведомления он снова в фокусе - скрыть уведомление
-  view.elements.newItemInput.onfocus = function() {
+  view.elements.newTaskInput.onfocus = function() {
     // Скрыть уведомление об ошибке
     if (view.elements.addForm.nextElementSibling.classList.contains('alert-danger')) {
       // удаляем индикатор ошибки, т.к. пользователь хочет ввести данные заново
