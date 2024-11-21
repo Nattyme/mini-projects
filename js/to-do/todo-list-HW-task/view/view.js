@@ -48,9 +48,7 @@ function changeTitle () {
 
 // = Добавление задачи на страницу =
 const addTask = function () {
-  // Получим текст задачи
-  let userText = elements.newTaskInput.value.trim();
-
+  let userText = elements.newTaskInput.value.trim(); // Получим текст задачи
 
   const task = new UI.Task(userText, ['delete', 'edit']); // создаем объект задачт
   const taskHTML = task.getHTML(); // получаем шаблон задачи
@@ -61,6 +59,7 @@ const addTask = function () {
   // Очищаем поле ввода для текста 
   elements.newTaskInput.value = '';
 }
+
 // Функция сохранения задачи
 const saveTask = function (e) {
   // Получаем задачи
@@ -90,7 +89,7 @@ const saveTask = function (e) {
 
 // = Удаление задачи со страницы =
 const removeTask = function (e, message) {
-  // Находим контейнер задач - ближайший элемент <li> от кнопки , по кот клик
+  // Находим текст задачи - по ближайшему элементу <li> от кнопки , по кот клик
   let taskText = e.target.closest('li').firstChild.textContent.trim();
 
   // Подтверждение об удаления

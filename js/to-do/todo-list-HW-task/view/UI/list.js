@@ -29,6 +29,4 @@ class Task {
   }
 }
 
-
-
 export { Task };

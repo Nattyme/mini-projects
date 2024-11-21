@@ -26,7 +26,7 @@ const startEventListeners = function () {
 const taskHandling = function (e) {
   // Если клик по кнопке 'delete' - удаляем задачу
   if (e.target.getAttribute("data-action") && e.target.getAttribute("data-action") === 'delete') {
-    removeTask(e);
+    view.removeTask(e);
   }
 
   // Если клик по кнопке 'edit' - редактируем задачу
