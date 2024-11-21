@@ -1,4 +1,4 @@
 import { buttons} from './buttons.js';
-import { Task } from './list.js';
+import { TaskHTML } from './task.js';
 
-export { buttons, Task };
+export { buttons, TaskHTML };

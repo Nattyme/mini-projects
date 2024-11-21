@@ -1,6 +1,8 @@
 import { NOTES } from './templates/templates.js';
 import * as UI from './UI/index.js';
 
+const tasks = []; // Массив для хранения объектов задач
+
 const elements = {
   addForm : document.querySelector('#addForm'),  
   newTaskInput : addForm.querySelector('#newItemText'), 
@@ -46,101 +48,38 @@ function changeTitle () {
   }
 }
 
-// = Добавление задачи на страницу =
-const addTask = function () {
-  let userText = elements.newTaskInput.value.trim(); // Получим текст задачи
+// = Удаление задачи со страницы =
+const removeTask = function (e, message) {
+  let task = e.target.closest('li');
+  let id = task.dataset.id;
 
-  const task = new UI.Task(userText, ['delete', 'edit']); // создаем объект задачт
-  const taskHTML = task.getHTML(); // получаем шаблон задачи
+  // Подтверждение об удаления
+  if (confirm(message)) {
+    if (task) task.remove(id); 
+    task.remove(); // удалим задачу
+  }
+
+  return id; // и вернём её id
+}
+
+// = Добавление задачи на страницу =
+const addTask = function (taskData) {
+  const task = new UI.TaskHTML(taskData).getHTML();// получаем шаблон задачи
 
   // Добавим задачу в список задач на странице
-  elements.tasksList.insertAdjacentHTML('afterbegin', taskHTML);
+  elements.tasksList.insertAdjacentHTML('afterbegin', task);
 
   // Очищаем поле ввода для текста 
   elements.newTaskInput.value = '';
 }
 
-// Функция сохранения задачи
-const saveTask = function (e) {
-  // Получаем задачи
-  let tasks =  elements.tasksList.querySelectorAll('li');
 
-  // Обходим задачи
-  tasks.forEach(function (task) {
-    
-    // Получили текст задачи списка, убрали пробелы, сохранили в новую переменную
-    let taskNewText = task.firstChild.textContent.trim();
-    
-    // Проверяем, если поле задачи не пустое - сохраняем
-    if (taskNewText !== '') {
-      task.firstChild.textContent = taskNewText;
-
-      // Выводим уведомление об успехе
-      displayNotification(success, model.data.messages.success, elements.addForm)
- 
-    } else {
-      // Или оставляем предыдущий текст
-      // Проверка не работает
-      task.firstChild.textContent = taskText;
-    }
-  });
-
-}
-
-// = Удаление задачи со страницы =
-const removeTask = function (e, message) {
-  // Находим текст задачи - по ближайшему элементу <li> от кнопки , по кот клик
-  let taskText = e.target.closest('li').firstChild.textContent.trim();
-
-  // Подтверждение об удаления
-  if (confirm(message)) {
-    e.target.closest('li').remove();
-  }
-}
-
-
-// const getButtons = function (target) {
-//   const buttons = [];
-//    switch (target) {
-//     case 'edit' :
-//       buttons.push(buttons.save, buttons.cancel);
-//       break;
-//    }
-// console.log(buttons);
-
-//    return {buttons};
-// }
-
-const toggleButtons = function (target) {
-  // Скрываем кнопку, по которой был клик
-  console.log( target.nextElementSibling);
-  // target.remove();
- 
-  const classList = UI.buttons.edit.classList;
-  console.log(classList)
-  console.log(classList.push('display: none'))
-  console.log(classList)
-  
-  const buttons = getButtons(target); //array
-  
-  let type = target.getAttribute('data-action');
-  switch (type) {
-    case 'edit' :
-      buttons.buttonDelete.style.display = 'none';
-      buttons.buttonSave.style.display = 'block';
-      buttons.buttonCancel.style.display = 'block';
-      break;
-    case 'save' :
-
-   }
-   
-  
-}
 
 // Функция редактирования текста задачи
 const editTask = function (e) {
-
-
+  const task =  e.target.closest('li');
+  console.log(task);
+  
   toggleButtons(e.target);
   // Скрываем кнопку, по которой был клик
   // e.target.style.display = 'none';
@@ -198,6 +137,57 @@ const editTask = function (e) {
   });
 }
 
+const toggleButtons = function (target) {
+  // Скрываем кнопку, по которой был клик
+  console.log( target.nextElementSibling);
+  // target.remove();
+ 
+  const classList = UI.buttons.edit.classList;
+  console.log(classList)
+  console.log(classList.push('display: none'))
+  console.log(classList)
+  
+  const buttons = getButtons(target); //array
+  
+  let type = target.getAttribute('data-action');
+  switch (type) {
+    case 'edit' :
+      buttons.buttonDelete.style.display = 'none';
+      buttons.buttonSave.style.display = 'block';
+      buttons.buttonCancel.style.display = 'block';
+      break;
+    case 'save' :
+
+   }
+
+}
+
+// Функция сохранения задачи
+const saveTask = function (e) {
+  // Получаем задачи
+  let tasks =  elements.tasksList.querySelectorAll('li');
+
+  // Обходим задачи
+  tasks.forEach(function (task) {
+    
+    // Получили текст задачи списка, убрали пробелы, сохранили в новую переменную
+    let taskNewText = task.firstChild.textContent.trim();
+    
+    // Проверяем, если поле задачи не пустое - сохраняем
+    if (taskNewText !== '') {
+      task.firstChild.textContent = taskNewText;
+
+      // Выводим уведомление об успехе
+      displayNotification(success, model.data.messages.success, elements.addForm)
+ 
+    } else {
+      // Или оставляем предыдущий текст
+      // Проверка не работает
+      task.firstChild.textContent = taskText;
+    }
+  });
+
+}
 
 // ::: Поиск по задачам :::
 const doFilter = function (e) {
@@ -239,4 +229,4 @@ const doFilter = function (e) {
 }
 
 
-export { elements, NOTES, changeTitle, addTask, saveTask, removeTask, editTask, doFilter, displayNotification, validateInput };
+export { elements, NOTES, tasks, changeTitle, addTask, saveTask, removeTask, editTask, doFilter, displayNotification, validateInput };

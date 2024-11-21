@@ -13,9 +13,15 @@ const startEventListeners = function () {
     view.changeTitle();
 
     const isValid = view.validateInput();
-  
-    isValid ? view.addTask() : console.log('error');
 
+    let userText = view.elements.newTaskInput.value.trim(); // Получим текст задачи
+    let id = model.Task.getID();
+    
+    // Создадим объект задачи (startNumber)
+    let taskData = model.createTaskData(id, userText, ['delete', 'edit']); 
+    view.addTask(taskData);
+    // isValid ? view.addTask(taskData) : console.log('error');
+   
   });
 
   // Добавляем прослушивание контейнеру с задачами, запускаем функцию обработки задач
@@ -26,7 +32,10 @@ const startEventListeners = function () {
 const taskHandling = function (e) {
   // Если клик по кнопке 'delete' - удаляем задачу
   if (e.target.getAttribute("data-action") && e.target.getAttribute("data-action") === 'delete') {
-    view.removeTask(e);
+    let removedTask = view.removeTask(e);
+    console.log(removedTask);
+    model.removeTaskData(removedTask);
+    
   }
 
   // Если клик по кнопке 'edit' - редактируем задачу

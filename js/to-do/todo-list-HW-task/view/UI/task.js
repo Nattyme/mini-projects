@@ -1,9 +1,10 @@
 import { buttons } from './buttons.js';
 
-class Task {
-  constructor (text, buttonTypes) {
+class TaskHTML {
+  constructor ({ id, text, buttonTypes }) {
+    this.id = id,
     this.text = text,
-    this.buttonTypes = buttonTypes
+    this.buttonTypes = buttonTypes;
   }
 
   // Ф-ция ищет html кнопкок массива buttonsNeed в св-вах объекта buttonsAll. Возвращает массив 
@@ -20,7 +21,7 @@ class Task {
 
 
     return  `
-              <li class="list-group-item">
+              <li class="list-group-item" data-id="${this.id}">
                   ${this.text}
                   ${buttosHTML.join(' ')}
               </li>
@@ -29,4 +30,4 @@ class Task {
   }
 }
 
-export { Task };
+export { TaskHTML };
