@@ -44,14 +44,13 @@ const getAllTasks = function (l) {
 
 // Функция проверяет, в списке есть задачи или он пуст. По результату выводим нужный текст в заголовок.
 function changeTitle () {
-  const tasks = getAllTasks();
-  console.log(tasks);
-  let existList = tasks.forEach( (task) => {
-    return task.hasAttribute('data-display') && !task.getAttribute('data-display', 'none') ? true : false;
+  const tasks = Array.from(getAllTasks());
+
+  let existList = tasks.filter( (task) => {
+    return task.hasAttribute('data-display') && task.getAttribute('data-display') !== 'none';
   });
- console.log(existList);
  
-  if ( existList ) {
+  if ( existList.length > 0) {
     elements.taskListTitle.textContent = 'Список дел';
   } else {
     elements.taskListTitle.textContent = 'Список дел пуст';
@@ -100,13 +99,15 @@ const removeTask = function (e, message) {
 
 // = Добавление задачи на страницу =
 const addTask = function (id, userText, buttonsTypes) {
-  const task = new UI.TaskHTML(id, userText, buttonsTypes).getHTML();// получаем шаблон задачи
+  const task = new UI.TaskHTML(id, userText, buttonsTypes).getHTML(); // получаем шаблон задачи
 
   // Добавим задачу в список задач на странице
   elements.tasksList.insertAdjacentHTML('afterbegin', task);
 
   // Очищаем поле ввода для текста 
   elements.newTaskInput.value = '';
+
+  changeTitle();
 }
 
 // Функция редактирования текста задачи
