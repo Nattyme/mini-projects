@@ -14,13 +14,14 @@ const startEventListeners = function () {
 
     const isValid = view.validateInput();
 
-    let userText = view.elements.newTaskInput.value.trim(); // Получим текст задачи
     let id = model.Task.getID();
+    let userText = view.elements.newTaskInput.value.trim(); // Получим текст задачи
+    let buttonsType = ['delete', 'edit'];
     
     // Создадим объект задачи (startNumber)
-    let taskData = model.createTaskData(id, userText); 
+    model.createTaskData(id, userText); 
     
-    isValid ? view.addTask(taskData, ['delete', 'edit']) : console.log('error');
+    isValid ? view.addTask(id, userText, buttonsType) : console.log('error');
    
   });
 
@@ -38,13 +39,20 @@ const taskHandling = function (e) {
 
   // Если клик по кнопке 'edit' - редактируем задачу
   if (e.target.getAttribute("data-action") && e.target.getAttribute("data-action") === 'edit') {
-    const taskId =  e.target.closest('li').dataset.id;
+    // Запустим функцию рендера 
+    view.editTask(e);
+  }
 
-    // Замени кнопки в данных задачи и запишем в переменную
-    let buttonTypes = model.findTask(taskId).buttonTypes = ['cancel', 'save'];
+  // Если клик по кнопке 'cancel' - отмена редактирования задачи
+  if (e.target.getAttribute("data-action") && e.target.getAttribute("data-action") === 'cancel') {
+     // Запустим функцию отмены редактирования
+     view.cancelTaskEdit(e);
+  }
 
-    // Запустим функцию рендера и передадим кнопки
-    view.editTask(taskId, buttonTypes);
+  // Если клик по кнопке 'save' - сохраняем задачу
+  if (e.target.getAttribute("data-action") && e.target.getAttribute("data-action") === 'save') {
+    // Запустим функцию отмены редактирования
+    view.saveTask(e);
   }
 
   // Прослушивание события инпута для ввода новой задачи. Если после уведомления он снова в фокусе - скрыть уведомление

@@ -1,29 +1,24 @@
 import { buttons } from './buttons.js';
 
 class TaskHTML {
-  constructor ({ id, text}, buttonTypes) {
+  constructor ( id, text, buttonTypes ) {
     this.id = id,
     this.text = text,
     this.buttonTypes = buttonTypes;
   }
 
-  // Ф-ция ищет html кнопкок массива buttonsNeed в св-вах объекта buttonsAll. Возвращает массив 
+   // Метод ищет html кнопкок массива buttonsNeed в св-вах объекта buttonsAll. Возвращает разметку
+  getButtonsHTML () {
+    return this.buttonTypes.map( (type) => type ?  buttons[type].html : '').join(' ');
+  }
+
+  // Метод возвращает разметку задачи 
   getHTML () {
-    const buttosHTML = this.buttonTypes.map(
-      function (type) {
-        if (type) {
-          return buttons[type].html;
-        } else {
-          return '';
-        }
-      }
-    );
-
-
+    
     return  `
-              <li class="list-group-item" data-id="${this.id}">
+              <li class="list-group-item" data-display data-id="${this.id}">
                   ${this.text}
-                  ${buttosHTML.join(' ')}
+                  ${this.getButtonsHTML()}
               </li>
             `;
     

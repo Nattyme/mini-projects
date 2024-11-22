@@ -38,14 +38,50 @@ const validateInput = function () {
   return true;
 }
 
+const getAllTasks = function (l) {
+  return elements.tasksList.querySelectorAll('li');
+}
 
 // Функция проверяет, в списке есть задачи или он пуст. По результату выводим нужный текст в заголовок.
 function changeTitle () {
-  if ( elements.tasksList.clientHeight > 0) {
+  const tasks = getAllTasks();
+  console.log(tasks);
+  let existList = tasks.forEach( (task) => {
+    return task.hasAttribute('data-display') && !task.getAttribute('data-display', 'none') ? true : false;
+  });
+ console.log(existList);
+ 
+  if ( existList ) {
     elements.taskListTitle.textContent = 'Список дел';
   } else {
     elements.taskListTitle.textContent = 'Список дел пуст';
   }
+}
+
+const removeButtons = function (task, type) {
+  let buttons = task.querySelectorAll(`[type = ${type}]`);
+  buttons.forEach( (button) => {button.remove()} );
+}
+
+// Фу-ция меняет кнопки задачи, возвращает HTML
+const getUpdatedHTML = function ( id, text, buttonsType, task) {
+  // Найдем и удалим все кнопки в текущей задаче
+  removeButtons(task, 'button');
+
+  const editedTask = new UI.TaskHTML ( id, text, buttonsType );
+  const newButtons = editedTask.getButtonsHTML();
+
+   // Добавим задачу в список задач на странице
+  task.insertAdjacentHTML('afterbegin', newButtons);
+
+}
+
+const getParent = function (e, type) {
+  return e.target.closest(`${type}`);
+}
+
+const getTaskID = function (e, type) {
+  return e.target.closest(`${type}`).dataset.id;
 }
 
 // = Удаление задачи со страницы =
@@ -63,8 +99,8 @@ const removeTask = function (e, message) {
 }
 
 // = Добавление задачи на страницу =
-const addTask = function (taskData, buttonTypes) {
-  const task = new UI.TaskHTML(taskData, buttonTypes).getHTML();// получаем шаблон задачи
+const addTask = function (id, userText, buttonsTypes) {
+  const task = new UI.TaskHTML(id, userText, buttonsTypes).getHTML();// получаем шаблон задачи
 
   // Добавим задачу в список задач на странице
   elements.tasksList.insertAdjacentHTML('afterbegin', task);
@@ -74,86 +110,40 @@ const addTask = function (taskData, buttonTypes) {
 }
 
 // Функция редактирования текста задачи
-const editTask = function (taskId, buttonTypes) {
-  console.log(buttonTypes);
-  console.log(taskId);
-  const task = new UI.TaskHTML(taskData).getHTML(); // получаем шаблон задачи
+const editTask = function (e) {
+  let task = getParent(e, 'li');  // получаем шаблон задачи
+  let id = getTaskID (e, 'li');  // получаем id задачи
 
-  // Добавим задачу в список задач на странице
-  elements.tasksList.insertAdjacentHTML('afterbegin', task);
-  // console.log(UI.getHTML());
-  return
+  const text = task.textContent.trim(); // Получаем содержимое задачи
+  const buttonsType = ['save', 'cancel'];
 
-  // Находим список задач
-  let tasks = elements.tasksList.querySelectorAll('li');
+  // Обновим HTML задачи
+  getUpdatedHTML(id, text, buttonsType, task); 
+ 
+  // Разрешаем редактирование
+  task.contentEditable = true;
 
-  // Обходим задачи
-  tasks.forEach(function (task) {
-    // Находим контецнер задачи - ближайший <li>. Разрешаем его редактирование
-    let focusWrapper = e.target.closest('li');
-    focusWrapper.contentEditable = true;
+  // Задаём фокус внутрь контейнера. 
+  task.focus();
 
-    // Задаём фокус внутрь контейнера. 
-    // > Не получилось сдвинуть каретку в конец текста
-    focusWrapper.focus();
-
-    // Слушаем событтие "клик" по кнопке "Отмена"
-    buttons.buttonCancel.addEventListener('click', function (e) {
-      // Находим контейнер задачи - ближайший <li> и запрещаем редактирование
-      focusWrapper.contentEditable = false;
-
-      // Скрываем кнопки "Отмена", "Сохранить", "Удалить", "Редактировать"
-      buttons.buttonCancel.style.display = 'none';
-      buttons.buttonSave.style.display = 'none';
-      buttons.buttonDelete.style.display = 'block';
-      buttons.buttonEdit.style.display = 'block';
-   
-    });
-
-    // Слушаем событие кнопки "Сохранить"
-    buttons.buttonSave.addEventListener('click', function (e) {
-      // Запрещаем редактирование блока задачи
-      focusWrapper.contentEditable = false;
-
-      // Скрываем кнопки "Сохранить", "Отмена"
-      buttons.buttonSave.style.display = 'none';
-      buttons.buttonCancel.style.display = 'none';
-
-      // Показываем кнопки "Удалить", "Редактировать"
-      buttons.buttonDelete.style.display = 'block';
-      buttons.buttonEdit.style.display = 'block';
-
-      // Запускаем функцию "Сохранить задачу"
-      saveTask();
-     
-    })
-  });
+  return id;
 }
 
-// const toggleButtons = function (target) {
-//   // Скрываем кнопку, по которой был клик
-//   console.log( target.nextElementSibling);
-//   // target.remove();
- 
-//   const classList = UI.buttons.edit.classList;
-//   console.log(classList)
-//   console.log(classList.push('display: none'))
-//   console.log(classList)
-  
-//   const buttons = getButtons(target); //array
-  
-//   let type = target.getAttribute('data-action');
-//   switch (type) {
-//     case 'edit' :
-//       buttons.buttonDelete.style.display = 'none';
-//       buttons.buttonSave.style.display = 'block';
-//       buttons.buttonCancel.style.display = 'block';
-//       break;
-//     case 'save' :
+const cancelTaskEdit = function (e) {
+  let task = getParent(e, 'li');  // получаем шаблон задачи
+  let id = getTaskID (e, 'li');  // получаем id задачи
 
-//    }
+  // Находим контейнер задачи - ближайший <li> и запрещаем редак-ние
+  task.contentEditable = false;
 
-// }
+  const buttonsType = ['delete', 'edit']; // Передадим новые кнопки 
+
+  // Обновим HTML задачи
+  getUpdatedHTML(id, text, buttonsType, task);
+  
+  // Вернем текст и id задачи
+  return 
+}
 
 // Функция сохранения задачи
 const saveTask = function (e) {
@@ -180,6 +170,20 @@ const saveTask = function (e) {
     }
   });
 
+      // Запрещаем редактирование блока задачи
+      focusWrapper.contentEditable = false;
+
+      // Скрываем кнопки "Сохранить", "Отмена"
+      buttons.buttonSave.style.display = 'none';
+      buttons.buttonCancel.style.display = 'none';
+
+      // Показываем кнопки "Удалить", "Редактировать"
+      buttons.buttonDelete.style.display = 'block';
+      buttons.buttonEdit.style.display = 'block';
+
+      // Запускаем функцию "Сохранить задачу"
+      saveTask();
+
 }
 
 // ::: Поиск по задачам :::
@@ -191,21 +195,22 @@ const doFilter = function (e) {
   let searchRequest = e.target.value.toLowerCase();
 
   // Находим все задачи
-  let tasks = elements.tasksList.querySelectorAll('li');
+  let tasks = getAllTasks();
 
   tasks.forEach(function (task) {
-    
     // Получили текст задачи списка, убрали пробелы, перевели в ниж. регистр
     let taskText = task.firstChild.textContent.trim().toLowerCase();
       
     // Если подстрока найдена в задаче - показываем её
     if (taskText.indexOf(searchRequest) != -1 || e.target === '') {
 
-      // Если строка найдена - показываем элемент li с задачей
+      // Если строка найдена - показываем элемент li с задачей list-group-item
       task.style.display = 'block';
+      task.setAttribute('data-display', '');
     } else {
       // Если строка не найдена - скрываем элементы li с задачей
       task.style.display = 'none';
+      task.setAttribute('data-display', 'none');
     } 
 
      // Прослушивание события инпута для фильтра. Если он в фокусе - очистить поле.
@@ -222,4 +227,4 @@ const doFilter = function (e) {
 }
 
 
-export { elements, NOTES, tasks, changeTitle, addTask, saveTask, removeTask, editTask, doFilter, displayNotification, validateInput };
+export { elements, NOTES, tasks, changeTitle, addTask, saveTask, removeTask, editTask, doFilter, displayNotification, validateInput, cancelTaskEdit, removeButtons, getAllTasks };
