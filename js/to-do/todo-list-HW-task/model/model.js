@@ -29,7 +29,7 @@ const createTaskData = function (id, text) {
 
   const taskData = new Task(id, text);
   tasks.push(taskData);
-
+  
   return taskData;
 }
 
@@ -43,6 +43,16 @@ const removeTaskData = function (id) {
 
 }
 
+// Ф-ция находит и обновляет задачу в массиве task. Возвращает новый массив
+const updateTaskData = function ( {id, text} ) {
+  const task = tasks.find( (task) => task.id === parseInt(id));
+ 
+  if ( !task ) console.log('Задача не найдена');
+  task.text = text;
+
+  return task;
+}
+
 // Ф-ция ищет задачу в массиве id и возвращает объект задачи
 const findTask = function (id) {
   
@@ -53,4 +63,4 @@ const findTask = function (id) {
   return tasks[taskId];
 }
 
-export { MESSAGES, Task, createTaskData, removeTaskData, findTask };
+export { MESSAGES, Task, createTaskData, removeTaskData, findTask, updateTaskData };

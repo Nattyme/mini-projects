@@ -12,17 +12,21 @@ const startEventListeners = function () {
     // Проверили список задач. По результату сменили заголовок списка
     view.changeTitle();
 
-    const isValid = view.validateInput();
+    const isValid = view.validateInput(view.elements.newTaskInput.value.trim());
 
     let id = model.Task.getID();
-    let userText = view.elements.newTaskInput.value.trim(); // Получим текст задачи
-    let buttonsType = ['delete', 'edit'];
+    let userText = isValid ? view.elements.newTaskInput.value.trim() : prompt('Ошибка сохранения текста. Попробуйте ещё раз.'); // Получим текст задачи
     
-    // Создадим объект задачи (startNumber)
-    model.createTaskData(id, userText); 
-    
-    isValid ? view.addTask(id, userText, buttonsType) : console.log('error');
-   
+    // Создадим объект задачи 
+    const createdTaskData = model.createTaskData(id, userText); 
+
+
+    if ( isValid ) {
+      view.addTask(createdTaskData);
+    } else {
+      console.log('Ошибка добавления задачи');
+    }
+
   });
 
   // Добавляем прослушивание контейнеру с задачами, запускаем функцию обработки задач
@@ -39,14 +43,30 @@ const taskHandling = function (e) {
 
   // Если клик по кнопке 'edit' - редактируем задачу
   if (e.target.getAttribute("data-action") && e.target.getAttribute("data-action") === 'edit') {
-    // Запустим функцию рендера 
-    view.editTask(e);
+    // Получим id текущей задачи
+    const taskID = view.getTaskID(e);
+
+    // Получим данные задачи 
+    const taskData = model.findTask(taskID);
+    // Запустим функцию редактирования. 
+    view.editTask(taskData, e);
+
+    // Добавим в объект задачи данные по кнопкам
+    // updatedTaskData.buttonTypes = buttonTypes;
+
+    // Обновим HTML задачи
+    // view.getUpdatedHTML(updatedT/askData, e); 
   }
 
   // Если клик по кнопке 'cancel' - отмена редактирования задачи
   if (e.target.getAttribute("data-action") && e.target.getAttribute("data-action") === 'cancel') {
-     // Запустим функцию отмены редактирования
-     view.cancelTaskEdit(e);
+    // Запустим функцию отмены редактирования и получаем ID текущей задачи
+    const taskID = view.cancelTaskEdit(e);
+    const updatedTaskData = model.findTask(taskID);
+
+    // Обновим HTML задачи
+    view.getUpdatedHTML(updatedTaskData, e);
+
   }
 
   // Если клик по кнопке 'save' - сохраняем задачу
