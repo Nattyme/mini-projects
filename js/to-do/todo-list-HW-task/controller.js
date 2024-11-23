@@ -59,13 +59,14 @@ const taskHandling = function (e) {
 
   // Если клик по кнопке 'cancel' - отмена редактирования задачи
   if (e.target.getAttribute("data-action") && e.target.getAttribute("data-action") === 'cancel') {
-    // Запустим функцию отмены  и получаbbv ID текущей задачи
-    const taskID = view.cancel(e);
-    
+    // Получим id текущей задачи
+    const taskID = view.getTaskID(e);
+
+    // Получим данные по задаче из модели
     const updatedTaskData = model.findTask(taskID);
-    console.log(updatedTaskData);
-    // Обновим HTML задачи
-    view.getUpdatedHTML({...updatedTaskData}, e);
+
+    // Запустим функцию сохаранения, передадим копию объекта данных (кнопки по умолч)
+    view.cancel({...updatedTaskData}, e);
   }
 
   // Если клик по кнопке 'save' - сохраняем задачу
