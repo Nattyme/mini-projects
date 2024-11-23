@@ -19,6 +19,7 @@ const startEventListeners = function () {
     
     // Создадим объект задачи 
     const createdTaskData = model.createTaskData(id, userText); 
+console.log(createdTaskData);
 
 
     if ( isValid ) {
@@ -48,25 +49,23 @@ const taskHandling = function (e) {
 
     // Получим данные задачи 
     const taskData = model.findTask(taskID);
-    // Запустим функцию редактирования. 
-    view.editTask(taskData, e);
 
-    // Добавим в объект задачи данные по кнопкам
-    // updatedTaskData.buttonTypes = buttonTypes;
+    // Кнопки на замену
+    const buttonTypes = ['cancel', 'save'];
 
-    // Обновим HTML задачи
-    // view.getUpdatedHTML(updatedT/askData, e); 
+    // Запустим функцию редактирования, передадим копию объекта данных и кнопки на замену
+    view.editTask({...taskData, buttonTypes}, e);
   }
 
   // Если клик по кнопке 'cancel' - отмена редактирования задачи
   if (e.target.getAttribute("data-action") && e.target.getAttribute("data-action") === 'cancel') {
-    // Запустим функцию отмены редактирования и получаем ID текущей задачи
-    const taskID = view.cancelTaskEdit(e);
+    // Запустим функцию отмены  и получаbbv ID текущей задачи
+    const taskID = view.cancel(e);
+    
     const updatedTaskData = model.findTask(taskID);
-
+    console.log(updatedTaskData);
     // Обновим HTML задачи
-    view.getUpdatedHTML(updatedTaskData, e);
-
+    view.getUpdatedHTML({...updatedTaskData}, e);
   }
 
   // Если клик по кнопке 'save' - сохраняем задачу

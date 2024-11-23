@@ -65,24 +65,20 @@ const removeButtons = function (e) {
 }
 
 // Фу-ция меняет кнопки задачи, возвращает HTML
-const getUpdatedHTML = function ( taskData, e) {
+const getUpdatedHTML = function (taskData, e) {
   // Надем задачу
   const task = getParent(e, 'li');
 
   // Найдем и удалим все кнопки в текущей задаче
   removeButtons(e);
- 
-  // Запишем в перем. данные задачи и добавиим кнопки на замену
-  const updatedTaskData = taskData;
-  
-  updatedTaskData.buttonTypes = ['cancel', 'save'];
+
+  // Запишем в перем. копию данных задачи и добавиим кнопки на замену
+  const updatedTaskData = {...taskData};
 
   // Создадим новую разметку
   const editeTask = new UI.TaskHTML ( updatedTaskData );
   const editeTaskHTML = editeTask.getButtonsHTML();
-  console.log(editeTaskHTML);
-  
-
+ 
    // Добавим задачу в список задач на странице
   task.querySelector('.buttons-wrapper').insertAdjacentHTML('afterbegin', editeTaskHTML);
 
@@ -136,16 +132,15 @@ const editTask = function (taskData, e) {
 
   // Заново отрисуем разметку задачи
   getUpdatedHTML( taskData, e);
-  return
-  
+ 
   return id;
 }
 
-const cancelTaskEdit = function (e) {
+const cancel = function (e) {
   const task = getParent(e, 'li');  // получаем шаблон задачи
   const id = getTaskID(e, 'li');
 
-  // Находим контейнер задачи - ближайший <li> и запрещаем редак-ние
+  // Находим контейнер задачи - ближайший <li> и запрещаем ред-ние
   task.contentEditable = false;
 
   return id;
@@ -234,4 +229,4 @@ const doFilter = function (e) {
 }
 
 
-export { elements, NOTES, tasks, changeTitle, getTaskID, addTask, saveTask, removeTask, editTask, doFilter, displayNotification, validateInput, cancelTaskEdit, removeButtons, getAllTasks, getUpdatedHTML };
+export { elements, NOTES, tasks, changeTitle, getTaskID, addTask, saveTask, removeTask, editTask, doFilter, displayNotification, validateInput, cancel, removeButtons, getAllTasks, getUpdatedHTML };

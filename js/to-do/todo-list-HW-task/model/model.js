@@ -2,6 +2,8 @@ import { MESSAGES } from './data/messages.js';
 
 // Массива для хран-я объектов задач
 const tasks = [];
+console.log('model');
+console.log(tasks);
 
 // Класс задачи
 class Task {
@@ -55,7 +57,6 @@ const updateTaskData = function ( {id, text} ) {
 
 // Ф-ция ищет задачу в массиве id и возвращает объект задачи
 const findTask = function (id) {
-  
   let taskId = tasks.findIndex( function (taskData) {
     return parseInt(id) === taskData.id;
   });
