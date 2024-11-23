@@ -5,19 +5,27 @@ class TaskHTML {
     this.id = id,
     this.text = text,
     this.buttonTypes = buttonTypes;
+    console.log('Button Types in Constructor:', this.buttonTypes);
   }
 
-   // Метод ищет html кнопкок массива buttonsNeed в св-вах объекта buttonsAll. Возвращает разметку
-  getButtonsHTML () {
+   // Метод ищет html кнопок массива buttonsNeed в св-вах объекта buttonsAll. Возвращает разметку
+  getButtonsHTML() {
     return  this.buttonTypes.map( (type) => type ?  buttons[type].html : '').join(' ');
   }
 
   // Метод возвращает разметку задачи 
   getHTML () {
-    
+    console.log('getHTml:', this.buttonTypes);
+
+    let inputBorder = 'style = "border-color: transparent;"';
+    if (this.getButtonsHTML().includes('save')) {
+      inputBorder = 'style = "border-color: #ced4da;"';
+    }
+    console.log(inputBorder);
+    console.log(this.buttonTypes);
     return  `
               <li class="list-group-item" data-display data-id="${this.id}">
-                  <p>${this.text}</p>
+                  <input type="text" class="form-control mr-2 mb-3 flex-grow-1" ${inputBorder} value="${this.text}">
                   <div class="buttons-wrapper d-flex justify-content-end">
                     ${this.getButtonsHTML(this.buttonTypes)}
                   </div>

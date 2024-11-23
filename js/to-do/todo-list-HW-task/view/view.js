@@ -38,7 +38,7 @@ const validateInput = function (element) {
   return true;
 }
 
-const getAllTasks = function (l) {
+const getAllTasks = function () {
   return elements.tasksList.querySelectorAll('li');
 }
 
@@ -72,16 +72,16 @@ const getUpdatedHTML = function (taskData, e) {
   // Найдем и удалим все кнопки в текущей задаче
   removeButtons(e);
 
-  // Запишем в перем. копию данных задачи и добавиим кнопки на замену
-  const updatedTaskData = {...taskData};
+  // Передаем копию объекта данных задачи 
+  const editTask = new UI.TaskHTML ( {...taskData} );
 
-  // Создадим новую разметку
-  const editeTask = new UI.TaskHTML ( updatedTaskData );
-  const editeTaskHTML = editeTask.getButtonsHTML();
- 
-   // Добавим задачу в список задач на странице
-  task.querySelector('.buttons-wrapper').insertAdjacentHTML('afterbegin', editeTaskHTML);
+  // Создадим новую разметку li 
+  const editTaskHTML = editTask.getHTML();
+  
+  // Добавим задачу в список задач на странице
+  task.outerHTML = editeTaskHTML;
 
+  return;
 }
 
 const getParent = function (e, type) {
@@ -124,7 +124,7 @@ const editTask = function (taskData, e) {
   let task = getParent(e, 'li');  // получаем шаблон задачи
 
   // Разрешаем редактирование
-  task.querySelector('p').contentEditable = true;
+  task.querySelector('input').contentEditable = true;
 
   // Задаём фокус внутрь контейнера. 
   task.focus();
@@ -137,7 +137,6 @@ const cancel = function (taskData, e) {
   // Получаем шаблон задачи
   const task = getParent(e, 'li'); 
 
-
   // Запрещаем ред-ние шаблона задачи
   task.contentEditable = false;
 
@@ -146,45 +145,37 @@ const cancel = function (taskData, e) {
 }
 
 // Функция сохранения задачи
-const saveTask = function (e) {
-  // Получаем задачи
-  let tasks =  elements.tasksList.querySelectorAll('li');
-   
-  // Обходим задачи
-  tasks.forEach(function (task) {
-    // Получаем ввод пользователя, удаляем пробелы
-    let userText = task.querySelector('p').textContent.trim();
+const save = function (e) {
+  // Получаем шаблон задачи
+  const task = getParent(e, 'li'); 
 
-    // Проверяем ввод пользователя
-    const isValid = validateInput(userText);
-   
-    let taskNewText = isValid ? userText : prompt('Ошибка сохранения текста. Попробуйте ещё раз.'); // Получим текст задачи
-    
-    // Проверяем, если поле задачи не пустое - сохраняем
-    if ( isValid ) {
-      task.firstChild.textContent = taskNewText;
-      // Выводим уведомление об успехе
-      console.log('Сообщение сохранено успешно');
-      
-      // displayNotification(success, model.data.messages.success, elements.addForm)
+  // Запрещаем ред-ние шаблона задачи
+  task.contentEditable = false;
+
+  // Получаем ввод пользователя, удаляем пробелы
+  let userText = task.querySelector('p').textContent.trim();
+
+  // // Проверяем ввод пользователя
+  // const isValid = validateInput(userText);
  
-    } 
-  });
+  let newText = isValid ? userText : prompt('Ошибка сохранения текста. Попробуйте ещё раз.'); // Получим текст задачи
+  
+  // Проверяем, если поле задачи не пустое - сохраняем
+  if ( isValid ) {
+    task.firstChild.textContent = newText;
+    // Выводим уведомление об успехе
+    console.log('Сообщение сохранено успешно');
+    // displayNotification(success, model.data.messages.success, elements.addForm)
+  } 
+
+  // Заново отрисуем разметку задачи
+  getUpdatedHTML( taskData, e);
 
   // Запрещаем редактирование блока задачи
   focusWrapper.contentEditable = false;
 
-  // Скрываем кнопки "Сохранить", "Отмена"
-  buttons.buttonSave.style.display = 'none';
-  buttons.buttonCancel.style.display = 'none';
-
-  // Показываем кнопки "Удалить", "Редактировать"
-  buttons.buttonDelete.style.display = 'block';
-  buttons.buttonEdit.style.display = 'block';
-
   // Запускаем функцию "Сохранить задачу"
-  saveTask();
-
+  return updatedTaskData;
 }
 
 // ::: Поиск по задачам :::
@@ -228,4 +219,4 @@ const doFilter = function (e) {
 }
 
 
-export { elements, NOTES, tasks, changeTitle, getTaskID, addTask, saveTask, removeTask, editTask, doFilter, displayNotification, validateInput, cancel, removeButtons, getAllTasks, getUpdatedHTML };
+export { elements, NOTES, tasks, changeTitle, getTaskID, addTask, save, removeTask, editTask, doFilter, displayNotification, validateInput, cancel, removeButtons, getAllTasks, getUpdatedHTML };

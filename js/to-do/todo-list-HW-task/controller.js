@@ -18,12 +18,10 @@ const startEventListeners = function () {
     let userText = isValid ? view.elements.newTaskInput.value.trim() : prompt('Ошибка сохранения текста. Попробуйте ещё раз.'); // Получим текст задачи
     
     // Создадим объект задачи 
-    const createdTaskData = model.createTaskData(id, userText); 
-console.log(createdTaskData);
-
+    const taskData = model.createTaskData(id, userText); 
 
     if ( isValid ) {
-      view.addTask(createdTaskData);
+      view.addTask({...taskData});
     } else {
       console.log('Ошибка добавления задачи');
     }
@@ -52,7 +50,7 @@ const taskHandling = function (e) {
 
     // Кнопки на замену
     const buttonTypes = ['cancel', 'save'];
-
+  
     // Запустим функцию редактирования, передадим копию объекта данных и кнопки на замену
     view.editTask({...taskData, buttonTypes}, e);
   }
@@ -71,8 +69,10 @@ const taskHandling = function (e) {
 
   // Если клик по кнопке 'save' - сохраняем задачу
   if (e.target.getAttribute("data-action") && e.target.getAttribute("data-action") === 'save') {
+    // Проверяем ввод пользователя
+    const isValid = validateInput(userText);
     // Запустим функцию отмены редактирования
-    view.saveTask(e);
+    view.save(e);
   }
 
   // Прослушивание события инпута для ввода новой задачи. Если после уведомления он снова в фокусе - скрыть уведомление
