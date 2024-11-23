@@ -30,13 +30,39 @@ const displayNotification = function (type, message, container) {
   return note;
 }
 
-const validateInput = function (element) {
-  if (element.value === '' && element.value.length < 4 ) {
-    return false;
-  }
 
-  return true;
-}
+
+// const validateInput = function (element) {
+//   // Получаем ввод пользователя, убираем пробелы
+//   const inputText = getInput(element).trim();
+
+//   // Зададим флаг проверки
+//   let isValid = true;
+
+//   // Сделаем проверки
+//   if (inputText === '') {
+//     console.log('Поле пустое');
+//     isValid = false;
+//     return;
+//   }
+
+//   // Если слишком короткое
+//   if ( inputText.length < 4 ) {
+//     console.log('Поле слишком короткое');
+//     isValid = false;
+//     return;
+//   } 
+
+//   // Если поле инпута заполнено
+//   if (inputText !== '') {
+//     const allowed = /^[a-zA-Zа-яА-Я\s,.\?!;:"'()&+\-=\\]+$/; // Разрешены только буквы и несколько символо
+//     if (allowed.test(inputText) === false) isValid = false;
+//   }
+
+//   if (isValid === false) return;
+
+//   return inputText;
+// }
 
 const getAllTasks = function () {
   return elements.tasksList.querySelectorAll('li');
@@ -79,13 +105,13 @@ const getUpdatedHTML = function (taskData, e) {
   const editTaskHTML = editTask.getHTML();
   
   // Добавим задачу в список задач на странице
-  task.outerHTML = editeTaskHTML;
+  task.outerHTML = editTaskHTML;
 
-  return;
+  return task;
 }
 
 const getParent = function (e, type) {
-  return e.target.closest(`${type}`);
+  return e.target.closest(type);
 }
 
 const getTaskID = function (e) {
@@ -93,7 +119,7 @@ const getTaskID = function (e) {
 }
 
 // = Удаление задачи со страницы =
-const removeTask = function (e, message) {
+const remove = function (e, message) {
   let task = e.target.closest('li');
   let id = task.dataset.id;
 
@@ -107,7 +133,7 @@ const removeTask = function (e, message) {
 }
 
 // = Добавление задачи на страницу =
-const addTask = function (createdTaskData) {
+const add = function (createdTaskData) {
   const task = new UI.TaskHTML(createdTaskData).getHTML(); // получаем шаблон задачи
 
   // Добавим задачу в список задач на странице
@@ -120,17 +146,26 @@ const addTask = function (createdTaskData) {
 }
 
 // Функция редактирования текста задачи
-const editTask = function (taskData, e) {
-  let task = getParent(e, 'li');  // получаем шаблон задачи
+const edit = function (taskData, e) {
+  // Заново отрисуем разметку задачи
+  const taskNew = getUpdatedHTML( taskData, e);
 
+  // Найдём input
+  const input = taskNew.querySelector('input');
   // Разрешаем редактирование
-  task.querySelector('input').contentEditable = true;
+  input.removeAttribute('readonly');
+  console.log(taskNew.querySelector('input'));
 
   // Задаём фокус внутрь контейнера. 
-  task.focus();
+  // input.focus();
+  setTimeout(() => {
+    input.focus();
+    // Переместим курсор в конец текста (если требуется)
+    const length = input.value.length;
+    input.setSelectionRange(length, length);
+  }, 0);
 
-  // Заново отрисуем разметку задачи
-  getUpdatedHTML( taskData, e);
+
 }
 
 const cancel = function (taskData, e) {
@@ -138,44 +173,35 @@ const cancel = function (taskData, e) {
   const task = getParent(e, 'li'); 
 
   // Запрещаем ред-ние шаблона задачи
-  task.contentEditable = false;
+   // Запрещаем ред-ние шаблона задачи
+   task.querySelector('input').setAttribute('readonly', '');
 
   // Заново отрисуем разметку задачи
   getUpdatedHTML( taskData, e);
+
+  return;
 }
 
 // Функция сохранения задачи
-const save = function (e) {
+const save = function (taskData, e) {
   // Получаем шаблон задачи
   const task = getParent(e, 'li'); 
-
-  // Запрещаем ред-ние шаблона задачи
-  task.contentEditable = false;
-
-  // Получаем ввод пользователя, удаляем пробелы
-  let userText = task.querySelector('p').textContent.trim();
-
-  // // Проверяем ввод пользователя
-  // const isValid = validateInput(userText);
- 
-  let newText = isValid ? userText : prompt('Ошибка сохранения текста. Попробуйте ещё раз.'); // Получим текст задачи
+  const input = task.querySelector('input[type = "text"]');
   
+  // Запрещаем его редак-ние
+  input.setAttribute('readonly', '');
+
   // Проверяем, если поле задачи не пустое - сохраняем
-  if ( isValid ) {
-    task.firstChild.textContent = newText;
-    // Выводим уведомление об успехе
-    console.log('Сообщение сохранено успешно');
-    // displayNotification(success, model.data.messages.success, elements.addForm)
-  } 
+  input.value = taskData.text;
+
+  // Выводим уведомление об успехе
+  console.log('Сообщение сохранено успешно');
 
   // Заново отрисуем разметку задачи
   getUpdatedHTML( taskData, e);
 
-  // Запрещаем редактирование блока задачи
-  focusWrapper.contentEditable = false;
-
   // Запускаем функцию "Сохранить задачу"
-  return updatedTaskData;
+  return;
 }
 
 // ::: Поиск по задачам :::
@@ -219,4 +245,22 @@ const doFilter = function (e) {
 }
 
 
-export { elements, NOTES, tasks, changeTitle, getTaskID, addTask, save, removeTask, editTask, doFilter, displayNotification, validateInput, cancel, removeButtons, getAllTasks, getUpdatedHTML };
+export { 
+  elements, 
+  NOTES, 
+  tasks, 
+  UI, 
+  changeTitle, 
+  getTaskID, 
+  getParent, 
+  add, 
+  save, 
+  remove, 
+  edit, 
+  doFilter, 
+  displayNotification, 
+  cancel, 
+  removeButtons, 
+  getAllTasks, 
+  getUpdatedHTML 
+};

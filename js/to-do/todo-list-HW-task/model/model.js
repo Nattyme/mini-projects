@@ -27,8 +27,9 @@ class Task {
 }
 
 // Ф-ция создает задачу
-const createTaskData = function (id, text) {
-
+const createTaskData = function (text) {
+  // Создадим ID для задачи
+  const id = Task.getID();
   const taskData = new Task(id, text);
   tasks.push(taskData);
   
@@ -47,7 +48,10 @@ const removeTaskData = function (id) {
 
 // Ф-ция находит и обновляет задачу в массиве task. Возвращает новый массив
 const updateTaskData = function ( {id, text} ) {
+  console.log({id, text});
   const task = tasks.find( (task) => task.id === parseInt(id));
+ console.log(task);
+ console.log(parseInt(id));
  
   if ( !task ) console.log('Задача не найдена');
   task.text = text;

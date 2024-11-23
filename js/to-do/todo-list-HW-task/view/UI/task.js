@@ -15,14 +15,11 @@ class TaskHTML {
 
   // Метод возвращает разметку задачи 
   getHTML () {
-    console.log('getHTml:', this.buttonTypes);
-
-    let inputBorder = 'style = "border-color: transparent;"';
+    let inputBorder = 'style = "border-color: transparent; background-color: transparent;"';
     if (this.getButtonsHTML().includes('save')) {
-      inputBorder = 'style = "border-color: #ced4da;"';
+      inputBorder = 'style = "border-color: #ced4da; background-color: #e9ecef;"';
     }
-    console.log(inputBorder);
-    console.log(this.buttonTypes);
+  
     return  `
               <li class="list-group-item" data-display data-id="${this.id}">
                   <input type="text" class="form-control mr-2 mb-3 flex-grow-1" ${inputBorder} value="${this.text}">
