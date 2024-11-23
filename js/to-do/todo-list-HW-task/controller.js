@@ -46,7 +46,7 @@ const startEventListeners = function () {
 const taskHandling = function (e) {
   // Если клик по кнопке 'delete' - удаляем задачу
   if (e.target.getAttribute("data-action") && e.target.getAttribute("data-action") === 'delete') {
-    let removedTask = view.removeTask(e); // удаляем задачу со страницы
+    let removedTask = view.remove(e); // удаляем задачу со страницы
     model.removeTaskData(removedTask); // удаляем данные задачи из объекта
   }
 
@@ -123,8 +123,3 @@ view.changeTitle (); // При загрузке страницы изменяе�
 
 // Запускаем прослушивание событий
 startEventListeners();
-
-
-
-
-

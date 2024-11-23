@@ -27,7 +27,7 @@ const validateInput = function (element) {
 
   // Если поле инпута заполнено
   if (inputText !== '') {
-    const allowed = /^[a-zA-Zа-яА-Я0-9\s,.\?!;:"'()&+\-=\\]+$/; // Разрешены только буквы и несколько символо
+    const allowed = /^[a-zA-Zа-яА-Я0-9\s,.\?!;:"'()&+\-=\\]+$/; // Разрешены только буквы и несколько символов
     if (allowed.test(inputText) === false) isValid = false;
   }
   console.log(isValid);

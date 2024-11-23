@@ -1,7 +1,7 @@
-import { NOTES } from './templates/templates.js';
+import * as NOTES  from './notifications/notifications.js';
 import * as UI from './UI/index.js';
 
-const tasks = []; // Массив для хранения объектов задач
+// const tasks = []; // Массив для хранения объектов задач
 
 const elements = {
   addForm : document.querySelector('#addForm'),  
@@ -29,8 +29,6 @@ const displayNotification = function (type, message, container) {
 
   return note;
 }
-
-
 
 // const validateInput = function (element) {
 //   // Получаем ввод пользователя, убираем пробелы
@@ -248,7 +246,6 @@ const doFilter = function (e) {
 export { 
   elements, 
   NOTES, 
-  tasks, 
   UI, 
   changeTitle, 
   getTaskID, 
