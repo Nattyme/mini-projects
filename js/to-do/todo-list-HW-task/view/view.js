@@ -207,21 +207,24 @@ const doFilter = function (e) {
   // Проверили список задач. По результату сменили заголовок списка
   // changeTitle ();
   console.log(UI.validateInput(elements.filter));
-  const input = UI.validateInput(elements.filter);
+  const isValid = UI.validateInput(elements.filter, { minLength : 1, maxLength : 30}) ? true : false;
+console.log(isValid);
+console.log(elements.filter.value.toLowerCase());
 
-  
   // Записываем строку запроса в переменную 
-  let searchRequest = e.target.value.toLowerCase();
+  let searchRequest = isValid ? elements.filter.value.toLowerCase() : '';
 
   // Находим все задачи
   let tasks = getAllTasks();
+console.log(tasks);
 
   tasks.forEach(function (task) {
     // Получили текст задачи списка, убрали пробелы, перевели в ниж. регистр
-    let taskText = task.firstChild.textContent.trim().toLowerCase();
+    let taskText = task.querySelector('input[type="text"]').value.trim().toLowerCase();
+      console.log(taskText);
       
     // Если подстрока найдена в задаче - показываем её
-    if (taskText.indexOf(searchRequest) != -1 || e.target === '') {
+    if (taskText.includes(searchRequest) || e.target === '') {
 
       // Если строка найдена - показываем элемент li с задачей list-group-item
       task.style.display = 'block';
