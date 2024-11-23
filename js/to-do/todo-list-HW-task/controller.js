@@ -26,8 +26,9 @@ const startEventListeners = function () {
 
     // Если проверки не пройдена - остновим програму
     if( !isValid ) return 'Ошибка, данные не получены';
+
     // Запишем в переменную, если с текстом всё ок
-    const userText = view.UI.getInputValue(view.elements.addForm); 
+    const userText = view.UI.getInput(view.elements.addForm).value; 
 
     // Создадим объект задачи 
     const taskData = model.createTaskData(userText); 
@@ -48,6 +49,9 @@ const taskHandling = function (e) {
   if (e.target.getAttribute("data-action") && e.target.getAttribute("data-action") === 'delete') {
     let removedTask = view.remove(e); // удаляем задачу со страницы
     model.removeTaskData(removedTask); // удаляем данные задачи из объекта
+
+    // Сменим заголовок
+    view.changeTitle();
   }
 
   // Если клик по кнопке 'edit' - редактируем задачу
@@ -91,7 +95,7 @@ const taskHandling = function (e) {
     if ( ! isValid ) return 'Ошибка сохранения. Проверьте данные';
 
     // Запишем в переменную, если с текстом всё ок
-    const text = view.UI.getInputValue(task); 
+    const text = view.UI.getInput(task).value; 
 
     // Обновим данные задачи в её объекте 
     model.updateTaskData({id, text});

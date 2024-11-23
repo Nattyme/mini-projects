@@ -1,4 +1,4 @@
-import { MESSAGES } from './data/messages.js';
+import { MESSAGES } from './notes/notes.js';
 
 // Массива для хран-я объектов задач
 const tasks = [];

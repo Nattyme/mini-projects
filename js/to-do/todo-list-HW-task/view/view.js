@@ -1,4 +1,4 @@
-import * as NOTES  from './notifications/notifications.js';
+import * as NOTES  from './notes/notes.js';
 import * as UI from './UI/index.js';
 
 // const tasks = []; // Массив для хранения объектов задач
@@ -126,7 +126,6 @@ const remove = function (e, message) {
     if (task) task.remove(id); 
     task.remove(); // удалим задачу
   }
-
   return id; // и вернём её id
 }
 
@@ -140,6 +139,7 @@ const add = function (createdTaskData) {
   // Очищаем поле ввода для текста 
   elements.newTaskInput.value = '';
 
+  // Сменим заголовок
   changeTitle();
 }
 
@@ -205,9 +205,12 @@ const save = function (taskData, e) {
 // ::: Поиск по задачам :::
 const doFilter = function (e) {
   // Проверили список задач. По результату сменили заголовок списка
-  changeTitle ();
+  // changeTitle ();
+  console.log(UI.validateInput(elements.filter));
+  const input = UI.validateInput(elements.filter);
 
-  // Записываем в переменную строку запроса
+  
+  // Записываем строку запроса в переменную 
   let searchRequest = e.target.value.toLowerCase();
 
   // Находим все задачи
