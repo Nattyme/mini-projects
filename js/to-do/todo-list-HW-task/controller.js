@@ -11,9 +11,29 @@ const Controller = ( function () {
     return false;
   }
 
+  const eventHandlers = {
+    click : (e) => {console.log('Clicked: ', e.target);},
+    keyup : (e) => {
+      const filterEl = view.Module.elements.filter;
+      if (e.target === filterEl) {
+        // Валидация ввода пользователя 
+        const isValid = model.Module.validateInput(view.Module.elements.filter, { minLength : 1, maxLength : 30});
+        if (isValid) view.Module.doFilter(e, isValid);  // Запустим ф-цию фильтра
+      }
+    }
+  }
+
+  // Ф-ция запускает метод евента, еслт он найден в объекте eventHandlers;
+  const handleEvent = function (type, event) {
+    if (eventHandlers[type]) {
+      eventHandlers[type](event);
+    }
+  }
+
   const startEventListeners = function () {
     // Прослушивание событий фильтра, запускаем функцию  фильтра
-    view.Module.elements.filter.addEventListener('keyup', view.Module.doFilter);
+    // view.Module.elements.filter.addEventListener('keyup', view.Module.doFilter);
+    view.Module.elements.filter.addEventListener('keyup', (e) => handleEvent('keyup', e));
 
     // Отмена стандарт. поведение формы - по нажатию на submit страница не будет обновляться
     view.Module.elements.addForm.addEventListener('submit', function(e) {

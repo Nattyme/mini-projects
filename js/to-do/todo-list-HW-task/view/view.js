@@ -2,7 +2,8 @@ import * as NOTES  from './notes/notes.js';
 import * as UI from './UI/index.js';
 
 const Module = ( function () {
-  const { validateInput, getInput } = UI;
+  const { getInput } = UI;
+
   const elements = { 
     addForm : document.querySelector('#addForm'),  
     newTaskInput : addForm.querySelector('#newItemText'), 
@@ -34,7 +35,7 @@ const Module = ( function () {
     return elements.tasksList.querySelectorAll('li');
   }
   
-  // Функция проверяет, в списке есть задачи или он пуст. По результату выводим нужный текст в заголовок.
+  // Ф-ция проверяет, в списке есть задачи или он пуст. По результату выводим нужный текст в заголовок.
   function changeTitle () {
     const tasks = Array.from(getAllTasks());
   
@@ -50,13 +51,14 @@ const Module = ( function () {
       elements.taskListTitle.textContent = 'Список дел пуст';
     }
   }
-  
+
+  // Ф-ция удаляем все кнопки контейнере event
   const removeButtons = function (e) {
     let buttonsWrapper = getParent(e, 'div');
     buttonsWrapper.innerHTML = '';
   }
   
-  // Фу-ция меняет кнопки задачи, возвращает HTML
+  // Ф-ция меняет кнопки задачи, возвращает HTML
   const getUpdatedHTML = function (taskData, e) {
     // Надем задачу
     const task = getParent(e, 'li');
@@ -76,27 +78,16 @@ const Module = ( function () {
     return task;
   }
   
+  // Ф-ция получает родителя e по типу элемента ('li', 'div' и т д)
   const getParent = function (e, type) {
     return e.target.closest(type);
   }
   
+  // Ф-ция получает id задачи
   const getTaskID = function (e) {
     return e.target.closest('li').dataset.id;
   }
-  
-  // = Удаление задачи со страницы =
-  const remove = function (e, message) {
-    let task = e.target.closest('li');
-    let id = task.dataset.id;
-  
-    // Подтверждение об удаления
-    if (confirm(message)) {
-      if (task) task.remove(id); 
-      task.remove(); // удалим задачу
-    }
-    return id; // и вернём её id
-  }
-  
+
   // = Добавление задачи на страницу =
   const add = function (createdTaskData) {
     const task = new UI.TaskHTML(createdTaskData).getHTML(); // получаем шаблон задачи
@@ -109,6 +100,25 @@ const Module = ( function () {
   
     // Сменим заголовок
     changeTitle();
+  }
+
+  // Ф-ция обновляет список задачи в завис-ти от увед. об изменении в модели
+  const update = function (tasks) {
+    // renderTasks(tasks);
+    add(tasks);
+  };
+  
+  // = Удаление задачи со страницы =
+  const remove = function (e, message) {
+    let task = e.target.closest('li');
+    let id = task.dataset.id;
+  
+    // Подтверждение об удаления
+    if (confirm(message)) {
+      if (task) task.remove(id); 
+      task.remove(); // удалим задачу
+    }
+    return id; // и вернём её id
   }
   
   // Функция редактирования текста задачи
@@ -171,20 +181,13 @@ const Module = ( function () {
   }
   
   // ::: Поиск по задачам :::
-  const doFilter = function (e) {
-    // Проверили список задач. По результату сменили заголовок списка
-    // changeTitle ();
-    console.log(UI.validateInput(elements.filter));
-    const isValid = UI.validateInput(elements.filter, { minLength : 1, maxLength : 30}) ? true : false;
-  console.log(isValid);
-  console.log(elements.filter.value.toLowerCase());
-  
+  const doFilter = function (e , isValid) {
+    // const isValid = UI.validateInput(elements.filter, { minLength : 1, maxLength : 30}) ? true : false;
     // Записываем строку запроса в переменную 
     let searchRequest = isValid ? elements.filter.value.toLowerCase() : '';
   
     // Находим все задачи
     let tasks = getAllTasks();
-  console.log(tasks);
   
     tasks.forEach(function (task) {
       // Получили текст задачи списка, убрали пробелы, перевели в ниж. регистр
