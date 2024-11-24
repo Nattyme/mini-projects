@@ -3,7 +3,7 @@ import * as view from './view/view.js';
 
 const Controller = ( function () {
   // Ф-ция проверяем, получены ли данные от модели
-  const isData = function (data) {
+  const isDataCreated = function (data) {
     const receivedData = data;
 
     if (receivedData !== undefined && receivedData !== null) return true;
@@ -14,20 +14,43 @@ const Controller = ( function () {
   // Объект событий
   const EVENT_TYPES = {
     CLICK : 'click',
-    KEYUP : 'keyup'
+    KEYUP : 'keyup',
+    SUBMIT : 'submit'
   }
 
   // Типы событий и их методы 
   const eventHandlers = {
-    click : (e) => {console.log('Clicked: ', e.target);},
-    keyup : (e) => {
-      const filterEl = view.Module.elements.filter;
-      if (e.target === filterEl) {
-        // Валидация ввода пользователя 
-        const isValid = model.Module.validateInput(view.Module.elements.filter, { minLength : 1, maxLength : 30});
-        if (isValid) view.Module.doFilter(e, isValid);  // Запустим ф-цию фильтра
-      }
-    }
+    [EVENT_TYPES.CLICK] : (e) => {taskHandling(e)}, // запускает ф-ция обраб-ки задач
+    [EVENT_TYPES.KEYUP] : (e) => {
+            const filterEl = view.Module.elements.filter;
+            if (e.target === filterEl) {
+              // Валидация ввода пользователя 
+              const isValid = model.Module.validateInput(view.Module.elements.filter, { minLength : 1, maxLength : 30});
+              if (isValid) view.Module.doFilter(e, isValid);  // Запустим ф-цию фильтра
+            }
+    }, // запускает ф-цию фильтрации
+    [EVENT_TYPES.SUBMIT] : (e) => {
+            e.preventDefault(); // Отменяем станд. поведение
+            
+            view.Module.changeTitle();    // Проверим список задач. По результату сменим заголовок
+
+            const input = view.Module.getInput(view.Module.elements.addForm); // Получим Input
+            const isValid = model.Module.validateInput(input);  // Проверим текст пользователя из формы 
+
+            if( !isValid ) return 'Ошибка, данные не получены';   // Если проверки не пройдена - return
+
+
+            const text = input.value;  // Если текст ок - запишем ввод в переменную
+            const taskData = model.Module.createTaskData(text);  // Создадим объект задачи 
+            const dataExist = isDataCreated(taskData); // Проверим, создан ли объект данных задачи
+
+            // Если данные получены - запускаем ф-цию add()
+            if (dataExist) {
+              view.Module.add({...taskData});
+            } else {
+              console.log('Невозможно добавить задачу. Попробуйте ещё раз');
+            }
+    } // добавления задачи
   }
 
   // Ф-ция запускает метод евента, еслт он найден в объекте eventHandlers;
@@ -37,40 +60,17 @@ const Controller = ( function () {
     }
   }
 
+  // Ф-ция запускает прослушивание событий
   const startEventListeners = function () {
-    // Слушаем keyup поля фильтра, запускаем ф-цию фильтра
+
+    // Слушаем keyup фильтра, запускаем ф-цию фильтра
     view.Module.elements.filter.addEventListener(EVENT_TYPES.KEYUP, (e) => handleEvent(EVENT_TYPES.KEYUP, e));
 
-    // Отмена стандарт. поведение формы - по нажатию на submit страница не будет обновляться
-    view.Module.elements.addForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      // Проверили список задач. По результату сменили заголовок списка
-      view.Module.changeTitle();
+    // Слушаем submit, запускаем ф-цию добавления задачи
+    view.Module.elements.addForm.addEventListener(EVENT_TYPES.SUBMIT, (e) => handleEvent(EVENT_TYPES.SUBMIT, e));
 
-      // Получим Input
-      const input = view.Module.getInput(view.Module.elements.addForm);
-
-      // Проверим текст пользователя из формы 
-      const isValid = model.Module.validateInput(input);
-
-      // Если проверки не пройдена - остновим програму
-      if( !isValid ) return 'Ошибка, данные не получены';
-
-      // Запишем в переменную, если с текстом всё ок
-      const userText = view.Module.getInput(view.Module.elements.addForm).value; 
-
-      // Создадим объект задачи 
-      const taskData = model.Module.createTaskData(userText); 
-
-      const dataExist = isData(taskData);
-
-      // Если данные получены - запускаем функцию add()
-      dataExist === true ? view.Module.add({...taskData}) : console.log('Невозможно добавить задачу. Попробуйте ещё раз');
-    });
-
-    // Добавляем прослушивание контейнеру с задачами, запускаем функцию обработки задач
-    view.Module.elements.mainContainer.addEventListener('click', taskHandling);
+    // Слушаем click списка задач, запускаем ф-цию обработки задачи
+    view.Module.elements.tasksList.addEventListener(EVENT_TYPES.CLICK, (e) => handleEvent(EVENT_TYPES.CLICK, e));
   }
 
   // ::: Обработка задач :::
