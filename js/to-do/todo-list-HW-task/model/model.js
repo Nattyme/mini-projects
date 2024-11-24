@@ -1,71 +1,90 @@
 import { MESSAGES } from './notes/notes.js';
 
-// Массива для хран-я объектов задач
-const tasks = [];
-console.log('model');
-console.log(tasks);
+const Module = ( function () {
 
-// Класс задачи
-class Task {
-  constructor ( id, text) {
-    this.id = id,
-    this.text = text
-  }
+  // Массива для хран-я объектов задач
+  const tasks = [];
+  console.log('model');
+  console.log(tasks);
 
-  static getID = function ( startId = 1) {
-    let id;
-
-    if ( tasks.length === 0 ) {
-      id = startId;
-    } else {
-      let lastElement = tasks[tasks.length - 1];
-      id = lastElement.id + 1;
+  // Класс задачи
+  class Task {
+    constructor ( id, text) {
+      this.id = id;
+      this.text = text;
     }
 
-    return id;
+    static getID = function ( startId = 1) {
+      let id;
+
+      if ( tasks.length === 0 ) {
+        id = startId;
+      } else {
+        let lastElement = tasks[tasks.length - 1];
+        id = lastElement.id + 1;
+      }
+
+      return id;
+    }
   }
-}
 
-// Ф-ция создает задачу
-const createTaskData = function (text) {
-  // Создадим ID для задачи
-  const id = Task.getID();
-  const taskData = new Task(id, text);
-  tasks.push(taskData);
+  // Ф-ция создает задачу
+  const createTaskData = function (text) {
+    // Создадим ID для задачи
+    const id = Task.getID();
+    const taskData = new Task(id, text);
+    tasks.push(taskData);
+    
+    return taskData;
+  }
+
+  // Ф-ция удаляет задачу из массива tasks
+  const removeTaskData = function (id) {
+    let removeTask = tasks.findIndex( function (taskData) {
+      return parseInt(id) === taskData.id;
+    });
+
+    if (removeTask !== -1) tasks.splice(removeTask, 1); // Удаляем из массива 
+
+  }
+
+  // Ф-ция находит и обновляет задачу в массиве task. Возвращает новый массив
+  const updateTaskData = function ( {id, text} ) {
+    console.log({id, text});
+    const task = tasks.find( (task) => task.id === parseInt(id));
+  console.log(task);
+  console.log(parseInt(id));
   
-  return taskData;
-}
+    if ( !task ) console.log('Задача не найдена');
+    task.text = text;
 
-// Ф-ция удаляет задачу из массива tasks
-const removeTaskData = function (id) {
-  let removeTask = tasks.findIndex( function (taskData) {
-    return parseInt(id) === taskData.id;
-  });
+    return task;
+  }
 
-  if (removeTask !== -1) tasks.splice(removeTask, 1); // Удаляем из массива 
+  // Ф-ция ищет задачу в массиве по id и возвращает объект задачи
+  const findTask = function (id) {
+    let taskId = tasks.findIndex( function (task) {
+      return parseInt(id) === task.id;
+    });
+    console.log(taskId);
+    console.log(tasks);
 
-}
+    if ( taskId === '-1') {
+      console.log('Объект задачи не найден');
+      return;
+    }
+console.log(tasks[taskId]);
 
-// Ф-ция находит и обновляет задачу в массиве task. Возвращает новый массив
-const updateTaskData = function ( {id, text} ) {
-  console.log({id, text});
-  const task = tasks.find( (task) => task.id === parseInt(id));
- console.log(task);
- console.log(parseInt(id));
- 
-  if ( !task ) console.log('Задача не найдена');
-  task.text = text;
+    return tasks[taskId];
+  }
 
-  return task;
-}
+  return {
+    createTaskData : createTaskData,
+    removeTaskData : removeTaskData,
+    updateTaskData : updateTaskData,
+    findTask : findTask
+  }
+}) ();
 
-// Ф-ция ищет задачу в массиве id и возвращает объект задачи
-const findTask = function (id) {
-  let taskId = tasks.findIndex( function (taskData) {
-    return parseInt(id) === taskData.id;
-  });
 
-  return tasks[taskId];
-}
-
-export { MESSAGES, Task, createTaskData, removeTaskData, findTask, updateTaskData };
+export { MESSAGES, Module };

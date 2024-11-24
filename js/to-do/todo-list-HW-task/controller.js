@@ -31,7 +31,7 @@ const startEventListeners = function () {
     const userText = view.UI.getInput(view.elements.addForm).value; 
 
     // Создадим объект задачи 
-    const taskData = model.createTaskData(userText); 
+    const taskData = model.Module.createTaskData(userText); 
 
     const dataExist = isData(taskData);
 
@@ -48,7 +48,7 @@ const taskHandling = function (e) {
   // Если клик по кнопке 'delete' - удаляем задачу
   if (e.target.getAttribute("data-action") && e.target.getAttribute("data-action") === 'delete') {
     let removedTask = view.remove(e); // удаляем задачу со страницы
-    model.removeTaskData(removedTask); // удаляем данные задачи из объекта
+    model.Module.removeTaskData(removedTask); // удаляем данные задачи из объекта
 
     // Сменим заголовок
     view.changeTitle();
@@ -58,9 +58,11 @@ const taskHandling = function (e) {
   if (e.target.getAttribute("data-action") && e.target.getAttribute("data-action") === 'edit') {
     // Получим id текущей задачи
     const taskID = view.getTaskID(e);
+console.log(taskID);
 
     // Получим данные задачи 
-    const taskData = model.findTask(taskID);
+    const taskData = model.Module.findTask(taskID);
+    console.log(taskData);
 
     // Кнопки на замену
     const buttonTypes = ['cancel', 'save'];
@@ -75,7 +77,7 @@ const taskHandling = function (e) {
     const taskID = view.getTaskID(e);
 
     // Получим данные по задаче из модели
-    const updatedTaskData = model.findTask(taskID);
+    const updatedTaskData = model.Module.findTask(taskID);
 
     // Запустим функцию сохаранения, передадим копию объекта данных (кнопки по умолч)
     view.cancel({...updatedTaskData}, e);
@@ -85,23 +87,27 @@ const taskHandling = function (e) {
   if (e.target.getAttribute("data-action") && e.target.getAttribute("data-action") === 'save') {
     // Получим id текущей задачи
     const id = view.getTaskID(e);
+console.log(id);
 
     // Получаем шаблон задачи
     const task = view.getParent(e, 'li'); 
+    console.log(task);
 
     // Проверим текст пользователяи запишем резул-т в переменную
     const isValid = view.UI.validateInput(task); 
+    console.log(isValid);
 
     if ( ! isValid ) return 'Ошибка сохранения. Проверьте данные';
 
     // Запишем в переменную, если с текстом всё ок
     const text = view.UI.getInput(task).value; 
+    console.log(text);
 
     // Обновим данные задачи в её объекте 
-    model.updateTaskData({id, text});
+    model.Module.updateTaskData({id, text});
 
     // Получим данные по задаче из модели
-    const updatedTaskData = model.findTask(id);
+    const updatedTaskData = model.Module.findTask(id);
 
     // Запустим функцию сохарнения, передадим новые данные по задаче
     view.save({...updatedTaskData}, e);
