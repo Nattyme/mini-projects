@@ -11,6 +11,13 @@ const Controller = ( function () {
     return false;
   }
 
+  // Объект событий
+  const EVENT_TYPES = {
+    CLICK : 'click',
+    KEYUP : 'keyup'
+  }
+
+  // Типы событий и их методы 
   const eventHandlers = {
     click : (e) => {console.log('Clicked: ', e.target);},
     keyup : (e) => {
@@ -31,9 +38,8 @@ const Controller = ( function () {
   }
 
   const startEventListeners = function () {
-    // Прослушивание событий фильтра, запускаем функцию  фильтра
-    // view.Module.elements.filter.addEventListener('keyup', view.Module.doFilter);
-    view.Module.elements.filter.addEventListener('keyup', (e) => handleEvent('keyup', e));
+    // Слушаем keyup поля фильтра, запускаем ф-цию фильтра
+    view.Module.elements.filter.addEventListener(EVENT_TYPES.KEYUP, (e) => handleEvent(EVENT_TYPES.KEYUP, e));
 
     // Отмена стандарт. поведение формы - по нажатию на submit страница не будет обновляться
     view.Module.elements.addForm.addEventListener('submit', function(e) {
