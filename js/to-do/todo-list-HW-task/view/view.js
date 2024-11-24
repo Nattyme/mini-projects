@@ -2,7 +2,7 @@ import * as NOTES  from './notes/notes.js';
 import * as UI from './UI/index.js';
 
 const Module = ( function () {
-  const { buttons, validateInput, getInput, TaskHTML } = UI;
+  const { validateInput, getInput } = UI;
   const elements = { 
     addForm : document.querySelector('#addForm'),  
     newTaskInput : addForm.querySelector('#newItemText'), 
