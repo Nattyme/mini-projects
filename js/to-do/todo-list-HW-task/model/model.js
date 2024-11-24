@@ -51,11 +51,9 @@ const Module = ( function () {
 
   // Ф-ция находит и обновляет задачу в массиве task. Возвращает новый массив
   const updateTaskData = function ( {id, text} ) {
-    console.log({id, text});
-    const task = tasks.find( (task) => task.id === parseInt(id));
-  console.log(task);
-  console.log(parseInt(id));
   
+    const task = tasks.find( (task) => task.id === parseInt(id));
+
     if ( !task ) console.log('Задача не найдена');
     task.text = text;
 
@@ -67,14 +65,11 @@ const Module = ( function () {
     let taskId = tasks.findIndex( function (task) {
       return parseInt(id) === task.id;
     });
-    console.log(taskId);
-    console.log(tasks);
 
     if ( taskId === '-1') {
       console.log('Объект задачи не найден');
       return;
     }
-console.log(tasks[taskId]);
 
     return tasks[taskId];
   }

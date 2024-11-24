@@ -46,7 +46,7 @@ const Controller = ( function () {
 
             // Если данные получены - запускаем ф-цию add()
             if (dataExist) {
-              view.Module.add({...taskData});
+              view.Module.taskManager.add({...taskData});
             } else {
               console.log('Невозможно добавить задачу. Попробуйте ещё раз');
             }
@@ -77,7 +77,7 @@ const Controller = ( function () {
   const taskHandling = function (e) {
     // Если клик по кнопке 'delete' - удаляем задачу
     if (e.target.getAttribute("data-action") && e.target.getAttribute("data-action") === 'delete') {
-      let removedTask = view.Module.remove(e); // удаляем задачу со страницы
+      let removedTask = view.Module.taskManager.remove(e); // удаляем задачу со страницы
       model.Module.removeTaskData(removedTask); // удаляем данные задачи из объекта
 
       // Сменим заголовок
@@ -88,17 +88,15 @@ const Controller = ( function () {
     if (e.target.getAttribute("data-action") && e.target.getAttribute("data-action") === 'edit') {
       // Получим id текущей задачи
       const taskID = view.Module.getTaskID(e);
-  console.log(taskID);
 
       // Получим данные задачи 
       const taskData = model.Module.findTask(taskID);
-      console.log(taskData);
 
       // Кнопки на замену
       const buttonTypes = ['cancel', 'save'];
     
       // Запустим функцию редактирования, передадим копию объекта данных и кнопки на замену
-      view.Module.edit({...taskData, buttonTypes}, e);
+      view.Module.taskManager.edit({...taskData, buttonTypes}, e);
     }
 
     // Если клик по кнопке 'cancel' - отмена редактирования задачи
@@ -110,31 +108,27 @@ const Controller = ( function () {
       const updatedTaskData = model.Module.findTask(taskID);
 
       // Запустим функцию сохаранения, передадим копию объекта данных (кнопки по умолч)
-      view.Module.cancel({...updatedTaskData}, e);
+      view.Module.taskManager.cancel({...updatedTaskData}, e);
     }
 
     // Если клик по кнопке 'save' - сохраняем задачу
     if (e.target.getAttribute("data-action") && e.target.getAttribute("data-action") === 'save') {
       // Получим id текущей задачи
       const id = view.Module.getTaskID(e);
-  console.log(id);
 
       // Получаем шаблон задачи
       const task = view.Module.getParent(e, 'li'); 
-      console.log(task);
 
       // Получим Input
       const input = view.Module.getInput(task);
 
       // Проверим текст пользователяи запишем резул-т в переменную
       const isValid = model.Module.validateInput(input);
-      console.log(isValid);
 
       if ( ! isValid ) return 'Ошибка сохранения. Проверьте данные';
 
       // Запишем в переменную, если с текстом всё ок
       const text = view.Module.getInput(task).value; 
-      console.log(text);
 
       // Обновим данные задачи в её объекте 
       model.Module.updateTaskData({id, text});
@@ -143,7 +137,7 @@ const Controller = ( function () {
       const updatedTaskData = model.Module.findTask(id);
 
       // Запустим функцию сохарнения, передадим новые данные по задаче
-      view.Module.save({...updatedTaskData}, e);
+      view.Module.taskManager.save({...updatedTaskData}, e);
     }
 
     // // Прослушивание события инпута для ввода новой задачи. Если после уведомления он снова в фокусе - скрыть уведомление

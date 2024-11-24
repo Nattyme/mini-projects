@@ -88,107 +88,68 @@ const Module = ( function () {
     return e.target.closest('li').dataset.id;
   }
 
-  // = Добавление задачи на страницу =
-  const add = function (createdTaskData) {
-    const task = new UI.TaskHTML(createdTaskData).getHTML(); // получаем шаблон задачи
+  // Модуль с действиями 
+  const taskManager = {
+    add(taskData) {
+      const task = new UI.TaskHTML(taskData).getHTML(); // получаем HTML шаблон задачи
+      elements.tasksList.insertAdjacentHTML('afterbegin', task); // Добавим задачу в список задач на странице
   
-    // Добавим задачу в список задач на странице
-    elements.tasksList.insertAdjacentHTML('afterbegin', task);
+      elements.newTaskInput.value = ''; // Очищаем поле ввода для текста 
+      changeTitle(); // Сменим заголовок
+
+      return;
+    },
+    remove(e, message) {
+      let task = e.target.closest('li'); // Найдём задачу
+      let id = task.dataset.id; // Запишем её ID
   
-    // Очищаем поле ввода для текста 
-    elements.newTaskInput.value = '';
-  
-    // Сменим заголовок
-    changeTitle();
+      // Проверяем подтверждение удаления
+      if (confirm(message)) {
+        if (task) task.remove(); // удалим задачу
+      }
+
+      return id; // и вернём её id
+    },
+    edit(taskData, e) {
+      const taskNew = getUpdatedHTML( taskData, e);  // Отрисуем разметку задачи с новыми кнопками
+      const input = taskNew.querySelector('input'); // Найдём input
+
+      input.removeAttribute('readonly');   // Разрешаем редактирование
+    
+      // Задаём фокус внутрь контейнера. 
+      input.focus();
+
+      return;
+    },
+    cancel(taskData, e) {
+      const task = getParent(e, 'li'); // Получаем шаблон задачи
+    
+      task.querySelector('input').setAttribute('readonly', ''); // Запрещаем ред-ние шаблона задачи
+      getUpdatedHTML( taskData, e);   // Заново отрисуем разметку задачи
+    
+      return;
+    },
+    save(taskData, e) {
+      const task = getParent(e, 'li');  // Получаем шаблон задачи
+      const input = task.querySelector('input[type = "text"]');   // Получаем инпут задачи
+      
+      input.setAttribute('readonly', '');  // Запрещаем редак-ние инпута
+      input.value = taskData.text;  // сохраняем ввод в поле задачи
+    
+      console.log('Сообщение сохранено успешно'); // Выводим уведомление об успехе
+    
+      getUpdatedHTML( taskData, e);    // Отрисуем разметку задачи с новыми данными
+    
+      return;
+    }
   }
 
-  // Ф-ция обновляет список задачи в завис-ти от увед. об изменении в модели
-  const update = function (tasks) {
-    // renderTasks(tasks);
-    add(tasks);
-  };
-  
-  // = Удаление задачи со страницы =
-  const remove = function (e, message) {
-    let task = e.target.closest('li');
-    let id = task.dataset.id;
-  
-    // Подтверждение об удаления
-    if (confirm(message)) {
-      if (task) task.remove(id); 
-      task.remove(); // удалим задачу
-    }
-    return id; // и вернём её id
-  }
-  
-  // Функция редактирования текста задачи
-  const edit = function (taskData, e) {
-    // Заново отрисуем разметку задачи
-    const taskNew = getUpdatedHTML( taskData, e);
-  
-    // Найдём input
-    const input = taskNew.querySelector('input');
-    // Разрешаем редактирование
-    input.removeAttribute('readonly');
-    console.log(taskNew.querySelector('input'));
-  
-    // Задаём фокус внутрь контейнера. 
-    // input.focus();
-    setTimeout(() => {
-      input.focus();
-      // Переместим курсор в конец текста (если требуется)
-      const length = input.value.length;
-      input.setSelectionRange(length, length);
-    }, 0);
-  
-  
-  }
-  
-  const cancel = function (taskData, e) {
-    // Получаем шаблон задачи
-    const task = getParent(e, 'li'); 
-  
-    // Запрещаем ред-ние шаблона задачи
-     // Запрещаем ред-ние шаблона задачи
-     task.querySelector('input').setAttribute('readonly', '');
-  
-    // Заново отрисуем разметку задачи
-    getUpdatedHTML( taskData, e);
-  
-    return;
-  }
-  
-  // Функция сохранения задачи
-  const save = function (taskData, e) {
-    // Получаем шаблон задачи
-    const task = getParent(e, 'li'); 
-    const input = task.querySelector('input[type = "text"]');
-    
-    // Запрещаем его редак-ние
-    input.setAttribute('readonly', '');
-  
-    // Проверяем, если поле задачи не пустое - сохраняем
-    input.value = taskData.text;
-  
-    // Выводим уведомление об успехе
-    console.log('Сообщение сохранено успешно');
-  
-    // Заново отрисуем разметку задачи
-    getUpdatedHTML( taskData, e);
-  
-    // Запускаем функцию "Сохранить задачу"
-    return;
-  }
-  
   // ::: Поиск по задачам :::
   const doFilter = function (e , isValid) {
-    // const isValid = UI.validateInput(elements.filter, { minLength : 1, maxLength : 30}) ? true : false;
-    // Записываем строку запроса в переменную 
-    let searchRequest = isValid ? elements.filter.value.toLowerCase() : '';
-  
-    // Находим все задачи
-    let tasks = getAllTasks();
-  
+   
+    let searchRequest = isValid ? elements.filter.value.toLowerCase() : '';  // Записываем строку запроса в переменную 
+    let tasks = getAllTasks();  // Находим все задачи
+
     tasks.forEach(function (task) {
       // Получили текст задачи списка, убрали пробелы, перевели в ниж. регистр
       let taskText = task.querySelector('input[type="text"]').value.trim().toLowerCase();
@@ -216,20 +177,16 @@ const Module = ( function () {
   
     // Проверили список задач. По результату сменили заголовок списка
     changeTitle ();
-  
+
   }
 
   return {
     elements,
+    taskManager,
     getTaskID,
     getParent,
     getInput,
     changeTitle,
-    add,
-    remove,
-    cancel, 
-    save,
-    edit,
     doFilter
   }
   
