@@ -1,4 +1,5 @@
 import { MESSAGES } from './notes/notes.js';
+import { validateInput } from './validate/validate.js';
 
 const Module = ( function () {
 
@@ -79,12 +80,13 @@ console.log(tasks[taskId]);
   }
 
   return {
-    createTaskData : createTaskData,
-    removeTaskData : removeTaskData,
-    updateTaskData : updateTaskData,
-    findTask : findTask
+    createTaskData,
+    removeTaskData,
+    updateTaskData,
+    findTask,
+    validateInput
   }
 }) ();
 
 
-export { MESSAGES, Module };
+export { MESSAGES, Module, validateInput };

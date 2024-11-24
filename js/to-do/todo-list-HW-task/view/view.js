@@ -218,7 +218,6 @@ const Module = ( function () {
 
   return {
     elements,
-    validateInput,
     getTaskID,
     getParent,
     getInput,

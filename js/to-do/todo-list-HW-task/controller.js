@@ -2,7 +2,7 @@ import * as model from './model/model.js';
 import * as view from './view/view.js';
 
 const Controller = ( function () {
-  // Ф-цтя проверяем, получены ли данные от модели
+  // Ф-ция проверяем, получены ли данные от модели
   const isData = function (data) {
     const receivedData = data;
 
@@ -22,8 +22,11 @@ const Controller = ( function () {
       // Проверили список задач. По результату сменили заголовок списка
       view.Module.changeTitle();
 
+      // Получим Input
+      const input = view.Module.getInput(view.Module.elements.addForm);
+
       // Проверим текст пользователя из формы 
-      const isValid = view.Module.validateInput(view.Module.elements.addForm);
+      const isValid = model.Module.validateInput(input);
 
       // Если проверки не пройдена - остновим програму
       if( !isValid ) return 'Ошибка, данные не получены';
@@ -94,8 +97,11 @@ const Controller = ( function () {
       const task = view.Module.getParent(e, 'li'); 
       console.log(task);
 
+      // Получим Input
+      const input = view.Module.getInput(task);
+
       // Проверим текст пользователяи запишем резул-т в переменную
-      const isValid = view.Module.validateInput(task); 
+      const isValid = model.Module.validateInput(input);
       console.log(isValid);
 
       if ( ! isValid ) return 'Ошибка сохранения. Проверьте данные';
