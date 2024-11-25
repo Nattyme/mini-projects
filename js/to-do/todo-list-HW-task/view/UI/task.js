@@ -1,14 +1,15 @@
 import { ButtonFactory } from './buttons.js';
+import { BUTTON_TYPES } from './buttonTypes.js';
 
-class TaskHTML {
-  constructor ( {id, text, buttonTypes = ['edit', 'delete'] }) {
+class TaskFactory {
+  constructor ( {id, text, buttonTypes = [BUTTON_TYPES.EDIT, BUTTON_TYPES.DELETE] }) {
     this.id = id,
     this.text = text,
     this.buttonTypes = buttonTypes;
     console.log('Button Types in Constructor:', this.buttonTypes);
   }
 
-   // Метод ищет html кнопок массива buttonsNeed в св-вах объекта buttonsAll. Возвращает разметку
+   // Метод получает от фабрики кнопок нужную разметку
   getButtonsHTML() {
     return  this.buttonTypes.map( (type) => ButtonFactory.createButton(type)).join(' ');
   }
@@ -36,4 +37,4 @@ class TaskHTML {
   }
 }
 
-export { TaskHTML };
+export { TaskFactory };

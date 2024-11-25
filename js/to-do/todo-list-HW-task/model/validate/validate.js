@@ -1,4 +1,4 @@
-import { RULES } from '../config.js';
+import { RULES } from './validateRules.js';
 
 // Типизация входных данных
 const typeValidators  = {

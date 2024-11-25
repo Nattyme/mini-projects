@@ -76,7 +76,7 @@ const getUpdatedHTML = function (taskData, e) {
   removeButtons(e);
 
   // Передаем копию объекта данных задачи 
-  const editTask = new UI.TaskHTML ( {...taskData} );
+  const editTask = new UI.TaskFactory ( {...taskData} );
 
   // Создадим новую разметку li 
   const editTaskHTML = editTask.getHTML();

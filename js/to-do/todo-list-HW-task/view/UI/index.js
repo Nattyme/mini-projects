@@ -1,4 +1,4 @@
 import { getInput } from './input.js';
-import { TaskHTML } from './task.js';
+import { TaskFactory } from './task.js';
 
-export { getInput, TaskHTML };
+export { getInput, TaskFactory };

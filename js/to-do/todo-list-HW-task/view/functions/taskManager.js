@@ -3,7 +3,7 @@ import { elements, changeTitle, getUpdatedHTML, getParent } from '../view.js';
 
 const taskManager = {
   add(taskData) {
-    const task = new UI.TaskHTML(taskData).getHTML(); // получаем HTML шаблон задачи
+    const task = new UI.TaskFactory(taskData).getHTML(); // получаем HTML шаблон задачи
     elements.tasksList.insertAdjacentHTML('afterbegin', task); // Добавим задачу в список задач на странице
 
     elements.newTaskInput.value = ''; // Очищаем поле ввода для текста 
