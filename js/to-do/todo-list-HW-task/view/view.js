@@ -69,23 +69,22 @@ const removeButtons = function (e) {
 
 // Ф-ция меняет кнопки задачи, возвращает HTML
 const getUpdatedHTML = function (taskData, e) {
-  // Надем задачу
+  // Найдём задачу
   const task = getParent(e, 'li');
 
-  // Найдем и удалим все кнопки в текущей задаче
-  removeButtons(e);
-
-  // Передаем копию объекта данных задачи 
-  const editTask = new UI.TaskFactory ( {...taskData} );
-
-  // Создадим новую разметку li 
+  // Создадим новую разметку li
+  const editTask = new UI.TaskFactory({ ...taskData });
   const editTaskHTML = editTask.getHTML();
-  
-  // Добавим задачу в список задач на странице
+
+  // Заменим задачу новой разметкой
   task.outerHTML = editTaskHTML;
 
-  return task;
-}
+  // Найдём обновлённый элемент по id или другим уникальным атрибутам
+  const updatedTask = elements.tasksList.querySelector(`[data-id="${taskData.id}"]`);
+
+  return updatedTask; // Возвращаем обновлённый элемент
+};
+
 
 // ::: Поиск по задачам :::
 const doFilter = function (e , isValid) {
