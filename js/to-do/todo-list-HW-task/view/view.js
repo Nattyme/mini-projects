@@ -1,4 +1,3 @@
-import * as NOTES  from './notes/notes.js';
 import * as UI from './UI/index.js';
 import * as FUNC  from './functions/index.js';
 
@@ -59,12 +58,6 @@ function changeTitle () {
   } else {
     elements.taskListTitle.textContent = 'Список дел пуст';
   }
-}
-
-// Ф-ция удаляем все кнопки в контейнере event
-const removeButtons = function (e) {
-  let buttonsWrapper = getParent(e, 'div');
-  buttonsWrapper.innerHTML = '';
 }
 
 // Ф-ция меняет кнопки задачи, возвращает HTML

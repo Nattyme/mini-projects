@@ -1,7 +1,9 @@
 import * as model from '../model/model.js';
 import * as view from '../view/view.js';
+import { displayMessage } from './notificationManager.js';
 
 
+displayMessage()
 // Ф-ция проверяем, получены ли данные от модели
 const isDataCreated = function (data) {
   const receivedData = data;
@@ -57,7 +59,7 @@ console.log(view);
   } // добавления задачи
 }
 
-// Ф-ция запускает метод евента, еслт он найден в объекте eventHandlers;
+// Ф-ция запускает метод евента, если он найден в объекте eventHandlers;
 const handleEvent = function (type, event) {
   if (eventHandlers[type]) {
     eventHandlers[type](event);
