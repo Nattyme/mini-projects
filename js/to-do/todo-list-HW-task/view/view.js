@@ -30,6 +30,16 @@ const displayNotification = function (type, message, container) {
   return note;
 }
 
+// Ф-ция получает родителя e по типу элемента ('li', 'div' и т д)
+const getParent = function (e, type) {
+  return e.target.closest(type);
+}
+
+// Ф-ция получает id задачи
+const getTaskID = function (e) {
+  return e.target.closest('li').dataset.id;
+}
+
 const getAllTasks = function () {
   return elements.tasksList.querySelectorAll('li');
 }
@@ -51,7 +61,7 @@ function changeTitle () {
   }
 }
 
-// Ф-ция удаляем все кнопки контейнере event
+// Ф-ция удаляем все кнопки в контейнере event
 const removeButtons = function (e) {
   let buttonsWrapper = getParent(e, 'div');
   buttonsWrapper.innerHTML = '';
@@ -75,16 +85,6 @@ const getUpdatedHTML = function (taskData, e) {
   task.outerHTML = editTaskHTML;
 
   return task;
-}
-
-// Ф-ция получает родителя e по типу элемента ('li', 'div' и т д)
-const getParent = function (e, type) {
-  return e.target.closest(type);
-}
-
-// Ф-ция получает id задачи
-const getTaskID = function (e) {
-  return e.target.closest('li').dataset.id;
 }
 
 // ::: Поиск по задачам :::
@@ -120,7 +120,6 @@ const doFilter = function (e , isValid) {
 
   // Проверили список задач. По результату сменили заголовок списка
   changeTitle ();
-
 }
 
 export { 
@@ -132,4 +131,4 @@ export {
   getParent,
   changeTitle,
   doFilter
- };
+};
