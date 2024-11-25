@@ -1,6 +1,6 @@
 import * as UI from './UI/index.js';
 import * as FUNC  from './functions/index.js';
-
+import { MESSAGES }  from './MESSAGES/MESSAGES.js';
 
 const elements = { 
     addForm : document.querySelector('#addForm'),  
@@ -15,18 +15,8 @@ const elements = {
     tasksList : document.querySelector('#items'), 
 }
 
-// = Уведомление 
-const displayNotification = function (type, message, container) {
-  let note = UI.NOTES.type;
-
-  // Добавляем текcт в уведомление об ошибке
-  type.insertAdjacentHTML('afterbegin', message);
-  // Подумать
-  if (!elements.addForm.nextElementSibling.classList.contains('alert-danger')) {
-    container.after(note);
-  }
-
-  return note;
+const displayMessage = function (message, wrapper) {
+  wrapper.insertAdjacentHTML('afterbegin', message);
 }
 
 // Ф-ция получает родителя e по типу элемента ('li', 'div' и т д)
@@ -118,7 +108,9 @@ export {
   elements,
   UI,
   FUNC,
+  MESSAGES,
   getUpdatedHTML,
+  displayMessage,
   getTaskID,
   getParent,
   changeTitle,

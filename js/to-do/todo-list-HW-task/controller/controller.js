@@ -1,9 +1,6 @@
 import * as model from '../model/model.js';
 import * as view from '../view/view.js';
-import { displayMessage } from './notificationManager.js';
 
-
-displayMessage()
 // Ф-ция проверяем, получены ли данные от модели
 const isDataCreated = function (data) {
   const receivedData = data;
@@ -13,14 +10,14 @@ const isDataCreated = function (data) {
   return false;
 }
 
-// Объект событий
+// Объект всех событий на странице 
 const EVENT_TYPES = {
   CLICK : 'click',
   KEYUP : 'keyup',
   SUBMIT : 'submit'
 }
 
-// Типы событий и их методы 
+// Типы событий на странице и их методы 
 const eventHandlers = {
   [EVENT_TYPES.CLICK] : (e) => {taskHandling(e)}, // запускает ф-ция обраб-ки задач
   [EVENT_TYPES.KEYUP] : (e) => {
@@ -79,10 +76,12 @@ const startEventListeners = function () {
   view.elements.tasksList.addEventListener(EVENT_TYPES.CLICK, (e) => handleEvent(EVENT_TYPES.CLICK, e));
 }
 
-// ::: Обработка задач :::
+// ::: Обработка задач по клику:::
 const taskHandling = function (e) {
   // Если клик по кнопке 'delete' - удаляем задачу
   if (e.target.getAttribute("data-action") && e.target.getAttribute("data-action") === 'delete') {
+    // view.displayMessage(view.MESSAGES.ERROR.DELETE, e.target.closest('li'));
+
     let removedTask = view.FUNC.taskManager.remove(e); // удаляем задачу со страницы
     model.removeTaskData(removedTask); // удаляем данные задачи из объекта
 
@@ -129,9 +128,16 @@ const taskHandling = function (e) {
     const input = view.UI.getInput(task);
 
     // Проверим текст пользователяи запишем резул-т в переменную
+   
+    
     const isValid = model.validateInput(input);
 
-    if ( ! isValid ) return 'Ошибка сохранения. Проверьте данные';
+    if ( !isValid ) {
+      console.log((view.displayMessage()));
+      
+      // view.displayMessage(view.MESSAGES_TYPES.ERROR.MESSAGES_TEXT.UNVALID, input);
+      return;
+    }
 
     // Запишем в переменную, если с текстом всё ок
     const text = view.UI.getInput(task).value; 
@@ -145,6 +151,8 @@ const taskHandling = function (e) {
     // Запустим функцию сохарнения, передадим новые данные по задаче
     view.FUNC.taskManager.save({...updatedTaskData}, e);
   }
+
+  
 
   // // Прослушивание события инпута для ввода новой задачи. Если после уведомления он снова в фокусе - скрыть уведомление
   // view.elements.newTaskInput.onfocus = function() {
@@ -162,6 +170,7 @@ const taskHandling = function (e) {
   // };
 };
 
+// Запускает работу
 const init = function () {
   view.changeTitle (); // При загрузке страницы изменяем заголовок, если список задач пуст
 

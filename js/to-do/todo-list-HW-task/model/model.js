@@ -1,6 +1,4 @@
-import { MESSAGES } from './notes/notes.js';
 import { validateInput } from './validate/validate.js';
-
 
 // Массива для хран-я объектов задач
 const tasks = [];
@@ -74,8 +72,7 @@ const findTask = function (id) {
 }
 
 
-export { 
-  MESSAGES, 
+export {
   createTaskData,
   removeTaskData,
   updateTaskData,
