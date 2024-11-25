@@ -1,4 +1,4 @@
-import { buttons } from './buttons.js';
+import { ButtonFactory } from './buttons.js';
 
 class TaskHTML {
   constructor ( {id, text, buttonTypes = ['edit', 'delete'] }) {
@@ -10,8 +10,12 @@ class TaskHTML {
 
    // Метод ищет html кнопок массива buttonsNeed в св-вах объекта buttonsAll. Возвращает разметку
   getButtonsHTML() {
-    return  this.buttonTypes.map( (type) => type ?  buttons[type].html : '').join(' ');
+    return  this.buttonTypes.map( (type) => ButtonFactory.createButton(type)).join(' ');
   }
+  getButtonsHTML() {
+    return this.buttonTypes.map(type => ButtonFactory.createButton(type)).join(' ');
+  }
+  
 
   // Метод возвращает разметку задачи 
   getHTML () {
