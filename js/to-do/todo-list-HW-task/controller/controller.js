@@ -14,7 +14,8 @@ const isDataCreated = function (data) {
 const EVENT_TYPES = {
   CLICK : 'click',
   KEYUP : 'keyup',
-  SUBMIT : 'submit'
+  SUBMIT : 'submit',
+  FOCUS : 'onfocus'
 }
 
 // Типы событий на странице и их методы 
@@ -53,7 +54,21 @@ console.log(view);
           } else {
             console.log('Невозможно добавить задачу. Попробуйте ещё раз');
           }
-  } // добавления задачи
+  }, // добавления задачи
+  [EVENT_TYPES.FOCUS] : (e) => {
+    // Скрыть уведомление об ошибке
+    if (view.elements.addForm.nextElementSibling.classList.contains('alert-danger')) {
+      // удаляем индикатор ошибки, т.к. пользователь хочет ввести данные заново
+      view.elements.addForm.nextElementSibling.remove();
+    }
+
+    // Скрыть уведомление об успехе
+    if (view.elements.addForm.nextElementSibling.classList.contains('alert-success')) {
+      // удаляем индикатор ошибки, т.к. пользователь хочет ввести данные заново
+      view.elements.addForm.nextElementSibling.remove();
+    }
+  
+}, 
 }
 
 // Ф-ция запускает метод евента, если он найден в объекте eventHandlers;
@@ -68,6 +83,8 @@ const startEventListeners = function () {
 
   // Слушаем keyup фильтра, запускаем ф-цию фильтра
   view.elements.filter.addEventListener(EVENT_TYPES.KEYUP, (e) => handleEvent(EVENT_TYPES.KEYUP, e));
+  // Прослушивание события инпута для ввода новой задачи. Если после уведомления он снова в фокусе - скрыть уведомление
+  view.elements.filter.addEventListener(EVENT_TYPES.FOCUS, (e) => handleEvent(FOCUS, e));
 
   // Слушаем submit, запускаем ф-цию добавления задачи
   view.elements.addForm.addEventListener(EVENT_TYPES.SUBMIT, (e) => handleEvent(EVENT_TYPES.SUBMIT, e));
@@ -152,22 +169,6 @@ const taskHandling = function (e) {
     view.FUNC.taskManager.save({...updatedTaskData}, e);
   }
 
-  
-
-  // // Прослушивание события инпута для ввода новой задачи. Если после уведомления он снова в фокусе - скрыть уведомление
-  // view.elements.newTaskInput.onfocus = function() {
-  //   // Скрыть уведомление об ошибке
-  //   if (view.elements.addForm.nextElementSibling.classList.contains('alert-danger')) {
-  //     // удаляем индикатор ошибки, т.к. пользователь хочет ввести данные заново
-  //     view.elements.addForm.nextElementSibling.remove();
-  //   }
-
-  //   // Скрыть уведомление об успехе
-  //   if (view.elements.addForm.nextElementSibling.classList.contains('alert-success')) {
-  //     // удаляем индикатор ошибки, т.к. пользователь хочет ввести данные заново
-  //     view.elements.addForm.nextElementSibling.remove();
-  //   }
-  // };
 };
 
 // Запускает работу
