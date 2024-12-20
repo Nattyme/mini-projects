@@ -25,8 +25,8 @@ return (
 		<li className="todo-item">
 			<span className="todo-item-text">Позавтракать</span>
 			<div className="btn-group">
-        {<Button classNames = 'btn-outline-dark btn-sm'  text= 'Важное' />}
-        {<Button classNames = 'btn-outline-danger btn-sm'  text= 'Удалить' />}
+        <Button classNames = 'btn-outline-dark btn-sm'  text= 'Важное' />
+        <Button classNames = 'btn-outline-danger btn-sm'  text= 'Удалить' />
 			</div>
 		</li>
 	</ul>
