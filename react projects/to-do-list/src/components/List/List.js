@@ -1,5 +1,7 @@
 import './List.css';
 
+import Button from  './../Buttons/Buttons';
+
 const List = () => {
 return (
 	<ul className="todo-list">
@@ -23,8 +25,8 @@ return (
 		<li className="todo-item">
 			<span className="todo-item-text">Позавтракать</span>
 			<div className="btn-group">
-				<button role="button" className="btn btn-outline-dark btn-sm">Важное</button>
-				<button role="button" className="btn btn-outline-danger btn-sm">Удалить</button>
+        {<Button classNames = 'btn-outline-dark btn-sm'  text= 'Важное' />}
+        {<Button classNames = 'btn-outline-danger btn-sm'  text= 'Удалить' />}
 			</div>
 		</li>
 	</ul>

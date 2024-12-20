@@ -1,5 +1,7 @@
 import './Search.css';
 
+import Button from  './../Buttons/Buttons';
+
 const Search = () => {
 	return (
 		<div className="search">
@@ -9,9 +11,9 @@ const Search = () => {
         className="form-control me-2"
       />
       <div className="btn-group" role="group">
-        <button type="button" className="btn btn-primary">Все</button>
-        <button type="button" className="btn btn-light">Активные</button>
-        <button type="button" className="btn btn-light">Выполненные</button>
+        {<Button active = {true} text= 'Все' />}
+        {<Button active = {false} text= 'Активные' />}
+        {<Button active = {false} text= 'Выполненные' />}
       </div>
 	  </div>
 	)
