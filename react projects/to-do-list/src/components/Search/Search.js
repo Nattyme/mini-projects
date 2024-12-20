@@ -2,16 +2,16 @@ import './Search.css';
 
 const Search = () => {
 	return (
-		<div class="search">
+		<div className="search">
       <input
         type="text"
         placeholder="введите фразу для поиска"
-        class="form-control me-2"
+        className="form-control me-2"
       />
-      <div class="btn-group" role="group">
-        <button type="button" class="btn btn-primary">Все</button>
-        <button type="button" class="btn btn-light">Активные</button>
-        <button type="button" class="btn btn-light">Выполненные</button>
+      <div className="btn-group" role="group">
+        <button type="button" className="btn btn-primary">Все</button>
+        <button type="button" className="btn btn-light">Активные</button>
+        <button type="button" className="btn btn-light">Выполненные</button>
       </div>
 	  </div>
 	)
