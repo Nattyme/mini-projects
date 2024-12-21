@@ -1,6 +1,7 @@
-import './List.css';
-import ListItem from './../ListItem/ListItem';
 import data from './../../data/data.json';
+import ListItem from './../ListItem/ListItem';
+
+import './List.css';
 
 const List = () => {
 	return (
