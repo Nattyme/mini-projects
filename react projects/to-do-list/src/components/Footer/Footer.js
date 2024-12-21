@@ -7,7 +7,7 @@ import Button from  './../Buttons/Buttons';
 const Footer = () => {
 	return (
 		<footer className="footer">
-      <Input type="text" placeholder="Что необходимо сделать" classNames="form-control me-2"/>
+      <Input placeholder="Что необходимо сделать"/>
       <Button classNames='btn-primary' text='Добавить'/>
 		</footer>
 	)

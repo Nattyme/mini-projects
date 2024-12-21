@@ -1,22 +1,26 @@
-
 .todo-list {
-	display: flex;
-	flex-direction: column;
 	padding: 0;
 	margin: 0;
-	border-radius: 0.25rem;
 	margin-bottom: 1rem;
+
+	display: flex;
+	flex-direction: column;
+
+	border-radius: 0.25rem;
 }
 
 .todo-item {
-	position: relative;
 	padding: 0.5rem 1rem;
-	color: #212529;
-	text-decoration: none;
-	background-color: #fff;
-	border: 1px solid rgba(0, 0, 0, 0.125);
-	display: flex;
+
+  position: relative;
+
+  display: flex;
 	justify-content: space-between;
+	border: 1px solid rgba(0, 0, 0, 0.125);
+	background-color: #fff;
+
+	text-decoration: none;
+	color: #212529;
 }
 
 .todo-item:first-child {

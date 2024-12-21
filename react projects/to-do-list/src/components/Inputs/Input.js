@@ -1,9 +1,9 @@
-const Input = (props) => {
+const Input = ({type = 'text', placeholder = 'Введите текст', classNames = 'form-control me-2'}) => {
 	return (
 		<input
-			type={props.type}
-			placeholder={props.placeholder}
-			className={props.classNames}
+			type={type}
+			placeholder={placeholder}
+			className={classNames}
 		/>
 	)
 }

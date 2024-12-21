@@ -6,16 +6,12 @@ import Button from  './../Buttons/Buttons';
 const Search = () => {
 	return (
 		<div className="search">
-      <Input 
-          type='text' 
-          placeholder='введите фразу для поиска' 
-          classNames='form-control me-2'
-        />
+      <Input placeholder='введите фразу для поиска'/>
  
       <div className="btn-group" role="group">
-        <Button active = {true} text= 'Все' />
-        <Button active = {false} text= 'Активные' />
-        <Button active = {false} text= 'Выполненные' />
+        <Button classNames='btn-primary' text= 'Все' />
+        <Button classNames='btn-light' text= 'Активные' />
+        <Button classNames='btn-light' text= 'Выполненные' />
       </div>
 	  </div>
 	)

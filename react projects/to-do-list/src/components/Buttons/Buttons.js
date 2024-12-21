@@ -1,25 +1,9 @@
-const getActiveClass = (activeStatus) => {
-  if (activeStatus === true) {
-    return 'btn-primary';
-  } 
-  if (activeStatus === false) {
-    return 'btn-light';
-  }
-
-	return '';
-}
-
-const getClass = (classNames) => {
-  return classNames ? classNames : '';
-}
-
-const Button = (props) => {
+const Button = ({type ='button', classNames, text}) => {
 	return ( 
-		<button type="button" className={`btn ${getActiveClass(props.active)} ${getClass(props.classNames)}`}>
-			{props.text}
+		<button type={type} className={`btn ${classNames || ''}`}>
+			{text}
 		</button>
 	)
 }
-
 
 export default Button;

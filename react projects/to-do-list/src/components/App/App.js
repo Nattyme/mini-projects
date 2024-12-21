@@ -8,12 +8,12 @@ import List from './../List/List';
 
 const App = () => {
   return (
-    <body className="todo-app p-5">
+    <section className="todo-app p-5">
       {<Header/>}
       {<Search/>}
       {<List/>}
       {<Footer/>}
-    </body>
+    </section>
   )
 }
 
