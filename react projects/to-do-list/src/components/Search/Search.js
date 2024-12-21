@@ -1,7 +1,7 @@
 import './Search.css';
 
 import Input from  './../Inputs/Input';
-import Button from  './../Buttons/Buttons';
+import Button from  './../Button/Button';
 
 const Search = () => {
 	return (
