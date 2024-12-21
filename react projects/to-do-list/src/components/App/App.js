@@ -14,40 +14,48 @@ class App extends React.Component {
 
 
   toggleTask = (id, e) => {
-
     this.setState ( (state) => {
       // Find task in data by id 
       const index = state.toDoData.findIndex( (el) => {
         return el.id === id;
       });
       const oldTaskData = state.toDoData[index];  // Get old task obj
-      let newTaskData = { ...oldTaskData};   // Create new task obj
-
 
       // Clicked on 'button important'
-      if ( e.target.type === 'button' && e.target.classList.contains('btn-outline-dark')) {
-        newTaskData = { ...oldTaskData, important : !oldTaskData.important,  done : false};
+      if ( e.target.dataset.button === 'important') {
+        return {toDoData : this.markImportantTask(index, oldTaskData, state.toDoData)};
+      }
+
+       // Clicked 'task delete'
+      if (e.target.dataset.button === 'remove') {
+        return { toDoData : this.removeTask(index, state.toDoData)}
       }
 
       // Clicked 'task done'
-      if (e.target.type !== 'button' && e.target.closest('li')) {
-        newTaskData = { ...oldTaskData, important : false, done : !oldTaskData.done};
+      if (!e.target.dataset.button && e.target.closest('[data-item="task"]')) {
+        return { toDoData :  this.markDoneTask(index, oldTaskData, state.toDoData)};
       }
-     
-      const part1 = state.toDoData.slice(0, index);
-      const part2 = state.toDoData.slice(index + 1);
 
-      // Updated array
-      const newArray = [...part1, newTaskData, ...part2];
+    });
+  }
 
-      return {
-        toDoData: newArray,
-      }
-    })
+  markImportantTask (index, oldTaskData, data) {
+    const newTaskData = { ...oldTaskData, important : !oldTaskData.important,  done : false};   // Create new task obj
+    return [...data.slice(0, index), newTaskData, ...data.slice(index + 1)];
+  }
+
+  markDoneTask (index, oldTaskData, data) {
+    const newTaskData = { ...oldTaskData, important : false, done : !oldTaskData.done};
+    return [...data.slice(0, index), newTaskData, ...data.slice(index + 1)];
+  }
+
+  removeTask (index, data) {
+    // Updated array
+    return  [...data.slice(0, index), ...data.slice(index + 1)];
   }
 
   render() {
-    console.log(this.state.toDoData);
+
     return (
       <section className="todo-app p-5">
         {<Header data = {this.state.toDoData}/>}
@@ -58,12 +66,6 @@ class App extends React.Component {
     )
   }
 
-	// 	// Clicked button delete
-	// 	if (  e.target.type === 'button' && e.target.classList.contains('btn-outline-danger') ) {
-	// 		// data remove here?
-	// 		// e.target.closest('li').remove();
-	// 	}
-	// }
 }
 
 export default App;

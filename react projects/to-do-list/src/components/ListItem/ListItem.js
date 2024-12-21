@@ -30,11 +30,11 @@ class ListItem extends React.Component {
 		// render task
 		if (this.props.task) {
 			return (
-				<li onClick={ (e)=>{this.props.toggleTask(this.props.task.id, e)} } className={classNames}>
+				<li onClick={ (e)=>{this.props.toggleTask(this.props.task.id, e)} } className={classNames} data-item="task">
 					<span className="todo-item-text">{this.props.task.title}</span>
 					<div className="btn-group">
-						<Button classNames = 'btn-outline-dark btn-sm'  text= 'Важное' />
-						<Button classNames = 'btn-outline-danger btn-sm'  text= 'Удалить' />
+						<Button classNames = 'btn-outline-dark btn-sm' dataset='important'  text= 'Важное' />
+						<Button classNames = 'btn-outline-danger btn-sm' dataset='remove'  text= 'Удалить' />
 					</div>
 				</li>
 			);
