@@ -5,6 +5,16 @@ import './ListItem.css';
 
 class ListItem extends React.Component {
 	render () {
+    // render title for empty list 
+		if (!this.props.task && this.props.isEmpty) {
+			return (
+				<li className="todo-item justify-content-center">
+ 					<span className="todo-item-text">Список дел пуст</span>
+ 				</li>
+			)
+		}
+
+
 		let classNames = 'todo-item';
 
 		// check for important task
@@ -17,19 +27,10 @@ class ListItem extends React.Component {
 			classNames += ' done';
 		}
 
-		// render Li for empty list 
-		if (this.props.isEmpty) {
-			return (
-				<li className="todo-item justify-content-center">
- 					<span className="todo-item-text">Список дел пуст</span>
- 				</li>
-			)
-		}
-
-		// render Li
+		// render task
 		if (this.props.task) {
 			return (
-				<li onClick={ (e)=>{this.props.onToggleTask(this.props.task.id, e)} } className={classNames}>
+				<li onClick={ (e)=>{this.props.toggleTask(this.props.task.id, e)} } className={classNames}>
 					<span className="todo-item-text">{this.props.task.title}</span>
 					<div className="btn-group">
 						<Button classNames = 'btn-outline-dark btn-sm'  text= 'Важное' />
@@ -39,7 +40,7 @@ class ListItem extends React.Component {
 			);
 		}
 
-		return null;
+		return ;
 	};
 }
 

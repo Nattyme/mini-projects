@@ -12,20 +12,17 @@ class App extends React.Component {
     toDoData : data
   }
 
-  onToggleTask = (id, e) => {
+
+  toggleTask = (id, e) => {
 
     this.setState ( (state) => {
-   
       // Find task in data by id 
       const index = state.toDoData.findIndex( (el) => {
         return el.id === id;
       });
-      
-      // Get old task obj
-      const oldTaskData = state.toDoData[index];
+      const oldTaskData = state.toDoData[index];  // Get old task obj
+      let newTaskData = { ...oldTaskData};   // Create new task obj
 
-      // Create new task obj
-      let newTaskData = { ...oldTaskData}
 
       // Clicked on 'button important'
       if ( e.target.type === 'button' && e.target.classList.contains('btn-outline-dark')) {
@@ -50,11 +47,12 @@ class App extends React.Component {
   }
 
   render() {
+    console.log(this.state.toDoData);
     return (
       <section className="todo-app p-5">
-        {<Header/>}
+        {<Header data = {this.state.toDoData}/>}
         {<Search/>}
-        {<List data = {this.state.toDoData} onToggleTask={this.onToggleTask}/>}
+        {<List data = {this.state.toDoData} toggleTask={this.toggleTask}/>}
         {<Footer/>}
       </section>
     )
