@@ -54,14 +54,31 @@ class App extends React.Component {
     return  [...data.slice(0, index), ...data.slice(index + 1)];
   }
 
+  addItem = (title) => {
+
+    this.setState((state)=>{
+      const id = state.toDoData[state.toDoData.length - 1]['id'] + 1;
+      console.log(id);
+      
+      const newItem = {id : id, title: title, important: false, done: false}
+
+      const newArray = [...state.toDoData, newItem];
+
+
+      return {
+        toDoData : newArray,
+      }
+    })
+  }
+
   render() {
 
     return (
       <section className="todo-app p-5">
-        {<Header data = {this.state.toDoData}/>}
-        {<Search/>}
-        {<List data = {this.state.toDoData} toggleTask={this.toggleTask}/>}
-        {<Footer/>}
+        <Header data = {this.state.toDoData}/>
+        <Search/>
+        <List data = {this.state.toDoData} toggleTask={this.toggleTask}/>
+        <Footer addItem = {this.addItem}/>
       </section>
     )
   }
