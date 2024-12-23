@@ -2,3 +2,8 @@
 	max-width: 800px;
 	padding: 3rem;
 }
+
+.todo-app__search {
+	display: flex;
+	margin-bottom: 1rem;
+}

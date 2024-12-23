@@ -3,6 +3,7 @@ import data from './../../data/data.json';
 import Header from './../Header/Header';
 import Footer from './../Footer/Footer';
 import Search from './../Search/Search';
+import StatusBar from './../StatusBar/StatusBar';
 import List from './../List/List';
 
 import './App.css';
@@ -10,7 +11,8 @@ import './App.css';
 class App extends React.Component {
   state = {
     toDoData : data,
-    term : ''
+    term : '',
+    status : 'all' // 'all', 'active', 'done'
   }
 
   toggleTask = (id, e) => {
@@ -72,25 +74,44 @@ class App extends React.Component {
     if (term.trim().length === 0) return items;
 
     return items.filter((item)=>{
-      if(item.title.indexOf(term.trim()) > -1 ) return true;
+      if(item.title.toLowerCase().indexOf(term.toLowerCase().trim()) > -1 ) return true;
     });
   }
 
   changeTerm = (term) => {
-    console.log('changer term start', term);
     this.setState({
       term: term,
     });
   }
 
+  // check status
+  filterByStatus = (items, status) => {
+    switch (status) {
+      case 'all' :
+        return items;
+      case 'active' : 
+        return items.filter( (item) => item.done === false );
+      case 'done' :
+        return items.filter ( (item) => item.done === true )
+
+      default : 
+        return items;
+  
+    }
+  }
+
   render() {
-    const visibleItems = this.search(this.state.toDoData, this.state.term);
+    const filteredBySearchItems = this.search(this.state.toDoData, this.state.term);
+    const filteredByStatusItems = this.filterByStatus(filteredBySearchItems, this.state.status);
 
     return (
       <section className="todo-app p-5">
         <Header data = {this.state.toDoData}/>
-        <Search changeTerm={this.changeTerm}/>
-        <List data = {visibleItems} toggleTask={this.toggleTask}/>
+        <div className="todo-app__search">
+          <Search changeTerm={this.changeTerm} term={this.state.term}/>
+          <StatusBar/>
+        </div>
+        <List data = {filteredByStatusItems} toggleTask={this.toggleTask}/>
         <Footer addItem = {this.addItem}/>
       </section>
     )

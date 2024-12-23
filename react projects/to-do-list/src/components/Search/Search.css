@@ -1,9 +1,0 @@
-.search {
-	display: flex;
-	margin-bottom: 1rem;
-}
-
-.search .btn-group {
-  column-gap: 0.30rem;
-  background-color: #f8f9fa;
-}
