@@ -10,7 +10,7 @@ import './App.css';
 class App extends React.Component {
   state = {
     toDoData : data,
-    term : 'кофе'
+    term : ''
   }
 
   toggleTask = (id, e) => {
@@ -76,13 +76,20 @@ class App extends React.Component {
     });
   }
 
+  changeTerm = (term) => {
+    console.log('changer term start', term);
+    this.setState({
+      term: term,
+    });
+  }
+
   render() {
     const visibleItems = this.search(this.state.toDoData, this.state.term);
 
     return (
       <section className="todo-app p-5">
         <Header data = {this.state.toDoData}/>
-        <Search/>
+        <Search changeTerm={this.changeTerm}/>
         <List data = {visibleItems} toggleTask={this.toggleTask}/>
         <Footer addItem = {this.addItem}/>
       </section>
