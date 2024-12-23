@@ -17,15 +17,20 @@ class Footer extends React.Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    console.log('Submit');
+  
     this.props.addItem(this.state.taskTitle);
+
+    // clean input after task is added
+    this.setState({
+      taskTitle: ''
+    });
   }
 
   render() {
     return (
       <footer className="footer">
         <form onSubmit={this.onSubmit} className="footer__form form">
-          <Input onchange = {this.onInputChange} placeholder="Что необходимо сделать"/>
+          <Input value={this.state.taskTitle} onchange = {this.onInputChange} placeholder="Что необходимо сделать"/>
           <Button type = 'submit' classNames='btn-primary' text='Добавить'/>
         </form>
       </footer>

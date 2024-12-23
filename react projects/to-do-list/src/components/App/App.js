@@ -58,12 +58,8 @@ class App extends React.Component {
 
     this.setState((state)=>{
       const id = state.toDoData[state.toDoData.length - 1]['id'] + 1;
-      console.log(id);
-      
       const newItem = {id : id, title: title, important: false, done: false}
-
       const newArray = [...state.toDoData, newItem];
-
 
       return {
         toDoData : newArray,
