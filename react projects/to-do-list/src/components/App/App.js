@@ -9,9 +9,9 @@ import './App.css';
 
 class App extends React.Component {
   state = {
-    toDoData : data
+    toDoData : data,
+    term : 'кофе'
   }
-
 
   toggleTask = (id, e) => {
     this.setState ( (state) => {
@@ -67,13 +67,23 @@ class App extends React.Component {
     })
   }
 
+  search = (items, term) => {
+    // case empty search
+    if (term.trim().length === 0) return items;
+
+    return items.filter((item)=>{
+      if(item.title.indexOf(term.trim()) > -1 ) return true;
+    });
+  }
+
   render() {
+    const visibleItems = this.search(this.state.toDoData, this.state.term);
 
     return (
       <section className="todo-app p-5">
         <Header data = {this.state.toDoData}/>
         <Search/>
-        <List data = {this.state.toDoData} toggleTask={this.toggleTask}/>
+        <List data = {visibleItems} toggleTask={this.toggleTask}/>
         <Footer addItem = {this.addItem}/>
       </section>
     )

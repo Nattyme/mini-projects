@@ -17,8 +17,9 @@ class Footer extends React.Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-  
-    this.props.addItem(this.state.taskTitle);
+
+    // validate empty input
+    if ( this.state.taskTitle.trim() ) this.props.addItem(this.state.taskTitle);
 
     // clean input after task is added
     this.setState({
