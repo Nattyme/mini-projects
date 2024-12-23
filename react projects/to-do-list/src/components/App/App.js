@@ -100,6 +100,11 @@ class App extends React.Component {
     }
   }
 
+  // change state status by button click
+  changeStatus = (status) => {
+    this.setState({status : status});
+  }
+
   render() {
     const filteredBySearchItems = this.search(this.state.toDoData, this.state.term);
     const filteredByStatusItems = this.filterByStatus(filteredBySearchItems, this.state.status);
@@ -109,7 +114,7 @@ class App extends React.Component {
         <Header data = {this.state.toDoData}/>
         <div className="todo-app__search">
           <Search changeTerm={this.changeTerm} term={this.state.term}/>
-          <StatusBar/>
+          <StatusBar changeStatus={this.changeStatus} status = {this.state.status}/>
         </div>
         <List data = {filteredByStatusItems} toggleTask={this.toggleTask}/>
         <Footer addItem = {this.addItem}/>
