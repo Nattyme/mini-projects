@@ -1,4 +1,4 @@
-import React from 'react'; // need to convert into class
+import {Component}from 'react'; // need to convert into class
 import data from './../../data/data.json';
 import Header from './../Header/Header';
 import Footer from './../Footer/Footer';
@@ -8,7 +8,7 @@ import List from './../List/List';
 
 import './App.css';
 
-class App extends React.Component {
+class App extends Component {
   state = {
     toDoData : data,
     term : '',

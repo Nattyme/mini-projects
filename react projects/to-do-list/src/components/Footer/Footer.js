@@ -1,10 +1,10 @@
-import React from 'react';
+import {Component} from 'react';
 
 import Input from  './../Inputs/Input';
 import Button from  './../Button/Button';
 import './Footer.css';
 
-class Footer extends React.Component {
+class Footer extends Component {
   state = {
     taskTitle : ''
   }
