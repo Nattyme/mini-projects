@@ -17,43 +17,37 @@ class App extends Component {
 
   toggleTask = (id, e) => {
     this.setState ( (state) => {
-      // Find task in data by id 
-      const index = state.toDoData.findIndex( (el) => {
-        return el.id === id;
-      });
-      const oldTaskData = state.toDoData[index];  // Get old task obj
-
-      // Clicked on 'button important'
+      // Clicked on 'button IMPORTANT'
       if ( e.target.dataset.button === 'important') {
-        return {toDoData : this.markImportantTask(index, oldTaskData, state.toDoData)};
+        return {toDoData : this.toggleParam(id, 'important', state.toDoData)};
       }
 
-       // Clicked 'task delete'
+       // Clicked 'task DELETE'
       if (e.target.dataset.button === 'remove') {
-        return { toDoData : this.removeTask(index, state.toDoData)}
+        return { toDoData : this.removeTask(id, state.toDoData)}
       }
 
-      // Clicked 'task done'
+      // Clicked 'task DONE'
       if (!e.target.dataset.button && e.target.closest('[data-item="task"]')) {
-        return { toDoData :  this.markDoneTask(index, oldTaskData, state.toDoData)};
+        return { toDoData :  this.toggleParam(id, 'done', state.toDoData)};
       }
 
     });
   }
 
-  markImportantTask (index, oldTaskData, data) {
-    const newTaskData = { ...oldTaskData, important : !oldTaskData.important,  done : false};   // Create new task obj
-    return [...data.slice(0, index), newTaskData, ...data.slice(index + 1)];
+  toggleParam (id, param, data) {
+    return data.map((task) => {
+      return {
+        ...task,
+        [param] : id === task.id ? !task[param] : task[param]
+      }
+    });
   }
 
-  markDoneTask (index, oldTaskData, data) {
-    const newTaskData = { ...oldTaskData, important : false, done : !oldTaskData.done};
-    return [...data.slice(0, index), newTaskData, ...data.slice(index + 1)];
-  }
+  removeTask (id, data) {
+      // Updated array
+      return data.filter((task) => task.id !== id);
 
-  removeTask (index, data) {
-    // Updated array
-    return  [...data.slice(0, index), ...data.slice(index + 1)];
   }
 
   addItem = (title) => {
