@@ -1,7 +1,0 @@
-const Button = () => {
-  return(
-    <button type="button" className="btn btn-outline-primary" id="btnMinus">Minus</button>
-  )
-}
-
-export default Button;
