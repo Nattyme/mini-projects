@@ -1,7 +1,13 @@
-const Input = () => {
-  return(
-    <input type="number" className="form-control mb-3" id="input" disabled value="0"/>
-  )
+const Input = (props) => {
+return(
+	<input 
+		type={props.type} 
+		className={props.classNames} 
+		id={props.id} 
+		value={props.value}
+		disabled = {props.disabled}
+	/>
+)
 }
 
 export default Input;

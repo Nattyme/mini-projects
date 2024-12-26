@@ -5,22 +5,32 @@ import './App.css';
 const App = () => {
 const buttons = [
 	{
-	id : 'btnMinus',
-	type : 'button',
-	classNames : 'btn btn-outline-primary',
-	text : 'Minus'
+		id : 'btnMinus',
+		type : 'button',
+		classNames : 'btn btn-outline-primary',
+		text : 'Minus'
 	},
 	{
-	id : 'btnReset',
-	type : 'button',
-	classNames : 'btn btn-outline-primary',
-	text : 'Reset'
+		id : 'btnReset',
+		type : 'button',
+		classNames : 'btn btn-outline-primary',
+		text : 'Reset'
 	},
 	{
-	id : 'btnPlus',
-	type : 'button',
-	classNames : 'btn btn-outline-primary',
-	text : 'Plus'
+		id : 'btnPlus',
+		type : 'button',
+		classNames : 'btn btn-outline-primary',
+		text : 'Plus'
+	}
+];
+
+const inputs = [
+	{
+		id : 'input',
+		type : 'number',
+		classNames : 'form-control mb-3',
+		value : '0',
+		disabled : 'disabled',
 	}
 ];
 
@@ -34,14 +44,25 @@ const renderButtons = buttons.map( (button) => {
 			/>
 });
 
+const renderInput = inputs.map ( (input) => {
+	return (
+		<Input
+			id = {input.id}
+			classNames = {input.classNames}
+			value = {input.value}
+			disabled = {input.disabled}
+		/>
+	)
+});
+
 return (
 	<div className = 'app p-3'>
-	<h1>Counter</h1>
-	<Input/>
+		<h1>Counter</h1>
+		{renderInput}
 
-	<div className="btn-group" role="group" aria-label="Basic example">
-		{renderButtons}
-	</div>
+		<div className="btn-group" role="group" aria-label="Basic example">
+			{renderButtons}
+		</div>
 	</div>
 )
 }
