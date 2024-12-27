@@ -1,14 +1,20 @@
+import { useState } from 'react';
 import data from './../../data/data.json';
 import BlogList from './../BlogList/BlogList';
 import './Home.css';
 
 const Home = () => {
-  const blog = data.blog;
-console.log(blog);
+  const [posts, setPosts] = useState(data.blog);
+
+  const handleDelete = (id) => {
+    const newPosts = posts.filter( (post) => post.id !== id);
+    setPosts(newPosts);
+  }
+
 
   return ( 
     <div className = "home">
-      <BlogList blog={blog}/>
+      <BlogList posts={posts} handleDelete = {handleDelete}/>
     </div>
    
   );
