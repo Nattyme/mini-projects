@@ -1,0 +1,159 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+* {
+	margin: 0;
+	padding: 0;
+	font-family: 'Montserrat', sans-serif;
+}
+
+.app {
+	margin: 0 auto;
+	max-width: 800px;
+	padding-bottom: 50px;
+}
+
+.navBar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	margin-bottom: 50px;
+	padding: 30px 0;
+
+	border-bottom: 1px solid #f2f2f2;
+}
+
+.navBar h1 {
+	font-weight: 700;
+	font-size: 32px;
+	color: rgb(5, 106, 220);
+}
+
+.links {
+	font-size: 24px;
+	display: flex;
+	column-gap: 30px;
+}
+
+.links a {
+	color: rgb(26, 148, 255);
+	text-decoration: none;
+}
+
+.blog {
+	display: flex;
+	flex-direction: column;
+	row-gap: 50px;
+}
+
+.post-preview {
+	border-radius: 8px;
+	padding: 20px;
+	transition: box-shadow 0.2s ease-in;
+	box-shadow: #cfdeea 0px 5px 35px;
+}
+
+.post-preview a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.post-preview a:hover h2 {
+	color: rgb(26, 148, 255);
+}
+
+.post-preview h2 {
+	font-weight: 600;
+	margin-bottom: 15px;
+}
+
+.post-preview p {
+}
+
+.post-preview .btn-delete {
+	margin-top: 20px;
+}
+
+.btn-delete {
+	padding: 5px 10px;
+	cursor: pointer;
+}
+
+.blog-details div {
+	line-height: 1.7;
+	font-size: 16px;
+}
+
+.blog-details h2 {
+	font-size: 32px;
+	margin-bottom: 1em;
+}
+
+.blog-details p {
+	margin-bottom: 1em;
+}
+
+.author {
+	color: #94acc1;
+}
+
+/* create new blog form */
+.create {
+	max-width: 600px;
+	margin: 0 auto;
+	text-align: center;
+}
+.create label {
+	text-align: left;
+	display: block;
+}
+.create h2 {
+	font-size: 20px;
+	color: rgb(5, 106, 220);
+	margin-bottom: 30px;
+}
+.create input,
+.create textarea,
+.create select {
+	width: 100%;
+	padding: 10px 10px;
+	margin: 10px 0 20px;
+	border: 1px solid #ddd;
+	box-sizing: border-box;
+	display: block;
+	font-size: 18px;
+}
+button {
+	background: rgb(5, 106, 220);
+	color: #fff;
+	border: 0;
+	padding: 10px 20px;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 18px;
+	font-weight: 600;
+}
+
+button:active {
+	background: rgb(1, 77, 163);
+	position: relative;
+	top: 1px;
+}
+
+button[disabled] {
+	background: rgb(199 205 213);
+}
+
+.blog-body {
+	margin-bottom: 20px;
+}
+
+.not-found h2 {
+	margin-bottom: 30px;
+	color: tomato;
+	font-size: 28px;
+}
+
+.not-found p {
+	margin-bottom: 20px;
+}

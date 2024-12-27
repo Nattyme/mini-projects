@@ -1,0 +1,23 @@
+.blog {
+	display: flex;
+	flex-direction: column;
+	row-gap: 50px;
+}
+
+.blog-body {
+	margin-bottom: 20px;
+}
+
+.blog-details div {
+	line-height: 1.7;
+	font-size: 16px;
+}
+
+.blog-details h2 {
+	font-size: 32px;
+	margin-bottom: 1em;
+}
+
+.blog-details p {
+	margin-bottom: 1em;
+}
