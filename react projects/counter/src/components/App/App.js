@@ -1,8 +1,7 @@
 import {Component} from 'react';
 import data from './../../data/data.json';
 import Form from './../Form/Form';
-import Button from './../Button/Button';
-import Input from './../Input/Input';
+
 
 import './App.css';
 
@@ -13,6 +12,7 @@ class App extends Component {
     formButtons : data.buttons
   }
 
+  // Change state term
   changeTerm = (term) => {
     this.setState({
       term : term
@@ -42,36 +42,9 @@ class App extends Component {
     this.changeTerm(newValue);
   }
 
+  // Form submit handling
   handleFormSubmit = (e) => {
     e.preventDefault();
-  } 
-
-  renderButtons = (buttons) => {
-    return buttons.map( (button) => {
-      return  <Button
-                id = {button.id}
-                key = {button.id}
-                type = {button.type}
-                classNames = {button.classNames}
-                text = {button.text}
-              />
-    });
-  }
-
-  // Render inputs to page
-  renderInput = (formInputs, term) => {
-    return formInputs.map( (input) => {
-  
-      return (
-        <Input
-          id = {input.id}
-          key = {input.id}
-          classNames = {input.classNames}
-          value = {term}
-          disabled = {input.disabled}
-        />
-      )
-    });
   } 
 
   render () {
@@ -83,8 +56,8 @@ class App extends Component {
           clickedButton = {this.clickedButton}
           changeTerm = {this.changeTerm} 
           term = {this.state.term} 
-          renderInput = {this.renderInput(this.state.input, this.state.term)} 
-          renderButtons = {this.renderButtons(this.state.formButtons)}/>
+          inputs= {this.state.input} 
+          buttons = {this.state.formButtons}/>
       </div>
     )
   }

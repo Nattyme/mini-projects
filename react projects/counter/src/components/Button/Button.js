@@ -1,12 +1,12 @@
-const Button = (props) => {
+const Button = ({button}) => {
 
   return (
     <button 
-      type={props.type} 
-      className={props.classNames} 
-      id={props.id} 
+      id={button.id} 
+      type={button.type} 
+      className={button.classNames} 
     > 
-      {props.text}
+      {button.text}
     </button>
   )
 }
