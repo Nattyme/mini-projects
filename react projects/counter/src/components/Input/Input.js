@@ -1,12 +1,12 @@
-const Input = ({type, classNames, id, value, disabled, placeholder='0'}) => {
+const Input = ({id, type, classNames, disabled, value, placeholder='0'}) => {
   return(
     <input 
+      id={id} 
       type={type} 
       className={classNames} 
-      id={id} 
+      disabled = {disabled}
       value={value}
       placeholder= {placeholder}
-      disabled = {disabled}
     />
   )
 }

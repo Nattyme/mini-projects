@@ -23,6 +23,6 @@
 					"id" : "input",
 					"type" : "number",
 					"classNames" : "form-control mb-3",
-					"disabled" : "disabled"
+					"disabled" : true
 				}]
 }
