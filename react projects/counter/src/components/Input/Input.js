@@ -1,13 +1,14 @@
-const Input = (props) => {
-return(
-	<input 
-		type={props.type} 
-		className={props.classNames} 
-		id={props.id} 
-		value={props.value}
-		disabled = {props.disabled}
-	/>
-)
+const Input = ({type, classNames, id, value, disabled, placeholder='0'}) => {
+  return(
+    <input 
+      type={type} 
+      className={classNames} 
+      id={id} 
+      value={value}
+      placeholder= {placeholder}
+      disabled = {disabled}
+    />
+  )
 }
 
 export default Input;

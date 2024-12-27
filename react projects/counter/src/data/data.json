@@ -1,0 +1,28 @@
+{
+"buttons" : [
+				{
+					"id" : "btnMinus",
+					"type" : "button",
+					"classNames" : "btn btn-outline-primary",
+					"text" : "Minus"
+				},
+				{
+					"id" : "btnReset",
+					"type" : "reset",
+					"classNames" : "btn btn-outline-primary",
+					"text" : "Reset"
+				},
+				{
+					"id" : "btnPlus",
+					"type" : "button",
+					"classNames" : "btn btn-outline-primary",
+					"text" : "Plus"
+				}
+			],
+"input" : [{
+					"id" : "input",
+					"type" : "number",
+					"classNames" : "form-control mb-3",
+					"disabled" : "disabled"
+				}]
+}
