@@ -1,6 +1,6 @@
 import './BlogList.css';
 
-const BlogList = ({ posts, handleDelete}) => {
+const BlogList = ({ posts}) => {
 	return ( 
 		<div className="blog">
       {posts.map((post) => 
@@ -8,7 +8,7 @@ const BlogList = ({ posts, handleDelete}) => {
             <div key={post.id} className="post-preview">
               <h2>{post.title}</h2>
               <p>{post.author}</p>
-              <button className="btn-delete" onClick = { () => {handleDelete(post.id)}}>Delete</button>
+              {/* <button className="btn-delete">Delete</button> */}
             </div>
           )
       )}

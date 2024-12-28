@@ -1,26 +1,24 @@
 import { useEffect, useState } from 'react';
-import data from './../../data/data.json';
 import BlogList from './../BlogList/BlogList';
 import './Home.css';
 
 const Home = () => {
-  const [posts, setPosts] = useState(data.blog);
-  const [name, setName] = useState('Jim');
-  const handleDelete = (id) => {
-    const newPosts = posts.filter( (post) => post.id !== id);
-    setPosts(newPosts);
-  }
+  const [posts, setPosts] = useState(null);
 
   useEffect(()=>{
     console.log('use effect run');
-    
-  }, [name]);
+    fetch('http://localhost:8000/posts').then((res)=>{
+      return res.json();
+    }).then((data) =>{
+      console.log(data);
+      setPosts(data);
+    });
+  }, []);
 
 
   return ( 
     <div className = "home">
-      <BlogList posts={posts} handleDelete = {handleDelete}/>
-      <button onClick={()=>{setName('Tom')}}>{name}</button>
+      {posts && <BlogList posts={posts}/>}
     </div>
    
   );
