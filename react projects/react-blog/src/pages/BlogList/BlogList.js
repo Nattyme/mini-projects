@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './BlogList.css';
 
 const BlogList = ({posts}) => {  
@@ -6,8 +7,11 @@ const BlogList = ({posts}) => {
       {posts.map((post) => 
           (
             <div key={post.id} className="post-preview">
-              <h2>{post.title}</h2>
-              <p>{post.author}</p>
+              <Link to={`/blogs/${post.id}`}>
+                <h2>{post.title}</h2>
+                <p>{post.author}</p>
+              </Link>
+              
               {/* <button className="btn-delete">Delete</button> */}
             </div>
           )
