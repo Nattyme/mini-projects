@@ -5,11 +5,27 @@ const Create = () => {
   const [body, setBody] = useState('');
   const [author, setAuthor] = useState('Mary Jane');
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const blog = {title, body, author};
+    console.log(blog);
+
+    fetch('http://localhost:8000/posts', {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(blog)
+    }).then(() => {
+      console.log('New post was added');
+      
+    })
+    
+  }
+
   return (
     <div className="create">
       <h2>Add a new Post!</h2>
   
-      <form>
+      <form onSubmit={handleSubmit}>
         <label>Post title</label>
         <input 
           type="text" 
