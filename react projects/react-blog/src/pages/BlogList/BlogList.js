@@ -1,6 +1,6 @@
 import './BlogList.css';
 
-const BlogList = ({ posts}) => {
+const BlogList = ({posts}) => {  
 	return ( 
 		<div className="blog">
       {posts.map((post) => 
