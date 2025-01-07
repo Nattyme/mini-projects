@@ -39,7 +39,7 @@ const useFetch = (url) => {
       console.log('clean');
       abortCont.abort();
     }
-  }, []);
+  });
 
   return {data, isLoading, error}
 }

@@ -1,100 +1,22 @@
 {
   "posts": [
     {
-      "title": "My First Blog",
-      "body": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem fuga nisi cum earum odio assumenda provident laborum quisquam ipsum, eaque accusantium maiores incidunt atque porro dicta dolores ad soluta modi?",
-      "author": "John Doe",
-      "id": "1"
+        "title": "My First Blog",
+        "body": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem fuga nisi cum earum odio assumenda provident laborum quisquam ipsum, eaque accusantium maiores incidunt atque porro dicta dolores ad soluta modi?",
+        "author": "John Doe",
+        "id": 1
     },
     {
-      "title": "Second Post",
-      "body": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem fuga nisi cum earum odio assumenda provident laborum quisquam ipsum, eaque accusantium maiores incidunt atque porro dicta dolores ad soluta modi?",
-      "author": "Mary Jane",
-      "id": "2"
+        "title": "Second Post",
+        "body": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem fuga nisi cum earum odio assumenda provident laborum quisquam ipsum, eaque accusantium maiores incidunt atque porro dicta dolores ad soluta modi?",
+        "author": "Mary Jane",
+        "id": 2
     },
     {
-      "id": "ee18",
-      "title": "fdfd",
-      "body": "dfdfs",
-      "author": "Mary Jane"
-    },
-    {
-      "id": "a628",
-      "title": "dsds",
-      "body": "dsdsd",
-      "author": "Mary Jane"
-    },
-    {
-      "id": "b5d5",
-      "title": "dsds",
-      "body": "dsdsd",
-      "author": "Mary Jane"
-    },
-    {
-      "id": "ffa3",
-      "title": "dsds",
-      "body": "dsdsd",
-      "author": "Mary Jane"
-    },
-    {
-      "id": "238b",
-      "title": "dsds",
-      "body": "dsdsd",
-      "author": "Mary Jane"
-    },
-    {
-      "id": "3501",
-      "title": "dsds",
-      "body": "dsdsd",
-      "author": "Mary Jane"
-    },
-    {
-      "id": "2070",
-      "title": "dsds",
-      "body": "dsdsd",
-      "author": "Mary Jane"
-    },
-    {
-      "id": "9f6b",
-      "title": "dsds",
-      "body": "dsdsd",
-      "author": "Mary Jane"
-    },
-    {
-      "id": "bbb8",
-      "title": "dsds",
-      "body": "dsdsd",
-      "author": "Mary Jane"
-    },
-    {
-      "id": "836e",
-      "title": "dsds",
-      "body": "dsdsd",
-      "author": "Mary Jane"
-    },
-    {
-      "id": "14a4",
-      "title": "dsds",
-      "body": "dsdsd",
-      "author": "Mary Jane"
-    },
-    {
-      "id": "f7ed",
-      "title": "dsds",
-      "body": "dsdsd",
-      "author": "Mary Jane"
-    },
-    {
-      "id": "06f2",
-      "title": "dsds",
-      "body": "dsdsd",
-      "author": "Mary Jane"
-    },
-    {
-      "id": "437d",
-      "title": "fdfdf",
-      "body": "fdfd",
-      "author": "Jhon Doe"
+        "title": "Third Post",
+        "body": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem fuga nisi cum earum odio assumenda provident laborum quisquam ipsum, eaque accusantium maiores incidunt atque porro dicta dolores ad soluta modi?",
+        "author": "Tom Soyer",
+        "id": 3
     }
   ]
 }
