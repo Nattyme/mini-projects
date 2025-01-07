@@ -4,8 +4,8 @@ import useFetch from '../../useFetch'
 import './Home.css';
 
 const Home = () => {
-  const {data, isLoading, error} = useFetch('http://localhost:8000/posts');
   const [updateFlag, setUpdateFlag] = useState(false);
+  const {data, isLoading, error} = useFetch('http://localhost:8000/posts', updateFlag);
 
   return ( 
     <div className = "home">
