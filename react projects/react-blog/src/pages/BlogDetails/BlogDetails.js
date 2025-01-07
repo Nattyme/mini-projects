@@ -21,7 +21,7 @@ const BlogDetails = () => {
         <article>
           <h2>{blog.title}</h2>
           <p className="auther">Written by: {blog.author}</p>
-          <div>{blog.body}</div>
+          <div className="blog-body">{blog.body}</div>
           <button onClick={() => {deletePost(blog.id, afterDelete)}} className="btn-delete">Delete</button>
         </article>
       )}

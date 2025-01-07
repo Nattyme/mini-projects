@@ -8,6 +8,12 @@ const Create = () => {
   const [isPending, setIsPending] = useState(false);
   const navigate = useNavigate();
 
+  const clearForm = () => {
+    setTitle('');
+    setBody('');
+    setAuthor('Jhon Doe');
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const blog = {title, body, author};
@@ -21,9 +27,7 @@ const Create = () => {
       }).then(() => {
         console.log('New post was added');
         setIsPending(false);
-        setTitle('');
-        setBody('');
-        setAuthor('Jhon Doe');
+        clearForm();
         navigate('/')
       });
     }, 500)
