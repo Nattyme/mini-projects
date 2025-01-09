@@ -6,7 +6,6 @@ const useFetch = (url, updateFlag) => {
   const [error, setError] = useState(null);
 
   useEffect(()=>{
-    console.log('useEffect');
     const abortCont = new AbortController();
     setTimeout(
      () => {
@@ -18,8 +17,6 @@ const useFetch = (url, updateFlag) => {
         
         return res.json();
       }).then((data) =>{
-        console.log(data);
-        
         setData(data);
         setLoading(false);
         setError(null);
