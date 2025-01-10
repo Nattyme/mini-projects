@@ -3,7 +3,7 @@ import './_reset.scss';
 import './_base.scss';
 import './_section-cart.scss';
 import Title from '../Title';
-import Cart from '../../Cart';
+import Cart from './../Cart';
 
 const App = function () {
 	return (
@@ -15,9 +15,7 @@ const App = function () {
 			</header>
 			<div className="section-cart__body">
 				<div className="container">
-
 				  <Cart/>
-
 				</div>
 			</div>
 		</section>
