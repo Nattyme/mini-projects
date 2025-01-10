@@ -1,3 +1,4 @@
+import Counter from '../Counter';
 import './style.scss';
 
 const Product = () => {
@@ -8,19 +9,7 @@ const Product = () => {
 		</div>
 		<div className="product__title">Apple MacBook Air 13</div>
 		<div className="product__count">
-			<div className="count">
-				<div className="count__box">
-					<input type="number" className="count__input" min="1" max="100" value="1"/>
-				</div>
-				<div className="count__controls">
-					<button type="button" className="count__up">
-						<img src="./img/icons/icon-up.svg" alt="Increase"/>
-					</button>
-					<button type="button" className="count__down">
-						<img src="./img/icons/icon-down.svg" alt="Decrease"/>
-					</button>
-				</div>
-			</div>
+      <Counter />
 		</div>
 
 		<div className="product__price">110 000 руб.</div>
