@@ -1,3 +1,4 @@
+import ButtonDelete from '../ButtonDelete';
 import Counter from '../Counter';
 import './style.scss';
 
@@ -15,9 +16,7 @@ const Product = () => {
 		<div className="product__price">110 000 руб.</div>
 
 		<div className="product__controls">
-			<button type="button">
-				<img src="./img/icons/cross.svg" alt="Delete"/>
-			</button>
+      <ButtonDelete />
 		</div>
   	</section>
   );
