@@ -1,13 +1,14 @@
 import './_vars.scss';
 import './_reset.scss';
 import './_base.scss';
+import Title from '../Title';
 
 const App = function () {
 	return (
 		<section className="section-cart">
 			<header className="section-cart__header">
 				<div className="container">
-					<h1 className="title-1">Корзина товаров</h1>
+          <Title/>
 				</div>
 			</header>
 			<div className="section-cart__body">
