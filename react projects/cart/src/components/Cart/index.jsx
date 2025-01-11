@@ -7,7 +7,7 @@ import data from './../../data/data.json';
 const Cart = () => {
   const [cart, setCart] = useState(data);
   const products = cart.map((product) => {
-    return  <Product product = {product} />
+    return  <Product product = {product} key = {product.id} />
   });
   
 	return ( 
