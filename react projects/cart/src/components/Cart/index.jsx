@@ -7,12 +7,13 @@ import data from './../../data/data.json';
 const Cart = () => {
   const [cart, setCart] = useState(null);
   const [total, setTotal] = useState(null);
+  const [fetchData, setFetchData] = useState(true);
 
   useEffect( () => {
     fetch('http://localhost:8000/products').then((res) => {return res.json()}).then((data) => {
       setCart(data);
     });
-  }, []);
+  }, [fetchData]);
 
   useEffect ( () => {
     if (cart) {
@@ -59,7 +60,13 @@ const Cart = () => {
   }
 
   const deleteProduct = (id) => {
-    setCart( (cart) => cart.filter( (product) => id !== product.id));
+    // setCart( (cart) => cart.filter( (product) => id !== product.id));
+
+    fetch('http://localhost:8000/products/' + id, {
+      method: 'DELETE'
+    }).then((res) => {
+      res.ok &&  setFetchData( value => !value);
+    })
   }
 
   const changeValue = (id, value) => {
