@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import CartHeader from '../CartHeader';
 import Product from '../Product';
 import CartFooter from '../CartFooter';
@@ -6,6 +6,17 @@ import data from './../../data/data.json';
 
 const Cart = () => {
   const [cart, setCart] = useState(data);
+  const [total, setTotal] = useState({
+    price: cart.reduce((prev, curr) => {return +prev + Number(curr.priceTotal)}, 0),
+    count: cart.reduce( (prev, curr) => {return +prev + Number(curr.count)}, 0)
+  });
+
+  useEffect ( () => {
+    setTotal({
+      price: cart.reduce((prev, curr) => {return +prev + Number(curr.priceTotal)}, 0),
+      count: cart.reduce( (prev, curr) => {return +prev + Number(curr.count)}, 0)
+    })
+  }, [cart])
 
   const increase = (id) => {
    
@@ -76,7 +87,7 @@ const Cart = () => {
       
 			<CartHeader />
         {products}
-      <CartFooter />
+      <CartFooter total = {total}/>
 
 		</section>
 	);
