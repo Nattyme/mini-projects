@@ -1,10 +1,10 @@
 import './style.scss';
 
-const Counter = ({id, count, increase, decrease}) => {
+const Counter = ({id, count, increase, decrease, changeValue}) => {
 	return ( 
 		<div className="count">
 			<div className="count__box">
-				<input type="number" className="count__input" min="1" max="100" value={count}/>
+				<input onChange = {(e) => {changeValue(id, +e.target.value)}} type="number" className="count__input" min="1" max="100" value={count}/>
 			</div>
 			<div className="count__controls">
 				<button type="button" className="count__up" onClick={ () => {increase(id)}}>
