@@ -5,17 +5,23 @@ import CartFooter from '../CartFooter';
 import data from './../../data/data.json';
 
 const Cart = () => {
-  const [cart, setCart] = useState(data);
-  const [total, setTotal] = useState({
-    price: cart.reduce((prev, curr) => {return +prev + Number(curr.priceTotal)}, 0),
-    count: cart.reduce( (prev, curr) => {return +prev + Number(curr.count)}, 0)
-  });
+  const [cart, setCart] = useState(null);
+  const [total, setTotal] = useState(null);
+
+  useEffect( () => {
+    fetch('http://localhost:8000/products').then((res) => {return res.json()}).then((data) => {
+      setCart(data);
+    });
+  }, []);
 
   useEffect ( () => {
-    setTotal({
-      price: cart.reduce((prev, curr) => {return +prev + Number(curr.priceTotal)}, 0),
-      count: cart.reduce( (prev, curr) => {return +prev + Number(curr.count)}, 0)
-    })
+    if (cart) {
+      setTotal({
+        price: cart.reduce((prev, curr) => {return +prev + Number(curr.priceTotal)}, 0),
+        count: cart.reduce( (prev, curr) => {return +prev + Number(curr.count)}, 0)
+      })
+    }
+  
   }, [cart])
 
   const increase = (id) => {
@@ -71,23 +77,23 @@ const Cart = () => {
     });
   }
 
-  const products = cart.map((product) => {
-    return  <Product 
-              product = {product} 
-              key = {product.id} 
-              deleteProduct = {deleteProduct} 
-              increase={increase} 
-              decrease={decrease}
-              changeValue = {changeValue}
-            />
-  });
-  
 	return ( 
 		<section className="cart">
       
 			<CartHeader />
-        {products}
-      <CartFooter total = {total}/>
+        {cart &&
+          cart.map((product) => {
+            return  <Product 
+                      product = {product} 
+                      key = {product.id} 
+                      deleteProduct = {deleteProduct} 
+                      increase={increase} 
+                      decrease={decrease}
+                      changeValue = {changeValue}
+                    />
+          })
+        }
+      {total && <CartFooter total = {total}/>}
 
 		</section>
 	);
