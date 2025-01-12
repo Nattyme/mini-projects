@@ -12,14 +12,14 @@
 }
 
 .count__input {
-max-width: 100%;
+  max-width: 100%;
   padding-top: 4px;
-background-color: transparent;
+  background-color: transparent;
 
   text-align: center;
   font-weight: 600;
-font-size: 18px;
-line-height: 1.3;
+  font-size: 18px;
+  line-height: 1.3;
 }
 
 .count__input::-webkit-inner-spin-button,
@@ -36,3 +36,21 @@ line-height: 1.3;
 .count__controls img {
   display: block;
 }
+
+.count__down, .count__up {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+  }
+}
+
+.count__up::after {
+  inset: -10px -10px -5px -10px ;
+}
+
+.count__down::after {
+  inset: -5px -10px -10px -10px ;
+}
+

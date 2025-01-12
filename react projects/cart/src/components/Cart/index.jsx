@@ -7,12 +7,52 @@ import data from './../../data/data.json';
 const Cart = () => {
   const [cart, setCart] = useState(data);
 
+  const increase = (id) => {
+   
+    setCart((cart)=> {
+      return cart.map((product)=>{
+        if (product.id === id) {
+          const newCount = Number(product.count) + 1;
+          return {
+            ...product,
+            count: newCount,
+            priceTotal : newCount * product.price
+          }
+        }
+        return product;    
+      });
+    });
+  }
+
+  const decrease = (id) => {
+   
+    setCart((cart)=> {
+      return cart.map((product)=>{
+        if (product.id === id) {
+          const newCount = Number(product.count) - 1 > 0 ? Number(product.count) - 1 : 1;
+          return {
+            ...product,
+            count: newCount,
+            priceTotal : newCount * product.price
+          }
+        }
+        return product;    
+      });
+    });
+  }
+
   const deleteProduct = (id) => {
     setCart( (cart) => cart.filter( (product) => id !== product.id));
   }
 
   const products = cart.map((product) => {
-    return  <Product product = {product} key = {product.id} deleteProduct = {deleteProduct} />
+    return  <Product 
+              product = {product} 
+              key = {product.id} 
+              deleteProduct = {deleteProduct} 
+              increase={increase} 
+              decrease={decrease}
+            />
   });
   
 	return ( 
