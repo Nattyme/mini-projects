@@ -1,3 +1,4 @@
+import formatPrice from './../../utils/priceFormatter';
 import './style.scss';
 
 const CartFooter = ({ total }) => {
@@ -5,7 +6,7 @@ const CartFooter = ({ total }) => {
 	return ( 
 		<footer className="cart-footer">
 			<div className="cart-footer__count">{count} единицы</div>
-			<div className="cart-footer__price">{price} руб.</div>
+			<div className="cart-footer__price">{formatPrice(price)} руб.</div>
 		</footer>
 
 	);
