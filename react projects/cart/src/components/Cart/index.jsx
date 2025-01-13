@@ -61,21 +61,24 @@ const Cart = () => {
     }).then((res) => {
       res.ok &&  setFetchData( value => !value);
     });
- ;
-   
-    // setCart((cart)=> {
-    //   return cart.map((product)=>{
-    //     if (product.id === id) {
-    //       const newCount = Number(product.count) - 1 > 0 ? Number(product.count) - 1 : 1;
-    //       return {
-    //         ...product,
-    //         count: newCount,
-    //         priceTotal : newCount * product.price
-    //       }
-    //     }
-    //     return product;    
-    //   });
-    // });
+  }
+
+  const changeValue = (id, value) => {
+    const product = cart.find(product => product.id === id);
+    const data = {
+      ...product,
+      count: value,
+      priceTotal: value * product.price
+    }
+
+    fetch('http://localhost:8000/products/' + id, {
+      method: 'PUT',
+      headers: {'Content-type' : 'application/json'},
+      body: JSON.stringify(data)
+    }).then((res) => {
+      res.ok &&  setFetchData( value => !value);
+    });
+ 
   }
 
   const deleteProduct = (id) => {
@@ -88,20 +91,7 @@ const Cart = () => {
     })
   }
 
-  const changeValue = (id, value) => {
-    setCart( (cart) => {
-      return cart.map( (product) => {
-        if (product.id === id) {
-          return {
-            ...product,
-            count: value,
-            priceTotal : value * product.price
-          }
-        }
-        return product
-      })
-    });
-  }
+ 
 
 	return ( 
 		<section className="cart">
