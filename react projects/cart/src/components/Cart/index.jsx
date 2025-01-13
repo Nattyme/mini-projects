@@ -26,20 +26,23 @@ const Cart = () => {
   }, [cart])
 
   const increase = (id) => {
-   
-    setCart((cart)=> {
-      return cart.map((product)=>{
-        if (product.id === id) {
-          const newCount = Number(product.count) + 1;
-          return {
-            ...product,
-            count: newCount,
-            priceTotal : newCount * product.price
-          }
-        }
-        return product;    
-      });
+    const product = cart.find( product => id === product.id);
+    console.log(product);
+
+    const data = {
+      ...product,
+      count:  Number(product.count) + 1,
+      priceTotal :  (Number(product.count) + 1) * product.price
+    };
+
+    fetch('http://localhost:8000/products/' + id, {
+      method: 'PUT',
+      headers: {'Content-Type' : 'appliction/json'},
+      body: JSON.stringify(data),
+    }).then((res) => {
+      res.ok &&  setFetchData( value => !value);
     });
+ 
   }
 
   const decrease = (id) => {
