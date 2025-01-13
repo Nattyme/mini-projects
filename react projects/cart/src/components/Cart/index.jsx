@@ -26,7 +26,7 @@ const Cart = () => {
   }, [cart])
 
   const increase = (id) => {
-    const product = cart.find( product => id === product.id);
+    const product = cart.find( product => product.id === id);
     console.log(product);
 
     const data = {
@@ -38,7 +38,7 @@ const Cart = () => {
     fetch('http://localhost:8000/products/' + id, {
       method: 'PUT',
       headers: {'Content-Type' : 'appliction/json'},
-      body: JSON.stringify(data),
+      body: JSON.stringify(data)
     }).then((res) => {
       res.ok &&  setFetchData( value => !value);
     });
@@ -46,20 +46,36 @@ const Cart = () => {
   }
 
   const decrease = (id) => {
-   
-    setCart((cart)=> {
-      return cart.map((product)=>{
-        if (product.id === id) {
-          const newCount = Number(product.count) - 1 > 0 ? Number(product.count) - 1 : 1;
-          return {
-            ...product,
-            count: newCount,
-            priceTotal : newCount * product.price
-          }
-        }
-        return product;    
-      });
+    const product = cart.find(product => product.id === id);
+    const newCount = Number(product.count) - 1 > 0 ? Number(product.count) - 1 : 1;
+    const data = {
+      ...product,
+      count: newCount,
+      priceTotal : newCount * product.price  
+    }
+    
+    fetch('http://localhost:8000/products/' + id, {
+      method: 'PUT',
+      headers : {'Content-type': 'application/json'},
+      body: JSON.stringify(data)
+    }).then((res) => {
+      res.ok &&  setFetchData( value => !value);
     });
+ ;
+   
+    // setCart((cart)=> {
+    //   return cart.map((product)=>{
+    //     if (product.id === id) {
+    //       const newCount = Number(product.count) - 1 > 0 ? Number(product.count) - 1 : 1;
+    //       return {
+    //         ...product,
+    //         count: newCount,
+    //         priceTotal : newCount * product.price
+    //       }
+    //     }
+    //     return product;    
+    //   });
+    // });
   }
 
   const deleteProduct = (id) => {
