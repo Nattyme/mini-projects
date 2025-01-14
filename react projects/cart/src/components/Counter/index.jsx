@@ -1,16 +1,26 @@
 import './style.scss';
 
-const Counter = ({id, count, increase, decrease, changeValue}) => {
+const Counter = ({id, count, changeValue, clickedInputTarget}) => {
 	return ( 
-		<div className="count">
+		<div className="count" onClick = {(e) => {clickedInputTarget(id, e)}}>
 			<div className="count__box">
-				<input onChange = {(e) => {changeValue(id, +e.target.value)}} type="number" className="count__input" min="1" max="100" value={count}/>
+				<input 
+          onChange = {(e) => {
+            changeValue(id, +e.target.value)
+          }} 
+          type="number" 
+          className="count__input" 
+          min="1" 
+          max="100" 
+          value={count}
+          data-btn = "manualValue"
+        />
 			</div>
 			<div className="count__controls">
-				<button type="button" className="count__up" onClick={ () => {increase(id)}}>
+				<button type="button" className="count__up" data-btn="increase">
 					<img src="./img/icons/icon-up.svg" alt="Increase"/>
 				</button>
-				<button type="button" className="count__down" onClick = { () => {decrease(id)}}>
+				<button type="button" className="count__down" data-btn="decrease">
 					<img src="./img/icons/icon-down.svg" alt="Decrease"/>
 				</button>
 			</div>

@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import CartHeader from '../CartHeader';
 import Product from '../Product';
 import CartFooter from '../CartFooter';
-import data from './../../data/data.json';
 
 const Cart = () => {
   const [cart, setCart] = useState(null);
@@ -23,45 +22,54 @@ const Cart = () => {
       })
     }
   
-  }, [cart])
+  }, [cart]);
+  
+  const updateProductData = (id, data) => {
+    fetch('http://localhost:8000/products/' + id, {
+      method: 'PUT',
+      headers: {'Content-Type' : 'application/json'},
+      body: JSON.stringify(data)
+    }).then((res) => {
+      res.ok &&  setFetchData( value => !value);
+    });
+  }
 
-  const increase = (id) => {
+  const changeInputQuantity = (id, inputAction, value = 1) => {
     const product = cart.find( product => product.id === id);
-    console.log(product);
+    let newCount = product.count;
+
+    if (inputAction === 'increase') {
+      newCount = Number(product.count) + 1;
+    }
+
+    if (inputAction === 'decrease') {
+      newCount = Number(product.count) - 1 > 0 ? Number(product.count) - 1 : 1;
+    }
+
+    if ( inputAction === 'manualValue') {
+      newCount = value;
+    }
 
     const data = {
-      ...product,
-      count:  Number(product.count) + 1,
-      priceTotal :  (Number(product.count) + 1) * product.price
+          ...product,
+          count: newCount,
+          priceTotal : newCount * product.price  
     };
 
-    fetch('http://localhost:8000/products/' + id, {
-      method: 'PUT',
-      headers: {'Content-Type' : 'appliction/json'},
-      body: JSON.stringify(data)
-    }).then((res) => {
-      res.ok &&  setFetchData( value => !value);
-    });
- 
+    updateProductData(id, data);
   }
 
-  const decrease = (id) => {
-    const product = cart.find(product => product.id === id);
-    const newCount = Number(product.count) - 1 > 0 ? Number(product.count) - 1 : 1;
-    const data = {
-      ...product,
-      count: newCount,
-      priceTotal : newCount * product.price  
+  const clickedInputTarget = (id, e, value='1') => {
+    const inputAction = e.target.dataset.btn;
+    if (inputAction && (inputAction === 'increase' || inputAction === 'decrease') ) {
+      return changeInputQuantity(id, inputAction);
     }
-    
-    fetch('http://localhost:8000/products/' + id, {
-      method: 'PUT',
-      headers : {'Content-type': 'application/json'},
-      body: JSON.stringify(data)
-    }).then((res) => {
-      res.ok &&  setFetchData( value => !value);
-    });
+
+    if (inputAction && inputAction === 'manualValue') {
+      return changeInputQuantity(id, inputAction, value);
+    }
   }
+
 
   const changeValue = (id, value) => {
     const product = cart.find(product => product.id === id);
@@ -71,13 +79,7 @@ const Cart = () => {
       priceTotal: value * product.price
     }
 
-    fetch('http://localhost:8000/products/' + id, {
-      method: 'PUT',
-      headers: {'Content-type' : 'application/json'},
-      body: JSON.stringify(data)
-    }).then((res) => {
-      res.ok &&  setFetchData( value => !value);
-    });
+    updateProductData(id, data);
  
   }
 
@@ -91,8 +93,6 @@ const Cart = () => {
     })
   }
 
- 
-
 	return ( 
 		<section className="cart">
       
@@ -103,9 +103,8 @@ const Cart = () => {
                       product = {product} 
                       key = {product.id} 
                       deleteProduct = {deleteProduct} 
-                      increase={increase} 
-                      decrease={decrease}
                       changeValue = {changeValue}
+                      clickedInputTarget = {clickedInputTarget}
                     />
           })
         }
