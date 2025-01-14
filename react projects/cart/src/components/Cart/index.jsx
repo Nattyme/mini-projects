@@ -25,9 +25,9 @@ const Cart = () => {
   
   }, [cart]);
   
-  const updateProductData = (id, data) => {
-    fetch('http://localhost:8000/products/' + id, {
-      method: 'PUT',
+  const updateProductData = (id, data, action) => {
+    fetch(`http://localhost:8000/products/${id}`, {
+      method: action,
       headers: {'Content-Type' : 'application/json'},
       body: JSON.stringify(data)
     }).then((res) => {
@@ -57,7 +57,7 @@ const Cart = () => {
           priceTotal : newCount * product.price  
     };
 
-    updateProductData(id, data);
+    updateProductData(id, data, 'PUT');
   }
 
   const clickedInputTarget = (id, e, value='1') => {
@@ -80,8 +80,8 @@ const Cart = () => {
       priceTotal: inputValue * product.price
     }
 
-    updateProductData(id, data);
- 
+    updateProductData(id, data, 'PUT');
+
   }
 
   const deleteProduct = (id) => {
@@ -95,8 +95,25 @@ const Cart = () => {
   }
 
   const addProduct = () => {
-    console.log('addProduct');
-    
+    const titles = ['Apple MacBook Air 13', 'Apple watch', 'Apple MacBook Air 13'];
+    const images = ['macbook.jpg', 'apple-watch.jpg','mac-pro.jpg'];
+    const prices = [1000, 19000, 9000, 25000];
+
+    const getRandomValue = (array) => {
+      return array[Math.floor(Math.random() * array.length)];
+    }
+
+    const price = getRandomValue(prices);
+
+  
+    const data = {
+      img: getRandomValue(images),
+      title: getRandomValue(titles),
+      count: 1,
+      price: price,
+      priceTotal: price
+    }
+    console.log(data);
   }
 
 	return ( 
