@@ -25,20 +25,27 @@ const Cart = () => {
   
   }, [cart]);
   
-  const updateProductData = (id, data, action) => {
-    fetch(`http://localhost:8000/products/${id}`, {
+  const updateProductData = (newData, action, id) => {
+    console.log(id);
+    const url = id ? 'http://localhost:8000/products/' + id : 'http://localhost:8000/products/';
+    console.log(newData);
+    
+    fetch( url, {
       method: action,
       headers: {'Content-Type' : 'application/json'},
-      body: JSON.stringify(data)
+      body: JSON.stringify(newData)
     }).then((res) => {
       res.ok &&  setFetchData( value => !value);
-    });
+    })
   }
 
   const changeInputQuantity = (id, inputAction, value = 1) => {
-    const product = cart.find( product => product.id === id);
-    let newCount = product.count;
 
+    const product = cart.find( product => product.id === id);
+    console.log(product);
+    
+    let newCount = product.count;
+   
     if (inputAction === 'increase') {
       newCount = Number(product.count) + 1;
     }
@@ -57,10 +64,10 @@ const Cart = () => {
           priceTotal : newCount * product.price  
     };
 
-    updateProductData(id, data, 'PUT');
+    updateProductData(data, 'PUT', id);
   }
 
-  const clickedInputTarget = (id, e, value='1') => {
+  const clickedInputTarget = (id, e, value = 1) => {
     const inputAction = e.target.dataset.btn;
     if (inputAction && (inputAction === 'increase' || inputAction === 'decrease') ) {
       return changeInputQuantity(id, inputAction);
@@ -80,7 +87,7 @@ const Cart = () => {
       priceTotal: inputValue * product.price
     }
 
-    updateProductData(id, data, 'PUT');
+    updateProductData(data, 'PUT', id);
 
   }
 
@@ -104,7 +111,6 @@ const Cart = () => {
     }
 
     const price = getRandomValue(prices);
-
   
     const data = {
       img: getRandomValue(images),
@@ -113,7 +119,8 @@ const Cart = () => {
       price: price,
       priceTotal: price
     }
-    console.log(data);
+
+    updateProductData(data, 'POST');
   }
 
 	return ( 
