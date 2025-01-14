@@ -4,9 +4,9 @@
       "id": "1",
       "img": "macbook.jpg",
       "title": "Apple MacBook Air 13",
-      "count": 1,
+      "count": 8,
       "price": "110000",
-      "priceTotal": 110000
+      "priceTotal": 880000
     },
     {
       "id": "2",
@@ -20,9 +20,9 @@
       "id": "3",
       "img": "mac-pro.jpg",
       "title": "Apple MacBook Air 13",
-      "count": 0,
+      "count": 1,
       "price": "110000",
-      "priceTotal": 0
+      "priceTotal": 110000
     }
   ]
 }

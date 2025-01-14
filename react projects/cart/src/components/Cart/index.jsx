@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import CartHeader from '../CartHeader';
 import Product from '../Product';
 import CartFooter from '../CartFooter';
+import Button from './../Button';
 
 const Cart = () => {
   const [cart, setCart] = useState(null);
@@ -70,13 +71,13 @@ const Cart = () => {
     }
   }
 
-
   const changeValue = (id, value) => {
     const product = cart.find(product => product.id === id);
+    const inputValue = value > 0 ? value : 1;
     const data = {
       ...product,
-      count: value,
-      priceTotal: value * product.price
+      count: inputValue,
+      priceTotal: inputValue * product.price
     }
 
     updateProductData(id, data);
@@ -93,24 +94,34 @@ const Cart = () => {
     })
   }
 
-	return ( 
-		<section className="cart">
-      
-			<CartHeader />
-        {cart &&
-          cart.map((product) => {
-            return  <Product 
-                      product = {product} 
-                      key = {product.id} 
-                      deleteProduct = {deleteProduct} 
-                      changeValue = {changeValue}
-                      clickedInputTarget = {clickedInputTarget}
-                    />
-          })
-        }
-      {total && <CartFooter total = {total}/>}
+  const addProduct = () => {
+    console.log('addProduct');
+    
+  }
 
-		</section>
+	return ( 
+    <>
+      <section className="cart">
+        <CartHeader />
+          {cart &&
+            cart.map((product) => {
+              return  <Product 
+                        product = {product} 
+                        key = {product.id} 
+                        deleteProduct = {deleteProduct} 
+                        changeValue = {changeValue}
+                        clickedInputTarget = {clickedInputTarget}
+                      />
+            })
+          }
+        {total && <CartFooter total = {total}/>}
+
+      </section>
+      <section className="button-wrapper">
+        <Button title = 'Add product' onClick={addProduct}/>
+      </section>
+    </>
+		
 	);
 }
 
