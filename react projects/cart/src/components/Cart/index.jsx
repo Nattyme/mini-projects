@@ -1,8 +1,8 @@
 import { useState, useEffect, createContext } from 'react';
-import CartHeader from '../CartHeader';
 import Product from '../Product';
-import CartFooter from '../CartFooter';
 import Button from './../Button';
+import CartHeader from './CartHeader';
+import CartFooter from './CartFooter';
 
 export const AppContext = createContext(null);
 
@@ -80,7 +80,7 @@ const Cart = () => {
 
   const changeValue = (id, value) => {
     const product = cart.find(product => product.id === id);
-    const inputValue = value > 0 ? value : 1;
+    const inputValue = Math.max(value, 1);
     const data = {
       ...product,
       count: inputValue,
@@ -99,19 +99,21 @@ const Cart = () => {
   }
 
   const addProduct = () => {
-    const titles = ['Apple MacBook Air 13', 'Apple watch', 'Apple MacBook Air 13'];
-    const images = ['macbook.jpg', 'apple-watch.jpg','mac-pro.jpg'];
-    const prices = [1000, 19000, 9000, 25000];
+    const randomProduct = {
+      titles : ['Apple MacBook Air 13', 'Apple watch', 'Apple MacBook Air 13'],
+      images : ['macbook.jpg', 'apple-watch.jpg','mac-pro.jpg'],
+      prices : [1000, 19000, 9000, 25000]
+    }
 
     const getRandomValue = (array) => {
       return array[Math.floor(Math.random() * array.length)];
     }
 
-    const price = getRandomValue(prices);
+    const price = getRandomValue(randomProduct.prices);
   
     const data = {
-      img: getRandomValue(images),
-      title: getRandomValue(titles),
+      img: getRandomValue(randomProduct.images),
+      title: getRandomValue(randomProduct.titles),
       count: 1,
       price: price,
       priceTotal: price
@@ -121,6 +123,9 @@ const Cart = () => {
   }
 
   const renderProducts = () => {
+    if (!cart || cart.length === 0) {
+      return <p>Ваша корзина пуста. Добавьте товары</p>
+    }
     return cart.map((product) => {
         return  <Product 
                   product = {product} 
@@ -132,9 +137,10 @@ const Cart = () => {
 	return ( 
     <AppContext.Provider value = {{deleteProduct, changeValue, clickedInputTarget, addProduct}}>
       <section className="cart">
-        <CartHeader />
+        {cart && cart.length > 0 && <CartHeader/>}
+
         {cart && renderProducts()}
-        {total && <CartFooter total = {total}/>}
+        {cart && cart.length > 0 && total && <CartFooter  total = {total}/>}
       </section>
       <section className="button-wrapper">
         <Button title = 'Add product'/>

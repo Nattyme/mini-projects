@@ -1,4 +1,4 @@
-import formatPrice from './../../utils/priceFormatter';
+import formatPrice from './../../../utils/priceFormatter';
 import './style.scss';
 
 const CartFooter = ({ total }) => {
