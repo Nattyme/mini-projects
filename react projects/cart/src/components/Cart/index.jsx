@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, createContext } from 'react';
 import CartHeader from '../CartHeader';
 import Product from '../Product';
 import CartFooter from '../CartFooter';
 import Button from './../Button';
+
+export const AppContext = createContext(null);
 
 const Cart = () => {
   const [cart, setCart] = useState(null);
@@ -26,10 +28,8 @@ const Cart = () => {
   }, [cart]);
   
   const updateProductData = (newData, action, id) => {
-    console.log(id);
     const url = id ? 'http://localhost:8000/products/' + id : 'http://localhost:8000/products/';
-    console.log(newData);
-    
+  
     fetch( url, {
       method: action,
       headers: {'Content-Type' : 'application/json'},
@@ -88,12 +88,9 @@ const Cart = () => {
     }
 
     updateProductData(data, 'PUT', id);
-
   }
 
   const deleteProduct = (id) => {
-    // setCart( (cart) => cart.filter( (product) => id !== product.id));
-
     fetch('http://localhost:8000/products/' + id, {
       method: 'DELETE'
     }).then((res) => {
@@ -124,7 +121,7 @@ const Cart = () => {
   }
 
 	return ( 
-    <>
+    <AppContext.Provider value = {{deleteProduct}}>
       <section className="cart">
         <CartHeader />
           {cart &&
@@ -132,7 +129,6 @@ const Cart = () => {
               return  <Product 
                         product = {product} 
                         key = {product.id} 
-                        deleteProduct = {deleteProduct} 
                         changeValue = {changeValue}
                         clickedInputTarget = {clickedInputTarget}
                       />
@@ -144,8 +140,7 @@ const Cart = () => {
       <section className="button-wrapper">
         <Button title = 'Add product' onClick={addProduct}/>
       </section>
-    </>
-		
+    </AppContext.Provider>
 	);
 }
 

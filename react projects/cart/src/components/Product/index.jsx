@@ -3,10 +3,9 @@ import Counter from '../Counter';
 import formatPrice from './../../utils/priceFormatter';
 import './style.scss';
 
-const Product = ({product, changeValue, deleteProduct, clickedInputTarget}) => {
+const Product = ({product, changeValue, clickedInputTarget}) => {
   const { id, title, img, priceTotal, count} = product;
 
-  
   return ( 
 	  <section className="product">
       <div className="product__img">
@@ -22,7 +21,7 @@ const Product = ({product, changeValue, deleteProduct, clickedInputTarget}) => {
       </div>
 
       <div className="product__controls">
-        <ButtonDelete deleteProduct = {deleteProduct} id = {id}/>
+        <ButtonDelete id = {id}/>
       </div>
   	</section>
   );
