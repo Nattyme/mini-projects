@@ -1,6 +1,11 @@
+import { useContext } from 'react';
+import {AppContext} from './../Cart';
+
 import './style.scss';
 
-const Counter = ({id, count, changeValue, clickedInputTarget}) => {
+const Counter = ({id, count}) => {
+  const { changeValue, clickedInputTarget } = useContext(AppContext);
+  
 	return ( 
 		<div className="count" onClick = {(e) => {clickedInputTarget(id, e)}}>
 			<div className="count__box">

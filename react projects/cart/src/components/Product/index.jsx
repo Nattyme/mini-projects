@@ -3,7 +3,7 @@ import Counter from '../Counter';
 import formatPrice from './../../utils/priceFormatter';
 import './style.scss';
 
-const Product = ({product, changeValue, clickedInputTarget}) => {
+const Product = ({product}) => {
   const { id, title, img, priceTotal, count} = product;
 
   return ( 
@@ -13,7 +13,7 @@ const Product = ({product, changeValue, clickedInputTarget}) => {
       </div>
       <div className="product__title">{title}</div>
       <div className="product__count">
-        <Counter count = {count} id = {id} changeValue = {changeValue} clickedInputTarget = {clickedInputTarget} />
+        <Counter count = {count} id = {id}/>
       </div>
 
 		  <div className="product__price">

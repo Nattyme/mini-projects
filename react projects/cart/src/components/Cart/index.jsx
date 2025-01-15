@@ -120,25 +120,24 @@ const Cart = () => {
     updateProductData(data, 'POST');
   }
 
+  const renderProducts = () => {
+    return cart.map((product) => {
+        return  <Product 
+                  product = {product} 
+                  key = {product.id} 
+                />
+    })
+  }
+
 	return ( 
-    <AppContext.Provider value = {{deleteProduct}}>
+    <AppContext.Provider value = {{deleteProduct, changeValue, clickedInputTarget, addProduct}}>
       <section className="cart">
         <CartHeader />
-          {cart &&
-            cart.map((product) => {
-              return  <Product 
-                        product = {product} 
-                        key = {product.id} 
-                        changeValue = {changeValue}
-                        clickedInputTarget = {clickedInputTarget}
-                      />
-            })
-          }
+        {cart && renderProducts()}
         {total && <CartFooter total = {total}/>}
-
       </section>
       <section className="button-wrapper">
-        <Button title = 'Add product' onClick={addProduct}/>
+        <Button title = 'Add product'/>
       </section>
     </AppContext.Provider>
 	);
