@@ -10,6 +10,7 @@ const Cart = () => {
   const [cart, setCart] = useState(null);
   const [total, setTotal] = useState(null);
   const [fetchData, setFetchData] = useState(true);
+  const isCartEmpty = !cart || cart.length === 0 ? true : false;
 
   useEffect( () => {
     fetch('http://localhost:8000/products').then((res) => {return res.json()}).then((data) => {
@@ -123,8 +124,8 @@ const Cart = () => {
   }
 
   const renderProducts = () => {
-    if (!cart || cart.length === 0) {
-      return <p>Ваша корзина пуста. Добавьте товары</p>
+    if (isCartEmpty) {
+      return <p className="cartText">Ваша корзина пуста. Добавьте товары</p>
     }
     return cart.map((product) => {
         return  <Product 
@@ -137,10 +138,10 @@ const Cart = () => {
 	return ( 
     <AppContext.Provider value = {{deleteProduct, changeValue, clickedInputTarget, addProduct}}>
       <section className="cart">
-        {cart && cart.length > 0 && <CartHeader/>}
+        {!isCartEmpty && <CartHeader/>}
 
         {cart && renderProducts()}
-        {cart && cart.length > 0 && total && <CartFooter  total = {total}/>}
+        {!isCartEmpty && total && <CartFooter  total = {total}/>}
       </section>
       <section className="button-wrapper">
         <Button title = 'Add product'/>
