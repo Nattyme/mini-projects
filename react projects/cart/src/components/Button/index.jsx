@@ -1,10 +1,7 @@
-import { useContext } from 'react';
-import {AppContext} from './../Cart';
 import './style.scss';
 
-const Button = ({title}) => {
-  const {addProduct} = useContext(AppContext);
-	return <button className = 'button' onClick = {addProduct}>{title}</button>;
+const Button = ({title, onclick}) => {
+	return <button className = 'button' onClick = {onclick}>{title}</button>;
 }
 
 export default Button;

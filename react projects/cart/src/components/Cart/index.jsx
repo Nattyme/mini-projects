@@ -8,6 +8,37 @@ import './style.scss';
 
 export const AppContext = createContext(null);
 
+/**
+ * Компонент корзины товаров.
+ * 
+ * @component
+ * @returns {JSX.Element} Отображает корзину с товарами, их количеством и общей стоимостью.
+ * 
+ * @description
+ * - Использует состояние для хранения данных корзины, общей суммы и триггера для обновления данных.
+ * - Подгружает данные о продуктах с сервера при первом рендере и обновлении корзины.
+ * - Предоставляет функции для добавления, удаления и изменения количества продуктов.
+ * - Рендерит список продуктов с возможностью взаимодействия.
+ * 
+ * @context {Object} AppContext
+ * - `deleteProduct` - Функция для удаления товара из корзины.
+ * - `updateInputValue` - Функция для изменения количества товара.
+ * - `clickedInputTarget` - Обработчик для кликов по кнопкам изменения количества товара.
+ * - `addProduct` - Функция для добавления нового случайного продукта в корзину.
+ * 
+ * @state {Array|null} cart - Список товаров в корзине.
+ * @state {Object|null} total - Общая сумма и количество товаров в корзине.
+ * @state {boolean} fetchData - Флаг для триггера обновления данных корзины.
+ * @state {boolean} isCartEmpty - Флаг для проверки пустоты корзины.
+ * 
+ * @dependencies
+ * - Компоненты: `Product`, `CartHeader`, `CartFooter`, `Button`.
+ * - Контекст: `AppContext`.
+ * 
+ * @example
+ * <Cart />
+*/
+
 const Cart = () => {
   const [cart, setCart] = useState(null);
   const [total, setTotal] = useState(null);
@@ -41,6 +72,7 @@ const Cart = () => {
       res.ok &&  setFetchData( value => !value);
     })
   }
+
 
   const clickedInputTarget = (id, e, value = 1) => {
     const inputAction = e.target.dataset.btn;
@@ -80,13 +112,7 @@ const Cart = () => {
     updateProductData(data, 'PUT', id);
   }
 
-  const deleteProduct = (id) => {
-    fetch('http://localhost:8000/products/' + id, {
-      method: 'DELETE'
-    }).then((res) => {
-      res.ok &&  setFetchData( value => !value);
-    })
-  }
+
 
   const addProduct = async () => {
     try {
@@ -118,6 +144,14 @@ const Cart = () => {
     }
   }
 
+  const deleteProduct = (id) => {
+    fetch('http://localhost:8000/products/' + id, {
+      method: 'DELETE'
+    }).then((res) => {
+      res.ok &&  setFetchData( value => !value);
+    })
+  }
+
   const renderProducts = () => {
     if (isCartEmpty) {
       return <p className="cart__header">Ваша корзина пуста. Добавьте товары</p>
@@ -131,6 +165,7 @@ const Cart = () => {
     })
   }
 
+
 	return ( 
     <AppContext.Provider value = {{deleteProduct, updateInputValue, clickedInputTarget, addProduct}}>
       <section className="cart">
@@ -140,7 +175,7 @@ const Cart = () => {
         {!isCartEmpty && total && <CartFooter  total = {total}/>}
       </section>
       <section className="button-wrapper">
-        <Button title = 'Add product'/>
+        <Button title = 'Add product' onclick={addProduct}/>
       </section>
     </AppContext.Provider>
 	);
