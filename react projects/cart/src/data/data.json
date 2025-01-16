@@ -1,8 +1,38 @@
 {
-  "products": [],
-  "randomProduct" : {
-    "titles" : ["Apple MacBook Air 13", "Apple watch", "Apple MacBook Air 13"],
-    "images" : ["macbook.jpg", "apple-watch.jpg","mac-pro.jpg"],
-    "prices" : [1000, 19000, 9000, 25000]
+  "products": [
+    {
+      "id": "c8c3",
+      "img": "mac-pro.jpg",
+      "title": "Apple MacBook Air 13",
+      "count": 1,
+      "price": 9000,
+      "priceTotal": 9000
+    },
+    {
+      "id": "871c",
+      "img": "macbook.jpg",
+      "title": "Apple MacBook Air 13",
+      "count": 1,
+      "price": 1000,
+      "priceTotal": 1000
+    }
+  ],
+  "randomProduct": {
+    "titles": [
+      "Apple MacBook Air 13",
+      "Apple watch",
+      "Apple MacBook Air 13"
+    ],
+    "images": [
+      "macbook.jpg",
+      "apple-watch.jpg",
+      "mac-pro.jpg"
+    ],
+    "prices": [
+      1000,
+      19000,
+      9000,
+      25000
+    ]
   }
 }

@@ -3,6 +3,7 @@ import Product from '../Product';
 import Button from './../Button';
 import CartHeader from './CartHeader';
 import CartFooter from './CartFooter';
+import getRandomValue from './../../utils/calcValues';
 import './style.scss';  
 
 export const AppContext = createContext(null);
@@ -41,6 +42,17 @@ const Cart = () => {
     })
   }
 
+  const clickedInputTarget = (id, e, value = 1) => {
+    const inputAction = e.target.dataset.btn;
+    if (inputAction && (inputAction === 'increase' || inputAction === 'decrease') ) {
+      return changeInputQuantity(id, inputAction);
+    }
+
+    if (inputAction && inputAction === 'manualValue') {
+      return changeInputQuantity(id, inputAction, value);
+    }
+  }
+
   const changeInputQuantity = (id, inputAction, value = 1) => {
     const product = cart.find( product => product.id === id);
     let newCount = product.count;
@@ -66,17 +78,6 @@ const Cart = () => {
     updateProductData(data, 'PUT', id);
   }
 
-  const clickedInputTarget = (id, e, value = 1) => {
-    const inputAction = e.target.dataset.btn;
-    if (inputAction && (inputAction === 'increase' || inputAction === 'decrease') ) {
-      return changeInputQuantity(id, inputAction);
-    }
-
-    if (inputAction && inputAction === 'manualValue') {
-      return changeInputQuantity(id, inputAction, value);
-    }
-  }
-
   const changeValue = (id, value) => {
     const product = cart.find(product => product.id === id);
     const inputValue = Math.max(value, 1);
@@ -100,36 +101,38 @@ const Cart = () => {
   const addProduct = async () => {
     try {
       const response = await fetch('http://localhost:8000/randomProduct');
-      console.log(response)
       const randomProduct = await response.json();
+
+      if(!response.ok) {
+        throw new Error ('Данный для случайного продукта не получены с сервера')
+      }
+
+      // const getRandomValue = (array) => {
+      //   return array[Math.floor(Math.random() * array.length)];
+      // }
+
+      const price = getRandomValue(randomProduct.prices);
+  
+      const data = {
+        img: getRandomValue(randomProduct.images),
+        title: getRandomValue(randomProduct.titles),
+        count: 1,
+        price: price,
+        priceTotal: price
+      }
+
+      updateProductData(data, 'POST');
     }
     catch {
-      console.log('random product not received');
-      
+      console.log('random product data is not received');
     }
-   
-
-    // const getRandomValue = (array) => {
-    //   return array[Math.floor(Math.random() * array.length)];
-    // }
-
-    // const price = getRandomValue(randomProduct.prices);
-  
-    // const data = {
-    //   img: getRandomValue(randomProduct.images),
-    //   title: getRandomValue(randomProduct.titles),
-    //   count: 1,
-    //   price: price,
-    //   priceTotal: price
-    // }
-
-    // updateProductData(data, 'POST');
   }
 
   const renderProducts = () => {
     if (isCartEmpty) {
       return <p className="cart__header">Ваша корзина пуста. Добавьте товары</p>
     }
+
     return cart.map((product) => {
         return  <Product 
                   product = {product} 
