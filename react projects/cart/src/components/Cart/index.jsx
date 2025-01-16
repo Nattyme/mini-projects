@@ -45,15 +45,17 @@ const Cart = () => {
   const clickedInputTarget = (id, e, value = 1) => {
     const inputAction = e.target.dataset.btn;
     if (inputAction && (inputAction === 'increase' || inputAction === 'decrease') ) {
-      return changeInputQuantity(id, inputAction);
+      return updateInputValue(id, inputAction);
     }
 
     if (inputAction && inputAction === 'manualValue') {
-      return changeInputQuantity(id, inputAction, value);
+      return updateInputValue(id, inputAction, value);
     }
   }
 
-  const changeInputQuantity = (id, inputAction, value = 1) => {
+  const updateInputValue = (id, inputAction, value = 1) => {
+    console.log(inputAction);
+    
     const product = cart.find( product => product.id === id);
     let newCount = product.count;
    
@@ -66,26 +68,14 @@ const Cart = () => {
     }
 
     if ( inputAction === 'manualValue') {
-      newCount = value;
+      newCount = Math.max(value, 1);
     }
 
-    const data = {
-          ...product,
-          count: newCount,
-          priceTotal : newCount * product.price  
-    };
-
-    updateProductData(data, 'PUT', id);
-  }
-
-  const changeValue = (id, value) => {
-    const product = cart.find(product => product.id === id);
-    const inputValue = Math.max(value, 1);
     const data = {
       ...product,
-      count: inputValue,
-      priceTotal: inputValue * product.price
-    }
+      count: newCount,
+      priceTotal : newCount * product.price  
+    };
 
     updateProductData(data, 'PUT', id);
   }
@@ -142,7 +132,7 @@ const Cart = () => {
   }
 
 	return ( 
-    <AppContext.Provider value = {{deleteProduct, changeValue, clickedInputTarget, addProduct}}>
+    <AppContext.Provider value = {{deleteProduct, updateInputValue, clickedInputTarget, addProduct}}>
       <section className="cart">
         {!isCartEmpty && <CartHeader/>}
 

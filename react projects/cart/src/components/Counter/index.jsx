@@ -4,14 +4,14 @@ import {AppContext} from './../Cart';
 import './style.scss';
 
 const Counter = ({id, count}) => {
-  const { changeValue, clickedInputTarget } = useContext(AppContext);
+  const { updateInputValue, clickedInputTarget } = useContext(AppContext);
   
 	return ( 
 		<div className="count" onClick = {(e) => {clickedInputTarget(id, e)}}>
 			<div className="count__box">
 				<input 
           onChange = {(e) => {
-            changeValue(id, +e.target.value)
+            updateInputValue(id, +e.target.value)
           }} 
           type="number" 
           className="count__input" 
