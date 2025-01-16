@@ -3,6 +3,7 @@ import Product from '../Product';
 import Button from './../Button';
 import CartHeader from './CartHeader';
 import CartFooter from './CartFooter';
+import './style.scss';  
 
 export const AppContext = createContext(null);
 
@@ -41,10 +42,7 @@ const Cart = () => {
   }
 
   const changeInputQuantity = (id, inputAction, value = 1) => {
-
     const product = cart.find( product => product.id === id);
-    console.log(product);
-    
     let newCount = product.count;
    
     if (inputAction === 'increase') {
@@ -99,33 +97,38 @@ const Cart = () => {
     })
   }
 
-  const addProduct = () => {
-    const randomProduct = {
-      titles : ['Apple MacBook Air 13', 'Apple watch', 'Apple MacBook Air 13'],
-      images : ['macbook.jpg', 'apple-watch.jpg','mac-pro.jpg'],
-      prices : [1000, 19000, 9000, 25000]
+  const addProduct = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/randomProduct');
+      console.log(response)
+      const randomProduct = await response.json();
     }
-
-    const getRandomValue = (array) => {
-      return array[Math.floor(Math.random() * array.length)];
+    catch {
+      console.log('random product not received');
+      
     }
+   
 
-    const price = getRandomValue(randomProduct.prices);
+    // const getRandomValue = (array) => {
+    //   return array[Math.floor(Math.random() * array.length)];
+    // }
+
+    // const price = getRandomValue(randomProduct.prices);
   
-    const data = {
-      img: getRandomValue(randomProduct.images),
-      title: getRandomValue(randomProduct.titles),
-      count: 1,
-      price: price,
-      priceTotal: price
-    }
+    // const data = {
+    //   img: getRandomValue(randomProduct.images),
+    //   title: getRandomValue(randomProduct.titles),
+    //   count: 1,
+    //   price: price,
+    //   priceTotal: price
+    // }
 
-    updateProductData(data, 'POST');
+    // updateProductData(data, 'POST');
   }
 
   const renderProducts = () => {
     if (isCartEmpty) {
-      return <p className="cartText">Ваша корзина пуста. Добавьте товары</p>
+      return <p className="cart__header">Ваша корзина пуста. Добавьте товары</p>
     }
     return cart.map((product) => {
         return  <Product 

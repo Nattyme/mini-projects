@@ -1,3 +1,8 @@
 {
-  "products": []
+  "products": [],
+  "randomProduct" : {
+    "titles" : ["Apple MacBook Air 13", "Apple watch", "Apple MacBook Air 13"],
+    "images" : ["macbook.jpg", "apple-watch.jpg","mac-pro.jpg"],
+    "prices" : [1000, 19000, 9000, 25000]
+  }
 }
