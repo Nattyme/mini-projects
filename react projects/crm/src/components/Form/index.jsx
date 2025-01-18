@@ -1,4 +1,3 @@
-import {useState, useEffect} from 'react';
 import Label from '../Label';
 import Input from './../Input';
 import FormGroup from './../FormGroup';
@@ -40,12 +39,12 @@ const formFields = [
   }
 ];
 
-// const randomData = getRandomArrayData();
-
 const Form = () => {
   const testData = data.testData;
   const newTask = getRandomArrayData(testData);
-  console.log(newTask);
+  const changeInputValue = () => {
+    console.log('clicked');
+  }
   
   const formContent = formFields.map((field) => {
     switch (field.element) {
