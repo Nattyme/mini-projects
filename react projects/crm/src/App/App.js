@@ -1,10 +1,10 @@
-import HeaderNav from '../components/HeaderNav';
+import FormPage from '../pages/FormPage';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <HeaderNav/>
+      <FormPage/>
     </div>
   );
 }

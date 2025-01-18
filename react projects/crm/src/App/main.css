@@ -11,6 +11,7 @@ body {
 	background: #fff;
 	font-family: 'Open Sans', sans-serif;
 }
+
 .radial-bg {
 	background: #2d77bb;
 	background: radial-gradient(circle, #8dd5ff 0%, #268ff8 100%);
