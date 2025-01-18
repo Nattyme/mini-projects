@@ -17,10 +17,21 @@
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
+.btn:hover {
+  color: #212529;
+  text-decoration: none;
+}
+
 .btn-primary {
   color: #fff;
   background-color: #007bff;
   border-color: #007bff;
+}
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: #0069d9;
+  border-color: #0062cc;
 }
 
 .btn-group-lg>.btn, .btn-lg {
@@ -33,15 +44,4 @@
 .btn-block {
   display: block;
   width: 100%;
-}
-
-.btn:hover {
-  color: #212529;
-  text-decoration: none;
-}
-
-.btn-primary:hover {
-  color: #fff;
-  background-color: #0069d9;
-  border-color: #0062cc;
 }
