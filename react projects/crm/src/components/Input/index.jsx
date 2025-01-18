@@ -1,6 +1,6 @@
 import './style.css';
 
-const Input = ({type, name, placeholder, id, required, className="form-control", autoComplete="on"}) => {
+const Input = ({type, name, placeholder, id, value, required, className="form-control", autoComplete="on"}) => {
 	return (
 		<input 
 			type={type}
@@ -8,6 +8,7 @@ const Input = ({type, name, placeholder, id, required, className="form-control",
 			name={name} 
 			placeholder={placeholder}
 			id={id} 
+      value = {value}
 			autoComplete={autoComplete} 
 			required = {required}
 		/>

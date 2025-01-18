@@ -1,6 +1,6 @@
-const Select = ({name, className, id}) => {
+const Select = ({name, className, id, value}) => {
 	return (
-		<select id={id} name={name} className={className}>
+		<select id={id} name={name} className={className} value={value}>
 			<option value="course-html">Курс по верстке</option>
 			<option value="course-js">Курс по JavaScript</option>
 			<option value="course-vue">Курс по VUE JS</option>
