@@ -68,7 +68,7 @@ input::-ms-clear {
   display: none;
 }
 
-button, input[type="submit"] {
+button, input[type=submit] {
   display: inline-block;
   box-shadow: none;
   background-color: transparent;
@@ -95,7 +95,7 @@ legend {
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 .container {
@@ -123,7 +123,8 @@ body {
 .cart-header {
   display: grid;
   grid-template-columns: 2fr repeat(3, 3fr) 1fr;
-  column-gap: 30px;
+  -moz-column-gap: 30px;
+       column-gap: 30px;
   padding: 22px 0;
   background-color: #EAEFF2;
   font-weight: 700;
@@ -149,7 +150,8 @@ body {
 .cart-footer {
   display: grid;
   grid-template-columns: 2fr repeat(3, 3fr) 1fr;
-  column-gap: 30px;
+  -moz-column-gap: 30px;
+       column-gap: 30px;
   padding: 19px 0;
   background: #EAEFF2;
   font-weight: 700;
@@ -182,7 +184,8 @@ body {
 .product {
   display: grid;
   grid-template-columns: 2fr repeat(3, 3fr) 1fr;
-  column-gap: 30px;
+  -moz-column-gap: 30px;
+       column-gap: 30px;
   padding: 20px 0;
   border-bottom: 1px solid rgba(126, 155, 189, 0.3);
   font-weight: 600;
@@ -193,7 +196,8 @@ body {
   .product {
     grid-template-columns: repeat(6, 1fr);
     grid-auto-rows: minmax(60px, auto);
-    column-gap: 15px;
+    -moz-column-gap: 15px;
+         column-gap: 15px;
     row-gap: 10px;
   }
 }
@@ -236,7 +240,8 @@ body {
 
 .count {
   display: flex;
-  column-gap: 10px;
+  -moz-column-gap: 10px;
+       column-gap: 10px;
   align-items: center;
 }
 
@@ -259,7 +264,8 @@ body {
 
 .count__input::-webkit-inner-spin-button,
 .count__input::-webkit-outer-spin-button {
-  appearance: none;
+  -webkit-appearance: none;
+          appearance: none;
 }
 
 .count__controls {
@@ -270,6 +276,4 @@ body {
 
 .count__controls img {
   display: block;
-}
-
-/*# sourceMappingURL=main.css.map */
+}/*# sourceMappingURL=main.css.map */

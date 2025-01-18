@@ -1,4 +1,5 @@
 import { useState, useEffect, createContext } from 'react';
+import {serverPath} from './../../helpers/variables';
 import Product from '../Product';
 import Button from './../Button';
 import CartHeader from './CartHeader';
@@ -46,7 +47,7 @@ const Cart = () => {
   const isCartEmpty = !cart || cart.length === 0 ? true : false;
 
   useEffect( () => {
-    fetch('http://localhost:8000/products').then((res) => {return res.json()}).then((data) => {
+    fetch(serverPath + 'products').then((res) => {return res.json()}).then((data) => {
       setCart(data);
     });
   }, [fetchData]);
@@ -62,7 +63,7 @@ const Cart = () => {
   }, [cart]);
   
   const updateProductData = (newData, action, id) => {
-    const url = id ? 'http://localhost:8000/products/' + id : 'http://localhost:8000/products/';
+    const url = id ? `${serverPath}products/${id}` : `${serverPath}products`;
   
     fetch( url, {
       method: action,
@@ -74,20 +75,15 @@ const Cart = () => {
   }
 
 
-  const clickedInputTarget = (id, e, value = 1) => {
+  const clickedInputTarget = (id, e) => {
     const inputAction = e.target.dataset.btn;
+
     if (inputAction && (inputAction === 'increase' || inputAction === 'decrease') ) {
       return updateInputValue(id, inputAction);
     }
-
-    if (inputAction && inputAction === 'manualValue') {
-      return updateInputValue(id, inputAction, value);
-    }
   }
 
-  const updateInputValue = (id, inputAction, value = 1) => {
-    console.log(inputAction);
-    
+  const updateInputValue = (id, inputAction, value) => {
     const product = cart.find( product => product.id === id);
     let newCount = product.count;
    
@@ -112,23 +108,17 @@ const Cart = () => {
     updateProductData(data, 'PUT', id);
   }
 
-
-
   const addProduct = async () => {
     try {
-      const response = await fetch('http://localhost:8000/randomProduct');
-      const randomProduct = await response.json();
+      const response = await fetch(serverPath + 'randomProduct');
 
       if(!response.ok) {
-        throw new Error ('Данный для случайного продукта не получены с сервера')
+        throw new Error ('Данные для случайного продукта не получены с сервера')
       }
 
-      // const getRandomValue = (array) => {
-      //   return array[Math.floor(Math.random() * array.length)];
-      // }
 
+      const randomProduct = await response.json();
       const price = getRandomValue(randomProduct.prices);
-  
       const data = {
         img: getRandomValue(randomProduct.images),
         title: getRandomValue(randomProduct.titles),
@@ -139,13 +129,14 @@ const Cart = () => {
 
       updateProductData(data, 'POST');
     }
+
     catch {
       console.log('random product data is not received');
     }
   }
 
   const deleteProduct = (id) => {
-    fetch('http://localhost:8000/products/' + id, {
+    fetch(serverPath + 'products/' + id, {
       method: 'DELETE'
     }).then((res) => {
       res.ok &&  setFetchData( value => !value);
@@ -175,7 +166,7 @@ const Cart = () => {
         {!isCartEmpty && total && <CartFooter  total = {total}/>}
       </section>
       <section className="button-wrapper">
-        <Button title = 'Add product' onclick={addProduct}/>
+        <Button title = 'Добавить товар' onclick={addProduct}/>
       </section>
     </AppContext.Provider>
 	);

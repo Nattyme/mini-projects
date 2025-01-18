@@ -11,7 +11,7 @@ const Counter = ({id, count}) => {
 			<div className="count__box">
 				<input 
           onChange = {(e) => {
-            updateInputValue(id, +e.target.value)
+            updateInputValue(id, 'manualValue', +e.target.value)
           }} 
           type="number" 
           className="count__input" 
