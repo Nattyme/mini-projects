@@ -1,18 +1,16 @@
 import Logo from "../Logo";
 import StatusBar from "../StatusBar";
+import User from "../User";
 import './style.css';
 
 const SideBar = ({statusData}) => {
 	return (
 		<div className="left-panel blue-skin">
 		
-			<Logo/>
+			<Logo title = "CRM заявки" subtitle = "учебный проект webcademy"/>
 			
 			<div className="left-panel__user clearfix">
-				<div className="left-panel__user-photo">
-				  <img src="./img/avatars/avatar-128.jpg" alt="Avatar" />
-				</div>
-				<div className="left-panel__user-name">Петр <br />Васильевич</div>
+				<User/>
 			</div>
 
       { statusData.length > 0 && 

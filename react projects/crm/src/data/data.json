@@ -61,6 +61,13 @@
 		"course-vue" : "Курс по VUE JS",
 		"course-php" : "Курс по PHP",
 		"course-wordpress" : "Курс по WordPress"
+  },
+  "users" : {
+    "id" : 1,
+    "name" : "Петр",
+    "secondName" : "Васильевич",
+    "cover" : "avatar-128.jpg",
+    "isAdmin" : true
   }
 }
 

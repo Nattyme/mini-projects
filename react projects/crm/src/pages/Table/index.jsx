@@ -22,6 +22,8 @@ const TablePage = () => {
   ];
 
   const tableHeaders = ['ID', 'дата', 'продукт', 'имя', 'email', 'телефон', 'статус', ''];
+
+  
   return (
     <>
       <SideBar statusData={statusData}/>
