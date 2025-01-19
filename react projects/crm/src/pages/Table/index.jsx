@@ -5,7 +5,7 @@ const TablePage = () => {
   const statusData = [
     {
       data : 'all',
-      text : 'Все'
+      text : 'Все',
     },
     {
       data : 'new',
@@ -19,11 +19,13 @@ const TablePage = () => {
       data : 'completed',
       text : 'Завершенные'
     }
-  ]
+  ];
+
+  const tableHeaders = ['ID', 'дата', 'продукт', 'имя', 'email', 'телефон', 'статус', ''];
   return (
     <>
-		  <SideBar statusData={statusData}/>
-      <Dashboard statusData={statusData}/>
+      <SideBar statusData={statusData}/>
+      <Dashboard tableHeaders = {tableHeaders} statusData={statusData}/>
     </>
   );
 }

@@ -15,12 +15,13 @@ const SideBar = ({statusData}) => {
 				<div className="left-panel__user-name">Петр <br />Васильевич</div>
 			</div>
 
-			<div className="left-panel__navigation">
-				<div className="left-panel__navigation-title">Заявки</div>
+      { statusData.length > 0 && 
+      <div className="left-panel__navigation">
+        <div className="left-panel__navigation-title">Заявки</div>
         <StatusBar type="bottom" statusData = {statusData}/>
-			</div>
-
-
+      </div>
+      }
+			
 		</div>
 	);
 }

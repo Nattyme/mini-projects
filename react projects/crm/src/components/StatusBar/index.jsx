@@ -5,17 +5,15 @@ const StatusBar = ({type, statusData}) => {
  
   return (
     <ul id={isTop ? "topStatusBar" : "asideStatusNav"} className={isTop ? "btn-group" : ""} role="group" aria-label="...">
-      {
-        statusData.map((status)=>{
+      { statusData.map((status)=>{
           return(
-            <li>
+            <li key={status.data}>
               <a href="#" className={isTop ? "btn btn-light" : ""} data-value={status.data} data-role={isTop ? "left-status" : ""}>
                 {status.text}
               </a>
             </li>
           )
-        })
-      }
+        })}
    
     </ul>
   );
