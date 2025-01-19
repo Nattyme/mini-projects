@@ -42,9 +42,7 @@ const formFields = [
 const Form = () => {
   const testData = data.testData;
   const newTask = getRandomArrayData(testData);
-  const changeInputValue = () => {
-    console.log('clicked');
-  }
+
   
   const formContent = formFields.map((field) => {
     switch (field.element) {
