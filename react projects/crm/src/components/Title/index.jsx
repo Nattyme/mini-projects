@@ -1,8 +1,8 @@
 import './style.css';
 
-const Ttile = ({text}) => {
+const Ttile = ({title}) => {
   return (
-    <div className="admin-heading-1">{text}</div>
+    <div className="admin-heading-1">{title}</div>
   );
 }
  

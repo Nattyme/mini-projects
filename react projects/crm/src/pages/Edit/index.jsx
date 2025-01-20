@@ -1,15 +1,15 @@
-import {Link, Links} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import Button from "../../components/Button";
 import Card from "../../components/Card";
 import Title from '../../components/Title';
 
-const EditPage = ({products, statusData}) => {
+const EditPage = ({products, statusData, title}) => {
   return (
     <div className="form-wrapper">
       <div className="container-fluid">
         <div className="row justify-content-between align-items-center">
           <div className="col">
-            <Title text = "Работа с заявкой"/>
+            <Title title={title}/>
           </div>
           <div className="col text-right">
             <Link className="btn btn-link" to="/tasks"> Вернуться назад</Link>

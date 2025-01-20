@@ -5,7 +5,7 @@ const Table = ({tableHeaders}) => {
 			<thead>
 				<tr>
           {tableHeaders.map( (header) => {
-            return(<th>{header}</th>);
+            return(<th key={header}>{header}</th>);
           })}
 				</tr>
 			</thead>

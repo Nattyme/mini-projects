@@ -34,8 +34,6 @@ const App = () => {
 
   useEffect( () => {
     const path = location.pathname;
-    console.log(path);
-
     document.body.classList.remove('with-nav', 'radial-bg', 'flex-center', 'body--dashboard');
 
     switch (path) {
@@ -59,9 +57,9 @@ const App = () => {
     <div className="App">
       <HeaderNav/>
       <Routes>
-        <Route path="/" element={<FormPage products={products} statusData={statusData}/>}></Route>
-        <Route path="/tasks" element={<TablePage products={products} statusData={statusData}/>}></Route>
-        <Route path="/edit" element={<EditPage products={products} statusData={statusData}/>}></Route>
+        <Route path="/" element={<FormPage products={products} statusData={statusData} title="Форма заявок"/>}></Route>
+        <Route path="/tasks" element={<TablePage products={products} statusData={statusData} title="Работа с заявкой"/>}></Route>
+        <Route path="/edit" element={<EditPage products={products} statusData={statusData} title="Работа с заявкой"/>}></Route>
       </Routes>
     </div>
   );
