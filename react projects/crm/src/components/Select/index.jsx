@@ -1,11 +1,12 @@
-const Select = ({name, className, id, value}) => {
+const Select = ({name, className, options, id, value}) => {
+  
 	return (
 		<select id={id} name={name} className={className} value={value}>
-			<option value="course-html">Курс по верстке</option>
-			<option value="course-js">Курс по JavaScript</option>
-			<option value="course-vue">Курс по VUE JS</option>
-			<option value="course-php">Курс по PHP</option>
-			<option value="course-wordpress">Курс по WordPress</option>
+      {
+        options.map((option)=>{
+          return (<option key={option.value} value={option.value}>{option.title}</option>)
+        })
+      }
 		</select>
 	);
 }

@@ -39,7 +39,7 @@ const formFields = [
   }
 ];
 
-const Form = () => {
+const Form = ({products}) => {
   const testData = data.testData;
   const newTask = getRandomArrayData(testData);
 
@@ -66,6 +66,7 @@ const Form = () => {
             <Select 
               name={field.name}
               className={field.className}
+              options={products}
               id={field.id}
               value={newTask.product}
             />

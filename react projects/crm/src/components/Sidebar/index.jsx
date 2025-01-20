@@ -1,27 +1,26 @@
 import Logo from "../Logo";
-import StatusBar from "../StatusBar";
+import SubNav from "../SubNav";
 import User from "../User";
-import './style.css';
+import "./style.css";
 
-const SideBar = ({statusData}) => {
-	return (
-		<div className="left-panel blue-skin">
-		
-			<Logo title = "CRM заявки" subtitle = "учебный проект webcademy"/>
-			
-			<div className="left-panel__user clearfix">
-				<User/>
-			</div>
+const SideBar = ({ statusData }) => {
 
-      { statusData.length > 0 && 
-      <div className="left-panel__navigation">
-        <div className="left-panel__navigation-title">Заявки</div>
-        <StatusBar type="bottom" statusData = {statusData}/>
+  return (
+    <div className="left-panel blue-skin">
+      <Logo title="CRM заявки" subtitle="учебный проект webcademy" />
+
+      <div className="left-panel__user clearfix">
+        <User />
       </div>
-      }
-			
-		</div>
-	);
-}
+
+      {statusData.length > 0 && (
+        <div className="left-panel__navigation">
+          <div className="left-panel__navigation-title">Заявки</div>
+          <SubNav type="bottom" data={statusData} />
+        </div>
+      )}
+    </div>
+  );
+};
 
 export default SideBar;

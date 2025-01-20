@@ -7,8 +7,30 @@ import HeaderNav from '../components/HeaderNav';
 import TablePage from '../pages/Table';
 import EditPage from '../pages/Edit';
 
+import data from './../data/data.json';
+
 const App = () => {
   const location = useLocation();
+
+  const products = data.products;
+  const statusData = [
+    {
+      value : 'all',
+      title : 'Все',
+    },
+    {
+      value : 'new',
+      title : 'Новые'
+    },
+    {
+      value : 'inwork',
+      title : 'В работе'
+    },
+    {
+      value : 'completed',
+      title : 'Завершенные'
+    }
+  ];
 
   useEffect( () => {
     const path = location.pathname;
@@ -37,9 +59,9 @@ const App = () => {
     <div className="App">
       <HeaderNav/>
       <Routes>
-        <Route path="/" element={<FormPage/>}></Route>
-        <Route path="/tasks" element={<TablePage/>}></Route>
-        <Route path="/edit" element={<EditPage/>}></Route>
+        <Route path="/" element={<FormPage products={products} statusData={statusData}/>}></Route>
+        <Route path="/tasks" element={<TablePage products={products} statusData={statusData}/>}></Route>
+        <Route path="/edit" element={<EditPage products={products} statusData={statusData}/>}></Route>
       </Routes>
     </div>
   );

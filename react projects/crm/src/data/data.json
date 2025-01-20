@@ -55,19 +55,36 @@
       "product" : "course-vue"
     }
   ],
-  "products" : {
-    "course-html" : "Курс по верстке",
-	  "course-js" : "Курс по JavaScript",
-		"course-vue" : "Курс по VUE JS",
-		"course-php" : "Курс по PHP",
-		"course-wordpress" : "Курс по WordPress"
-  },
-  "users" : {
-    "id" : 1,
-    "name" : "Петр",
-    "secondName" : "Васильевич",
-    "cover" : "avatar-128.jpg",
-    "isAdmin" : true
-  }
+  "products" : [
+    {
+      "value" : "course-html",
+      "title" : "Курс по верстке"
+    },
+    {
+      "value" : "course-js",
+      "title" : "Курс по JavaScript"
+    },
+    {
+      "value" : "course-vue",
+      "title" : "Курс по VUE JS"
+    },
+    {
+      "value" : "course-php",
+      "title" : "Курс по PHP"
+    },
+    {
+      "value" : "course-wordpress",
+      "title" : "Курс по WordPress"
+    }
+  ],
+  "users" : [
+    {
+      "id" : 1,
+      "name" : "Петр",
+      "secondName" : "Васильевич",
+      "cover" : "avatar-128.jpg",
+      "isAdmin" : true
+    }
+  ]
 }
 

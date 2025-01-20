@@ -1,15 +1,15 @@
 import './style.css';
 
-const StatusBar = ({type, statusData}) => {
+const SubNav = ({type, data}) => {
   const isTop = type === 'top';
- 
+  console.log(data);
   return (
     <ul id={isTop ? "topStatusBar" : "asideStatusNav"} className={isTop ? "btn-group" : ""} role="group" aria-label="...">
-      { statusData.map((status)=>{
+      { data.map((item)=>{
           return(
-            <li key={status.data}>
-              <a href="#" className={isTop ? "btn btn-light" : ""} data-value={status.data} data-role={isTop ? "left-status" : ""}>
-                {status.text}
+            <li key={item.value}>
+              <a href="#" className={isTop ? "btn btn-light" : ""} data-value={item.value} data-role={isTop ? "left-status" : ""}>
+                {item.title}
               </a>
             </li>
           )
@@ -25,4 +25,4 @@ const StatusBar = ({type, statusData}) => {
 <li><a data-value="completed" data-role="left-status" href="#">Завершенные</a></li>
 </ul> */}
  
-export default StatusBar;
+export default SubNav;

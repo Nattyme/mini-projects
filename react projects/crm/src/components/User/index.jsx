@@ -8,12 +8,20 @@ const User = () => {
   }
   
   return (
-    <>
-      <div className="left-panel__user-photo">
-        <img src={ `./img/avatars/${userData.cover}`} onError={handleError} alt="Avatar" />
-      </div>
-      <div className="left-panel__user-name">{userData.name} <br />{userData.secondName}</div>
-    </>
+    userData.map((user) => {
+      
+      if (user.isAdmin === true) {
+        return (
+          <>
+            <div className="left-panel__user-photo">
+              <img src={ `./img/avatars/${user.cover}`} onError={handleError} alt="Avatar" />
+            </div>
+            <div className="left-panel__user-name">{user.name} <br />{user.secondName}</div>
+          </> 
+        )
+      }
+    })
+   
   );
 }
  
