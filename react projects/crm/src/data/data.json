@@ -55,6 +55,7 @@
       "product" : "course-vue"
     }
   ],
+  "data" : [],
   "products" : [
     {
       "value" : "course-html",

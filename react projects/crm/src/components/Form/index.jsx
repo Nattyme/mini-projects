@@ -4,7 +4,7 @@ import FormGroup from './../FormGroup';
 import Select from '../Select';
 import Button from '../Button';
 import data from './../../data/data.json';
-import getRandomArrayData from './../../utils/calcFunctions'
+import getRandomArrayData from '../../utils/calcFunctions'
 
 const formFields = [
   {

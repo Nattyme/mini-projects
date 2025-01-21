@@ -6,13 +6,22 @@ import './App.css';
 import HeaderNav from '../components/HeaderNav';
 import TablePage from '../pages/Table';
 import EditPage from '../pages/Edit';
+import getRandomArrayData from './../utils/calcFunctions';
+import prepareDisplayData from './../utils/prepareDisplayData';
 
 import data from './../data/data.json';
 
 const App = () => {
   const location = useLocation();
+  const [tasks, setTask] = useState(null);
 
   const products = data.products;
+  const setFormData = (data) => {
+    const newTask = getRandomArrayData(data);
+    const newTaskFormatted = prepareDisplayData(newTask);
+    setFormData(taskFormatted, formElems); // заполним форму значениями задачи
+    console.log(newTaskFormatted);
+  }
   const statusData = [
     {
       value : 'all',
@@ -31,6 +40,18 @@ const App = () => {
       title : 'Завершенные'
     }
   ];
+
+  useEffect(()=>{
+    fetch('http://localhost:8000/testData').then(res=>res.json()).then((testData)=>{
+      setFormData(testData);
+    });
+  }, []);
+
+  useEffect(()=>{
+    fetch('http://localhost:8000/data').then(res => res.json()).then((data)=> {
+      console.log(tasks);
+    })
+  }, [tasks])
 
   useEffect( () => {
     const path = location.pathname;
@@ -52,6 +73,8 @@ const App = () => {
     }
     
   }, [location]);
+
+  
   
   return (
     <div className="App">
