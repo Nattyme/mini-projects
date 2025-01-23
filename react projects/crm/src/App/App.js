@@ -8,6 +8,7 @@ import TablePage from '../pages/Table';
 import EditPage from '../pages/Edit';
 import getRandomArrayData from './../utils/calcFunctions';
 import prepareDisplayData from './../utils/prepareDisplayData';
+import validate from './../utils/validate';
 
 export const AppContext = createContext(null);
 
@@ -27,16 +28,24 @@ const App = () => {
   }
 
   const createNewTask = (task) => {
-    task.timestamp = setTimeStamp();
-    task.changed = setTimeStamp();
-    task.status = setStatus();
+    const checkFieldValues = ['full_name', 'phone', 'email']; // Поля для проверки
+    const isValid = validate.fieldsOfTaskObj(task, checkFieldValues);
 
-    return task;
+    if (isValid) {
+      task.timestamp = setTimeStamp();
+      task.changed = setTimeStamp();
+      task.status = setStatus();
+
+      return task;
+    }
+
   }
 
   const btnClicked = async (e) => {
     if (e.target.dataset.btn === 'submit') {
       e.preventDefault();
+      console.log(formData);
+      
       const newTask = createNewTask(formData);
 
       fetch( 'http://localhost:8000/data', {
@@ -44,11 +53,25 @@ const App = () => {
         headers: {'Content-Type' : 'application/json'},
         body: JSON.stringify(newTask)
       }).then((res) => {
-        setTasks(res)
+        setTasks(res);
       })
     }
     
   }
+
+  const updateInputValue = (id, value) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [id] : value
+    }) );
+  }
+
+  const clickedInputTarget = (e) => {
+    const id = e.target.id; // Получаем id поля
+    updateInputValue(id, ''); // Очищаем поле
+  }
+
+ 
 
   useEffect(()=>{
     fetch('http://localhost:8000/testData').then(res => res.json()).then((data) => {
@@ -121,7 +144,7 @@ const App = () => {
     <div className="App">
       <HeaderNav/>
 
-      <AppContext.Provider value={{formData, btnClicked, products, navData}}>
+      <AppContext.Provider value={{formData, btnClicked, updateInputValue, clickedInputTarget, products, navData}}>
         <Routes>
           <Route path="/" element={
             formData && products && <FormPage title="Форма заявок"/>

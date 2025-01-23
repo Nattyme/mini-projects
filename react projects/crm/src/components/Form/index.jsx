@@ -39,8 +39,9 @@ const formFields = [
   }
 ];
 
+
 const Form = () => {
-  const {formData, products} = useContext(AppContext);
+  const {formData, products, updateInputValue, clickedInputTarget} = useContext(AppContext);
   
   const formContent = formFields.map((field) => {
     switch (field.element) {
@@ -52,7 +53,7 @@ const Form = () => {
               name = {field.name}
               placeholder = {field.placeholder}
               id = {field.id}
-              value={formData[field.name]}
+              value={formData[field.name] || ''}
               required = {field.required}
             />
           </FormGroup>
@@ -77,7 +78,7 @@ const Form = () => {
   });
 
   return (
-    <form id="form" method="POST" action="">
+    <form id="form" method="POST" action="" onClick={(e)=>{clickedInputTarget(e)}}>
       <Label htmlFor = 'full_name' text = 'Ваши данные:'/>
       {formContent}
       <FormGroup id='noteWrapper' key="noteWrapper">

@@ -7,6 +7,13 @@ const formatName = (fullName) => {
   return fullName.split(' ').slice(0, 2).join(' ');   // если больше двух слов - убирает лишнее
 }
 
+const formatCamelWords = (dataString) => {
+  dataString = dataString.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
+  dataString = dataString.join(' ');
+
+  return dataString;
+}
+
 const formatPhone = (phoneNumber) => {
   let phone = phoneNumber.replace(regEx.digit, '');
 
@@ -17,4 +24,4 @@ const formatPhone = (phoneNumber) => {
   return false;
 }
 
-export {formatName, formatPhone}
+export {formatName, formatPhone, formatCamelWords}

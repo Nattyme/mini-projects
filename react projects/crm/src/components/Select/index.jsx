@@ -1,6 +1,5 @@
 const Select = ({name, className, options, id, value}) => {
-  console.log(options);
-  
+
 	return (
 		<select id={id} name={name} className={className} value={value}>
       {
