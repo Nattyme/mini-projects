@@ -33,10 +33,11 @@ const App = () => {
   }, []);
 
   useEffect(()=> {
-    const newTask = getNewTask(testData);
-    console.log(newTask);
-    
-    setFormData(newTask);
+    if (testData) {
+      const newTask = getNewTask(testData);
+      setFormData(newTask);
+    }
+  
   }, [testData]);
 
 
