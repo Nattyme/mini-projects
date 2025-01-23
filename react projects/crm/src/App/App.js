@@ -9,49 +9,36 @@ import EditPage from '../pages/Edit';
 import getRandomArrayData from './../utils/calcFunctions';
 import prepareDisplayData from './../utils/prepareDisplayData';
 
-import data from './../data/data.json';
-
 const App = () => {
   const location = useLocation();
+  const [loading, setLoading] = useState(null);
+  const [error, setError] = useState(null);
+  const [testData, setTestData] = useState(null);
   const [tasks, setTask] = useState(null);
+  const [formData, setFormData] = useState(null);
 
-  const products = data.products;
-  const setFormData = (data) => {
+  const getNewTask = (data) => {
     const newTask = getRandomArrayData(data);
-    const newTaskFormatted = prepareDisplayData(newTask);
-    setFormData(taskFormatted, formElems); // заполним форму значениями задачи
-    console.log(newTaskFormatted);
+    return prepareDisplayData(newTask);
   }
-  const statusData = [
-    {
-      value : 'all',
-      title : 'Все',
-    },
-    {
-      value : 'new',
-      title : 'Новые'
-    },
-    {
-      value : 'inwork',
-      title : 'В работе'
-    },
-    {
-      value : 'completed',
-      title : 'Завершенные'
-    }
-  ];
 
-  useEffect(()=>{
-    fetch('http://localhost:8000/testData').then(res=>res.json()).then((testData)=>{
-      setFormData(testData);
-    });
+  useEffect(()=> {
+    fetch('http://localhost:8000/testData').then(res => res.json()).then((data) => {
+      setTestData(data);
+      setLoading(false);
+    }).catch( (error) => {
+      setError(error);
+      setLoading(false);
+    })
   }, []);
 
-  useEffect(()=>{
-    fetch('http://localhost:8000/data').then(res => res.json()).then((data)=> {
-      console.log(tasks);
-    })
-  }, [tasks])
+  useEffect(()=> {
+    const newTask = getNewTask(testData);
+    console.log(newTask);
+    
+    setFormData(newTask);
+  }, [testData]);
+
 
   useEffect( () => {
     const path = location.pathname;
@@ -74,15 +61,34 @@ const App = () => {
     
   }, [location]);
 
-  
-  
+ 
+
+  const statusData = [
+    {
+      value : 'all',
+      title : 'Все',
+    },
+    {
+      value : 'new',
+      title : 'Новые'
+    },
+    {
+      value : 'inwork',
+      title : 'В работе'
+    },
+    {
+      value : 'completed',
+      title : 'Завершенные'
+    }
+  ];
+
   return (
     <div className="App">
       <HeaderNav/>
       <Routes>
-        <Route path="/" element={<FormPage products={products} statusData={statusData} title="Форма заявок"/>}></Route>
-        <Route path="/tasks" element={<TablePage products={products} statusData={statusData} title="Работа с заявкой"/>}></Route>
-        <Route path="/edit" element={<EditPage products={products} statusData={statusData} title="Работа с заявкой"/>}></Route>
+        <Route path="/" element={<FormPage data={formData} statusData={statusData} title="Форма заявок"/>}></Route>
+        {/* <Route path="/tasks" element={<TablePage products={testData} statusData={statusData} title="Работа с заявкой"/>}></Route>
+        <Route path="/edit" element={<EditPage products={testData} statusData={statusData} title="Работа с заявкой"/>}></Route> */}
       </Routes>
     </div>
   );

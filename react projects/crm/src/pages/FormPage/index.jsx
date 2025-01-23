@@ -1,7 +1,7 @@
 import HeaderNav from "../../components/HeaderNav";
 import Form from "../../components/Form";
 
-const FormPage = ({products, title}) => {
+const FormPage = ({data, title}) => {
   return (
     <>
      <HeaderNav/>
@@ -15,9 +15,7 @@ const FormPage = ({products, title}) => {
           </div>
 
           <div className="white-plate__line-between white-plate__line-between--main"></div>
-
-          <Form products={products}/>
-
+          {data &&  <Form products={data}/>}
         </div>
       </div>
     </>

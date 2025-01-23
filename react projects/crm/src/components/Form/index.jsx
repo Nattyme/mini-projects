@@ -3,9 +3,7 @@ import Input from './../Input';
 import FormGroup from './../FormGroup';
 import Select from '../Select';
 import Button from '../Button';
-import data from './../../data/data.json';
-import getRandomArrayData from '../../utils/calcFunctions'
-
+import dataServer from './../../data/data.json';
 const formFields = [
   {
     element: 'input',
@@ -39,10 +37,9 @@ const formFields = [
   }
 ];
 
-const Form = ({products}) => {
-  const testData = data.testData;
-  const newTask = getRandomArrayData(testData);
-
+const Form = ({data}) => {
+  const products = dataServer.products;
+  console.log(data);
   
   const formContent = formFields.map((field) => {
     switch (field.element) {
@@ -54,7 +51,7 @@ const Form = ({products}) => {
               name = {field.name}
               placeholder = {field.placeholder}
               id = {field.id}
-              value={newTask[field.name]}
+              value={data[field.name]}
               required = {field.required}
             />
           </FormGroup>
@@ -68,7 +65,7 @@ const Form = ({products}) => {
               className={field.className}
               options={products}
               id={field.id}
-              value={newTask.product}
+              value={data.product}
             />
           </FormGroup>
         );

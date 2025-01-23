@@ -43,14 +43,8 @@ export const AppContext = createContext(null);
 const Cart = () => {
   const [cart, setCart] = useState(null);
   const [total, setTotal] = useState(null);
-  const [fetchData, setFetchData] = useState(true);
+  const [fetch, setFetchData] = useState(true);
   const isCartEmpty = !cart || cart.length === 0 ? true : false;
-
-  useEffect( () => {
-    fetch(serverPath + 'products').then((res) => {return res.json()}).then((data) => {
-      setCart(data);
-    });
-  }, [fetchData]);
 
   useEffect ( () => {
     if (cart) {
@@ -73,7 +67,6 @@ const Cart = () => {
       res.ok &&  setFetchData( value => !value);
     })
   }
-
 
   const clickedInputTarget = (id, e) => {
     const inputAction = e.target.dataset.btn;
