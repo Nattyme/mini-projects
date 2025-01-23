@@ -55,19 +55,7 @@
       "product": "course-vue"
     }
   ],
-  "data": [
-    {
-      "full_name": "Natah Bala",
-      "phone": "+7 (925) 345-86-75",
-      "email": "justkate@google.com",
-      "product": "",
-      "form": "",
-      "timestamp": 1737666511599,
-      "changed": 1737666511599,
-      "status": "new",
-      "id": 1
-    }
-  ],
+  "data": [],
   "products": [
     {
       "value": "course-html",

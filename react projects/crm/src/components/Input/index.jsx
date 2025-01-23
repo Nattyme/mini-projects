@@ -3,10 +3,11 @@ import { AppContext } from '../../App/App';
 import './style.css';
 
 const Input = ({type, name, placeholder, id, value, required, className="form-control", autoComplete="on"}) => {
-  const {updateInputValue} = useContext(AppContext);
+  const {updateFieldValue, handleBlurValue} = useContext(AppContext);
 	return (
 		<input 
-      onChange = {(e) => {updateInputValue(e.target.id, e.target.value)}}
+      onChange = {(e) => {updateFieldValue(e.target.id, e.target.value)}}
+      onBlur = { (e) => {handleBlurValue(e)}}
 			type={type}
 			className={className} 
 			name={name} 

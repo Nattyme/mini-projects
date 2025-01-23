@@ -19,6 +19,7 @@ const App = () => {
   const [products, setProducts] = useState(null);
   const [tasks, setTasks] = useState(null);
   const [formData, setFormData] = useState(null);
+  const [initialFormData, setInitialFormData] = useState(null);
 
   const setTimeStamp = () => {
     return Date.now();
@@ -59,19 +60,37 @@ const App = () => {
     
   }
 
-  const updateInputValue = (id, value) => {
+  const updateFieldValue = (id, value) => {
+    console.log(id);
+    console.log(value);
+    
     setFormData((prevFormData) => ({
       ...prevFormData,
       [id] : value
     }) );
   }
 
-  const clickedInputTarget = (e) => {
+  const clickedFieldTarget = (e) => {
     const id = e.target.id; // Получаем id поля
-    updateInputValue(id, ''); // Очищаем поле
+    const isSelect = e.target.tagName === 'SELECT'; // Проверяем, что это select
+    console.log(e.target);
+
+    if (!isSelect) {
+      updateFieldValue(id, ''); // Очищаем поле для  input
+    }
+    
   }
 
- 
+  const handleBlurValue = (e) => {
+    const {id} = e.target;
+
+    if (formData[id].trim() === '') {
+      setFormData ((prevFormData) => ({
+        ...prevFormData,
+        [id] : initialFormData[id]
+      }))
+    }
+  }
 
   useEffect(()=>{
     fetch('http://localhost:8000/testData').then(res => res.json()).then((data) => {
@@ -79,6 +98,7 @@ const App = () => {
       const formNewData  = prepareDisplayData(randomData);
 
       setFormData(formNewData);
+      setInitialFormData(formNewData);
       setLoading(false);
     }).catch( (error) => {
       setError(error);
@@ -144,7 +164,7 @@ const App = () => {
     <div className="App">
       <HeaderNav/>
 
-      <AppContext.Provider value={{formData, btnClicked, updateInputValue, clickedInputTarget, products, navData}}>
+      <AppContext.Provider value={{formData, btnClicked, updateFieldValue, clickedFieldTarget, handleBlurValue, products, navData}}>
         <Routes>
           <Route path="/" element={
             formData && products && <FormPage title="Форма заявок"/>
