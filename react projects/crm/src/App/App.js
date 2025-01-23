@@ -5,6 +5,7 @@ import FormPage from "../pages/FormPage";
 import HeaderNav from "../components/HeaderNav";
 import TablePage from "../pages/Table";
 import EditPage from "../pages/Edit";
+import { serverPath } from "../helpers/variables";
 import useAppState from "../hooks/useAppState";
 import { createNewTask } from "./../utils/taskUtils";
 import { useFormHandlers } from "../hooks/useFormHandlers";
@@ -39,7 +40,7 @@ const App = () => {
       e.preventDefault();
       const newTask = createNewTask(formData);
 
-      fetch("http://localhost:8000/data", {
+      fetch(serverPath + 'data', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newTask),

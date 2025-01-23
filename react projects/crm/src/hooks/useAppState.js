@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { serverPath } from "../helpers/variables";
 import getRandomArrayData from "../utils/calcFunctions";
 import prepareDisplayData from "../utils/prepareDisplayData";
 
@@ -11,7 +12,7 @@ const useAppState = () => {
   const [initialFormData, setInitialFormData] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:8000/testData")
+    fetch(serverPath)
       .then((res) => res.json())
       .then((data) => {
         const randomData = getRandomArrayData(data);
@@ -28,7 +29,7 @@ const useAppState = () => {
   }, [tasks]);
 
   useEffect(() => {
-    fetch("http://localhost:8000/products")
+    fetch(serverPath + 'products')
       .then((res) => res.json())
       .then((data) => {
         setProducts(data);
