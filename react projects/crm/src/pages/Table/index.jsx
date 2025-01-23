@@ -7,7 +7,6 @@ const TablePage = ({products, statusData}) => {
   const title = statusData.length === 0 ? "Нет заявок" : "Все заявки";
 
   return (
-  
     <>
       <SideBar statusData={statusData}/>
       <div className="main-wrapper">

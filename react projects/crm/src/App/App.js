@@ -15,25 +15,54 @@ const App = () => {
   const location = useLocation();
   const [loading, setLoading] = useState(null);
   const [error, setError] = useState(null);
-  const [testData, setTestData] = useState(null);
   const [products, setProducts] = useState(null);
-  const [tasks, setTask] = useState(null);
+  const [tasks, setTasks] = useState(null);
   const [formData, setFormData] = useState(null);
 
-  const getNewTask = (data) => {
-    const newTask = getRandomArrayData(data);
-    return prepareDisplayData(newTask);
+  const setTimeStamp = () => {
+    return Date.now();
+  }
+  const setStatus = () => {
+    return 'new' 
   }
 
-  useEffect(()=> {
+  const createNewTask = (task) => {
+    task.timestamp = setTimeStamp();
+    task.changed = setTimeStamp();
+    task.status = setStatus();
+
+    return task;
+  }
+
+  const btnClicked = async (e) => {
+    if (e.target.dataset.btn === 'submit') {
+      e.preventDefault();
+      const newTask = createNewTask(formData);
+
+      fetch( 'http://localhost:8000/data', {
+        method: 'POST',
+        headers: {'Content-Type' : 'application/json'},
+        body: JSON.stringify(newTask)
+      }).then((res) => {
+        setTasks(res)
+      })
+    }
+    
+  }
+
+  useEffect(()=>{
     fetch('http://localhost:8000/testData').then(res => res.json()).then((data) => {
-      setTestData(data);
+      const randomData = getRandomArrayData(data);
+      const formNewData  = prepareDisplayData(randomData);
+
+      setFormData(formNewData);
       setLoading(false);
     }).catch( (error) => {
       setError(error);
       setLoading(false);
     })
-  }, []);
+ 
+  }, [tasks]);
 
   useEffect(()=> {
     fetch('http://localhost:8000/products').then(res => res.json()).then((data) => {
@@ -44,14 +73,6 @@ const App = () => {
       setLoading(false);
     })
   }, []);
-
-  useEffect(()=> {
-    if (testData) {
-      const newTask = getNewTask(testData);
-      setFormData(newTask);
-    }
-  
-  }, [testData]);
 
 
   useEffect( () => {
@@ -77,7 +98,7 @@ const App = () => {
 
  
 
-  const statusData = [
+  const navData = [
     {
       value : 'all',
       title : 'Все',
@@ -100,13 +121,13 @@ const App = () => {
     <div className="App">
       <HeaderNav/>
 
-      <AppContext.Provider value={{formData, products}}>
+      <AppContext.Provider value={{formData, btnClicked, products, navData}}>
         <Routes>
           <Route path="/" element={
-            formData && products && <FormPage statusData={statusData} title="Форма заявок"/>
+            formData && products && <FormPage title="Форма заявок"/>
           }></Route>
-          {/* <Route path="/tasks" element={<TablePage products={testData} statusData={statusData} title="Работа с заявкой"/>}></Route>
-          <Route path="/edit" element={<EditPage products={testData} statusData={statusData} title="Работа с заявкой"/>}></Route> */}
+          <Route path="/tasks" element={<TablePage title="Работа с заявкой"/>}></Route>
+          <Route path="/edit" element={<EditPage title="Работа с заявкой"/>}></Route>
         </Routes>
       </AppContext.Provider>
     

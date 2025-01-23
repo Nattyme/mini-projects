@@ -1,11 +1,14 @@
+import { useContext } from 'react';
+import { AppContext } from '../../App/App';
 import './style.css';
 
-const SubNav = ({type, data}) => {
+const SubNav = ({type}) => {
+  const {statusData} = useContext(AppContext);
   const isTop = type === 'top';
-  console.log(data);
+  
   return (
     <ul id={isTop ? "topStatusBar" : "asideStatusNav"} className={isTop ? "btn-group" : ""} role="group" aria-label="...">
-      { data.map((item)=>{
+      { statusData.map((item)=>{
           return(
             <li key={item.value}>
               <a href="#" className={isTop ? "btn btn-light" : ""} data-value={item.value} data-role={isTop ? "left-status" : ""}>

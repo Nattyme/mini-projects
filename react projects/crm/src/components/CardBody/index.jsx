@@ -1,8 +1,14 @@
+import { useContext } from 'react';
+import { AppContext } from './../../App/App';
 import Input from "../../components/Input";
 import Select from "../../components/Select";
 import CardRow from "../CardRow";
 
-const CardBody = ({products, statusData}) => {
+const CardBody = () => {
+  const {products, navData} = useContext(AppContext);
+  console.log(navData);
+  console.log(products);
+  
 	const data = [
 		{
 			label : 'ID',
@@ -75,7 +81,7 @@ const CardBody = ({products, statusData}) => {
 				<Select
 					name="status"
 					className="custom-select"
-					options={statusData}
+					options={navData}
 					id="status"
 					value="Выберите статус"
 				/>
@@ -85,7 +91,7 @@ const CardBody = ({products, statusData}) => {
 
 	return (
 		<div className="card-body">
-			{data.map((field)=>{
+			{products && navData && data.map((field)=>{
 				return (
 					<CardRow key={field.label} label={field.label}>
 						{field.content}

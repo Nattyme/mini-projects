@@ -1,8 +1,11 @@
+import { useContext } from 'react';
+import { AppContext } from '../../App/App';
 import Select from "../Select";
 import SubNav from "../SubNav";
 import Table from "../Table";
 
 const Dashboard = ({ selectData, navData, tableHeaders}) => {
+  const {products, statusData} = useContext(AppContext);
   return (
     <>
       <div className="row mb-3 justify-content-start">

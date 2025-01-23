@@ -1,11 +1,11 @@
 import CardBody from "../CardBody";
 import CardHeader from "../CardHeader";
 
-const Card = ({products, statusData}) => {
+const Card = () => {
   return (
     <div className="card mb-4">
       <CardHeader text="Данные о заявке"/>
-      <CardBody products={products} statusData = {statusData}/>
+      <CardBody/>
     </div>
   );
 }

@@ -81,7 +81,7 @@ const Form = () => {
       <Label htmlFor = 'full_name' text = 'Ваши данные:'/>
       {formContent}
       <FormGroup id='noteWrapper' key="noteWrapper">
-        <Button text='Оформить заявку' className='btn btn-lg btn-primary btn-block'/>
+        <Button text='Оформить заявку' className='btn btn-lg btn-primary btn-block' dataBtn ='submit'/>
       </FormGroup>
 
     </form>

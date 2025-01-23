@@ -1,9 +1,12 @@
+import { useContext } from 'react';
+import { AppContext } from '../../App/App';
 import Logo from "../Logo";
 import SubNav from "../SubNav";
 import User from "../User";
 import "./style.css";
 
-const SideBar = ({ statusData }) => {
+const SideBar = () => {
+  const {statusData} = useContext(AppContext);
 
   return (
     <div className="left-panel blue-skin">
@@ -16,7 +19,7 @@ const SideBar = ({ statusData }) => {
       {statusData.length > 0 && (
         <div className="left-panel__navigation">
           <div className="left-panel__navigation-title">Заявки</div>
-          <SubNav type="bottom" data={statusData} />
+          <SubNav type="bottom"/>
         </div>
       )}
     </div>

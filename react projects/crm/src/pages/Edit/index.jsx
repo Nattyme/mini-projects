@@ -3,7 +3,7 @@ import Button from "../../components/Button";
 import Card from "../../components/Card";
 import Title from '../../components/Title';
 
-const EditPage = ({products, statusData, title}) => {
+const EditPage = ({title}) => {
   return (
     <div className="form-wrapper">
       <div className="container-fluid">
@@ -19,7 +19,7 @@ const EditPage = ({products, statusData, title}) => {
         <div className="row">
           <div className="col">
             <form id="form" action="edit.html" method="POST">
-              <Card products={products} statusData={statusData}/>
+              <Card/>
 
               <div className="row justify-content-between form__buttons">
                 <div className="col text-right">
