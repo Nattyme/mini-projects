@@ -1,5 +1,5 @@
-import {BrowserRouter as Router, Routes, Route, useLocation} from 'react-router-dom';
-import {useState, useEffect} from 'react';
+import {Routes, Route, useLocation} from 'react-router-dom';
+import {useState, useEffect, createContext} from 'react';
 
 import FormPage from '../pages/FormPage';
 import './App.css';
@@ -9,11 +9,14 @@ import EditPage from '../pages/Edit';
 import getRandomArrayData from './../utils/calcFunctions';
 import prepareDisplayData from './../utils/prepareDisplayData';
 
+export const AppContext = createContext(null);
+
 const App = () => {
   const location = useLocation();
   const [loading, setLoading] = useState(null);
   const [error, setError] = useState(null);
   const [testData, setTestData] = useState(null);
+  const [products, setProducts] = useState(null);
   const [tasks, setTask] = useState(null);
   const [formData, setFormData] = useState(null);
 
@@ -25,6 +28,16 @@ const App = () => {
   useEffect(()=> {
     fetch('http://localhost:8000/testData').then(res => res.json()).then((data) => {
       setTestData(data);
+      setLoading(false);
+    }).catch( (error) => {
+      setError(error);
+      setLoading(false);
+    })
+  }, []);
+
+  useEffect(()=> {
+    fetch('http://localhost:8000/products').then(res => res.json()).then((data) => {
+      setProducts(data);
       setLoading(false);
     }).catch( (error) => {
       setError(error);
@@ -86,11 +99,17 @@ const App = () => {
   return (
     <div className="App">
       <HeaderNav/>
-      <Routes>
-        <Route path="/" element={<FormPage data={formData} statusData={statusData} title="Форма заявок"/>}></Route>
-        {/* <Route path="/tasks" element={<TablePage products={testData} statusData={statusData} title="Работа с заявкой"/>}></Route>
-        <Route path="/edit" element={<EditPage products={testData} statusData={statusData} title="Работа с заявкой"/>}></Route> */}
-      </Routes>
+
+      <AppContext.Provider value={{formData, products}}>
+        <Routes>
+          <Route path="/" element={
+            formData && products && <FormPage statusData={statusData} title="Форма заявок"/>
+          }></Route>
+          {/* <Route path="/tasks" element={<TablePage products={testData} statusData={statusData} title="Работа с заявкой"/>}></Route>
+          <Route path="/edit" element={<EditPage products={testData} statusData={statusData} title="Работа с заявкой"/>}></Route> */}
+        </Routes>
+      </AppContext.Provider>
+    
     </div>
   );
 }

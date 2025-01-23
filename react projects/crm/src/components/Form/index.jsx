@@ -1,9 +1,11 @@
+import { useContext } from 'react';
+import { AppContext } from '../../App/App';
 import Label from '../Label';
 import Input from './../Input';
 import FormGroup from './../FormGroup';
 import Select from '../Select';
 import Button from '../Button';
-import dataServer from './../../data/data.json';
+
 const formFields = [
   {
     element: 'input',
@@ -37,9 +39,8 @@ const formFields = [
   }
 ];
 
-const Form = ({data}) => {
-  const products = dataServer.products;
-  console.log(data);
+const Form = () => {
+  const {formData, products} = useContext(AppContext);
   
   const formContent = formFields.map((field) => {
     switch (field.element) {
@@ -51,7 +52,7 @@ const Form = ({data}) => {
               name = {field.name}
               placeholder = {field.placeholder}
               id = {field.id}
-              value={data[field.name]}
+              value={formData[field.name]}
               required = {field.required}
             />
           </FormGroup>
@@ -65,7 +66,7 @@ const Form = ({data}) => {
               className={field.className}
               options={products}
               id={field.id}
-              value={data.product}
+              value={formData.product}
             />
           </FormGroup>
         );
