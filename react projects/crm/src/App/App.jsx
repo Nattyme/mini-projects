@@ -16,72 +16,76 @@ import Loader from "../components/Loader";
 export const AppContext = createContext(null);
 
 const App = () => {
-  const location = useLocation();
-  const {appState, setAppState} = useAppState();
+const location = useLocation();
+const {appState, setAppState} = useAppState();
 
-  // functions to handle form fields
-  const {
-    updateFieldValue, 
-    clickedFieldTarget, 
-    handleBlurValue
-  } = useFormHandlers(appState, setAppState);
-  
-  const btnClicked = async (e) => {
-    if (e.target.dataset.btn === "submit") {
-      e.preventDefault();
-      const newTask = createNewTask(appState.formData);
+// functions to handle form fields
+const {
+	updateFieldValue, 
+	clickedFieldTarget, 
+	handleBlurValue
+} = useFormHandlers(appState, setAppState);
 
-      fetch(serverPath + 'data', {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newTask),
-      }).then(res => res.json()).then((newTaskData) => {
-        setAppState((prevData) => (
-          {
-          ...prevData,
-          data: [...prevData.data, newTaskData]
-        }));
-      })
-    }
-  };
+const btnClicked = async (e) => {
+	if (e.target.dataset.btn === "submit") {
+	e.preventDefault();
+	const newTask = createNewTask(appState.formData);
+
+	fetch(serverPath + 'data', {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(newTask),
+	}).then(res => res.json()).then((newTaskData) => {
+		setAppState((prevData) => (
+		{
+		...prevData,
+		data: [...prevData.data, newTaskData]
+		}));
+	})
+	}
+};
 
 
-  useBodyClass(location.pathname);
+useBodyClass(location.pathname);
 
-  const navData = appState.status;
- 
-  return (
-    <div className="App">
-      <HeaderNav />
+const navData = appState.status;
 
-      <AppContext.Provider
-        value={{
-          appState,
-          setAppState,
-          btnClicked,
-          updateFieldValue,
-          clickedFieldTarget,
-          handleBlurValue,
-          navData,
-        }}
-      >
-        <Routes>
-          <Route
-            path="/"
-            element={appState.loading ? <Loader/> : appState.formData && appState.products && <FormPage title="Форма заявок" />}
-          ></Route>
-          <Route
-            path="/tasks"
-            element={appState.loading ? <Loader/> : appState.products && appState.users && <TablePage title="Все заявки" />}
-          ></Route>
-          <Route
-            path="/edit/:id"
-            element={appState.loading ? <Loader/> : <EditPage title="Работа с заявкой" />}
-          ></Route>
-        </Routes>
-      </AppContext.Provider>
-    </div>
-  );
+return (
+	<div className="App">
+	<HeaderNav />
+
+	<AppContext.Provider
+		value={{
+		appState,
+		setAppState,
+		btnClicked,
+		updateFieldValue,
+		clickedFieldTarget,
+		handleBlurValue,
+		navData,
+		}}
+	>
+
+		{appState.loading ? <Loader/> : (
+			<Routes>
+				<Route
+					path="/"
+					element={appState.formData && appState.products && <FormPage title="Форма заявок" />}
+				></Route>
+				<Route
+					path="/tasks"
+					element={appState.products && appState.users && <TablePage title="Все заявки" />}
+				></Route>
+				<Route
+					path="/edit/:id"
+					element={<EditPage title="Работа с заявкой" />}
+				></Route>
+			</Routes> 
+		)}
+		
+	</AppContext.Provider>
+	</div>
+);
 };
 
 export default App;
