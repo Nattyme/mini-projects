@@ -8,8 +8,6 @@ const TablePage = () => {
   const {data, users} = useContext(AppContext);
   const title = data && data.length > 0  ? "Все заявки" : "Нет заявок";
   const admin = users.find((user) => user.isAdmin === true);
-console.log(data);
-console.log(users);
 
   return (
     <>

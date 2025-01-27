@@ -1,21 +1,28 @@
 import { useContext } from 'react';
 import { AppContext } from './../../App/App';
+import { Link } from 'react-router-dom';
 
 const TableRow = () => {
   const {data} = useContext(AppContext);
   return(
     <>
       { data.map((task) => (
-      <tr class="task-table__row task-table__row--link" data-status="new" data-display="">
-        <td>id</td>
-        <td>date</td>
-        <td>product</td>
-        <td><a class="link-abs" title="Перейти к редактированию заявки №6" href="edit.html?id=6">name</a></td>
-        <td>email</td>
-        <td>phone</td>
-        <td><div class="badge badge-pill badge-danger"></div>status</td>
-        <td><a class="button-edit" href="edit.html"></a>edit</td>
-      </tr>
+        <tr class="task-table__row task-table__row--link" data-status="new" data-display="">
+          <td>{task.id}</td>
+          <td>{task.timestamp}</td>
+          <td>{task.product}</td>
+          <td>
+            <Link class="link-abs" title={`Перейти к редактированию заявки №${task.id}`} to={`/edit/${task.id}`}>
+              {task.name}
+            </Link>
+            
+            
+          </td>
+          <td>{task.email}</td>
+          <td>{task.phone}</td>
+          <td><div class="badge badge-pill badge-danger"></div>{task.status}</td>
+          <td><a class="button-edit" href="edit.html"></a>Редактировать</td>
+        </tr>
       ))}
     </>
   

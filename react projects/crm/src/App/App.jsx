@@ -5,9 +5,9 @@ import FormPage from "../pages/FormPage";
 import HeaderNav from "../components/HeaderNav";
 import TablePage from "../pages/Table";
 import EditPage from "../pages/Edit";
-import { serverPath } from "./../helpers/variables";
+import { serverPath } from "../helpers/variables";
 import useAppState from "../hooks/useAppState";
-import { createNewTask } from "./../utils/taskUtils";
+import { createNewTask } from "../utils/taskUtils";
 import { useFormHandlers } from "../hooks/useFormHandlers";
 import { useBodyClass } from "../hooks/useBodyClass";
 import "./App.css";
@@ -94,7 +94,7 @@ return [...prevData, newTaskData]
             element={products && users && <TablePage title="Все заявки" />}
           ></Route>
           <Route
-            path="/edit"
+            path="/edit/:id"
             element={<EditPage title="Работа с заявкой" />}
           ></Route>
         </Routes>

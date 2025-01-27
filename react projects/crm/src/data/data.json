@@ -65,6 +65,46 @@
       "changed": 1737679829415,
       "status": "new",
       "id": 1
+    },
+    {
+      "full_name": "Elena Aurgas",
+      "phone": "79253458675",
+      "email": "helen@google.com",
+      "product": "course-js",
+      "timestamp": 1737980836839,
+      "changed": 1737980836839,
+      "status": "new",
+      "id": 2
+    },
+    {
+      "full_name": "Pavel Nerezov",
+      "phone": "79253555555",
+      "email": "pn@google.com",
+      "product": "course-vue",
+      "timestamp": 1737980837601,
+      "changed": 1737980837601,
+      "status": "new",
+      "id": 3
+    },
+    {
+      "full_name": "Екатерина М",
+      "phone": "79253458675",
+      "email": "justkate@google.com",
+      "product": "course-vue",
+      "timestamp": 1737980845635,
+      "changed": 1737980845635,
+      "status": "new",
+      "id": 4
+    },
+    {
+      "full_name": "Pavel Nerezov",
+      "phone": "79253555555",
+      "email": "pn@google.com",
+      "product": "course-vue",
+      "timestamp": 1737980846053,
+      "changed": 1737980846053,
+      "status": "new",
+      "id": 5
     }
   ],
   "products": [
