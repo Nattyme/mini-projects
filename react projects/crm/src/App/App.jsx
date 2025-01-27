@@ -11,87 +11,68 @@ import { createNewTask } from "../utils/taskUtils";
 import { useFormHandlers } from "../hooks/useFormHandlers";
 import { useBodyClass } from "../hooks/useBodyClass";
 import "./App.css";
+import Loader from "../components/Loader";
 
 export const AppContext = createContext(null);
 
 const App = () => {
   const location = useLocation();
+  const {appState, setAppState} = useAppState();
 
-  const {
-    loading,
-    error,
-    testData,
-    products,
-    setTestData,
-    data,
-    users,
-    formData,
-    setData,
-    setFormData,
-    setLoading,
-    setError,
-    initialFormData,
-  } = useAppState();
-console.log(products);
-
+  // functions to handle form fields
   const {
     updateFieldValue, 
     clickedFieldTarget, 
     handleBlurValue
-  } = useFormHandlers(formData, initialFormData, setFormData);
-
+  } = useFormHandlers(appState.formData, appState.initialFormData, setAppState);
+  
   const btnClicked = async (e) => {
     if (e.target.dataset.btn === "submit") {
       e.preventDefault();
-      const newTask = createNewTask(formData);
+      const newTask = createNewTask(appState.formData);
 
       fetch(serverPath + 'data', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newTask),
       }).then(res => res.json()).then((newTaskData) => {
-        setData((prevData) => {
-return [...prevData, newTaskData]
-        }) // Добав. новую задачу в БД
+        setAppState((prevData) => (
+          {
+          ...prevData,
+          data: [...prevData.data, newTaskData]
+        })) 
       })
     }
   };
 
+
   useBodyClass(location.pathname);
 
-  const navData = [
-    { value: "all", title: "Все" },
-    { value: "new", title: "Новые" },
-    { value: "inwork", title: "В работе" },
-    { value: "completed", title: "Завершенные" },
-  ];
-
+  const navData = appState.status;
+ 
   return (
     <div className="App">
       <HeaderNav />
 
       <AppContext.Provider
         value={{
-          loading,
-          formData,
-          data,
+          appState,
+          setAppState,
           btnClicked,
           updateFieldValue,
           clickedFieldTarget,
           handleBlurValue,
-          products,
           navData,
-          users
         }}
       >
         <Routes>
           <Route
             path="/"
-            element={formData && products && <FormPage title="Форма заявок" />}
+            element={appState.loading ? <Loader/> : appState.formData && appState.products && <FormPage title="Форма заявок" />}
           ></Route>
           <Route
             path="/tasks"
-            element={products && users && <TablePage title="Все заявки" />}
+            element={appState.loading ? <Loader/> : appState.products && appState.users && <TablePage title="Все заявки" />}
           ></Route>
           <Route
             path="/edit/:id"

@@ -13,7 +13,7 @@ const TableRow = () => {
           <td>{task.product}</td>
           <td>
             <Link class="link-abs" title={`Перейти к редактированию заявки №${task.id}`} to={`/edit/${task.id}`}>
-              {task.name}
+              {task.full_name}
             </Link>
             
             

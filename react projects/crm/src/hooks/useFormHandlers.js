@@ -1,8 +1,8 @@
-export const useFormHandlers = (formData, initialFormData, setFormData) => {
+export const useFormHandlers = (formData, initialFormData, setAppState) => {
   const updateFieldValue = (id, value) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [id]: value,
+    setAppState((prevAppState) => ({
+      ...prevAppState,
+      [formData[id]]: value,
     }));
   };
 
@@ -19,9 +19,9 @@ export const useFormHandlers = (formData, initialFormData, setFormData) => {
     const { id } = e.target;
 
     if (formData[id].trim() === "") {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        [id]: initialFormData[id],
+      setAppState((prevAppState) => ({
+        ...prevAppState,
+        [formData[id]]: initialFormData[id],
       }));
     }
   };

@@ -129,6 +129,12 @@
       "title": "Курс по WordPress"
     }
   ],
+  "status": [
+    { "value": "all", "title": "Все" },
+    { "value": "new", "title": "Новые" },
+    { "value": "inwork", "title": "В работе" },
+    { "value": "completed", "title": "Завершенные" }
+  ],
   "users": [
     {
       "id": 1,
