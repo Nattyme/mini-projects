@@ -1,5 +1,6 @@
 export const useFormHandlers = (appState, setAppState) => {
 
+  // Ф-ция обновляет поля формы в состоянии при вводе пользователя 
   const updateFieldValue = (id, value) => {
     setAppState((prevAppState) => ({
       ...prevAppState,
@@ -10,27 +11,27 @@ export const useFormHandlers = (appState, setAppState) => {
     }));
   };
 
-  // Function check clicked target
-  const clickedFieldTarget = (e) => {
-    const id = e.target.id; // Получаем id поля
-    const isSelect = e.target.tagName === "SELECT"; // Проверяем, что это select
+  // Ф-ция делает поле пустым по клику и возвращает id этого элемента 
+  const clearFieldOnClick = (e) => {
+    const {id, tagName} = e.target; // Получаем id и тег поля
+    const isSelect = tagName === "SELECT"; // Проверяем, если тег является select
 
     if (!isSelect) {
       updateFieldValue(id, ""); // Очищаем поле для  input
     }
 
-    return id;
+    return id; // на случай использования 
   };
 
-  // Funtion set prev form field data if field value is not changed
+  // Ф-ция проверяет пустой ввод и вернёт предыдущее значение поля
   const handleBlurValue = (e) => {
     const { id } = e.target;
 
-    if (appState.formData[id].trim() === "") {
+    if (appState.formData[id]?.trim() === "") {
       updateFieldValue(id, appState.initialFormData[id]);
     }
   };
 
-  return {updateFieldValue, clickedFieldTarget, handleBlurValue}
+  return {updateFieldValue, clearFieldOnClick, handleBlurValue}
 }
  

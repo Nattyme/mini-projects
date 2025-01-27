@@ -55,7 +55,38 @@
       "product": "course-vue"
     }
   ],
-  "data": [],
+  "data": [
+    {
+      "full_name": "Stepanova Polina",
+      "phone": "79253555555",
+      "email": "polly777@google.com",
+      "product": "course-js",
+      "timestamp": 1738016127512,
+      "changed": 1738016127512,
+      "status": "new",
+      "id": 1
+    },
+    {
+      "full_name": "Sofie Braz",
+      "phone": "79245600000",
+      "email": "sofie@outlook.com",
+      "product": "course-wordpress",
+      "timestamp": 1738016196530,
+      "changed": 1738016196530,
+      "status": "new",
+      "id": 2
+    },
+    {
+      "full_name": "Анатолий Ш",
+      "phone": "79253458675",
+      "email": "anatol@google.com",
+      "product": "course-php",
+      "timestamp": 1738016197545,
+      "changed": 1738016197545,
+      "status": "new",
+      "id": 3
+    }
+  ],
   "products": [
     {
       "value": "course-html",

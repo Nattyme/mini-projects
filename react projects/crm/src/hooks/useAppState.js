@@ -47,6 +47,7 @@ const useAppState = () => {
 
   const getFetchData = (fieldsObj) => {
     fieldsObj.forEach(({field, path}) => {
+      
       fetch(serverPath + path)
       .then((res) => res.json())
       .then((data) => {
