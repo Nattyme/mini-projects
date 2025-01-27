@@ -5,30 +5,30 @@ import SubNav from "../SubNav";
 import Table from "../Table";
 
 const Dashboard = () => {
-  const {products, data} = useContext(AppContext);
+  const {appState} = useContext(AppContext);
   
   return (
     <>
       <div className="row mb-3 justify-content-start">
         <div className="col">
-          {data.length > 0 && (
+          {appState.data.length > 0 && (
             <SubNav type="top"/>
           )}
         </div>
 
         <div className="col">
-          {products.length > 0 && data.length > 0 && (
+          {appState.products.length > 0 && appState.data.length > 0 && (
             <Select
               name="product"
               className="custom-select"
-              options={products}
+              options={appState.products}
               id="productSelect"
             />
           )}
         </div>
       </div>
 
-      {data && data.length > 0 && <Table/>}
+      {appState.data && appState.data.length > 0 && <Table/>}
     </>
 
   );

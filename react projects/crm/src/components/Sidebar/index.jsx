@@ -6,7 +6,7 @@ import User from "../User";
 import "./style.css";
 
 const SideBar = ({isAdmin}) => {
-  const {data} = useContext(AppContext);
+  const {appState} = useContext(AppContext);
   
   return (
     <div className="left-panel blue-skin">
@@ -16,7 +16,7 @@ const SideBar = ({isAdmin}) => {
         {isAdmin && <User user = {isAdmin}/>}
       </div>
 
-      {data && data.length > 0 && (
+      {appState.data && appState.data.length > 0 && (
         <div className="left-panel__navigation">
           <div className="left-panel__navigation-title">Заявки</div>
           <SubNav type="bottom"/>

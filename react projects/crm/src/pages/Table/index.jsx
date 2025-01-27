@@ -6,16 +6,13 @@ import Title from './../../components/Title';
 import Loader from '../../components/Loader';
 
 const TablePage = () => { 
-  const {appState} = useContext(AppContext);
+  const {appState, navData} = useContext(AppContext);
   const title = appState.data && appState.data.length > 0  ? "Все заявки" : "Нет заявок";
   const admin = appState.users.find((user) => user.isAdmin === true);
-  console.log(appState);
-  console.log(appState.data);
-  console.log(title);
-  console.log(admin);
+
     return (
       <>
-        {appState.data && appState.navData && admin ? (
+        {appState.data && navData && admin ? (
           <>
            <SideBar isAdmin={admin}/>
            <div className="main-wrapper">
