@@ -55,7 +55,18 @@
       "product": "course-vue"
     }
   ],
-  "data": [],
+  "data": [
+    {
+      "full_name": "Ivan Ivanov",
+      "phone": "79253458675",
+      "email": "",
+      "product": "course-vue",
+      "timestamp": 1738008963026,
+      "changed": 1738008963026,
+      "status": "new",
+      "id": 1
+    }
+  ],
   "products": [
     {
       "value": "course-html",

@@ -24,7 +24,7 @@ const App = () => {
     updateFieldValue, 
     clickedFieldTarget, 
     handleBlurValue
-  } = useFormHandlers(appState.formData, appState.initialFormData, setAppState);
+  } = useFormHandlers(appState, setAppState);
   
   const btnClicked = async (e) => {
     if (e.target.dataset.btn === "submit") {
@@ -40,7 +40,7 @@ const App = () => {
           {
           ...prevData,
           data: [...prevData.data, newTaskData]
-        })) 
+        }));
       })
     }
   };
@@ -76,7 +76,7 @@ const App = () => {
           ></Route>
           <Route
             path="/edit/:id"
-            element={<EditPage title="Работа с заявкой" />}
+            element={appState.loading ? <Loader/> : <EditPage title="Работа с заявкой" />}
           ></Route>
         </Routes>
       </AppContext.Provider>

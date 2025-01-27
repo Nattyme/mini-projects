@@ -1,8 +1,13 @@
-export const useFormHandlers = (formData, initialFormData, setAppState) => {
+export const useFormHandlers = (appState, setAppState) => {
+  console.log('поле обновляетсмя');
+  
   const updateFieldValue = (id, value) => {
     setAppState((prevAppState) => ({
       ...prevAppState,
-      [formData[id]]: value,
+      formData: {
+        ...prevAppState.formData,
+        [id]: value,
+      }
     }));
   };
 
@@ -18,10 +23,13 @@ export const useFormHandlers = (formData, initialFormData, setAppState) => {
   const handleBlurValue = (e) => {
     const { id } = e.target;
 
-    if (formData[id].trim() === "") {
+    if (appState.formData[id].trim() === "") {
       setAppState((prevAppState) => ({
         ...prevAppState,
-        [formData[id]]: initialFormData[id],
+        formData: {
+          ...prevAppState.formData,
+          [id]: appState.initialFormData[id]
+        }
       }));
     }
   };
