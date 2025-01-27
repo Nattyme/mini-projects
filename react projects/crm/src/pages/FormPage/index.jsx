@@ -15,7 +15,7 @@ const FormPage = ({title}) => {
             </div>
 
             <div className="white-plate__line-between white-plate__line-between--main"></div>
-            {/* <Form/> */}
+            <Form/>
           </div>
       </div>
     

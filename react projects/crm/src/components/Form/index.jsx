@@ -41,7 +41,7 @@ const formFields = [
 
 
 const Form = () => {
-  const {formData, products, updateFieldValue, clickedFieldTarget} = useContext(AppContext);
+  const {appState, clickedFieldTarget} = useContext(AppContext);
   
   const formContent = formFields.map((field) => {
     switch (field.element) {
@@ -53,7 +53,7 @@ const Form = () => {
               name = {field.name}
               placeholder = {field.placeholder}
               id = {field.id}
-              value={formData[field.name] || ''}
+              value={appState.formData[field.name] || ''}
               required = {field.required}
             />
           </FormGroup>
@@ -65,9 +65,9 @@ const Form = () => {
             <Select 
               name={field.name}
               className={field.className}
-              options={products}
+              options={appState.products}
               id={field.id}
-              value={formData.product}
+              value={appState.formData.product}
             />
           </FormGroup>
         );
