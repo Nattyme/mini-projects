@@ -1,5 +1,23 @@
+import './style.css';
+
 const Laoder = () => {
-  return ( <h1>Идёт загрузка данных</h1> );
-}
- 
+  return (
+    <div class="lds-default">
+    <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  );
+  
+};
+
 export default Laoder;
