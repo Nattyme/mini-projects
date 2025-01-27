@@ -5,7 +5,7 @@ import FormPage from "../pages/FormPage";
 import HeaderNav from "../components/HeaderNav";
 import TablePage from "../pages/Table";
 import EditPage from "../pages/Edit";
-import { serverPath } from "../helpers/variables";
+import { serverPath } from "./../helpers/variables";
 import useAppState from "../hooks/useAppState";
 import { createNewTask } from "./../utils/taskUtils";
 import { useFormHandlers } from "../hooks/useFormHandlers";
@@ -20,14 +20,19 @@ const App = () => {
   const {
     loading,
     error,
+    testData,
     products,
+    setTestData,
+    data,
+    users,
     formData,
-    setTasks,
+    setData,
     setFormData,
     setLoading,
     setError,
     initialFormData,
   } = useAppState();
+console.log(products);
 
   const {
     updateFieldValue, 
@@ -44,9 +49,11 @@ const App = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newTask),
-      }).then((res) => {
-        setTasks(res);
-      });
+      }).then(res => res.json()).then((newTaskData) => {
+        setData((prevData) => {
+return [...prevData, newTaskData]
+        }) // Добав. новую задачу в БД
+      })
     }
   };
 
@@ -65,13 +72,16 @@ const App = () => {
 
       <AppContext.Provider
         value={{
+          loading,
           formData,
+          data,
           btnClicked,
           updateFieldValue,
           clickedFieldTarget,
           handleBlurValue,
           products,
           navData,
+          users
         }}
       >
         <Routes>
@@ -81,7 +91,7 @@ const App = () => {
           ></Route>
           <Route
             path="/tasks"
-            element={<TablePage title="Работа с заявкой" />}
+            element={products && users && <TablePage title="Все заявки" />}
           ></Route>
           <Route
             path="/edit"

@@ -4,15 +4,17 @@ import getRandomArrayData from "../utils/calcFunctions";
 import prepareDisplayData from "../utils/prepareDisplayData";
 
 const useAppState = () => {
-  const [loading, setLoading] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [products, setProducts] = useState(null);
-  const [tasks, setTasks] = useState(null);
+  const [testData, setTestData] = useState(null);
   const [formData, setFormData] = useState(null);
+  const [data, setData] = useState(null);
+  const [products, setProducts] = useState(null);
   const [initialFormData, setInitialFormData] = useState(null);
+  const [users, setUsers] = useState(null);
 
   useEffect(() => {
-    fetch(serverPath)
+    fetch(serverPath + 'testData')
       .then((res) => res.json())
       .then((data) => {
         const randomData = getRandomArrayData(data);
@@ -26,13 +28,13 @@ const useAppState = () => {
         setError(error);
         setLoading(false);
       });
-  }, [tasks]);
+  }, [data]);
 
   useEffect(() => {
-    fetch(serverPath + 'products')
+    fetch(serverPath + 'data')
       .then((res) => res.json())
       .then((data) => {
-        setProducts(data);
+        setData(data);
         setLoading(false);
       })
       .catch((error) => {
@@ -41,13 +43,49 @@ const useAppState = () => {
       });
   }, []);
 
+  useEffect(() => {
+    fetch(serverPath + 'products')
+      .then((res) => res.json())
+      .then((data) => {
+        setProducts(data);
+        console.log(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
+  }, []);
+  useEffect(() => {
+    fetch(serverPath + 'users')
+      .then((res) => res.json())
+      .then((data) => {
+        setUsers(data);
+        console.log('Данные пользователя Загружены');
+        
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
+  }, []);
+
+  useEffect(()=>{
+    console.log(products);
+    
+  },[products])  
+  
   return {
     loading,
     error,
+    testData,
+    data,
+    users,
     products,
-    tasks,
     formData,
-    setTasks,
+    setTestData,
+    setData,
     setFormData,
     initialFormData,
     setInitialFormData,

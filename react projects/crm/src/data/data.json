@@ -56,7 +56,16 @@
     }
   ],
   "data": [
-   
+    {
+      "full_name": "Elena Aurgas",
+      "phone": "79253458675",
+      "email": "helen@google.com",
+      "product": "course-js",
+      "timestamp": 1737679829415,
+      "changed": 1737679829415,
+      "status": "new",
+      "id": 1
+    }
   ],
   "products": [
     {
@@ -88,5 +97,6 @@
       "cover": "avatar-128.jpg",
       "isAdmin": true
     }
-  ]
+  ],
+  "table": []
 }

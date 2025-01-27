@@ -1,18 +1,23 @@
+import { useContext } from 'react';
+import { AppContext } from '../../App/App';
 import Dashboard from "../../components/Dashboard";
 import SideBar from "../../components/Sidebar";
 import Title from './../../components/Title';
 
-const TablePage = ({products, statusData}) => { 
-  const tableHeaders = ['ID', 'дата', 'продукт', 'имя', 'email', 'телефон', 'статус', ''];
-  const title = statusData.length === 0 ? "Нет заявок" : "Все заявки";
+const TablePage = () => { 
+  const {data, users} = useContext(AppContext);
+  const title = data && data.length > 0  ? "Все заявки" : "Нет заявок";
+  const admin = users.find((user) => user.isAdmin === true);
+console.log(data);
+console.log(users);
 
   return (
     <>
-      <SideBar statusData={statusData}/>
+      {data && admin && <SideBar isAdmin={admin}/>}
       <div className="main-wrapper">
         <div className="container-fluid">
-          <Title title={title}/>
-          <Dashboard tableHeaders={tableHeaders} navData={statusData} selectData={products}/>
+          {data && admin && <Title title={title}/>}
+          {data && admin && <Dashboard/>}
         </div>
       </div>    
     </>
