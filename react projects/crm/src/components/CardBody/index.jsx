@@ -4,26 +4,26 @@ import {EditPageContext} from '../../pages/Edit';
 import Input from "../../components/Input";
 import Select from "../../components/Select";
 import CardRow from "../CardRow";
+import {formatTaskEdit} from './../../utils/formatters'
 
 const CardBody = () => {
   const {appState, setAppState, navData} = useContext(AppContext);
   const {id} = useContext(EditPageContext);
   
-  const editTask = appState.data.find((task) => task.id === +id);
-  console.log(editTask);
+  const currentTask = appState.data.find((task) => task.id === +id);
+  const editTask = formatTaskEdit(currentTask);
   
   useEffect(()=> {
     setAppState((prevState) => ({
       ...prevState,
       formData : {
-        ...editTask
+        ...currentTask
       },
       initialFormData : {
-        ...editTask
+        ...currentTask
       }
     }))
-  },[])
-  console.log(appState);
+  },[]);
   
 	const data = [
 		{
@@ -37,7 +37,7 @@ const CardBody = () => {
 		},
 		{
 			label : 'Дата создания:',
-			content: editTask.timestamp
+			content: editTask.date
 		},
 		{
 			label : "Продукт:",

@@ -43,19 +43,11 @@ const formatDate = (timestamp)=> {
 }
 
 const formatProduct = (name, products) => {
-  for (const product of products) {
-    if (product.value === name) {
-      return product.title;
-    }
-  }
+  return products.find(product => product.value === name)?.title || '';
 }
 
 const formatStatus = (incomeStatus, statusTypes) => {
-  for (const status of statusTypes) {
-    if (status.value === incomeStatus) {
-      return status.title;
-    }
-  }
+  return statusTypes.find(status => status.value === incomeStatus)?.title || '';
 }
 
 const formatDataInTable = ( task, products, statusTypes) => {
@@ -70,4 +62,27 @@ const formatDataInTable = ( task, products, statusTypes) => {
   };
 }
 
-export {formatName, formatPhone, formatCamelWords, formatDateTime, formatDate, formatProduct, formatDataInTable}
+const formatTaskDateTime = (taskData, type = 'date') =>  {
+  const dataCopy = {...taskData};  
+
+  if (type === 'date') {
+    dataCopy.date = formatDate( dataCopy.timestamp);
+  }
+
+  if (type === 'date-time') {
+    dataCopy.date = formatDateTime( dataCopy.timestamp, 'date-time')
+  }
+  return dataCopy;
+}
+
+const formatTaskEdit = (taskData) => {
+  let taskWithDate = formatTaskDateTime(taskData, 'date-time');
+  let formattedPhone = formatPhone(taskWithDate.phone);
+
+  if(!formattedPhone) return;
+  
+  taskWithDate.phone = formattedPhone;
+  return taskWithDate;
+}
+
+export {formatName, formatPhone, formatCamelWords, formatDateTime, formatDate, formatProduct, formatDataInTable, formatTaskEdit}
