@@ -4,14 +4,14 @@ export const subNavTop = {
   id: 'topStatusBar',
   className: 'btn-group',
   linkClassName: 'btn btn-light',
-  linkDataRole: 'left-status',
+  linkDataRole: '',
   badge: false
 };
 
 export const subNavAside = {
   id: 'asideStatusNav',
-  className: 'active',
+  className: '',
   linkClassName: '',
-  linkDataRole: '',
+  linkDataRole: 'left-status',
   badge: true
 };

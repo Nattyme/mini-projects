@@ -85,10 +85,6 @@ const App = () => {
 						path="/tasks"
 						element={appState.products && appState.users && <TablePage title="Все заявки" />}
 					></Route>
-          <Route
-						path="/tasks/:filterParam"
-						element={appState.products && appState.users && <TablePage title="Все заявки" />}
-					></Route>
 					<Route
 						path="/edit/:id"
 						element={<EditPage title="Работа с заявкой" />}

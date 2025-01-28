@@ -1,22 +1,12 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AppContext } from './../../App/App';
-import { TableContext } from '../../pages/Table';
 import {formatDataInTable} from './../../utils/formatters';
 
 const TableRow = () => {
   const {appState} = useContext(AppContext);
-  const {filterParam} = useContext(TableContext);
-  
-  const filteredData = (data, param) => {
-    if (param === 'all') return data;
-    
-    return data.filter((task) => {
-      return task.status === param;
-    })
-  }
-  const data = filterParam ? filteredData(appState.data, filterParam) : appState.data;
-  const sortedData = [...data].sort((currentObj, nextObj)=> nextObj.id - currentObj.id);
+
+  const sortedData = [... appState.data].sort((currentObj, nextObj)=> nextObj.id - currentObj.id);
  
   return(
     <>
