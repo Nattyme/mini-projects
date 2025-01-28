@@ -1,25 +1,29 @@
 import { useContext } from 'react';
+import {subNavTop, subNavAside} from './../../helpers/variables';
 import { AppContext } from './../../App/App';
-import './style.css';
 import { Link } from 'react-router-dom';
+import './style.css';
+import Badge from '../Badge';
 
 const SubNav = ({type}) => {
   const {navData} = useContext(AppContext);
-  const isTop = type === 'top';
+  const navType = type === 'top' ? subNavTop : subNavAside;
+
   
   return (
-    <ul id={isTop ? "topStatusBar" : "asideStatusNav"} className={isTop ? "btn-group" : ""} role="group" aria-label="...">
+    <ul id={navType.id} className={navType.className} role="group" aria-label="...">
       { navData.map((item)=>{
           return(
             <li key={item.value}>
               <Link 
-                className={isTop ? "btn btn-light" : ""} 
+                className={navType.linkClassName} 
                 data-value={item.value} 
-                data-role={isTop ? "left-status" : ""}
+                data-role={navType.linkDataRole}
                 title={item.title}
                 to={item.value}
               >
                 {item.title}
+                { navType.badge && navType.className.includes('active') && <Badge value="4"/>}
               </Link>
             </li>
           )
@@ -28,11 +32,6 @@ const SubNav = ({type}) => {
     </ul>
   );
 }
-{/* <ul id="asideStatusNav">
-<li><a data-value="all" data-role="left-status" href="#" className="active">Все вместе</a></li>
-<li><a data-value="new" data-role="left-status" href="#" >Новые<div className="badge" id="badge-new"></div></a></li>
-<li><a data-value="inwork" data-role="left-status" href="#">В работе</a></li>
-<li><a data-value="completed" data-role="left-status" href="#">Завершенные</a></li>
-</ul> */}
+
  
 export default SubNav;
