@@ -87,7 +87,7 @@ const App = () => {
 					></Route>
 					<Route
 						path="/edit/:id"
-						element={<EditPage title="Работа с заявкой :id" />}
+						element={<EditPage title="Работа с заявкой" />}
 					></Route>
 				</Routes> 
 			)}

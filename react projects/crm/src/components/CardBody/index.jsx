@@ -1,13 +1,27 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { AppContext } from './../../App/App';
+import {EditPageContext} from '../../pages/Edit';
 import Input from "../../components/Input";
 import Select from "../../components/Select";
 import CardRow from "../CardRow";
 
 const CardBody = () => {
-  const {products, navData} = useContext(AppContext);
-  console.log(navData);
-  console.log(products);
+  const {appState, setAppState, navData} = useContext(AppContext);
+  const {id} = useContext(EditPageContext);
+  
+  const editTask = appState.data.find((task) => task.id === +id);
+  console.log(editTask);
+  
+  useEffect(()=> {
+    setAppState((prevState) => ({
+      ...prevState,
+      initialFormData : {
+        ...editTask
+      }
+    }
+  ));
+  },[])
+  console.log(appState);
   
 	const data = [
 		{
@@ -15,13 +29,13 @@ const CardBody = () => {
 			content: (
 				<>
 					Заявка №<span id="number">1</span>
-					<Input type="hidden" name="id" placeholder="" id="id" value="" required={false}/>
+					<Input type="hidden" name="id" placeholder={`${editTask.id}`} id="id" value="" required={false}/>
 				</>
 			)
 		},
 		{
 			label : 'Дата создания:',
-			content: '2020-04-20 13:52:130'
+			content: editTask.timestamp
 		},
 		{
 			label : "Продукт:",
@@ -29,7 +43,8 @@ const CardBody = () => {
 				<Select
 					name="product"
 					className="custom-select"
-					options={products}
+          value={`${editTask.product}`}
+					options={appState.products}
 					id="product"
 				/>
 			)
@@ -42,7 +57,7 @@ const CardBody = () => {
 					name="full_name"
 					placeholder="Введите имя"
 					id="full_name"
-					value="Петр Сергеевич"
+					value={`${editTask.full_name}`}
 					required={true}
 					className="form-control"
 				/>
@@ -56,7 +71,7 @@ const CardBody = () => {
 					name="email"
 					placeholder="Введите email"
 					id="email"
-					value="info@inbox.ru"
+					value={`${editTask.email}`}
 					required={true}
 					className="form-control"
 				/>
@@ -71,7 +86,7 @@ const CardBody = () => {
 					placeholder="phone"
 					id="phone"
 					className="form-control"
-					value="+7 (903) 555-77-55"
+					value={`${editTask.phone}`}
 				/>
 			)
 		},
@@ -82,8 +97,9 @@ const CardBody = () => {
 					name="status"
 					className="custom-select"
 					options={navData}
+          placeholder="Выберите статус"
 					id="status"
-					value="Выберите статус"
+					value={`${editTask.status}`}
 				/>
 			)
 		},
@@ -91,7 +107,7 @@ const CardBody = () => {
 
 	return (
 		<div className="card-body">
-			{products && navData && data.map((field)=>{
+			{appState.products && navData && data.map((field)=>{
 				return (
 					<CardRow key={field.label} label={field.label}>
 						{field.content}
