@@ -57,32 +57,32 @@
   ],
   "data": [
     {
-      "full_name": "Stepanova Polina",
-      "phone": "79253555555",
-      "email": "polly777@google.com",
+      "full_name": "Elena Aurgas",
+      "phone": "79253458675",
+      "email": "helen@google.com",
       "product": "course-js",
-      "timestamp": 1738016127512,
-      "changed": 1738016127512,
+      "timestamp": 1738087080015,
+      "changed": 1738087080015,
       "status": "new",
       "id": 1
-    },
-    {
-      "full_name": "Sofie Braz",
-      "phone": "79245600000",
-      "email": "sofie@outlook.com",
-      "product": "course-wordpress",
-      "timestamp": 1738016196530,
-      "changed": 1738016196530,
-      "status": "new",
-      "id": 2
     },
     {
       "full_name": "Анатолий Ш",
       "phone": "79253458675",
       "email": "anatol@google.com",
       "product": "course-php",
-      "timestamp": 1738016197545,
-      "changed": 1738016197545,
+      "timestamp": 1738087084077,
+      "changed": 1738087084077,
+      "status": "new",
+      "id": 2
+    },
+    {
+      "full_name": "Stepanova Polina",
+      "phone": "79253555555",
+      "email": "polly777@google.com",
+      "product": "course-js",
+      "timestamp": 1738087085440,
+      "changed": 1738087085440,
       "status": "new",
       "id": 3
     }

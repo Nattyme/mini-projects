@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { AppContext } from './../../App/App';
 import './style.css';
+import { Link } from 'react-router-dom';
 
 const SubNav = ({type}) => {
   const {navData} = useContext(AppContext);
@@ -11,9 +12,15 @@ const SubNav = ({type}) => {
       { navData.map((item)=>{
           return(
             <li key={item.value}>
-              <a href="#" className={isTop ? "btn btn-light" : ""} data-value={item.value} data-role={isTop ? "left-status" : ""}>
+              <Link 
+                className={isTop ? "btn btn-light" : ""} 
+                data-value={item.value} 
+                data-role={isTop ? "left-status" : ""}
+                title={item.title}
+                to={item.value}
+              >
                 {item.title}
-              </a>
+              </Link>
             </li>
           )
         })}

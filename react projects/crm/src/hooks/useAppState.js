@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { serverPath } from "../helpers/variables";
 import getRandomArrayData from "../utils/calcFunctions";
-import prepareDisplayData from "../utils/prepareDisplayData";
+import {prepareDisplayData} from "../utils/prepareDisplayData";
 
 const useAppState = () => {
   const [appState, setAppState] = useState(
@@ -22,7 +22,8 @@ const useAppState = () => {
       .then((res) => res.json())
       .then((data) => {
         const randomData = getRandomArrayData(data);
-        const formNewData = prepareDisplayData(randomData);
+        const {prepareDisplayFormData} = prepareDisplayData()
+        const formNewData = prepareDisplayFormData(randomData);
 
         // update formData and initialFormData
         setAppState((prevState) => (

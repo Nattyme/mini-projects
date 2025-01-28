@@ -1,4 +1,3 @@
-
 import TableRow from '../TableRow';
 
 const Table = () => {

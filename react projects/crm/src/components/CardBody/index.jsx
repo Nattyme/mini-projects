@@ -15,11 +15,13 @@ const CardBody = () => {
   useEffect(()=> {
     setAppState((prevState) => ({
       ...prevState,
+      formData : {
+        ...editTask
+      },
       initialFormData : {
         ...editTask
       }
-    }
-  ));
+    }))
   },[])
   console.log(appState);
   

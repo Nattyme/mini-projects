@@ -1,27 +1,45 @@
 import { useContext } from 'react';
-import { AppContext } from './../../App/App';
 import { Link } from 'react-router-dom';
+import { AppContext } from './../../App/App';
+import { TableContext } from '../../pages/Table';
+import {formatDataInTable} from './../../utils/formatters';
 
 const TableRow = () => {
   const {appState} = useContext(AppContext);
+  const {filterParam} = useContext(TableContext);
+  
+  const filteredData = (data, param) => {
+    if (param === 'all') return data;
+    
+    return data.filter((task) => {
+      return task.status === param;
+    })
+  }
+  const data = filterParam ? filteredData(appState.data, filterParam) : appState.data;
+  const sortedData = [...data].sort((currentObj, nextObj)=> nextObj.id - currentObj.id);
+ 
   return(
     <>
-      { appState.data.map((task) => (
-        <tr class="task-table__row task-table__row--link" data-status="new" data-display="">
-          <td>{task.id}</td>
-          <td>{task.timestamp}</td>
-          <td>{task.product}</td>
-          <td>
-            <Link class="link-abs" title={`Перейти к редактированию заявки №${task.id}`} to={`/edit/${task.id}`}>
-              {task.full_name}
-            </Link>
-          </td>
-          <td>{task.email}</td>
-          <td>{task.phone}</td>
-          <td><div class="badge badge-pill badge-danger"></div>{task.status}</td>
-          <td><span class="button-edit">Редактировать</span></td>
-        </tr>
-      ))}
+      { sortedData.map((data) => {
+          const task = formatDataInTable(data, appState.products, appState.status);
+    
+          return (
+            <tr class="task-table__row task-table__row--link" data-status="new" data-display="">
+              <td>{task.id}</td>
+              <td>{task.date}</td>
+              <td>{task.product}</td>
+              <td>
+                <Link class="link-abs" title={`Перейти к редактированию заявки №${task.id}`} to={`/edit/${task.id}`}>
+                  {task.full_name}
+                </Link>
+              </td>
+              <td>{task.email}</td>
+              <td>{task.phone}</td>
+              <td><div class="badge badge-pill badge-danger"></div>{task.status}</td>
+              <td><span class="button-edit">Редактировать</span></td>
+            </tr>
+          )
+      })}
     </>
   
   )

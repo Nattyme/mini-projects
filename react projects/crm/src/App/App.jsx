@@ -4,7 +4,7 @@ import { createContext } from "react";
 import { serverPath } from "../helpers/variables";
 import useAppState from "../hooks/useAppState";
 import { createNewTask } from "../utils/taskUtils";
-import { useFormHandlers } from "../hooks/useFormHandlers";
+import { useFormHandlers } from "../utils/useFormHandlers";
 import { useBodyClass } from "../hooks/useBodyClass";
 
 import FormPage from "../pages/FormPage";
@@ -83,6 +83,10 @@ const App = () => {
 					></Route>
 					<Route
 						path="/tasks"
+						element={appState.products && appState.users && <TablePage title="Все заявки" />}
+					></Route>
+          <Route
+						path="/tasks/:filterParam"
 						element={appState.products && appState.users && <TablePage title="Все заявки" />}
 					></Route>
 					<Route

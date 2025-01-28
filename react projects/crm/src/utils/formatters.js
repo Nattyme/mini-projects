@@ -24,4 +24,50 @@ const formatPhone = (phoneNumber) => {
   return false;
 }
 
-export {formatName, formatPhone, formatCamelWords}
+const formatDateTime = (timestamp) => {
+  const dateStamp = new Date(timestamp);
+  let dateTime = dateStamp.toISOString();
+
+  return dateTime = dateTime.slice(0, -5).replace('T', ' ');
+}
+
+const formatDate = (timestamp)=> {
+  const formatter = new Intl.DateTimeFormat ( 'ru-RU', {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+    }
+  );
+
+  return formatter.format( new Date(timestamp));
+}
+
+const formatProduct = (name, products) => {
+  for (const product of products) {
+    if (product.value === name) {
+      return product.title;
+    }
+  }
+}
+
+const formatStatus = (incomeStatus, statusTypes) => {
+  for (const status of statusTypes) {
+    if (status.value === incomeStatus) {
+      return status.title;
+    }
+  }
+}
+
+const formatDataInTable = ( task, products, statusTypes) => {
+  return {
+    ...task,
+    id : String(task.id),
+    full_name : formatName(task.full_name),
+    phone : formatPhone(task.phone),
+    date : formatDate(task.timestamp),
+    product : formatProduct(task.product, products),
+    status : formatStatus(task.status, statusTypes)
+  };
+}
+
+export {formatName, formatPhone, formatCamelWords, formatDateTime, formatDate, formatProduct, formatDataInTable}
