@@ -13,7 +13,7 @@ const Table = ({filterData}) => {
         </tr>
       </thead>
       <tbody id="tbody" className="table__body">
-        <TableRow filterData={filterData}></TableRow>
+        {filterData && <TableRow filterData={filterData}></TableRow>}
       </tbody>
     </table>
   );

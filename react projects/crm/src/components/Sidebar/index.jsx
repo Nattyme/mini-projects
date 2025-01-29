@@ -1,11 +1,11 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AppContext } from '../../App/App';
 import Logo from "../Logo";
 import SubNav from "../SubNav";
 import User from "../User";
 import "./style.css";
 
-const SideBar = ({isAdmin, filterData, setFilterData}) => {
+const SideBar = ({isAdmin, clickedSubNav}) => {
   const {appState} = useContext(AppContext);
   
   return (
@@ -19,7 +19,7 @@ const SideBar = ({isAdmin, filterData, setFilterData}) => {
       {appState.data && appState.data.length > 0 && (
         <div className="left-panel__navigation">
           <div className="left-panel__navigation-title">Заявки</div>
-          <SubNav type="bottom" filterData={filterData} setFilterData={setFilterData}/>
+          <SubNav type="bottom" clickedSubNav={clickedSubNav}/>
         </div>
       )}
     </div>

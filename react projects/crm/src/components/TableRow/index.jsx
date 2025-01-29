@@ -2,12 +2,15 @@ import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "./../../App/App";
 import { formatDataInTable } from "./../../utils/formatters";
+import Badge from "../Badge";
 
 const TableRow = ({ filterData }) => {
   const { appState } = useContext(AppContext);
+ 
   let sortedData = filterData.sort(
     (currentObj, nextObj) => nextObj.id - currentObj.id
   );
+
   useEffect(() => {
       sortedData = [...filterData].sort(
         (currentObj, nextObj) => nextObj.id - currentObj.id
@@ -27,7 +30,8 @@ const TableRow = ({ filterData }) => {
 
         return (
           <tr
-            class="task-table__row task-table__row--link"
+            key={task.id}
+            className="task-table__row task-table__row--link"
             data-status="new"
             data-display=""
           >
@@ -36,7 +40,7 @@ const TableRow = ({ filterData }) => {
             <td>{task.product}</td>
             <td>
               <Link
-                class="link-abs"
+                className="link-abs"
                 title={`Перейти к редактированию заявки №${task.id}`}
                 to={`/edit/${task.id}`}
               >
@@ -46,11 +50,10 @@ const TableRow = ({ filterData }) => {
             <td>{task.email}</td>
             <td>{task.phone}</td>
             <td>
-              <div class="badge badge-pill badge-danger"></div>
-              {task.status}
+              <Badge classNames="badge badge-pill badge-danger" value={task.status}/>
             </td>
             <td>
-              <span class="button-edit">Редактировать</span>
+              <span className="button-edit">Редактировать</span>
             </td>
           </tr>
         );
