@@ -5,7 +5,7 @@ import SubNav from "../SubNav";
 import User from "../User";
 import "./style.css";
 
-const SideBar = ({isAdmin, clickedSubNav, subNav}) => {
+const SideBar = ({isAdmin, clickedSubNav}) => {
   const {appState} = useContext(AppContext);
   
   return (
@@ -19,7 +19,7 @@ const SideBar = ({isAdmin, clickedSubNav, subNav}) => {
       {appState.data && appState.data.length > 0 && (
         <div className="left-panel__navigation">
           <div className="left-panel__navigation-title">Заявки</div>
-          <SubNav type="bottom" clickedSubNav={clickedSubNav} subNav={subNav}/>
+          <SubNav type="bottom" clickedSubNav={clickedSubNav}/>
         </div>
       )}
     </div>

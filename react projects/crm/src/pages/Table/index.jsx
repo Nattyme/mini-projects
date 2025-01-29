@@ -1,54 +1,43 @@
-import { useContext, useState } from 'react';
-import { AppContext } from '../../App/App';
-import {STATUS_CONFIG} from './../../helpers/variables'
+import { useContext, useEffect, useState } from "react";
+import { AppContext } from "../../App/App";
+import {doFilter, clickedSubNav} from "../../utils/filterFunctions";
 import Dashboard from "../../components/Dashboard";
 import SideBar from "../../components/Sidebar";
-import Title from './../../components/Title';
-import Loader from '../../components/Loader';
+import Title from "./../../components/Title";
+import Loader from "../../components/Loader";
 
-const TablePage = () => { 
-  const {appState, navData} = useContext(AppContext);
-  const [filterData, setFilterData] = useState(appState.data);
-  const [subNav, setSubNav] = useState(STATUS_CONFIG.ALL)
-  const title = appState.data && appState.data.length > 0  ? "Все заявки" : "Нет заявок";
+const TablePage = () => {
+  const { appState, setAppState, navData } = useContext(AppContext);
+  const title = appState.data && appState.data.length > 0 ? "Все заявки" : "Нет заявок";
   const admin = appState.users.find((user) => user.isAdmin === true);
 
-  const doFilter = (e) => {
-    const filterBy = e.target.dataset.value;
-    return filterBy === 'all' ? [...appState.data] : [...appState.data].filter(task => task.status === filterBy);
-  }
-
-  const clickedSubNav = (e) => {
-    const navList = e.target.closest('ul');
-
-    if (navList) {
-      const navItems = navList.querySelectorAll('a');
-      navItems.forEach(item => item.classList.remove('active'))
+  useEffect(() => {
+    if (appState.data) {
+      const tableData = doFilter(appState.subNav, appState.data);
+      setAppState((prev) => ({
+        ...prev,
+        filterData: tableData,
+      }));
     }
-    
-    e.target.classList.add('active');
-    const tableData = doFilter(e);
-    setFilterData(tableData);
-    setSubNav(e.target.dataset.value);
-  }
-  console.log(subNav);
+  }, [appState.subNav, appState.data, setAppState]);
 
   return (
     <>
       {appState.data && navData && admin ? (
         <>
-          <SideBar isAdmin={admin} clickedSubNav={clickedSubNav} subNav={subNav}/>
+          <SideBar isAdmin={admin} clickedSubNav={clickedSubNav} />
           <div className="main-wrapper">
             <div className="container-fluid">
-              <Title title={title}/>
-              <Dashboard filterData={filterData} setFilterData={setFilterData} subNav={subNav}/>
+              <Title title={title} />
+              {appState.filterData && <Dashboard/>}
             </div>
-          </div>   
+          </div>
         </>
-      ) : <Loader/> }
+      ) : (
+        <Loader />
+      )}
     </>
-  )
+  );
+};
 
-}
- 
 export default TablePage;

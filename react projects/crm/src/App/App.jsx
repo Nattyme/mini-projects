@@ -71,7 +71,7 @@ const App = () => {
 				clearFieldOnClick,
 				updateFieldValue,
 				handleBlurValue,
-				navData,
+				navData
 			}}
 		>
 

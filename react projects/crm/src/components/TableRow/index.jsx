@@ -5,9 +5,9 @@ import { AppContext } from "./../../App/App";
 import { formatDataInTable } from "./../../utils/formatters";
 import Badge from "../Badge";
 
-const TableRow = ({ filterData }) => {
+const TableRow = () => {
   const { appState } = useContext(AppContext);
-  let sortedData = useMemo(() => [...filterData].sort((current, next) => next.id - current.id), [filterData]);
+  let sortedData = useMemo(() => [...appState.filterData].sort((current, next) => next.id - current.id), [appState.filterData]);
 
 
   const formattedData = useMemo(() => (

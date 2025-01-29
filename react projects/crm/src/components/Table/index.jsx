@@ -1,6 +1,6 @@
 import TableRow from '../TableRow';
 
-const Table = ({filterData}) => {
+const Table = () => {
   const tableHeaders = ['ID', 'дата', 'продукт', 'имя', 'email', 'телефон', 'статус', ''];
 
   return (
@@ -13,7 +13,7 @@ const Table = ({filterData}) => {
         </tr>
       </thead>
       <tbody id="tbody" className="table__body">
-        {filterData && <TableRow filterData={filterData}></TableRow>}
+        {<TableRow></TableRow>}
       </tbody>
     </table>
   );

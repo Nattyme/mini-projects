@@ -5,16 +5,16 @@ import { AppContext } from './../../App/App';
 import Badge from '../Badge';
 import './style.css';
 
-const SubNav = ({type, clickedSubNav, subNav}) => {
-  const {navData, appState} = useContext(AppContext); 
+const SubNav = ({type, clickedSubNav}) => {
+  const {navData, appState, setAppState} = useContext(AppContext); 
   const {subNavTop, subNavAside } = NAVIGATION_CONFIG;
   const navType = type === 'top' ? subNavTop : subNavAside;
-  const countedField = appState.data.length;
+  const countedField = appState.data.filter((task) => task.status === STATUS_CONFIG.NEW).length;
   
   return (
     <ul id={navType.id} className={navType.className} role="group" aria-label="...">
       { navData.map((item)=>{
-        const isActive = item.value === subNav;
+        const isActive = item.value === appState.subNav;
           return(
             <li key={item.value}>
               <Link 
@@ -23,7 +23,7 @@ const SubNav = ({type, clickedSubNav, subNav}) => {
                 data-role={navType.linkDataRole}
                 title={item.title}
                 to={''}
-                onClick={(e) => {clickedSubNav(e)}}
+                onClick={(e) => {clickedSubNav(e, setAppState)}}
               >
                 {item.title}
                 { navType.badge && item.value === STATUS_CONFIG.NEW && <Badge type={STATUS_CONFIG.DEFAULT} value={countedField} />}
