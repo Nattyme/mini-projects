@@ -1,5 +1,5 @@
 import { useContext, useMemo } from "react";
-import {BADGE_CONFIG, STATUS_CONFIG} from './../../helpers/variables';
+import {STATUS_CONFIG} from './../../helpers/variables';
 import { Link } from "react-router-dom";
 import { AppContext } from "./../../App/App";
 import { formatDataInTable } from "./../../utils/formatters";

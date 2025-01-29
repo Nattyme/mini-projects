@@ -1,14 +1,15 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { AppContext } from '../../App/App';
+import {STATUS_CONFIG} from './../../helpers/variables'
 import Dashboard from "../../components/Dashboard";
 import SideBar from "../../components/Sidebar";
 import Title from './../../components/Title';
 import Loader from '../../components/Loader';
-import {subNavTop, subNavAside} from './../../helpers/variables'
 
 const TablePage = () => { 
   const {appState, navData} = useContext(AppContext);
   const [filterData, setFilterData] = useState(appState.data);
+  const [subNav, setSubNav] = useState(STATUS_CONFIG.ALL)
   const title = appState.data && appState.data.length > 0  ? "Все заявки" : "Нет заявок";
   const admin = appState.users.find((user) => user.isAdmin === true);
 
@@ -28,17 +29,19 @@ const TablePage = () => {
     e.target.classList.add('active');
     const tableData = doFilter(e);
     setFilterData(tableData);
+    setSubNav(e.target.dataset.value);
   }
+  console.log(subNav);
 
   return (
     <>
       {appState.data && navData && admin ? (
         <>
-          <SideBar isAdmin={admin} clickedSubNav={clickedSubNav}/>
+          <SideBar isAdmin={admin} clickedSubNav={clickedSubNav} subNav={subNav}/>
           <div className="main-wrapper">
             <div className="container-fluid">
               <Title title={title}/>
-              <Dashboard filterData={filterData} setFilterData={setFilterData}/>
+              <Dashboard filterData={filterData} setFilterData={setFilterData} subNav={subNav}/>
             </div>
           </div>   
         </>

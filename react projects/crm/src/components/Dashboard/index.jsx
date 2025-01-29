@@ -4,7 +4,7 @@ import Select from "../Select";
 import SubNav from "../SubNav";
 import Table from "../Table";
 
-const Dashboard = ({filterData}) => {
+const Dashboard = ({filterData, subNav}) => {
   const {appState} = useContext(AppContext);
   
   return (
@@ -12,7 +12,7 @@ const Dashboard = ({filterData}) => {
       <div className="row mb-3 justify-content-start">
         <div className="col">
           {appState.data.length > 0 && (
-            <SubNav type="top"/>
+            <SubNav type="top" subNav={subNav}/>
           )}
         </div>
 

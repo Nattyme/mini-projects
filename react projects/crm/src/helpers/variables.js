@@ -21,9 +21,10 @@ export const NAVIGATION_CONFIG = {
 export const STATUS_CONFIG = {
   NEW : 'new',
   DOING : 'inwork',
-  DONE : 'completed'
+  DONE : 'completed',
+  ALL : 'all',
+  DEFAULT : 'default'
 }
-
 export const STATUS_STYLES = {
   danger: 'badge badge-pill badge-danger',
   neutral: 'badge badge-pill badge-warning',
@@ -34,6 +35,7 @@ export const STATUS_STYLES = {
 export const BADGE_CONFIG = {
   [STATUS_CONFIG.NEW] : STATUS_STYLES.danger,
   [STATUS_CONFIG.DOING] : STATUS_STYLES.neutral,
-  [STATUS_CONFIG.DONE] : STATUS_STYLES.success
+  [STATUS_CONFIG.DONE] : STATUS_STYLES.success,
+  [STATUS_CONFIG.DEFAULT] : STATUS_STYLES.default
 }
 
