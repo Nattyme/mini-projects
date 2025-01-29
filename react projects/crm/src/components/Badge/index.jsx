@@ -1,26 +1,10 @@
+import { useMemo } from 'react';
+import { BADGE_CONFIG } from './../../helpers/variables';
 import './style.css';
 
-const Badge = ({type, value, id=''}) => {
-  const config = [
-    {
-      type: 'danger',
-      classNames: 'badge-pill badge-danger'
-    },
-   
-    {
-      type: 'neutral',
-      classNames: 'badge-pill badge-warning'
-    },
-   
-    {
-      type: 'success',
-      classNames: 'badge-pill badge-success'
-    }
-  ];
-
-  const badgeType = config.find(badge => badge.type === type);
-
-  return (<div className={`badge + ${badgeType?.classNames}`} id={id}>{value}</div>);
+const Badge = ({type, value, id = null}) => {
+  const badgeType = useMemo( () => BADGE_CONFIG[type], [type]);
+  return (<div className={badgeType} id={id}>{value}</div>);
 }
  
 export default Badge;

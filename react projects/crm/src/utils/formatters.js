@@ -47,7 +47,12 @@ const formatProduct = (name, products) => {
 }
 
 const formatStatus = (incomeStatus, statusTypes) => {
-  return statusTypes.find(status => status.value === incomeStatus)?.title || '';
+  const status = statusTypes.find(status => status.value === incomeStatus) || '';
+
+  return {
+    value : status.value,
+    title : status.title
+  }
 }
 
 const formatDataInTable = ( task, products, statusTypes) => {

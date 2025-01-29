@@ -1,12 +1,13 @@
 import { useContext } from 'react';
-import {subNavTop, subNavAside} from './../../helpers/variables';
-import { AppContext } from './../../App/App';
 import { Link } from 'react-router-dom';
-import './style.css';
+import { NAVIGATION_CONFIG } from './../../helpers/variables';
+import { AppContext } from './../../App/App';
 import Badge from '../Badge';
+import './style.css';
 
 const SubNav = ({type, clickedSubNav}) => {
   const {navData, appState} = useContext(AppContext); 
+  const {subNavTop, subNavAside } = NAVIGATION_CONFIG;
   const navType = type === 'top' ? subNavTop : subNavAside;
   const countedField = appState.data.length;
   
@@ -24,12 +25,11 @@ const SubNav = ({type, clickedSubNav}) => {
                 onClick={(e) => {clickedSubNav(e)}}
               >
                 {item.title}
-                { navType.badge && item.value === 'new' && <Badge value={countedField}/>}
+                { navType.badge && item.value === 'new' && <Badge value={countedField} />}
               </Link>
             </li>
           )
       })}
-   
     </ul>
   );
 }

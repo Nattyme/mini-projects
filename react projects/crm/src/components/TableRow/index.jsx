@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import {NEW, WARN, DOING, NEUTRAL, DONE, FINISH} from './../../helpers/variables';
+import { useContext, useMemo } from "react";
+import {BADGE_CONFIG, STATUS_CONFIG} from './../../helpers/variables';
 import { Link } from "react-router-dom";
 import { AppContext } from "./../../App/App";
 import { formatDataInTable } from "./../../utils/formatters";
@@ -7,30 +7,26 @@ import Badge from "../Badge";
 
 const TableRow = ({ filterData }) => {
   const { appState } = useContext(AppContext);
-  const badgeConfig = {
-    [NEW] : WARN,
-    [DOING] : NEUTRAL,
-    [DONE] : FINISH
-  }
+  let sortedData = useMemo(() => [...filterData].sort((current, next) => next.id - current.id), [filterData]);
 
-  let sortedData = [...filterData].sort(
-    (currentObj, nextObj) => nextObj.id - currentObj.id
-  );
 
-  return (
-    <>
-      {sortedData.map((data) => {
-        const task = formatDataInTable(
+  const formattedData = useMemo(() => (
+    sortedData.map((data) => {
+      return formatDataInTable(
           data,
           appState.products,
           appState.status
-        );
+      )
+    })
+  ), [sortedData, appState.products, appState.status]);
 
-        return (
+  return (
+    <>
+      {formattedData.map((task) => (
           <tr
             key={task.id}
             className="task-table__row task-table__row--link"
-            data-status={data.status}
+            data-status={task.status.value}
             data-display=""
           >
             <td>{task.id}</td>
@@ -49,15 +45,14 @@ const TableRow = ({ filterData }) => {
             <td>{task.phone}</td>
             <td>
               <Badge 
-                type = {badgeConfig[data.status] || badgeConfig[NEW]}
-                value={task.status}/>
+                type = {task.status.value || STATUS_CONFIG.NEW}
+                value={task.status.title}/>
             </td>
             <td>
               <span className="button-edit">Редактировать</span>
             </td>
           </tr>
-        );
-      })}
+      ))}
     </>
   );
 };
