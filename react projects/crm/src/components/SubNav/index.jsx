@@ -5,29 +5,31 @@ import { Link } from 'react-router-dom';
 import './style.css';
 import Badge from '../Badge';
 
-const SubNav = ({type}) => {
-  const {navData} = useContext(AppContext);
-  const navType = type === 'top' ? subNavTop : subNavAside;
-  const clickedSubNav = (e) => {
+const SubNav = ({type, filterData, setFilterData}) => {
+  const {navData, appState, setAppState} = useContext(AppContext);
 
-    if (e.target.dataset.role === 'left-status') {
-      const navList = e.target.closest('ul');
-      console.log(navList);
+  const navType = type === 'top' ? subNavTop : subNavAside;
+  const doFilter = (e) => {
+    const filterBy = e.target.dataset.value;
+
+    return [...appState.data].filter(task => task.status === filterBy);
+  }
+
+  const clickedSubNav = (e) => {
+    const navList = e.target.closest('ul');
+    const tableData = doFilter(e);
+    console.log(tableData);
+    
+
       
       if (navList) {
         const navItems = navList.querySelectorAll('a');
-        navItems.forEach((item) => {
-          console.log(item);
-          
-          item.classList.remove('active');
-        })
+        navItems.forEach(item => item.classList.remove('active'))
       }
       
       e.target.classList.add('active');
-    }
-   
-  }
 
+  }
   
   return (
     <ul id={navType.id} className={navType.className} role="group" aria-label="...">

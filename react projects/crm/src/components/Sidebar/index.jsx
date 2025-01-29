@@ -5,7 +5,7 @@ import SubNav from "../SubNav";
 import User from "../User";
 import "./style.css";
 
-const SideBar = ({isAdmin}) => {
+const SideBar = ({isAdmin, filterData, setFilterData}) => {
   const {appState} = useContext(AppContext);
   
   return (
@@ -19,7 +19,7 @@ const SideBar = ({isAdmin}) => {
       {appState.data && appState.data.length > 0 && (
         <div className="left-panel__navigation">
           <div className="left-panel__navigation-title">Заявки</div>
-          <SubNav type="bottom"/>
+          <SubNav type="bottom" filterData={filterData} setFilterData={setFilterData}/>
         </div>
       )}
     </div>
