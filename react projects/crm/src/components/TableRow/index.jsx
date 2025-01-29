@@ -1,4 +1,5 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
+import {NEW, WARN, DOING, NEUTRAL, DONE, FINISH} from './../../helpers/variables';
 import { Link } from "react-router-dom";
 import { AppContext } from "./../../App/App";
 import { formatDataInTable } from "./../../utils/formatters";
@@ -6,17 +7,14 @@ import Badge from "../Badge";
 
 const TableRow = ({ filterData }) => {
   const { appState } = useContext(AppContext);
- 
-  let sortedData = filterData.sort(
-    (currentObj, nextObj) => nextObj.id - currentObj.id
-  );
+  const badgeConfig = {
+    [NEW] : WARN,
+    [DOING] : NEUTRAL,
+    [DONE] : FINISH
+  }
 
-  useEffect(() => {
-      sortedData = [...filterData].sort(
-        (currentObj, nextObj) => nextObj.id - currentObj.id
-      );
-    },
-    [filterData]
+  let sortedData = [...filterData].sort(
+    (currentObj, nextObj) => nextObj.id - currentObj.id
   );
 
   return (
@@ -32,7 +30,7 @@ const TableRow = ({ filterData }) => {
           <tr
             key={task.id}
             className="task-table__row task-table__row--link"
-            data-status="new"
+            data-status={data.status}
             data-display=""
           >
             <td>{task.id}</td>
@@ -50,7 +48,9 @@ const TableRow = ({ filterData }) => {
             <td>{task.email}</td>
             <td>{task.phone}</td>
             <td>
-              <Badge classNames="badge badge-pill badge-danger" value={task.status}/>
+              <Badge 
+                type = {badgeConfig[data.status] || badgeConfig[NEW]}
+                value={task.status}/>
             </td>
             <td>
               <span className="button-edit">Редактировать</span>

@@ -15,3 +15,10 @@ export const subNavAside = {
   linkDataRole: 'left-status',
   badge: true
 };
+
+export const NEW = 'new';
+export const DOING = 'inwork';
+export const DONE = 'completed';
+export const WARN = 'danger';
+export const NEUTRAL = 'neutral';
+export const FINISH = 'success';

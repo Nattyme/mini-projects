@@ -8,7 +8,7 @@ import Badge from '../Badge';
 const SubNav = ({type, clickedSubNav}) => {
   const {navData, appState} = useContext(AppContext); 
   const navType = type === 'top' ? subNavTop : subNavAside;
-  const qountedField = appState.data.length;
+  const countedField = appState.data.length;
   
   return (
     <ul id={navType.id} className={navType.className} role="group" aria-label="...">
@@ -24,7 +24,7 @@ const SubNav = ({type, clickedSubNav}) => {
                 onClick={(e) => {clickedSubNav(e)}}
               >
                 {item.title}
-                { navType.badge && item.value === 'new' && <Badge classNames="badge" value={qountedField}/>}
+                { navType.badge && item.value === 'new' && <Badge value={countedField}/>}
               </Link>
             </li>
           )
