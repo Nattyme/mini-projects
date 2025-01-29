@@ -4,7 +4,7 @@ import Select from "../Select";
 import SubNav from "../SubNav";
 import Table from "../Table";
 
-const Dashboard = () => {
+const Dashboard = ({filterData}) => {
   const {appState} = useContext(AppContext);
   
   return (
@@ -28,7 +28,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {appState.data && appState.data.length > 0 && <Table/>}
+      {appState.data && appState.data.length > 0 && <Table filterData={filterData}/>}
     </>
 
   );
