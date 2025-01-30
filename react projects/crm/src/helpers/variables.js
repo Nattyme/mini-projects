@@ -3,17 +3,17 @@ export const serverPath = 'http://localhost:8000/';
 export const NAVIGATION_CONFIG = {
   subNavTop : {
     id: 'topStatusBar',
-    className: 'btn-group',
-    linkClassName: 'btn btn-light',
-    linkDataRole: '',
+    className: 'sub-nav btn-group',
+    liClassName: 'sub-nav__item btn btn-light',
+    liDataRole: '',
     badge: false
   },
   
   subNavAside : {
     id: 'asideStatusNav',
-    className: '',
-    linkClassName: '',
-    linkDataRole: 'left-status',
+    className: 'sub-nav',
+    liClassName: 'sub-nav__item',
+    liDataRole: 'left-status',
     badge: true
   }
 }

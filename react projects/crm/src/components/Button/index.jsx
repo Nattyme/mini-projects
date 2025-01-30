@@ -1,11 +1,8 @@
-import { useContext } from 'react';
-import { AppContext } from '../../App/App';
 import './style.css';
 
-const Button = ({text, className="btn", type="submit", dataBtn}) => {
-  const {btnClicked} = useContext(AppContext);
+const Button = ({text, className="btn", type="submit", dataBtn, btnClicked}) => {
   return (
-    <button data-btn ={dataBtn} type={type} className={className} onClick={(e)=>{btnClicked(e)}}>{text}</button>
+    <button data-btn ={dataBtn} type={type} className={className} onClick={btnClicked}>{text}</button>
   );
 }
  

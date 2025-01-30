@@ -57,54 +57,24 @@
   ],
   "data": [
     {
-      "full_name": "Ivan Ivanov",
+      "full_name": "Pavel Nerezov",
       "phone": "79253555555",
-      "email": "vanya@google.com",
-      "product": "course-js",
-      "timestamp": 1738191590543,
-      "changed": 1738191590543,
-      "status": "inwork",
-      "id": 1
-    },
-    {
-      "full_name": "Екатерина М",
-      "phone": "79253458675",
-      "email": "justkate@google.com",
+      "email": "pn@google.com",
       "product": "course-vue",
-      "timestamp": 1738194317531,
-      "changed": 1738194317531,
+      "timestamp": 1738237128311,
+      "changed": 1738237128311,
       "status": "new",
-      "id": 3
-    },
-    {
-      "full_name": "Stepanova Polina",
-      "phone": "79253555555",
-      "email": "polly777@google.com",
-      "product": "course-js",
-      "timestamp": 1738194318114,
-      "changed": 1738194318114,
-      "status": "new",
-      "id": 4
-    },
-    {
-      "full_name": "Stepanova Polina",
-      "phone": "79253555555",
-      "email": "polly777@google.com",
-      "product": "course-js",
-      "timestamp": 1738194582115,
-      "changed": 1738194582115,
-      "status": "new",
-      "id": 5
+      "id": 1
     },
     {
       "full_name": "Elena Aurgas",
       "phone": "79253458675",
       "email": "helen@google.com",
       "product": "course-js",
-      "timestamp": 1738194582538,
-      "changed": 1738194582538,
+      "timestamp": 1738237128683,
+      "changed": 1738237128683,
       "status": "new",
-      "id": 6
+      "id": 2
     }
   ],
   "products": [

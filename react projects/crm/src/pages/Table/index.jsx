@@ -23,7 +23,7 @@ const TablePage = () => {
 
   return (
     <>
-      {appState.data && navData && admin ? (
+      {appState.data && appState.navData && admin ? (
         <>
           <SideBar isAdmin={admin} clickedSubNav={clickedSubNav} />
           <div className="main-wrapper">

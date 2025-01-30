@@ -41,8 +41,8 @@ const formFields = [
 
 
 const Form = () => {
-  const {appState, clearFieldOnClick} = useContext(AppContext);
-  
+  const {appState, setAppState, clearFieldOnClick, btnClicked} = useContext(AppContext);
+
   const formContent = formFields.map((field) => {
     switch (field.element) {
       case 'input' :
@@ -78,11 +78,16 @@ const Form = () => {
   });
 
   return (
-    <form id="form" method="POST" action="" onClick={(e)=>{clearFieldOnClick(e)}}>
+    <form id="form" method="POST" action="" onClick={(e)=>{clearFieldOnClick(e, setAppState)}}>
       <Label htmlFor = 'full_name' text = 'Ваши данные:'/>
       {formContent}
       <FormGroup id='noteWrapper' key="noteWrapper">
-        <Button text='Оформить заявку' className='btn btn-lg btn-primary btn-block' dataBtn ='submit'/>
+        <Button 
+          text='Оформить заявку' 
+          className='btn btn-lg btn-primary btn-block' 
+          dataBtn ='submit'
+          btnClicked = {(e) => {btnClicked(e, 'data', appState, setAppState)}}
+        />
       </FormGroup>
 
     </form>

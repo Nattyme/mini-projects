@@ -15,8 +15,9 @@ const useAppState = () => {
     products: null,
     initialFormData: null,
     users: null,
+    navData: null,
     subNav: STATUS_CONFIG.ALL,
-    filterData: null,
+    filterData: null
   });
 
   const location = useLocation();
@@ -75,6 +76,7 @@ const useAppState = () => {
         { path: "products", field: "products" },
         { path: "users", field: "users" },
         { path: "status", field: "status" },
+        { path: "status", field: "navData" },
       ]),
     [location.pathname]
   );
