@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { AppContext } from '../../App/App';
 import Logo from "../Logo";
 import SubNav from "../SubNav";

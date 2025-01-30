@@ -15,6 +15,8 @@ export const clickedSubNav = (e, setAppState) => {
   
   e.target.classList.add('active');
   const selectedSubNav = e.target.dataset.value;
+console.log(e.target);
+console.log(selectedSubNav);
 
   setAppState((prev) => ({
       ...prev,

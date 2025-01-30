@@ -1,15 +1,13 @@
 .badge {
-	padding: 6px 10px 5px;
-	font-size: 14px;
+	padding: 6px 10px 5px !important;
+	font-size: 14px !important;
 }
 
 .left-panel__navigation .badge {
 	background-color: #2865b1;
 	color: #fff;
 	border-radius: 32px;
-	padding: 6px 10px 5px;
 	line-height: 1;
-	font-size: 14px;
 }
 .left-panel__navigation .badge:first-child {
 	margin-left: 5px;

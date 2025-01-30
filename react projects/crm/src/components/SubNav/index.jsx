@@ -16,18 +16,24 @@ const SubNav = ({type, clickedSubNav}) => {
       { navData.map((item)=>{
         const isActive = item.value === appState.subNav;
           return(
-            <li key={item.value}>
-              <Link 
+            <li 
+              key={item.value}
+              className={`${navType.linkClassName} ${isActive ? 'active' : ''}`}
+              data-value={item.value} 
+              data-role={navType.linkDataRole}
+              title={item.title}
+              onClick={(e) => {clickedSubNav(e, setAppState)}}
+            >
+              {/* <Link 
                 className={`${navType.linkClassName} ${isActive ? 'active' : ''}`}
                 data-value={item.value} 
                 data-role={navType.linkDataRole}
                 title={item.title}
-                to={''}
                 onClick={(e) => {clickedSubNav(e, setAppState)}}
-              >
+              > */}
                 {item.title}
                 { navType.badge && item.value === STATUS_CONFIG.NEW && <Badge type={STATUS_CONFIG.DEFAULT} value={countedField} />}
-              </Link>
+              {/* </Link> */}
             </li>
           )
       })}

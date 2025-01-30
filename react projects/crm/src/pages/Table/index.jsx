@@ -29,7 +29,7 @@ const TablePage = () => {
           <div className="main-wrapper">
             <div className="container-fluid">
               <Title title={title} />
-              {appState.filterData && <Dashboard/>}
+              {appState.filterData && <Dashboard clickedSubNav={clickedSubNav}/>}
             </div>
           </div>
         </>
