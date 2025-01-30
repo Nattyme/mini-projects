@@ -42,7 +42,7 @@ const formFields = [
 
 
 const Form = () => {
-  const {appState, setAppState, clearFieldOnClick, btnClicked} = useContext(AppContext);
+  const {appState, setAppState, clearFieldOnClick, btnClicked, onChangedSelect} = useContext(AppContext);
 
   const formContent = formFields.map((field) => {
     switch (field.element) {
@@ -69,6 +69,7 @@ const Form = () => {
               options={appState.products}
               id={field.id}
               value={appState.formData.product}
+              onChange={(e) => {onChangedSelect(e, setAppState)}}
             />
           </FormGroup>
         );

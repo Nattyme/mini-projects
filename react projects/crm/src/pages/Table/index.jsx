@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { AppContext } from "../../App/App";
 import {doFilter, clickedSubNav} from "../../utils/filterFunctions";
 import Dashboard from "../../components/Dashboard";

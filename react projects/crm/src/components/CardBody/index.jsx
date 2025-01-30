@@ -7,30 +7,33 @@ import CardRow from "../CardRow";
 import {formatTaskEdit} from './../../utils/formatters'
 
 const CardBody = () => {
-  const {appState, setAppState, navData} = useContext(AppContext);
+  const {appState, setAppState, onChangedSelect} = useContext(AppContext);
   const {id} = useContext(EditPageContext);
-  
   const currentTask = appState.data.find((task) => task.id === +id);
   const editTask = formatTaskEdit(currentTask);
-  
+  // formatTaskEdit(currentTask)
   useEffect(()=> {
     setAppState((prevState) => ({
       ...prevState,
-      formData : {
-        ...currentTask
-      },
+      editTask : formatTaskEdit(currentTask),
       initialFormData : {
         ...currentTask
       }
     }))
-  },[]);
+  },[id]);
+  useEffect(()=>{
+    console.log('changed');
+    
+  }, [editTask])
+
+  console.log(appState);
   
-	const data = [
+	const formFields = [
 		{
 			label : 'ID',
 			content: (
 				<>
-					Заявка №<span id="number">1</span>
+					Заявка №<span id="number">{id}</span>
 					<Input type="hidden" name="id" placeholder={`${editTask.id}`} id="id" value="" required={false}/>
 				</>
 			)
@@ -48,6 +51,7 @@ const CardBody = () => {
           value={`${editTask.product}`}
 					options={appState.products}
 					id="product"
+          onChange={(e) => {onChangedSelect(e, setAppState)}}
 				/>
 			)
 		},
@@ -102,6 +106,7 @@ const CardBody = () => {
           placeholder="Выберите статус"
 					id="status"
 					value={`${editTask.status}`}
+          onChange={(e) => {onChangedSelect(e, setAppState)}}
 				/>
 			)
 		},
@@ -109,7 +114,7 @@ const CardBody = () => {
 
 	return (
 		<div className="card-body">
-			{appState.products && appState.navData && data.map((field)=>{
+			{appState.products && appState.navData && formFields.map((field)=>{
 				return (
 					<CardRow key={field.label} label={field.label}>
 						{field.content}

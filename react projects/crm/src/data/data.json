@@ -63,7 +63,7 @@
       "product": "course-vue",
       "timestamp": 1738237128311,
       "changed": 1738237128311,
-      "status": "new",
+      "status": "inwork",
       "id": 1
     },
     {
@@ -75,6 +75,106 @@
       "changed": 1738237128683,
       "status": "new",
       "id": 2
+    },
+    {
+      "full_name": "Stepanova Polina",
+      "phone": "79253555555",
+      "email": "polly777@google.com",
+      "product": "course-js",
+      "timestamp": 1738260644871,
+      "changed": 1738260644871,
+      "status": "new",
+      "id": 3
+    },
+    {
+      "full_name": "Екатерина М",
+      "phone": "79253458675",
+      "email": "justkate@google.com",
+      "product": "course-vue",
+      "timestamp": 1738260645039,
+      "changed": 1738260645039,
+      "status": "inwork",
+      "id": 4
+    },
+    {
+      "full_name": "Elena Aurgas",
+      "phone": "79253458675",
+      "email": "helen@google.com",
+      "product": "course-js",
+      "timestamp": 1738260645202,
+      "changed": 1738260645202,
+      "status": "new",
+      "id": 5
+    },
+    {
+      "full_name": "Alexander B",
+      "phone": "79253458675",
+      "email": "al@mail.ru",
+      "product": "course-wordpress",
+      "timestamp": 1738260645347,
+      "changed": 1738260645347,
+      "status": "inwork",
+      "id": 6
+    },
+    {
+      "full_name": "Elena Aurgas",
+      "phone": "79253458675",
+      "email": "helen@google.com",
+      "product": "course-js",
+      "timestamp": 1738260645487,
+      "changed": 1738260645487,
+      "status": "new",
+      "id": 7
+    },
+    {
+      "full_name": "Stepanova Polina",
+      "phone": "79253555555",
+      "email": "polly777@google.com",
+      "product": "course-js",
+      "timestamp": 1738260645615,
+      "changed": 1738260645615,
+      "status": "new",
+      "id": 8
+    },
+    {
+      "full_name": "Stepanova Polina",
+      "phone": "79253555555",
+      "email": "polly777@google.com",
+      "product": "course-html",
+      "timestamp": 1738260645759,
+      "changed": 1738260645759,
+      "status": "new",
+      "id": 9
+    },
+    {
+      "full_name": "Sofie Braz",
+      "phone": "79245600000",
+      "email": "sofie@outlook.com",
+      "product": "course-wordpress",
+      "timestamp": 1738260645895,
+      "changed": 1738260645895,
+      "status": "new",
+      "id": 10
+    },
+    {
+      "full_name": "Alexander B",
+      "phone": "79253458675",
+      "email": "al@mail.ru",
+      "product": "course-wordpress",
+      "timestamp": 1738260646034,
+      "changed": 1738260646034,
+      "status": "new",
+      "id": 11
+    },
+    {
+      "full_name": "Elena Aurgas",
+      "phone": "79253458675",
+      "email": "helen@google.com",
+      "product": "course-js",
+      "timestamp": 1738260646179,
+      "changed": 1738260646179,
+      "status": "new",
+      "id": 12
     }
   ],
   "products": [
@@ -127,19 +227,19 @@
     }
   ],
   "logo": {
-    "title" : "CRM заявки",
-    "subtitle" : "учебный проект webcademy"
+    "title": "CRM заявки",
+    "subtitle": "учебный проект webcademy"
   },
-  "pages" : {
-    "tablePage" : {
-      "title" : "Все заявки",
-      "titleNoData" : "Нет заявок"
+  "pages": {
+    "tablePage": {
+      "title": "Все заявки",
+      "titleNoData": "Нет заявок"
     },
-    "formPage" : {
-      "title" : "Форма заявок"
+    "formPage": {
+      "title": "Форма заявок"
     },
-    "editPage" : {
-      "title" : "Работа с заявкой"
+    "editPage": {
+      "title": "Работа с заявкой"
     }
   },
   "table": []

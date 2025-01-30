@@ -17,7 +17,8 @@ const useAppState = () => {
     users: null,
     navData: null,
     subNav: STATUS_CONFIG.ALL,
-    filterData: null
+    filterData: null,
+    select: null
   });
 
   const location = useLocation();
@@ -84,15 +85,30 @@ const useAppState = () => {
   );
 
   useEffect(() => {
-
     if ( appState.data) {
-      const tableData = doFilter(appState.subNav, appState.data);
+      const tableData = doFilter('subNav', appState.subNav, appState.data);
       setAppState((prev) => ({
         ...prev,
         filterData: tableData,
       }));
     }
   }, [appState.subNav, appState.data]);
+
+  useEffect(() => {
+    if (! appState.data) return;
+
+    let filteredData = doFilter('subNav', appState.subNav, appState.data);
+
+    if ( appState.select) {
+      filteredData = doFilter('select', appState.select, filteredData);
+    }
+
+    setAppState((prev) => ({
+      ...prev,
+      filterData: filteredData,
+    }));
+
+  }, [appState.subNav, appState.select, appState.data]);
 
   return { appState, setAppState };
 };

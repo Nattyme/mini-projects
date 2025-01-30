@@ -1,8 +1,11 @@
-export const doFilter = (subNav, data) => {
-  console.log(data);
-  console.log(subNav);
-  
-  return subNav === 'all' ? [...data] : [...data].filter(task => task.status === subNav);
+export const doFilter = (type, filterBy, data) => {
+  if (type === 'subNav') {
+    return filterBy === 'all' ? [...data] : [...data].filter(task => task.status === filterBy);
+  }
+
+  if (type === 'select') {
+    return  [...data].filter(task => task.product === filterBy);
+  }
 }
 
 export const clickedSubNav = (e, setAppState) => {
@@ -15,8 +18,6 @@ export const clickedSubNav = (e, setAppState) => {
   
   e.target.classList.add('active');
   const selectedSubNav = e.target.dataset.value;
-console.log(e.target);
-console.log(selectedSubNav);
 
   setAppState((prev) => ({
       ...prev,

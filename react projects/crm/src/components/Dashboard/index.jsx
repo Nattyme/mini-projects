@@ -5,11 +5,7 @@ import SubNav from "../SubNav";
 import Table from "../Table";
 
 const Dashboard = ({clickedSubNav}) => {
-  const {appState, setAppState, updateFieldValue} = useContext(AppContext);
-
-  const onChangedSelect = (e) => {
-    return updateFieldValue(e.target.id, e.target.value, setAppState);
-  }
+  const {appState, setAppState, onChangedSelect} = useContext(AppContext);
 
   return (
     <>
@@ -27,7 +23,7 @@ const Dashboard = ({clickedSubNav}) => {
               className="custom-select"
               options={appState.products}
               id="productSelect"
-              onChange={(e) => {onChangedSelect(e)}}
+              onChange={(e) => {onChangedSelect(e, setAppState)}}
             />
           )}
         </div>
