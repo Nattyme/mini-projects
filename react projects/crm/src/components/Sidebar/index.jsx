@@ -7,16 +7,17 @@ import "./style.css";
 
 const SideBar = ({isAdmin, clickedSubNav}) => {
   const {appState} = useContext(AppContext);
+  const {title = '', subtitle = ''}= appState?.logo || {}; // Получаем данные по лого, если нет - пустое знач-е
   
   return (
     <div className="left-panel blue-skin">
-      <Logo title="CRM заявки" subtitle="учебный проект webcademy" />
+      {appState?.logo && <Logo title={title} subtitle={subtitle}/>}
 
       <div className="left-panel__user clearfix">
         {isAdmin && <User user = {isAdmin}/>}
       </div>
 
-      {appState.data && appState.data.length > 0 && (
+      {appState?.data && appState.data.length > 0 && (
         <div className="left-panel__navigation">
           <div className="left-panel__navigation-title">Заявки</div>
           <SubNav type="bottom" clickedSubNav={clickedSubNav}/>

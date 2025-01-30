@@ -77,12 +77,14 @@ const useAppState = () => {
         { path: "users", field: "users" },
         { path: "status", field: "status" },
         { path: "status", field: "navData" },
+        { path: "logo", field: "logo" },
+        { path:"pages", field: "pages"}
       ]),
     [location.pathname]
   );
 
   useEffect(() => {
-    console.log(appState.data);
+
     if ( appState.data) {
       const tableData = doFilter(appState.subNav, appState.data);
       setAppState((prev) => ({

@@ -25,6 +25,7 @@ export const STATUS_CONFIG = {
   ALL : 'all',
   DEFAULT : 'default'
 }
+
 export const STATUS_STYLES = {
   danger: 'badge badge-pill badge-danger',
   neutral: 'badge badge-pill badge-warning',
@@ -38,4 +39,5 @@ export const BADGE_CONFIG = {
   [STATUS_CONFIG.DONE] : STATUS_STYLES.success,
   [STATUS_CONFIG.DEFAULT] : STATUS_STYLES.default
 }
+
 

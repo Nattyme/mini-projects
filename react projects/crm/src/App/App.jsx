@@ -38,15 +38,15 @@ const App = () => {
 				<Routes>
 					<Route
 						path="/"
-						element={appState.formData && appState.products && <FormPage title="Форма заявок" />}
+						element={appState.formData && appState.products && appState.pages && <FormPage/>}
 					></Route>
 					<Route
 						path="/tasks"
-						element={appState.products && appState.users && <TablePage title="Все заявки" />}
+						element={appState.products && appState.users && appState.pages && <TablePage/>}
 					></Route>
 					<Route
 						path="/edit/:id"
-						element={<EditPage title="Работа с заявкой" />}
+						element={appState.products && appState.users && appState.pages && <EditPage/>}
 					></Route>
 				</Routes> 
 			)}

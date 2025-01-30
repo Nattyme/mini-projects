@@ -109,7 +109,7 @@ const CardBody = () => {
 
 	return (
 		<div className="card-body">
-			{appState.products && navData && data.map((field)=>{
+			{appState.products && appState.navData && data.map((field)=>{
 				return (
 					<CardRow key={field.label} label={field.label}>
 						{field.content}

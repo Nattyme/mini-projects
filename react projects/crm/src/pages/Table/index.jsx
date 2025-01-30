@@ -7,8 +7,10 @@ import Title from "./../../components/Title";
 import Loader from "../../components/Loader";
 
 const TablePage = () => {
-  const { appState, setAppState, navData } = useContext(AppContext);
-  const title = appState.data && appState.data.length > 0 ? "Все заявки" : "Нет заявок";
+  const { appState, setAppState } = useContext(AppContext);
+  const titlesData = appState.pages?.tablePage || {};
+  
+  const title = appState?.data?.length > 0 ? titlesData?.title : titlesData?.titleNoData;
   const admin = appState.users.find((user) => user.isAdmin === true);
 
   useEffect(() => {

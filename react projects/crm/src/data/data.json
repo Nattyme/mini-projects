@@ -126,5 +126,21 @@
       "isAdmin": true
     }
   ],
+  "logo": {
+    "title" : "CRM заявки",
+    "subtitle" : "учебный проект webcademy"
+  },
+  "pages" : {
+    "tablePage" : {
+      "title" : "Все заявки",
+      "titleNoData" : "Нет заявок"
+    },
+    "formPage" : {
+      "title" : "Форма заявок"
+    },
+    "editPage" : {
+      "title" : "Работа с заявкой"
+    }
+  },
   "table": []
 }

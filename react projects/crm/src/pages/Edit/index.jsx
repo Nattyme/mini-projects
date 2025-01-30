@@ -8,9 +8,12 @@ import Loader from '../../components/Loader';
 
 export const EditPageContext = createContext();
 
-const EditPage = ({title}) => {
+const EditPage = () => {
   const {id} = useParams();
-  const { appState, navData} = useContext(AppContext)
+  const { appState } = useContext(AppContext);
+  const titlesData = appState.pages.editPage || {};
+  
+  const title = appState?.data?.length && titlesData?.title;
   
   return (
     <div className="form-wrapper">
@@ -28,7 +31,7 @@ const EditPage = ({title}) => {
           <div className="col">
             <form id="form" action="edit.html" method="POST">
               <EditPageContext.Provider value={{id}}>
-                {appState.loading ? <Loader/> : appState && navData && <Card/>}
+                {/* {appState.loading ? <Loader/> : appState && <Card/>} */}
               </EditPageContext.Provider>
              
               <div className="row justify-content-between form__buttons">
