@@ -45,14 +45,14 @@ const formFields = [
 const Form = () => {
   const {appState, setAppState, clearFieldOnClick, btnClicked, onChangedSelect} = useContext(AppContext);
   const {register, handleSubmit, setValue, watch, formState: {errors} } = useForm();
-  
+
   // Заполнение формы тест. знач-ми
   useEffect(()=>{
     if(!appState.formData) return;
     Object.keys(appState.formData).forEach((key) => {
       setValue(key, appState.formData[key]); // Задаём тестовые значения в поля формы
     })
-  }, [appState.formData, setValue]);
+  }, [appState.formData, setValue]); // измен-не formdata обновляет setValue
   
  
   const onSubmit = (data) => {
@@ -74,8 +74,6 @@ const Form = () => {
               id = {field.id}
               register = {register}
               required={field.required}
-              // onChange={(e)=> setValue(field.name, e.target.value)}
-              // {...register(field.name, {required: true})}
             />
             {errors[field.name] && <p className="error">{errors[field.name?.message]}</p>}
           </FormGroup>

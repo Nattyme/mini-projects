@@ -2,6 +2,7 @@ import Form from '../Form';
 import './style.css';
 
 const WhitePlate = ({title}) => {
+  
   return (
     <div className="white-plate white-plate--payment">
       <div className="container-fluid">

@@ -5,14 +5,15 @@ import WhitePlate from "../../components/WhitePlate";
 
 const FormPage = () => {
   const { appState } = useContext(AppContext);
-  const titlesData = appState.pages.formPage || {};
   
-  const title = appState?.data?.length && titlesData?.title;
+  const titlesData = appState?.pages?.formPage || {};
+  const titleKey = Object.keys(titlesData).find((key)=> key === 'title'); // найдем поле заголовка
+  const title = titleKey ? titlesData[titleKey] : null; // получаем знач-е
 
   return (
     <>
      <HeaderNav/>
-     <WhitePlate title={title}/>
+     {title && <WhitePlate title={title}/>}
     </>
   );
 }
