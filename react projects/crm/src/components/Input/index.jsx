@@ -2,12 +2,12 @@ import { useContext } from 'react';
 import { AppContext } from '../../App/App';
 import './style.css';
 
-const Input = ({type, name, placeholder, id, value, required, className="form-control", autoComplete="on"}) => {
+const Input = ({onChange, type, name, placeholder, id, value, required, register, className="form-control", autoComplete="on"}) => {
   const {appState, setAppState, updateFieldValue, handleBlurValue} = useContext(AppContext);
   
 	return (
 		<input 
-      onChange = {(e) => {updateFieldValue(e.target.id, e.target.value)}}
+      onChange = {onChange}
       onBlur = { (e) => {handleBlurValue(e, appState, setAppState)}}
 			type={type}
 			className={className} 
@@ -16,6 +16,7 @@ const Input = ({type, name, placeholder, id, value, required, className="form-co
 			id={id} 
       value = {value}
 			autoComplete={autoComplete} 
+      {...register(name, {required: required ? "Поле обязательно для заполнения" : false})}
 			required = {required}
 		/>
 	);

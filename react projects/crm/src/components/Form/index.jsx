@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import {useForm} from 'react-hook-form';
 import { formActionPath } from "./../../helpers/variables";
 import { AppContext } from '../../App/App';
@@ -43,8 +43,23 @@ const formFields = [
 
 
 const Form = () => {
-  const {register, handleSubmit, setValue, watch, formState: {errors} } = useForm();
   const {appState, setAppState, clearFieldOnClick, btnClicked, onChangedSelect} = useContext(AppContext);
+  const {register, handleSubmit, setValue, watch, formState: {errors} } = useForm();
+  
+  // Заполнение формы тест. знач-ми
+  useEffect(()=>{
+    if(!appState.formData) return;
+    Object.keys(appState.formData).forEach((key) => {
+      setValue(key, appState.formData[key]); // Задаём тестовые значения в поля формы
+    })
+  }, [appState.formData, setValue]);
+  
+ 
+  const onSubmit = (data) => {
+    console.log('Отправленные данные ', data);
+  }
+  
+
 
 
   const formContent = formFields.map((field) => {
@@ -57,9 +72,12 @@ const Form = () => {
               name = {field.name}
               placeholder = {field.placeholder}
               id = {field.id}
-              {...register(field.name, {required: true})}
-              value={appState.formData[field.name] || ''}
+              register = {register}
+              required={field.required}
+              // onChange={(e)=> setValue(field.name, e.target.value)}
+              // {...register(field.name, {required: true})}
             />
+            {errors[field.name] && <p className="error">{errors[field.name?.message]}</p>}
           </FormGroup>
         );
       case 'select' :
@@ -73,11 +91,11 @@ const Form = () => {
               defaultOption="Выберите продукт"
               id={field.id}
               value={appState.formData.product}
-              onChange={(e) => {onChangedSelect(e, setAppState)}}
+              onChange={(e) => setValue(field.name, e.target.value)}
               register={register} // Передача register react-hook-form
               required={true}
             />
-            {errors[field.name] && <span className="error-message">Выберите продукт</span>} 
+            {errors[field.name] && <p className="error">{errors[field.name]?.message}</p>} 
           </FormGroup>
         );
 
@@ -87,7 +105,12 @@ const Form = () => {
   });
 
   return (
-    <form id="form" method="POST" action="" onClick={(e)=>{clearFieldOnClick(e, setAppState)}}>
+    <form 
+      id="form" 
+      method="POST" 
+      onSubmit={handleSubmit(onSubmit)}
+      onClick={(e)=>{clearFieldOnClick(e, setAppState)}}>
+
       <Label htmlFor = 'full_name' text = 'Ваши данные:'/>
       {formContent}
       <FormGroup id='noteWrapper' key="noteWrapper">
