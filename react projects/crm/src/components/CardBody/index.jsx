@@ -98,7 +98,7 @@ const CardBody = () => {
 				<Select
 					name="status"
 					className="custom-select"
-					options={navData}
+					options={appState.navData}
           placeholder="Выберите статус"
 					id="status"
 					value={`${editTask.status}`}

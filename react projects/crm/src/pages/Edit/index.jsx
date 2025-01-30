@@ -31,7 +31,7 @@ const EditPage = () => {
           <div className="col">
             <form id="form" action="edit.html" method="POST">
               <EditPageContext.Provider value={{id}}>
-                {/* {appState.loading ? <Loader/> : appState && <Card/>} */}
+                {appState.loading ? <Loader/> : appState && <Card/>}
               </EditPageContext.Provider>
              
               <div className="row justify-content-between form__buttons">

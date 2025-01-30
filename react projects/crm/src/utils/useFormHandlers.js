@@ -1,4 +1,3 @@
-import { serverPath } from "../helpers/variables";
 import { createNewTask } from "../utils/taskUtils";
 
 // Ф-ция обновляет поля формы в состоянии при вводе пользователя 
@@ -33,6 +32,7 @@ export const handleBlurValue = (e, appState, setAppState) => {
   }
 };
 
+// Ф-ция обрабатывает клик по кнопке формы
 export const btnClicked = async (e, path, appState,  setAppState) => {
   if (e.target.dataset.btn !== "submit") return;
 
@@ -40,7 +40,7 @@ export const btnClicked = async (e, path, appState,  setAppState) => {
   const newTask = createNewTask(appState.formData);
 
   try {
-    const response = await fetch(`${serverPath}${path}`, {
+    const response = await fetch(path, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newTask)

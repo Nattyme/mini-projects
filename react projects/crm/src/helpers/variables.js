@@ -1,4 +1,5 @@
 export const serverPath = 'http://localhost:8000/';
+export const formActionPath = `${serverPath}data`;
 
 export const NAVIGATION_CONFIG = {
   subNavTop : {

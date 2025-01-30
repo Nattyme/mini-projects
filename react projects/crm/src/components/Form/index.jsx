@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { formActionPath } from "./../../helpers/variables";
 import { AppContext } from '../../App/App';
 import Label from '../Label';
 import Input from './../Input';
@@ -86,7 +87,7 @@ const Form = () => {
           text='Оформить заявку' 
           className='btn btn-lg btn-primary btn-block' 
           dataBtn ='submit'
-          btnClicked = {(e) => {btnClicked(e, 'data', appState, setAppState)}}
+          btnClicked = {(e) => {btnClicked(e, formActionPath, appState, setAppState)}}
         />
       </FormGroup>
 

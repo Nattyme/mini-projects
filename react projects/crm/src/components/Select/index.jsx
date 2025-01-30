@@ -1,16 +1,11 @@
-import { useContext } from 'react';
-import { AppContext } from '../../App/App';
-
-const Select = ({name, className, options, id, value}) => {
-  const {updateFieldValue} = useContext(AppContext);
-
+const Select = ({name, className, options, id, value, onChange}) => {
 	return (
 		<select 
       id={id} 
       name={name} 
       className={className} 
       value={value}
-      onChange = {(e) => {updateFieldValue(e.target.id, e.target.value)}}
+      onChange = {onChange}
     >
       {
         options.map((option)=>{
