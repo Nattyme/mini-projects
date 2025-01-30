@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import {useForm} from 'react-hook-form';
 import { formActionPath } from "./../../helpers/variables";
 import { AppContext } from '../../App/App';
 import Label from '../Label';
@@ -42,7 +43,9 @@ const formFields = [
 
 
 const Form = () => {
+  const {register, handleSubmit, setValue, watch, formState: {errors} } = useForm();
   const {appState, setAppState, clearFieldOnClick, btnClicked, onChangedSelect} = useContext(AppContext);
+
 
   const formContent = formFields.map((field) => {
     switch (field.element) {
@@ -54,8 +57,8 @@ const Form = () => {
               name = {field.name}
               placeholder = {field.placeholder}
               id = {field.id}
+              {...register(field.name, {required: true})}
               value={appState.formData[field.name] || ''}
-              required = {field.required}
             />
           </FormGroup>
         );
@@ -67,10 +70,14 @@ const Form = () => {
               name={field.name}
               className={field.className}
               options={appState.products}
+              defaultOption="Выберите продукт"
               id={field.id}
               value={appState.formData.product}
               onChange={(e) => {onChangedSelect(e, setAppState)}}
+              register={register} // Передача register react-hook-form
+              required={true}
             />
+            {errors[field.name] && <span className="error-message">Выберите продукт</span>} 
           </FormGroup>
         );
 

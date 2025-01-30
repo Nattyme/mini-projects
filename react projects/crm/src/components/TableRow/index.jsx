@@ -1,25 +1,8 @@
-import { useContext, useMemo } from "react";
 import {STATUS_CONFIG} from './../../helpers/variables';
 import { Link } from "react-router-dom";
-import { AppContext } from "./../../App/App";
-import { formatDataInTable } from "./../../utils/formatters";
 import Badge from "../Badge";
 
-const TableRow = () => {
-  const { appState } = useContext(AppContext);
-  let sortedData = useMemo(() => [...appState.filterData].sort((current, next) => next.id - current.id), [appState.filterData]);
-
-
-  const formattedData = useMemo(() => (
-    sortedData.map((data) => {
-      return formatDataInTable(
-          data,
-          appState.products,
-          appState.status
-      )
-    })
-  ), [sortedData, appState.products, appState.status]);
-
+const TableRow = ({formattedData}) => {
   return (
     <>
       {formattedData.map((task) => (

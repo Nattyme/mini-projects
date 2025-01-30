@@ -84,16 +84,7 @@ const useAppState = () => {
     [location.pathname]
   );
 
-  useEffect(() => {
-    if ( appState.data) {
-      const tableData = doFilter('subNav', appState.subNav, appState.data);
-      setAppState((prev) => ({
-        ...prev,
-        filterData: tableData,
-      }));
-    }
-  }, [appState.subNav, appState.data]);
-
+  // Изменение фильтра 
   useEffect(() => {
     if (! appState.data) return;
 

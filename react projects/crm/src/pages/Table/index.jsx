@@ -31,7 +31,7 @@ const TablePage = () => {
           <div className="main-wrapper">
             <div className="container-fluid">
               <Title title={title} />
-              {appState.filterData && <Dashboard clickedSubNav={clickedSubNav}/>}
+              {appState?.filterData ? <Dashboard clickedSubNav={clickedSubNav}/> : <Loader />}
             </div>
           </div>
         </>
