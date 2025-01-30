@@ -6,6 +6,7 @@ import { prepareDisplayData } from "../utils/prepareDisplayData";
 import { useLocation } from "react-router-dom";
 
 const useAppState = () => {
+  // Начальные значения для состояний app
   const [appState, setAppState] = useState({
     loading: true,
     error: null,
@@ -70,6 +71,7 @@ const useAppState = () => {
     });
   };
 
+  // Получать данные с сервера при измненеии url
   useEffect(
     () =>
       getFetchData([

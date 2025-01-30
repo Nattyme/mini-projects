@@ -43,7 +43,8 @@ const formFields = [
 
 
 const Form = () => {
-  const {appState, setAppState, clearFieldOnClick, btnClicked, onChangedSelect} = useContext(AppContext);
+  const {appState, setAppState, sendNewFormData, onChangedSelect, updateFieldValue} = useContext(AppContext);
+  // const {appState, setAppState, clearFieldOnClick, btnClicked, onChangedSelect} = useContext(AppContext);
   const {register, handleSubmit, setValue, watch, formState: {errors} } = useForm();
 
   // Заполнение формы тест. знач-ми
@@ -52,16 +53,19 @@ const Form = () => {
     Object.keys(appState.formData).forEach((key) => {
       setValue(key, appState.formData[key]); // Задаём тестовые значения в поля формы
     })
-  }, [appState.formData, setValue]); // измен-не formdata обновляет setValue
+  }, [appState.formData, setValue]); // изм-е formdata обновляет setValue
   
- 
+  // Обновляем состояние при отправке данных 
   const onSubmit = (data) => {
-    console.log('Отправленные данные ', data);
+    console.log(data);
+    
+    setAppState((prev)=>({
+      ...prev,
+      formData: data
+    }));
+    sendNewFormData(formActionPath, data, setAppState);
   }
-  
-
-
-
+ 
   const formContent = formFields.map((field) => {
     switch (field.element) {
       case 'input' :
@@ -72,6 +76,7 @@ const Form = () => {
               name = {field.name}
               placeholder = {field.placeholder}
               id = {field.id}
+              onChange = {(e)=> setValue(field.name, e.target.value)}
               register = {register}
               required={field.required}
             />
@@ -88,8 +93,10 @@ const Form = () => {
               options={appState.products}
               defaultOption="Выберите продукт"
               id={field.id}
-              value={appState.formData.product}
-              onChange={(e) => setValue(field.name, e.target.value)}
+              value={watch(field.name)}
+              onChange={(e) => {
+                setValue(field.name, e.target.value); // Обнов-е знач. в react-hook-form;
+              }}
               register={register} // Передача register react-hook-form
               required={true}
             />
@@ -107,7 +114,8 @@ const Form = () => {
       id="form" 
       method="POST" 
       onSubmit={handleSubmit(onSubmit)}
-      onClick={(e)=>{clearFieldOnClick(e, setAppState)}}>
+      // onClick={(e)=>{clearFieldOnClick(e, setAppState)}}
+    >
 
       <Label htmlFor = 'full_name' text = 'Ваши данные:'/>
       {formContent}
@@ -116,7 +124,6 @@ const Form = () => {
           text='Оформить заявку' 
           className='btn btn-lg btn-primary btn-block' 
           dataBtn ='submit'
-          btnClicked = {(e) => {btnClicked(e, formActionPath, appState, setAppState)}}
         />
       </FormGroup>
 

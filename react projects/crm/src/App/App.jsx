@@ -6,7 +6,7 @@ import {
   updateFieldValue,
   clearFieldOnClick,
   handleBlurValue,
-  btnClicked,
+  sendNewFormData,
   onChangedSelect
 } from "../utils/formFieldsHandlers";
 import { useBodyClass } from "../hooks/useBodyClass";
@@ -19,6 +19,7 @@ import Loader from "../components/Loader";
 import "./App.css";
 
 export const AppContext = createContext(null);
+
 
 const App = () => {
   const location = useLocation();
@@ -33,13 +34,14 @@ const App = () => {
         value={{
           appState,
           setAppState,
-          btnClicked,
+          sendNewFormData,
           clearFieldOnClick,
           updateFieldValue,
           handleBlurValue,
           onChangedSelect
         }}
       >
+        {/* ===== ROUTER =====*/}
         {appState.loading ? (
           <Loader />
         ) : (
@@ -70,9 +72,12 @@ const App = () => {
             ></Route>
           </Routes>
         )}
+        {/* ===== ROUTER =====*/}
+
       </AppContext.Provider>
     </div>
   );
 };
+
 
 export default App;

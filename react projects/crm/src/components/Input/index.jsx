@@ -7,7 +7,7 @@ const Input = ({onChange, type, name, placeholder, id, value, required, register
   
 	return (
 		<input 
-      onChange = {onChange}
+      onChange = {(e)=>{onChange(e)}}
       onBlur = { (e) => {handleBlurValue(e, appState, setAppState)}}
 			type={type}
 			className={className} 

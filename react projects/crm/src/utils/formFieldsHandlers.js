@@ -2,6 +2,10 @@ import { createNewTask } from "./taskUtils";
 
 // Ф-ция обновляет поля формы в состоянии при вводе пользователя
 export const updateFieldValue = (id, value, setAppState) => {
+  console.log(id);
+  console.log(value);
+
+  
   setAppState((prevAppState) => ({
     ...prevAppState,
     formData: {
@@ -32,12 +36,10 @@ export const handleBlurValue = (e, appState, setAppState) => {
   }
 };
 
-// Ф-ция обрабатывает клик по кнопке формы
-export const btnClicked = async (e, path, appState, setAppState) => {
-  if (e.target.dataset.btn !== "submit") return;
-
-  e.preventDefault();
-  const newTask = createNewTask(appState.formData);
+// Ф-ция отправляет данные формы
+export const sendNewFormData = async (path, data, setAppState) => {
+  const newTask = createNewTask(data);
+console.log(newTask);
 
   try {
     const response = await fetch(path, {
