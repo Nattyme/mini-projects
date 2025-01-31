@@ -2,21 +2,14 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import { createContext } from "react";
 
 import useAppState from "../hooks/useAppState";
-import {
-  updateFieldValue,
-  clearFieldOnClick,
-  handleBlurValue,
-  sendNewFormData,
-  onChangedSelect
-} from "../utils/formFieldsHandlers";
 import { useBodyClass } from "../hooks/useBodyClass";
-
+import {sendNewFormData} from "./../utils/taskUtils";
 import FormPage from "../pages/FormPage";
 import HeaderNav from "../components/HeaderNav";
 import TablePage from "../pages/Table";
 import EditPage from "../pages/Edit";
 import Loader from "../components/Loader";
-import "./App.css";
+import "./style.css";
 
 export const AppContext = createContext(null);
 
@@ -35,10 +28,6 @@ const App = () => {
           appState,
           setAppState,
           sendNewFormData,
-          clearFieldOnClick,
-          updateFieldValue,
-          handleBlurValue,
-          onChangedSelect
         }}
       >
         {/* ===== ROUTER =====*/}

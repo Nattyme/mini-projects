@@ -1,11 +1,12 @@
 import { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import CardBody from "../CardBody";
 import CardHeader from "../CardHeader";
-import {formActionPath, tasksAllPath} from './../../helpers/variables';
+import {formActionPath} from './../../helpers/variables';
 import {formatTaskEdit} from './../../utils/formatters'
+import {removeTask} from './../../utils/taskUtils';
 import { AppContext } from "../../App/App";
-import { useNavigate } from "react-router-dom";
 import Button from "../Button";
 
 const Card = ({id}) => {
@@ -19,8 +20,6 @@ const Card = ({id}) => {
     if(!currentTask) return;
     const editTask = formatTaskEdit(currentTask);  // Приводим данные к формату для отображения на странице
   
-
-
     Object.keys(editTask).forEach((key) => {
       setValue(key, editTask[key]); // Задаём знач-я в поля формы
     });
@@ -45,13 +44,10 @@ const Card = ({id}) => {
     }));
 
     sendNewFormData(formActionPath, 'PUT',  dataWithoutDate, setAppState, +dataWithoutDate.id);
-
-    if(sendNewFormData) {
-      navigate('/tasks')
-    }
+    if(sendNewFormData) navigate('/tasks'); // Если ок - возврат к списку задач
   }
- 
-     
+
+
   return (
     <form id="form" action="edit.html" method="POST"  onSubmit={handleSubmit(onSubmit)} >
       <div className="card mb-4">
@@ -62,10 +58,15 @@ const Card = ({id}) => {
       <div className="row justify-content-between form__buttons">
         <div className="col text-right">
           <Button
-            className="btn btn-primary"
+            className="btn btn-primary mr-2"
             text="Сохранить изменения"
           />
-     
+          <Button
+            className="btn badge-danger"
+            text="Удалить"
+            type="button"
+            onClick={()=>{removeTask(id, formActionPath, setAppState, navigate)}}
+          />
         </div>
       </div>
     </form>

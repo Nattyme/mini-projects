@@ -1,8 +1,8 @@
 import './style.css';
 
-const Button = ({text, className="btn", type="submit", dataBtn, btnClicked}) => {
+const Button = ({text, className="btn", type="submit", dataBtn, onClick}) => {
   return (
-    <button data-btn ={dataBtn} type={type} className={className} onClick={btnClicked}>{text}</button>
+    <button data-btn ={dataBtn} type={type} className={className} onClick={onClick}>{text}</button>
   );
 }
  

@@ -57,33 +57,39 @@
   ],
   "data": [
     {
-      "full_name": "Екатерина М",
-      "phone": "79253458675",
-      "email": "justkate@google.com",
-      "product": "course-vue",
-      "timestamp": 1738284334490,
-      "changed": 1738284334490,
-      "status": "completed",
-      "id": 1
-    },
-    {
-      "full_name": "Екатерина М",
-      "phone": "79253458675",
-      "email": "justkate@google.com",
-      "product": "course-vue",
-      "timestamp": 1738301496976,
-      "changed": 1738301496976,
-      "status": "inwork",
-      "id": 2
-    },
-    {
       "full_name": "Stepanova Polina",
       "phone": "79253555555",
       "email": "polly777@google.com",
       "product": "course-js",
-      "timestamp": 1738284372828,
-      "changed": 1738284372828,
-      "status": "inwork",
+      "timestamp": 1738304985654,
+      "changed": 1738304985654,
+      "id": 1
+    },
+    {
+      "full_name": "Elena Aurgas",
+      "phone": "79253458675",
+      "email": "helen@google.com",
+      "product": "course-js",
+      "timestamp": 1738304985812,
+      "changed": 1738304985812,
+      "id": 2
+    },
+    {
+      "full_name": "Анатолий Ш",
+      "phone": "79253458675",
+      "email": "anatol@google.com",
+      "product": "course-php",
+      "timestamp": 1738304985960,
+      "changed": 1738304985960,
+      "id": 3
+    },
+    {
+      "full_name": "Sofie Braz",
+      "phone": "79245600000",
+      "email": "sofie@outlook.com",
+      "product": "course-wordpress",
+      "timestamp": 1738304986120,
+      "changed": 1738304986120,
       "id": 4
     },
     {
@@ -91,40 +97,49 @@
       "phone": "79253458675",
       "email": "anatol@google.com",
       "product": "course-php",
-      "timestamp": 1738284373823,
-      "changed": 1738284373823,
-      "status": "inwork",
+      "timestamp": 1738304986285,
+      "changed": 1738304986285,
       "id": 5
     },
     {
-      "full_name": "Stepanova Polina",
-      "phone": "79253555555",
-      "email": "polly777@google.com",
-      "product": "course-html",
-      "timestamp": 1738284374454,
-      "changed": 1738284374454,
-      "status": "completed",
+      "full_name": "Alexander B",
+      "phone": "79253458675",
+      "email": "al@mail.ru",
+      "product": "course-wordpress",
+      "timestamp": 1738305103721,
+      "changed": 1738305103721,
+      "status": "new",
       "id": 6
     },
     {
-      "id": 7,
+      "full_name": "Alexander B",
+      "phone": "79253458675",
+      "email": "al@mail.ru",
+      "product": "course-wordpress",
+      "timestamp": 1738305103905,
+      "changed": 1738305103905,
+      "status": "new",
+      "id": 7
+    },
+    {
+      "id": 8,
       "product": "course-wordpress",
       "full_name": "Alexander B",
       "email": "al@mail.ru",
       "phone": "79253458675",
-      "status": "completed",
-      "timestamp": 1738302737278,
-      "changed": 1738302737278
+      "status": "inwork",
+      "timestamp": 1738305116131,
+      "changed": 1738305116131
     },
     {
-      "id": 8,
-      "product": "course-html",
-      "full_name": "Балашова Наташа",
-      "email": "anatol@google.com",
+      "full_name": "Alexander B",
       "phone": "79253458675",
-      "status": "new",
-      "timestamp": 1738302746065,
-      "changed": 1738302746065
+      "email": "al@mail.ru",
+      "product": "course-wordpress",
+      "timestamp": 1738305110025,
+      "changed": 1738305110025,
+      "status": "completed",
+      "id": 9
     }
   ],
   "products": [
