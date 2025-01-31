@@ -42,3 +42,38 @@ export const BADGE_CONFIG = {
 }
 
 
+export const FORM_CONFIG = [
+  {
+    element: 'input',
+    type: 'text',
+    name: 'full_name',
+    placeholder : 'Имя и Фамилия',
+    id : 'full_name',
+    required : true
+  },
+  {
+    element: 'input',
+    type: 'text',
+    name: 'phone',
+    placeholder : 'Телефон',
+    id : 'phone',
+    required : true
+  },
+  {
+    element: 'input',
+    type: 'text',
+    name: 'email',
+    placeholder : 'Email',
+    id : 'email',
+    required : true
+  },
+  {
+    element: 'select',
+    className: 'form-control',
+    name: 'product',
+    id : 'product',
+  }
+];
+
+
+

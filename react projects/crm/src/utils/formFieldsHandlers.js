@@ -39,7 +39,6 @@ export const handleBlurValue = (e, appState, setAppState) => {
 // Ф-ция отправляет данные формы
 export const sendNewFormData = async (path, data, setAppState) => {
   const newTask = createNewTask(data);
-console.log(newTask);
 
   try {
     const response = await fetch(path, {
