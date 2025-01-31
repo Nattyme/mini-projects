@@ -1,20 +1,23 @@
-import { useContext, useMemo } from "react";
+import { useCallback, useContext, useMemo } from "react";
 import { AppContext } from "./../../App/App";
 import { formatDataInTable } from "./../../utils/formatters";
 import {TABLE_HEADERS} from './../../helpers/variables';
 import TableRow from '../TableRow';
 import TableHead from "../TableHead";
+import Loader from "../Loader";
 
 const Table = () => {
   const { appState } = useContext(AppContext);
+  const sortData = useCallback((data) => {
+    return  [...data].sort((current, next) => next.id - current.id);
+  }, []); // Для сортировки не нужны зависимости
 
-  const sortedData = useMemo(() => [...appState.filterData].sort((current, next) => next.id - current.id), [appState.filterData]);
+  // Отсортированные данные сохраняем в memo
+  const sortedData = useMemo(() => sortData(appState.filterData), [appState.filterData, sortData]);
 
-  const formattedData = useMemo(() => (
-    sortedData.map(data => formatDataInTable(data, appState.products,appState.status))), 
-    [sortedData, appState.products, appState.status]
-  );
-
+  const formattedData = useMemo(() => {
+    return sortedData.map((data) => formatDataInTable(data, appState.products, appState.status))
+  }, [sortedData, appState.products, appState.status]);
 
   if (formattedData.length === 0) return <h3 className="mt-1">Нет заявок по заданным параметрам</h3>;
 
@@ -22,7 +25,7 @@ const Table = () => {
     <table className="table fs-14">
       <TableHead headers={TABLE_HEADERS}/>
       <tbody id="tbody" className="table__body">
-        <TableRow formattedData={formattedData}></TableRow>
+        {appState?.filterData && appState.filterData.length > 0 ? <TableRow formattedData={formattedData}></TableRow> : <Loader/>}
       </tbody>
     </table>
   );

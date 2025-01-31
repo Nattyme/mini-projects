@@ -30,7 +30,7 @@ const Dashboard = ({clickedSubNav}) => {
         </div>
       </div>
 
-      {appState.data && appState.data.length > 0 && <Table/>}
+      {appState?.data && appState.data.length > 0 && <Table/>}
     </>
 
   );
