@@ -1,6 +1,5 @@
 const Select = ({name, className, options, defaultOption, id, value, onChange, register, required}) => {
-  console.log(onChange);
-  
+
 	return (
 		<select 
       id={id} 

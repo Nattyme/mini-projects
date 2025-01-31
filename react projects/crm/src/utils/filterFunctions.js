@@ -8,6 +8,8 @@ export const doFilter = (type, filterBy, data) => {
   }
 }
 
+
+
 export const clickedSubNav = (e, setAppState) => {
   const navList = e.target.closest('ul');
 

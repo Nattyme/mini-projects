@@ -9,8 +9,12 @@ import FormGroup from './../FormGroup';
 import FormFieldsRender from '../FormFieldsRender/FormFieldsRender';
 
 
-
-
+/**
+ * Компонент формы для отправки данных через форму.
+ * 
+ * Использует хук `useForm` из `react-hook-form` для работы с состоянием формы.
+ * Загружает тестовые значения в поля формы и отправляет данные при отправке формы.
+*/
 const Form = () => {
   const {appState, setAppState, sendNewFormData} = useContext(AppContext);
   const {register, handleSubmit, setValue, watch, formState: {errors} } = useForm();

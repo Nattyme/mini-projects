@@ -4,10 +4,35 @@ import FormGroup from './../FormGroup';
 import Select from './../Select';
 import { FORM_CONFIG } from "./../../helpers/variables";
 
+ /**
+ * Компонент для рендеринга различных полей формы на основе конфигурации.
+ * Поддерживает поля типа `input` и `select`.
+ * 
+ * @param {Object} props - Свойства компонента.
+ * @param {Function} props.register - Функция из `react-hook-form`, используемая для регистрации полей формы.
+ * @param {Function} props.watch - Функция из `react-hook-form` для отслеживания значения полей.
+ * @param {Object} props.errors - Ошибки, связанные с полями формы, предоставленные `react-hook-form`.
+ * @param {Function} props.setValue - Функция из `react-hook-form`, используемая для обновления значений полей.
+ * @param {Object} props.appState - Состояние приложения, содержащее данные для полей формы (например, список продуктов).
+ * 
+ * @returns {JSX.Element} Разметка для рендеринга полей формы на основе конфигурации.
+ */
 const FormFieldsRender = ({register, watch, errors, setValue, appState}) => {
-console.log(FORM_CONFIG);
 
-  // Создаём FormGroup с input или select с нужными парам-ми
+  /**
+   * Функция для рендеринга поля формы в зависимости от типа элемента.
+   * 
+   * @param {Object} field - Объект конфигурации для поля.
+   * @param {string} field.element - Тип элемента, который нужно отрисовать (например, 'input', 'select').
+   * @param {string} field.type - Тип поля (например, 'text', 'number', 'email' для input).
+   * @param {string} field.name - Имя поля.
+   * @param {string} field.placeholder - Текст подсказки для поля (только для input).
+   * @param {boolean} field.required - Флаг обязательности поля.
+   * @param {string} field.id - Идентификатор поля (для уникальности в DOM).
+   * @param {string} field.className - Классы для стилизации поля (для select).
+   * 
+   * @returns {JSX.Element|null} Разметка поля формы или null, если тип поля не поддерживается.
+   */
   const renderField = (field) => {
     switch (field.element) {
       case 'input' :

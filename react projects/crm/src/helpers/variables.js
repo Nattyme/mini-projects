@@ -1,6 +1,22 @@
+/**
+ * Путь к серверу, на котором размещен API.
+ * @constant {string}
+*/
 export const serverPath = 'http://localhost:8000/';
+
+/**
+ * Путь для отправки данных формы на сервер.
+ * @constant {string}
+*/
 export const formActionPath = `${serverPath}data`;
 
+
+/**
+ * Конфигурация навигационных панелей.
+ * @constant {Object}
+ * @property {Object} subNavTop - Конфигурация верхней панели навигации.
+ * @property {Object} subNavAside - Конфигурация боковой панели навигации.
+*/
 export const NAVIGATION_CONFIG = {
   subNavTop : {
     id: 'topStatusBar',
@@ -19,6 +35,16 @@ export const NAVIGATION_CONFIG = {
   }
 }
 
+
+/**
+ * Статусы задач.
+ * @constant {Object}
+ * @property {string} NEW - Статус новой задачи.
+ * @property {string} DOING - Статус задачи в процессе.
+ * @property {string} DONE - Статус завершенной задачи.
+ * @property {string} ALL - Все статусы.
+ * @property {string} DEFAULT - Статус по умолчанию.
+*/
 export const STATUS_CONFIG = {
   NEW : 'new',
   DOING : 'inwork',
@@ -27,6 +53,15 @@ export const STATUS_CONFIG = {
   DEFAULT : 'default'
 }
 
+
+/**
+ * Стили для отображения статусов в виде бейджей.
+ * @constant {Object}
+ * @property {string} danger - Стиль для статуса "new".
+ * @property {string} neutral - Стиль для статуса "doing".
+ * @property {string} success - Стиль для статуса "done".
+ * @property {string} default - Стиль для статуса по умолчанию.
+*/
 export const STATUS_STYLES = {
   danger: 'badge badge-pill badge-danger',
   neutral: 'badge badge-pill badge-warning',
@@ -34,6 +69,15 @@ export const STATUS_STYLES = {
   default: 'badge'
 }
 
+
+/**
+ * Конфигурация для отображения бейджей в зависимости от статуса.
+ * @constant {Object}
+ * @property {string} STATUS_CONFIG.NEW - Стиль для статуса NEW.
+ * @property {string} STATUS_CONFIG.DOING - Стиль для статуса DOING.
+ * @property {string} STATUS_CONFIG.DONE - Стиль для статуса DONE.
+ * @property {string} STATUS_CONFIG.DEFAULT - Стиль для статуса DEFAULT.
+*/
 export const BADGE_CONFIG = {
   [STATUS_CONFIG.NEW] : STATUS_STYLES.danger,
   [STATUS_CONFIG.DOING] : STATUS_STYLES.neutral,
@@ -42,6 +86,17 @@ export const BADGE_CONFIG = {
 }
 
 
+/**
+ * Конфигурация для полей формы.
+ * @constant {Array<Object>}
+ * @property {string} element - Тип элемента формы (например, 'input', 'select').
+ * @property {string} type - Тип поля для 'input' (например, 'text', 'email').
+ * @property {string} name - Имя поля, которое будет отправлено на сервер.
+ * @property {string} placeholder - Текст подсказки для поля.
+ * @property {string} id - Уникальный идентификатор поля.
+ * @property {boolean} required - Флаг обязательности поля для отправки.
+ * @property {string} className - Класс CSS для поля (только для 'select').
+ */
 export const FORM_CONFIG = [
   {
     element: 'input',

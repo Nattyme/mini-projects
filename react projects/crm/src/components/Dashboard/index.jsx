@@ -24,6 +24,7 @@ const Dashboard = ({clickedSubNav}) => {
               options={appState.products}
               id="productSelect"
               onChange={(e) => {onChangedSelect(e, setAppState)}}
+              defaultOption="Все продукты"
             />
           )}
         </div>
