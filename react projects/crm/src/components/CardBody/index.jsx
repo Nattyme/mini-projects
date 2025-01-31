@@ -5,6 +5,18 @@ import CardRow from "../CardRow";
 import { AppContext } from "./../../App/App";
 
 
+/**
+ * Компонент CardBody — тело карточки редактирования заявки.
+ * Отображает форму с полями для ввода данных, используя react-hook-form.
+ * 
+ * @param {Object} props - Свойства компонента.
+ * @param {Object} props.editTask - Объект редактируемой заявки.
+ * @param {Function} props.register - Функция регистрации полей формы (из react-hook-form).
+ * @param {Function} props.watch - Функция для отслеживания изменений в полях формы.
+ * @param {Function} props.setValue - Функция для обновления значений полей формы.
+ * 
+ * @returns {JSX.Element} Элемент <div> с полями ввода, обернутыми в <CardRow>.
+*/
 const CardBody = ({editTask, register, watch, setValue}) => {
   const {appState, setAppState} = useContext(AppContext);
 

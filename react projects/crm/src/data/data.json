@@ -112,9 +112,9 @@
       "full_name": "Alexander B",
       "email": "al@mail.ru",
       "phone": "79253458675",
-      "status": "new",
-      "timestamp": 1738301852045,
-      "changed": 1738301852045
+      "status": "completed",
+      "timestamp": 1738302737278,
+      "changed": 1738302737278
     },
     {
       "id": 8,
@@ -122,9 +122,9 @@
       "full_name": "Балашова Наташа",
       "email": "anatol@google.com",
       "phone": "79253458675",
-      "timestamp": 1738301063248,
-      "changed": 1738301063248,
-      "status": "completed"
+      "status": "new",
+      "timestamp": 1738302746065,
+      "changed": 1738302746065
     }
   ],
   "products": [

@@ -1,13 +1,15 @@
 import { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import CardBody from "../CardBody";
-import Button from "../../components/Button";
 import CardHeader from "../CardHeader";
-import {formActionPath} from './../../helpers/variables';
+import {formActionPath, tasksAllPath} from './../../helpers/variables';
 import {formatTaskEdit} from './../../utils/formatters'
 import { AppContext } from "../../App/App";
+import { useNavigate } from "react-router-dom";
+import Button from "../Button";
 
 const Card = ({id}) => {
+  const navigate = useNavigate();
   const {appState, setAppState, sendNewFormData} = useContext(AppContext);
   const {register, handleSubmit, setValue, watch, formState: {errors} } = useForm();
   const currentTask = appState.data.find((task) => task.id === +id);
@@ -43,6 +45,10 @@ const Card = ({id}) => {
     }));
 
     sendNewFormData(formActionPath, 'PUT',  dataWithoutDate, setAppState, +dataWithoutDate.id);
+
+    if(sendNewFormData) {
+      navigate('/tasks')
+    }
   }
  
      
@@ -59,6 +65,7 @@ const Card = ({id}) => {
             className="btn btn-primary"
             text="Сохранить изменения"
           />
+     
         </div>
       </div>
     </form>
