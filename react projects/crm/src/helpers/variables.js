@@ -130,5 +130,7 @@ export const FORM_CONFIG = [
   }
 ];
 
+export const TABLE_HEADERS = ['ID', 'дата', 'продукт', 'имя', 'email', 'телефон', 'статус', ''];
+
 
 

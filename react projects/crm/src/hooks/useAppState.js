@@ -72,8 +72,7 @@ const useAppState = () => {
   };
 
   // Получать данные с сервера при измненеии url
-  useEffect(
-    () =>
+  useEffect(() => {
       getFetchData([
         { path: "data", field: "data" },
         { path: "products", field: "products" },
@@ -82,24 +81,25 @@ const useAppState = () => {
         { path: "status", field: "navData" },
         { path: "logo", field: "logo" },
         { path:"pages", field: "pages"}
-      ]),
+      ])},
     [location.pathname]
   );
 
   // Изменение фильтра 
   useEffect(() => {
-    if (! appState.data) return;
+    if (appState.data) {
+      
+      let filteredData = doFilter('subNav', appState.subNav, appState.data);
 
-    let filteredData = doFilter('subNav', appState.subNav, appState.data);
+      if ( appState.select) {
+        filteredData = doFilter('select', appState.select, filteredData);
+      }
 
-    if ( appState.select) {
-      filteredData = doFilter('select', appState.select, filteredData);
+      setAppState((prev) => ({
+        ...prev,
+        filterData: filteredData,
+      }));
     }
-
-    setAppState((prev) => ({
-      ...prev,
-      filterData: filteredData,
-    }));
 
   }, [appState.subNav, appState.select, appState.data]);
 

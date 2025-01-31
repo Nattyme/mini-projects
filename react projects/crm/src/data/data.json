@@ -61,30 +61,80 @@
       "phone": "79253458675",
       "email": "justkate@google.com",
       "product": "course-vue",
-      "timestamp": 1738282060818,
-      "changed": 1738282060818,
-      "status": "new",
+      "timestamp": 1738284334490,
+      "changed": 1738284334490,
+      "status": "completed",
       "id": 1
-    },
-    {
-      "full_name": "Elena Aurgas",
-      "phone": "79253458675",
-      "email": "helen@google.com",
-      "product": "course-js",
-      "timestamp": 1738282061361,
-      "changed": 1738282061361,
-      "status": "new",
-      "id": 2
     },
     {
       "full_name": "Екатерина М",
       "phone": "79253458675",
       "email": "justkate@google.com",
       "product": "course-vue",
-      "timestamp": 1738282061678,
-      "changed": 1738282061678,
+      "timestamp": 1738284335530,
+      "changed": 1738284335530,
+      "status": "new",
+      "id": 2
+    },
+    {
+      "full_name": "Pavel Nerezov",
+      "phone": "79253555555",
+      "email": "pn@google.com",
+      "product": "course-vue",
+      "timestamp": 1738284335984,
+      "changed": 1738284335984,
       "status": "new",
       "id": 3
+    },
+    {
+      "full_name": "Stepanova Polina",
+      "phone": "79253555555",
+      "email": "polly777@google.com",
+      "product": "course-js",
+      "timestamp": 1738284372828,
+      "changed": 1738284372828,
+      "status": "inwork",
+      "id": 4
+    },
+    {
+      "full_name": "Анатолий Ш",
+      "phone": "79253458675",
+      "email": "anatol@google.com",
+      "product": "course-php",
+      "timestamp": 1738284373823,
+      "changed": 1738284373823,
+      "status": "inwork",
+      "id": 5
+    },
+    {
+      "full_name": "Stepanova Polina",
+      "phone": "79253555555",
+      "email": "polly777@google.com",
+      "product": "course-html",
+      "timestamp": 1738284374454,
+      "changed": 1738284374454,
+      "status": "completed",
+      "id": 6
+    },
+    {
+      "full_name": "Alexander B",
+      "phone": "79253458675",
+      "email": "al@mail.ru",
+      "product": "course-wordpress",
+      "timestamp": 1738284374841,
+      "changed": 1738284374841,
+      "status": "new",
+      "id": 7
+    },
+    {
+      "full_name": "Анатолий Ш",
+      "phone": "79253458675",
+      "email": "anatol@google.com",
+      "product": "course-php",
+      "timestamp": 1738284375205,
+      "changed": 1738284375205,
+      "status": "new",
+      "id": 8
     }
   ],
   "products": [

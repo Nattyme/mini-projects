@@ -1,10 +1,23 @@
-export const doFilter = (type, filterBy, data) => {
+export const doFilter = (type='all', filterBy, data) => {
+  console.log(type);
+  console.log(filterBy);
+  console.log(data);
+  
   if (type === 'subNav') {
+    console.log([...data]);
+    console.log([...data].filter(task => task.status === filterBy));
+    
     return filterBy === 'all' ? [...data] : [...data].filter(task => task.status === filterBy);
   }
 
   if (type === 'select') {
-    return  [...data].filter(task => task.product === filterBy);
+    console.log([...data]);
+    console.log([...data].filter(task => task.product === filterBy));
+    return  filterBy.trim() === '' ? [...data] : [...data].filter(task => task.product === filterBy);
+  }
+
+  if (type === 'default') {
+    return [...data];
   }
 }
 

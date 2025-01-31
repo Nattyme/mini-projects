@@ -15,13 +15,14 @@ const TablePage = () => {
 
   useEffect(() => {
     if (appState.data) {
-      const tableData = doFilter(appState.subNav, appState.data);
+      const tableData = doFilter('default', appState.subNav, appState.data);
       setAppState((prev) => ({
         ...prev,
         filterData: tableData,
       }));
     }
   }, [appState.subNav, appState.data, setAppState]);
+  console.log("Текущее filterData:", appState.filterData);
 
   return (
     <>
@@ -31,7 +32,7 @@ const TablePage = () => {
           <div className="main-wrapper">
             <div className="container-fluid">
               <Title title={title} />
-              {appState?.filterData ? <Dashboard clickedSubNav={clickedSubNav}/> : <Loader />}
+              {appState?.filterData && appState.filterData.length > 0 ? <Dashboard clickedSubNav={clickedSubNav}/> : <Loader />}
             </div>
           </div>
         </>
