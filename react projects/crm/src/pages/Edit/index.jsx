@@ -1,12 +1,11 @@
+import { useContext } from 'react';
 import {Link, useParams} from 'react-router-dom';
 import Button from "../../components/Button";
 import Card from "../../components/Card";
 import Title from '../../components/Title';
-import { createContext, useContext } from 'react';
-import { AppContext } from '../../App/App';
 import Loader from '../../components/Loader';
+import { AppContext } from '../../App/App';
 
-export const EditPageContext = createContext();
 
 const EditPage = () => {
   const {id} = useParams();
@@ -30,10 +29,7 @@ const EditPage = () => {
         <div className="row">
           <div className="col">
             <form id="form" action="edit.html" method="POST">
-              <EditPageContext.Provider value={{id}}>
-                {appState.loading ? <Loader/> : appState && <Card/>}
-              </EditPageContext.Provider>
-             
+                {appState.loading ? <Loader/> : appState && <Card id={id}/>}
               <div className="row justify-content-between form__buttons">
                 <div className="col text-right">
                   <Button

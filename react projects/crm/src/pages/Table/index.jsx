@@ -1,6 +1,6 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { AppContext } from "../../App/App";
-import {doFilter, clickedSubNav} from "../../utils/filterFunctions";
+import {clickedSubNav} from "../../utils/filterFunctions";
 import Dashboard from "../../components/Dashboard";
 import SideBar from "../../components/Sidebar";
 import Title from "./../../components/Title";

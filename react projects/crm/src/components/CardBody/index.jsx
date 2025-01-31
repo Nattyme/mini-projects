@@ -1,40 +1,21 @@
-import { useContext, useEffect } from 'react';
-import { AppContext } from './../../App/App';
-import {EditPageContext} from '../../pages/Edit';
+import { useContext } from "react";
 import Input from "../../components/Input";
 import Select from "../../components/Select";
 import CardRow from "../CardRow";
-import {formatTaskEdit} from './../../utils/formatters'
+import { AppContext } from "./../../App/App";
 
-const CardBody = () => {
-  const {appState, setAppState, onChangedSelect} = useContext(AppContext);
-  const {id} = useContext(EditPageContext);
-  const currentTask = appState.data.find((task) => task.id === +id);
-  const editTask = formatTaskEdit(currentTask);
-  // formatTaskEdit(currentTask)
-  useEffect(()=> {
-    setAppState((prevState) => ({
-      ...prevState,
-      editTask : formatTaskEdit(currentTask),
-      initialFormData : {
-        ...currentTask
-      }
-    }))
-  },[id]);
-  useEffect(()=>{
-    console.log('changed');
-    
-  }, [editTask])
 
-  console.log(appState);
-  
+const CardBody = ({editTask, register}) => {
+  const {appState, setAppState} = useContext(AppContext);
+
+
 	const formFields = [
 		{
 			label : 'ID',
 			content: (
 				<>
-					Заявка №<span id="number">{id}</span>
-					<Input type="hidden" name="id" placeholder={`${editTask.id}`} id="id" value="" required={false}/>
+					Заявка №<span id="number">{editTask.id}</span>
+					<Input type="hidden" name="id" placeholder={`${editTask.id}`} id="id" value="" required={false} register={register}/>
 				</>
 			)
 		},
@@ -51,7 +32,8 @@ const CardBody = () => {
           value={`${editTask.product}`}
 					options={appState.products}
 					id="product"
-          onChange={(e) => {onChangedSelect(e, setAppState)}}
+          register={register}
+          // onChange={(e) => {onChangedSelect(e, setAppState)}}
 				/>
 			)
 		},
@@ -64,8 +46,9 @@ const CardBody = () => {
 					placeholder="Введите имя"
 					id="full_name"
 					value={`${editTask.full_name}`}
-					required={true}
 					className="form-control"
+					required={true}
+          register={register}
 				/>
 			)
 		},
@@ -78,8 +61,9 @@ const CardBody = () => {
 					placeholder="Введите email"
 					id="email"
 					value={`${editTask.email}`}
-					required={true}
 					className="form-control"
+					required={true}
+          register={register}
 				/>
 			)
 		},
@@ -93,6 +77,8 @@ const CardBody = () => {
 					id="phone"
 					className="form-control"
 					value={`${editTask.phone}`}
+          required={true}
+          register={register}
 				/>
 			)
 		},
@@ -102,11 +88,13 @@ const CardBody = () => {
 				<Select
 					name="status"
 					className="custom-select"
-					options={appState.navData}
+					options={appState.navData.filter((status) => status.value !== 'all')}
           placeholder="Выберите статус"
 					id="status"
 					value={`${editTask.status}`}
-          onChange={(e) => {onChangedSelect(e, setAppState)}}
+          register={register}
+          defaultOption="Выберите статус"
+          // onChange={(e) => {onChangedSelect(e, setAppState)}}
 				/>
 			)
 		},

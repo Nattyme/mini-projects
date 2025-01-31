@@ -1,3 +1,4 @@
+// Ф-ция фильтрует задачи по статусу и продукту
 export const doFilter = (type, filterBy, data) => {
 
   if (type === 'subNav') {   
@@ -9,8 +10,7 @@ export const doFilter = (type, filterBy, data) => {
   }
 }
 
-
-
+// Ф-ция отслеживает клик по subNav и выделяет активное меню
 export const clickedSubNav = (e, setAppState) => {
   const navList = e.target.closest('ul');
 
