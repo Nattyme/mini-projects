@@ -1,12 +1,14 @@
 import { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import CardBody from "../CardBody";
+import Button from "../../components/Button";
 import CardHeader from "../CardHeader";
+import {formActionPath} from './../../helpers/variables';
 import {formatTaskEdit} from './../../utils/formatters'
 import { AppContext } from "../../App/App";
 
 const Card = ({id}) => {
-  const {appState, setAppState} = useContext(AppContext);
+  const {appState, setAppState, sendNewFormData} = useContext(AppContext);
   const {register, handleSubmit, setValue, watch, formState: {errors} } = useForm();
   const currentTask = appState.data.find((task) => task.id === +id);
   
@@ -15,6 +17,7 @@ const Card = ({id}) => {
     if(!currentTask) return;
     const editTask = formatTaskEdit(currentTask);  // Приводим данные к формату для отображения на странице
   
+
 
     Object.keys(editTask).forEach((key) => {
       setValue(key, editTask[key]); // Задаём знач-я в поля формы
@@ -32,16 +35,33 @@ const Card = ({id}) => {
 
   // Ф-ция обрабатывает отправку данных на сервер
   const onSubmit = (data) => {
-    console.log(data);
+    const {date, ...dataWithoutDate} = data;
     
-  }
+    setAppState((prev)=>({
+        ...prev,
+        editForm: dataWithoutDate
+    }));
 
+    sendNewFormData(formActionPath, 'PUT',  dataWithoutDate, setAppState, +dataWithoutDate.id);
+  }
+ 
      
   return (
-    <div className="card mb-4">
-      <CardHeader text="Данные о заявке"/>
-      {appState.editTask && <CardBody editTask={appState.editTask} register={register}/>}
-    </div>
+    <form id="form" action="edit.html" method="POST"  onSubmit={handleSubmit(onSubmit)} >
+      <div className="card mb-4">
+        <CardHeader text="Данные о заявке"/>
+        {appState.editTask && <CardBody editTask={appState.editTask} register={register} watch={watch} setValue={setValue}/>}
+      </div>
+               
+      <div className="row justify-content-between form__buttons">
+        <div className="col text-right">
+          <Button
+            className="btn btn-primary"
+            text="Сохранить изменения"
+          />
+        </div>
+      </div>
+    </form>
   );
 }
  

@@ -1,6 +1,5 @@
 import { useContext } from 'react';
 import {Link, useParams} from 'react-router-dom';
-import Button from "../../components/Button";
 import Card from "../../components/Card";
 import Title from '../../components/Title';
 import Loader from '../../components/Loader';
@@ -28,17 +27,7 @@ const EditPage = () => {
 
         <div className="row">
           <div className="col">
-            <form id="form" action="edit.html" method="POST">
-                {appState.loading ? <Loader/> : appState && <Card id={id}/>}
-              <div className="row justify-content-between form__buttons">
-                <div className="col text-right">
-                  <Button
-                    className="btn btn-primary"
-                    text="Сохранить изменения"
-                  />
-                </div>
-              </div>
-            </form>
+            {appState.loading ? <Loader/> : appState && <Card id={id}/>}
           </div>
         </div>
       </div>

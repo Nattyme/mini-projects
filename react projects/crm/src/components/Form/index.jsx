@@ -34,7 +34,8 @@ const Form = () => {
       ...prev,
       formData: data
     }));
-    sendNewFormData(formActionPath, data, setAppState);
+    
+    sendNewFormData(formActionPath, 'POST', data, setAppState);
   }
  
  

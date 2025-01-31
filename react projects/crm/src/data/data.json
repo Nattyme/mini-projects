@@ -71,20 +71,10 @@
       "phone": "79253458675",
       "email": "justkate@google.com",
       "product": "course-vue",
-      "timestamp": 1738284335530,
-      "changed": 1738284335530,
-      "status": "new",
+      "timestamp": 1738301496976,
+      "changed": 1738301496976,
+      "status": "inwork",
       "id": 2
-    },
-    {
-      "full_name": "Pavel Nerezov",
-      "phone": "79253555555",
-      "email": "pn@google.com",
-      "product": "course-vue",
-      "timestamp": 1738284335984,
-      "changed": 1738284335984,
-      "status": "new",
-      "id": 3
     },
     {
       "full_name": "Stepanova Polina",
@@ -117,24 +107,24 @@
       "id": 6
     },
     {
-      "full_name": "Alexander B",
-      "phone": "79253458675",
-      "email": "al@mail.ru",
+      "id": 7,
       "product": "course-wordpress",
-      "timestamp": 1738284374841,
-      "changed": 1738284374841,
+      "full_name": "Alexander B",
+      "email": "al@mail.ru",
+      "phone": "79253458675",
       "status": "new",
-      "id": 7
+      "timestamp": 1738301852045,
+      "changed": 1738301852045
     },
     {
-      "full_name": "Анатолий Ш",
-      "phone": "79253458675",
+      "id": 8,
+      "product": "course-html",
+      "full_name": "Балашова Наташа",
       "email": "anatol@google.com",
-      "product": "course-php",
-      "timestamp": 1738284375205,
-      "changed": 1738284375205,
-      "status": "new",
-      "id": 8
+      "phone": "79253458675",
+      "timestamp": 1738301063248,
+      "changed": 1738301063248,
+      "status": "completed"
     }
   ],
   "products": [

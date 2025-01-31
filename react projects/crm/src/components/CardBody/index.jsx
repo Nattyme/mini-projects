@@ -5,9 +5,8 @@ import CardRow from "../CardRow";
 import { AppContext } from "./../../App/App";
 
 
-const CardBody = ({editTask, register}) => {
+const CardBody = ({editTask, register, watch, setValue}) => {
   const {appState, setAppState} = useContext(AppContext);
-
 
 	const formFields = [
 		{
@@ -29,11 +28,13 @@ const CardBody = ({editTask, register}) => {
 				<Select
 					name="product"
 					className="custom-select"
-          value={`${editTask.product}`}
+          value={watch(editTask.product)} 
 					options={appState.products}
 					id="product"
           register={register}
-          // onChange={(e) => {onChangedSelect(e, setAppState)}}
+          defaultOption="Выберите продукт"
+          required={true}
+          onChange={(e) => setValue(e.target.name, e.target.value)}
 				/>
 			)
 		},
@@ -45,8 +46,9 @@ const CardBody = ({editTask, register}) => {
 					name="full_name"
 					placeholder="Введите имя"
 					id="full_name"
-					value={`${editTask.full_name}`}
+					value={watch(editTask.full_name)}
 					className="form-control"
+          onChange = {(e) => setValue(e.target.name, e.target.value)}
 					required={true}
           register={register}
 				/>
@@ -60,7 +62,7 @@ const CardBody = ({editTask, register}) => {
 					name="email"
 					placeholder="Введите email"
 					id="email"
-					value={`${editTask.email}`}
+          value={watch(editTask.email)}
 					className="form-control"
 					required={true}
           register={register}
@@ -76,7 +78,7 @@ const CardBody = ({editTask, register}) => {
 					placeholder="phone"
 					id="phone"
 					className="form-control"
-					value={`${editTask.phone}`}
+          value={watch(editTask.phone)}
           required={true}
           register={register}
 				/>
@@ -91,10 +93,11 @@ const CardBody = ({editTask, register}) => {
 					options={appState.navData.filter((status) => status.value !== 'all')}
           placeholder="Выберите статус"
 					id="status"
-					value={`${editTask.status}`}
+          value={watch("status")} 
           register={register}
           defaultOption="Выберите статус"
-          // onChange={(e) => {onChangedSelect(e, setAppState)}}
+          required={true}
+          onChange={(e) => setValue(e.target.name, e.target.value)}
 				/>
 			)
 		},
@@ -103,6 +106,8 @@ const CardBody = ({editTask, register}) => {
 	return (
 		<div className="card-body">
 			{appState.products && appState.navData && formFields.map((field)=>{
+  
+        
 				return (
 					<CardRow key={field.label} label={field.label}>
 						{field.content}

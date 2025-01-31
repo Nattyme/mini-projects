@@ -37,12 +37,13 @@ export const handleBlurValue = (e, appState, setAppState) => {
 };
 
 // Ф-ция отправляет данные формы
-export const sendNewFormData = async (path, data, setAppState) => {
+export const sendNewFormData = async (path, type, data, setAppState, id=null) => {
   const newTask = createNewTask(data);
+  const serverPath = id ? `${path}/${id}` : path;
 
   try {
-    const response = await fetch(path, {
-      method: "POST",
+    const response = await fetch(serverPath, {
+      method: type,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newTask),
     });
