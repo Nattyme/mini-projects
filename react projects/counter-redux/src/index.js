@@ -6,7 +6,7 @@ import App from './App';
 
 // Дефолтное состояние
 const defaultState = {
-  counter: 0,
+  counter: 100,
 }
 
 //Функция reducer
@@ -30,7 +30,7 @@ const store = createStore(reducer)
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Provider>
+  <Provider store={store}>
     <App />
   </Provider>
 );

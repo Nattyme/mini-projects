@@ -1,16 +1,18 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
 
 
-function App() {
-	const [counter, setCounter] = useState(0);
+const App = () => {
+  const counter = useSelector((state) => state.counter);
+  const dispatch = useDispatch();
 
 	const increase = (value) => {
-		setCounter((current) => current + value);
+    dispatch({type: 'INCREASE', payload: value})
 	};
 
 	const decrease = (value) => {
-		setCounter((current) => current - value);
+    dispatch({type: 'DECREASE', payload: value})
 	};
 
 	return (
