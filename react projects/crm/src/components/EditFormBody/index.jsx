@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import Input from "../../components/Input";
-import Select from "../../components/Select";
-import CardRow from "../CardRow";
-import { AppContext } from "./../../App/App";
+import Input from "../Input";
+import Select from "../Select";
+import EditFormRow from "../EditFormRow";
+import { AppContext } from "../../App/App";
 
 
 /**
@@ -17,7 +17,7 @@ import { AppContext } from "./../../App/App";
  * 
  * @returns {JSX.Element} Элемент <div> с полями ввода, обернутыми в <CardRow>.
 */
-const CardBody = ({editTask, register, watch, setValue}) => {
+const EditFormBody = ({editTask, register, watch, setValue}) => {
   const {appState} = useContext(AppContext);
 
 	const formFields = [
@@ -119,11 +119,10 @@ const CardBody = ({editTask, register, watch, setValue}) => {
 		<div className="card-body">
 			{appState.products && appState.navData && formFields.map((field)=>{
   
-        
 				return (
-					<CardRow key={field.label} label={field.label}>
+					<EditFormRow key={field.label} label={field.label}>
 						{field.content}
-					</CardRow>
+					</EditFormRow>
 				);
 				
 			})}		
@@ -131,4 +130,4 @@ const CardBody = ({editTask, register, watch, setValue}) => {
 	);
 }
 
-export default CardBody;
+export default EditFormBody;

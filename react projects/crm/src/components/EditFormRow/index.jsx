@@ -1,4 +1,4 @@
-const CardRow = ({label, children}) => {
+const EditFormRow = ({label, children}) => {
 
   return (
     <div className="row mb-3">
@@ -12,4 +12,4 @@ const CardRow = ({label, children}) => {
   );
 }
 
-export default CardRow;
+export default EditFormRow;
