@@ -2,10 +2,25 @@ import {STATUS_CONFIG} from './../../helpers/variables';
 import { Link } from "react-router-dom";
 import Badge from "../Badge";
 
+
+
+/**
+ * Компонент TableRow.
+ * Отображает строку таблицы для каждой заявки.
+ * Принимает отформатированные данные и отображает их в таблице.
+ * 
+ * @component
+ * 
+ * @param {Object} props
+ * @param {Array} props.formattedData - Массив объектов, содержащих отформатированные данные для отображения в строках таблицы.
+ * 
+ * @returns {JSX.Element} Разметка для строк таблицы, отображающих данные заявок.
+*/
 const TableRow = ({formattedData}) => {
+  const uniqueTasks = Array.from(new Map(formattedData.map((task) => [task.id, task])).values());
   return (
     <>
-      {formattedData.map((task) => (
+      {uniqueTasks.map((task) => (
           <tr
             key={task.id}
             className="task-table__row task-table__row--link"

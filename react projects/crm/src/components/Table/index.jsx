@@ -6,6 +6,17 @@ import TableRow from '../TableRow';
 import TableHead from "../TableHead";
 import Loader from "../Loader";
 
+
+/**
+ * Компонент Table.
+ * Отображает таблицу с отфильтрованными и отсортированными данными.
+ * Данные сортируются по `id`, и отображаются в формате, соответствующем текущему состоянию продуктов и статусов.
+ * Если данные не найдены, выводится сообщение о том, что нет заявок.
+ * 
+ * @component
+ * 
+ * @returns {JSX.Element} Разметка для таблицы.
+*/
 const Table = () => {
   const { appState } = useContext(AppContext);
   const sortData = useCallback((data) => {
@@ -14,7 +25,6 @@ const Table = () => {
 
   // Отсортированные данные сохраняем в memo
   const sortedData = useMemo(() => sortData(appState.filterData), [appState.filterData, sortData]);
-
   const formattedData = useMemo(() => {
     return sortedData.map((data) => formatDataInTable(data, appState.products, appState.status))
   }, [sortedData, appState.products, appState.status]);

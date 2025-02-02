@@ -18,7 +18,7 @@ import { AppContext } from "./../../App/App";
  * @returns {JSX.Element} Элемент <div> с полями ввода, обернутыми в <CardRow>.
 */
 const CardBody = ({editTask, register, watch, setValue}) => {
-  const {appState, setAppState} = useContext(AppContext);
+  const {appState} = useContext(AppContext);
 
 	const formFields = [
 		{

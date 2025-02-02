@@ -31,7 +31,7 @@ export const sendNewFormData = async (path, type, data, setAppState, id=null) =>
       body: JSON.stringify(newTask),
     });
 
-    if (!response.ok) {
+    if (type !== 'DELETE' && !response.ok) {
       console.log("Не получены задачи с сервера");
       return;
     }
@@ -43,14 +43,14 @@ export const sendNewFormData = async (path, type, data, setAppState, id=null) =>
       data: [...prevState.data, newTaskData],
     }));
   } catch (error) {
-    console.log(`Ошибка при сохранении новой задачи: ${error}`);
-  }
+    console.log(`Ошибка при сохранении новой задачи`);
+    return;
+  } 
 };
 
 export const removeTask = async (id, path, setAppState, navigate) => {
-  console.log('click');
-  
-    if (!window.confirm("Вы уверены, что хотите удалить заявку?")) return;
+    if (!window.confirm(`Удалить задачу №${id}?`))  return;
+    
   
     try {
       await sendNewFormData(`${path}/${id}`, "DELETE"); // Удаляем задачу с сервера

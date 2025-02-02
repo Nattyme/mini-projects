@@ -5,6 +5,27 @@ import { doFilter } from "../utils/filterFunctions";
 import { prepareDisplayData } from "../utils/prepareDisplayData";
 import { useLocation } from "react-router-dom";
 
+
+/**
+ * Хук, управляющий состоянием приложения.
+ * Загружает данные с сервера, фильтрует их и сохраняет в состоянии.
+ *
+ * @returns {Object} Объект с состоянием приложения и функцией для его обновления.
+ * @returns {Object} appState - состояние приложения.
+ * @returns {boolean} appState.loading - индикатор загрузки данных.
+ * @returns {Error|null} appState.error - ошибка, если она возникла при загрузке данных.
+ * @returns {Object|null} appState.formData - данные формы, подготовленные для отображения.
+ * @returns {Array|null} appState.data - основные данные приложения.
+ * @returns {Object|null} appState.status - статус приложения.
+ * @returns {Array|null} appState.products - список продуктов.
+ * @returns {Object|null} appState.initialFormData - начальные данные формы.
+ * @returns {Array|null} appState.users - данные пользователей.
+ * @returns {Object|null} appState.navData - данные для навигации.
+ * @returns {string} appState.subNav - текущий выбранный фильтр для подменю.
+ * @returns {Array|null} appState.filterData - данные после применения фильтров.
+ * @returns {Object|null} appState.select - выбранные данные для фильтрации.
+ * @returns {function} setAppState - функция для обновления состояния приложения.
+*/
 const useAppState = () => {
   // Начальные значения для состояний app
   const [appState, setAppState] = useState({
@@ -71,7 +92,7 @@ const useAppState = () => {
     });
   };
 
-  // Получать данные с сервера при измненеии url
+  // Получает данные с сервера при измненеии url
   useEffect(() => {
       getFetchData([
         { path: "data", field: "data" },

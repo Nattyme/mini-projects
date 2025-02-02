@@ -27,3 +27,25 @@ export const clickedSubNav = (e, setAppState) => {
       subNav: selectedSubNav,
   }));
 }
+
+// Ф-ция обновляет поля формы в состоянии после ввода пользователя
+export const updateFieldValue = (id, value, setAppState) => {
+  setAppState((prevAppState) => ({
+    ...prevAppState,
+    formData: {
+      ...prevAppState.formData,
+      [id]: value,
+    },
+  }));
+};
+
+// Ф-ция обрабатывает клик по селекту 
+export const onChangedSelect = (e, setAppState) => {
+  setAppState((prev)=>({
+    ...prev,
+    select: e.target.value
+  }));
+
+  return updateFieldValue(e.target.id, e.target.value, setAppState);
+}
+

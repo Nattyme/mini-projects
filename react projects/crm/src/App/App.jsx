@@ -21,8 +21,10 @@ const App = () => {
 
   return (
     <div className="App">
+      {/* Навигация */}
       <HeaderNav />
 
+      {/* Глобальный контекст приложения */}
       <AppContext.Provider
         value={{
           appState,
@@ -30,11 +32,14 @@ const App = () => {
           sendNewFormData,
         }}
       >
+
+
         {/* ===== ROUTER =====*/}
         {appState.loading ? (
           <Loader />
         ) : (
           <Routes>
+            {/* Главная страница с формой */}
             <Route
               path="/"
               element={
@@ -43,6 +48,8 @@ const App = () => {
                 appState.pages && <FormPage />
               }
             ></Route>
+
+            {/* Страница со списком задач */}
             <Route
               path="/tasks"
               element={
@@ -51,6 +58,8 @@ const App = () => {
                 appState.pages && <TablePage />
               }
             ></Route>
+
+            {/* Страница редактирования задачи */}
             <Route
               path="/edit/:id"
               element={
@@ -62,6 +71,8 @@ const App = () => {
           </Routes>
         )}
         {/* ===== ROUTER =====*/}
+
+        
 
       </AppContext.Provider>
     </div>

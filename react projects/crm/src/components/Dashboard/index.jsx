@@ -1,11 +1,23 @@
 import { useContext } from 'react';
 import { AppContext } from '../../App/App';
+import {onChangedSelect} from './../../utils/filterFunctions';
 import Select from "../Select";
 import SubNav from "../SubNav";
 import Table from "../Table";
 
+
+/**
+ * Компонент Dashboard.
+ * Отображает навигацию, выпадающий список для выбора продукта и таблицу данных.
+ * Предназначен для отображения общей информации о задачах и позволяет пользователю фильтровать данные по продуктам.
+ * 
+ * @component
+ * @param {Object} props - Свойства компонента.
+ * @param {Function} props.clickedSubNav - Функция, вызываемая при клике на элемент навигации.
+ * @returns {JSX.Element} Возвращает разметку с навигацией, выпадающим списком и таблицей данных.
+*/
 const Dashboard = ({clickedSubNav}) => {
-  const {appState, setAppState, onChangedSelect} = useContext(AppContext);
+  const {appState, setAppState} = useContext(AppContext);
 
   return (
     <>

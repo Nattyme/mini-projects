@@ -9,6 +9,16 @@ import {removeTask} from './../../utils/taskUtils';
 import { AppContext } from "../../App/App";
 import Button from "../Button";
 
+
+/**
+ * Компонент Card (Карточка для редактирования задачи).
+ * Предназначен для отображения и редактирования данных задачи с возможностью сохранить или удалить её.
+ * 
+ * @component
+ * @param {Object} props - Свойства компонента.
+ * @param {number} props.id - Идентификатор задачи для редактирования.
+ * @returns {JSX.Element} Возвращает форму для редактирования задачи с кнопками "Сохранить изменения" и "Удалить".
+*/
 const Card = ({id}) => {
   const navigate = useNavigate();
   const {appState, setAppState, sendNewFormData} = useContext(AppContext);
@@ -46,7 +56,6 @@ const Card = ({id}) => {
     sendNewFormData(formActionPath, 'PUT',  dataWithoutDate, setAppState, +dataWithoutDate.id);
     if(sendNewFormData) navigate('/tasks'); // Если ок - возврат к списку задач
   }
-
 
   return (
     <form id="form" action="edit.html" method="POST"  onSubmit={handleSubmit(onSubmit)} >

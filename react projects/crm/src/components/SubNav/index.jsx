@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { NAVIGATION_CONFIG, STATUS_CONFIG  } from './../../helpers/variables';
 import { AppContext } from './../../App/App';
 import Badge from '../Badge';
@@ -19,7 +19,11 @@ const SubNav = ({type, clickedSubNav}) => {
   const {appState, setAppState} = useContext(AppContext); 
   const {subNavTop, subNavAside } = NAVIGATION_CONFIG;
   const navType = type === 'top' ? subNavTop : subNavAside;
-  const countedField = appState.data.filter((task) => task.status === STATUS_CONFIG.NEW).length;
+  const [countedField, setCountedField] = useState(null);
+  useEffect(() => {
+    const newCountValue = appState.data.filter((task) => task.status === STATUS_CONFIG.NEW).length;
+    setCountedField(newCountValue);
+  });
   
   return (
     <ul id={navType.id} className={navType.className} role="group" aria-label="...">

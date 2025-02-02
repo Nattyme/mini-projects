@@ -1,6 +1,17 @@
 import Form from '../Form';
 import './style.css';
 
+/**
+ * Компонент WhitePlate.
+ * Отображает блок с белым фоном, который включает заголовок с разделением текста и форму.
+ * 
+ * @component
+ * 
+ * @param {Object} props
+ * @param {string} props.title - Заголовок для отображения в блоке, который будет разделен на две части.
+ * 
+ * @returns {JSX.Element} Разметка для отображения белого блока с заголовком и формой.
+*/
 const WhitePlate = ({title}) => {
   
   return (
