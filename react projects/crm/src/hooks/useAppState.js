@@ -40,10 +40,35 @@ const useAppState = () => {
     navData: null,
     subNav: STATUS_CONFIG.ALL,
     filterData: null,
-    select: null
+    select: null,
+    countedField: null
   });
 
   const location = useLocation();
+
+  // Получение данных с сервера
+  const getFetchData = (fieldsObj) => {
+    fieldsObj.forEach(({ field, path }) => {
+      fetch(serverPath + path)
+        .then((res) => res.json())
+        .then((data) => {
+          // Обновление полей
+          setAppState((prevState) => ({
+            ...prevState,
+            [field]: data,
+            loading: false,
+          }));
+        })
+        .catch((error) => {
+          setAppState((prevState) => ({
+            ...prevState,
+            error: error,
+            loading: false,
+          }));
+        });
+    });
+  };
+
 
   useEffect(() => {
     fetch(serverPath + "testData")
@@ -69,28 +94,6 @@ const useAppState = () => {
         }));
       });
   }, [appState.data]);
-
-  const getFetchData = (fieldsObj) => {
-    fieldsObj.forEach(({ field, path }) => {
-      fetch(serverPath + path)
-        .then((res) => res.json())
-        .then((data) => {
-          // update fields
-          setAppState((prevState) => ({
-            ...prevState,
-            [field]: data,
-            loading: false,
-          }));
-        })
-        .catch((error) => {
-          setAppState((prevState) => ({
-            ...prevState,
-            error: error,
-            loading: false,
-          }));
-        });
-    });
-  };
 
   // Получает данные с сервера при измненеии url
   useEffect(() => {

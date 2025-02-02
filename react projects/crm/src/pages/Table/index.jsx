@@ -17,11 +17,11 @@ const TablePage = () => {
     <>
       {appState.data && appState.navData && admin ? (
         <>
-          <SideBar isAdmin={admin} clickedSubNav={clickedSubNav} />
+          {appState.data && <SideBar isAdmin={admin} clickedSubNav={clickedSubNav} />}
           <div className="main-wrapper">
             <div className="container-fluid">
               <Title title={title} />
-              {appState ? <Dashboard clickedSubNav={clickedSubNav}/> : <Loader />}
+              {appState.data ? <Dashboard clickedSubNav={clickedSubNav}/> : <Loader />}
             </div>
           </div>
         </>

@@ -28,7 +28,7 @@ const EditPage = () => {
 
         <div className="row">
           <div className="col">
-            {appState.loading ? <Loader /> : appState && <EditForm id={id} />}
+            {appState.data ? <EditForm id={id}/> : <Loader/>}
           </div>
         </div>
       </div>

@@ -48,20 +48,25 @@ const EditForm = ({ id }) => {
   }, [currentTask, setValue, setAppState]); // изм-е formdata обновляет setValue
 
   // Ф-ция обрабатывает отправку данных на сервер
-  const onSubmit = (data) => {
-    const { date, ...dataWithoutDate } = data;
+  const onSubmit = (task) => {
+    const { date, ...taskWithoutDate } = task;
+    const updatedAppData = appState.data.map((taskData) => {
+      return taskData.id === +task.id ? {...taskData, ...taskWithoutDate} : taskData;
+    });
+
 
     setAppState((prev) => ({
       ...prev,
-      editForm: dataWithoutDate,
+      data: updatedAppData,
+      editForm: taskWithoutDate,
     }));
 
     sendNewFormData(
       formActionPath,
       "PUT",
-      dataWithoutDate,
+      taskWithoutDate,
       setAppState,
-      +dataWithoutDate.id
+      +taskWithoutDate.id
     );
     if (sendNewFormData) navigate("/tasks"); // Если ок - возврат к списку задач
   };

@@ -19,11 +19,16 @@ const SubNav = ({type, clickedSubNav}) => {
   const {appState, setAppState} = useContext(AppContext); 
   const {subNavTop, subNavAside } = NAVIGATION_CONFIG;
   const navType = type === 'top' ? subNavTop : subNavAside;
-  const [countedField, setCountedField] = useState(null);
+
   useEffect(() => {
     const newCountValue = appState.data.filter((task) => task.status === STATUS_CONFIG.NEW).length;
-    setCountedField(newCountValue);
-  });
+   
+    setAppState((prevState) => ({
+      ...prevState,
+      countedField : newCountValue
+    }));
+  }, [appState.data]);
+
   
   return (
     <ul id={navType.id} className={navType.className} role="group" aria-label="...">
@@ -39,7 +44,7 @@ const SubNav = ({type, clickedSubNav}) => {
               onClick={(e) => {clickedSubNav(e, setAppState)}}
             >
               {item.title}
-              { navType.badge && item.value === STATUS_CONFIG.NEW && <Badge type={STATUS_CONFIG.DEFAULT} value={countedField} />}
+              { navType.badge && item.value === STATUS_CONFIG.NEW && <Badge type={STATUS_CONFIG.DEFAULT} value={appState.countedField} />}
             </li>
           )
       })}
