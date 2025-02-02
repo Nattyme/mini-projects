@@ -20,10 +20,14 @@ const App = () => {
     dispatch({type: 'DECREASE', payload: value})
 	};
 
+  const deleteUser = (id) => {
+    dispatch({type: 'DELETE_USER', payload: id})
+  }
+
   const showUsers = () => {
     return users.map((user) => {
       return (
-        <div className="user" key={user.id}>
+        <div onClick={()=>{deleteUser(user.id)}} className="user" key={user.id}>
           {user.name}
         </div>
       )
