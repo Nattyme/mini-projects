@@ -6,15 +6,25 @@ const defaultState = {
   ],
 };
 
+const ADD_USER = 'ADD_USER';
+const DELETE_USER = 'DELETE_USER';
+
 export const usersReducer = (state = defaultState, action) => {
-  console.log('click');
   
   switch (action.type) {
-    case 'DELETE_USER':
+    case DELETE_USER:
       return {...state, users: [...state.users.filter(user=> user.id !== action.payload)]}
-    case 'ADD_USER':
+    case ADD_USER:
       return {...state, users: [...state.users, action.payload]}
       default : 
       return state;
   }
+}
+
+export const addUserAction = (payload) => {
+  return {type: ADD_USER, payload: payload}
+}
+
+export const deleteUserAction = (payload) => {
+  return {type: DELETE_USER, payload: payload}
 }

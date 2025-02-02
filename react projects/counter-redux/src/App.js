@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { addUserAction, deleteUserAction } from './store/usersReducer';
+import { increaseAction, decreaseAction } from './store/counterReducer';
 import './App.css';
 
 
@@ -8,20 +10,21 @@ const App = () => {
     console.log(state);
     return state.counter.counter;
   });
+
   const users = useSelector((state)=> state.users.users)
 
   const dispatch = useDispatch();
 
 	const increase = (value) => {
-    dispatch({type: 'INCREASE', payload: value})
+    dispatch(increaseAction(value))
 	};
 
 	const decrease = (value) => {
-    dispatch({type: 'DECREASE', payload: value})
+    dispatch(decreaseAction(value))
 	};
 
   const deleteUser = (id) => {
-    dispatch({type: 'DELETE_USER', payload: id})
+    dispatch(deleteUserAction(id));
   }
 
   /* Users */
@@ -30,7 +33,7 @@ const App = () => {
       name: name,
       id: Date.now()
     }
-    dispatch({type: 'ADD_USER', payload: user})
+    dispatch(addUserAction(user));
   }
 
   const showUsers = () => {
