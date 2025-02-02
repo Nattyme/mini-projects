@@ -12,7 +12,9 @@ export const usersReducer = (state = defaultState, action) => {
   switch (action.type) {
     case 'DELETE_USER':
       return {...state, users: [...state.users.filter(user=> user.id !== action.payload)]}
-    default : 
+    case 'ADD_USER':
+      return {...state, users: [...state.users, action.payload]}
+      default : 
       return state;
   }
 }

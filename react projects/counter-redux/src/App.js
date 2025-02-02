@@ -24,6 +24,15 @@ const App = () => {
     dispatch({type: 'DELETE_USER', payload: id})
   }
 
+  /* Users */
+  const addUser = (name) => {
+    const user = {
+      name: name,
+      id: Date.now()
+    }
+    dispatch({type: 'ADD_USER', payload: user})
+  }
+
   const showUsers = () => {
     return users.map((user) => {
       return (
@@ -39,6 +48,8 @@ const App = () => {
 			<h1>{counter}</h1>
 			<button onClick={() => decrease(Number(prompt()))}>Уменьшить</button>
 			<button onClick={() => increase(Number(prompt()))}>Увеличить</button>
+      <hr/>
+			<button onClick={() => addUser((prompt()))}>Добавить пользователя</button>
       {users.length > 0 ? showUsers() : <h3>Нет пользователей</h3>}
 		</div>
 	);
