@@ -4,6 +4,7 @@ export const setTimeStamp = () => {
   return Date.now();
 }
 
+// Ф-ция проверяет полученную задачу и возвращает валидные данные для сохранения
 export const createNewTask = (task) => {
   const checkFieldValues = ['full_name', 'phone', 'email']; // Поля для проверки
   const isValid = validate.fieldsOfTaskObj(task, checkFieldValues);
@@ -19,7 +20,6 @@ export const createNewTask = (task) => {
 
 }
 
-// Ф-ция отправляет данные формы
 // Создание новой задачи
 export const createTask = async (path, data, setAppState) => {
   const newTask = createNewTask(data);
@@ -49,7 +49,7 @@ export const createTask = async (path, data, setAppState) => {
 
 // Ф-ция обновляет задачу
 export const updateTask = async (path, id, data, setAppState) => {
-  const updatedTask = createNewTask(data);
+  const updatedTask = createNewTask(data); // Проверяем поля формы, записыываем в переменную
   const serverPath = `${path}/${id}`;
 
   try {

@@ -2,7 +2,7 @@
  * Путь к серверу, на котором размещен API.
  * @constant {string}
 */
-export const serverPath = 'https://star-sincere-geology.glitch.me/';
+export const serverPath = 'https://maddening-whispering-telephone.glitch.me/';
 
 /**
  * Путь для отправки данных формы на сервер.
