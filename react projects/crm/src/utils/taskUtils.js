@@ -20,49 +20,83 @@ export const createNewTask = (task) => {
 }
 
 // Ф-ция отправляет данные формы
-export const sendNewFormData = async (path, type, data, setAppState, id=null) => {
+// Создание новой задачи
+export const createTask = async (path, data, setAppState) => {
   const newTask = createNewTask(data);
-  const serverPath = id ? `${path}/${id}` : path;
 
   try {
-    const response = await fetch(serverPath, {
-      method: type,
+    const response = await fetch(path, {
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newTask),
     });
 
-    if (type !== 'DELETE' && !response.ok) {
-      console.log("Не получены задачи с сервера");
+    if (!response.ok) {
+      console.log("Ошибка при добавлении задачи");
       return;
     }
 
-    const newTaskData = await response.json();
+    const createdTask = await response.json();
 
     setAppState((prevState) => ({
       ...prevState,
-      data: [...prevState.data, newTaskData],
+      data: [...prevState.data, createdTask], // Добавляем новую задачу
     }));
   } catch (error) {
-    console.log(`Ошибка при сохранении новой задачи`);
-    return;
-  } 
+    console.log("Ошибка при отправке новой задачи:", error);
+  }
 };
 
-export const removeTask = async (id, path, setAppState, navigate) => {
-    if (!window.confirm(`Удалить задачу №${id}?`))  return;
-    
-  
-    try {
-      await sendNewFormData(`${path}/${id}`, "DELETE"); // Удаляем задачу с сервера
-  
-      setAppState((prev) => ({
-        ...prev,
-        data: prev.data.filter((task) => task.id !== id), // Меняем состояние
-      }));
-  
-      navigate("/tasks"); // Возврат к списку задач
-    } catch (error) {
-      console.error("Ошибка при удалении задачи:", error);
+// Ф-ция обновляет задачу
+export const updateTask = async (path, id, data, setAppState) => {
+  const updatedTask = createNewTask(data);
+  const serverPath = `${path}/${id}`;
+
+  try {
+    const response = await fetch(serverPath, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updatedTask),
+    });
+
+    if (!response.ok) {
+      console.log("Ошибка при сохранении обновления задачи");
+      return;
     }
+
+    const taskToUpdate = await response.json();
+
+    setAppState((prevState) => ({
+      ...prevState,
+      data: prevState.data.map((task) =>
+        task.id === +taskToUpdate.id ? { ...task, ...taskToUpdate } : task
+      ),
+    }));
+  } 
+  
+  catch (error) {
+    console.log("Ошибка при сохранения обновления задачи:", error);
+  }
 };
 
+// Ф-ция удаляет задачу
+export const deleteTask = async (path, id, setAppState, navigate) => {
+  if (!window.confirm(`Удалить задачу №${id}?`)) return;
+
+  try {
+    await fetch(`${path}/${id}`, {
+      method: "DELETE",
+    });
+
+    setAppState((prevState) => ({
+      ...prevState,
+      data: prevState.data.filter((task) => task.id !== id),
+    }));
+
+    navigate("/tasks"); // Возврат к списоку задач
+  } 
+  
+  catch (error) {
+    console.log("Ошибка при удалении задачи:", error);
+  }
+};

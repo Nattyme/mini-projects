@@ -3,7 +3,6 @@ import { createContext } from "react";
 
 import useAppState from "../hooks/useAppState";
 import { useBodyClass } from "../hooks/useBodyClass";
-import {sendNewFormData} from "./../utils/taskUtils";
 import FormPage from "../pages/FormPage";
 import HeaderNav from "../components/HeaderNav";
 import TablePage from "../pages/Table";
@@ -28,8 +27,7 @@ const App = () => {
       <AppContext.Provider
         value={{
           appState,
-          setAppState,
-          sendNewFormData,
+          setAppState
         }}
       >
 

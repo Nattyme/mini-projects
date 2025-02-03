@@ -3,6 +3,7 @@ import {useForm} from 'react-hook-form';
 
 import { formActionPath } from "./../../helpers/variables";
 import { AppContext } from '../../App/App';
+import {createTask} from './../../utils/taskUtils';
 import Label from '../Label';
 import Button from '../Button';
 import FormGroup from './../FormGroup';
@@ -16,7 +17,7 @@ import FormFieldsRender from '../FormFieldsRender/FormFieldsRender';
  * Загружает тестовые значения в поля формы и отправляет данные при отправке формы.
 */
 const Form = () => {
-  const {appState, setAppState, sendNewFormData} = useContext(AppContext);
+  const {appState, setAppState} = useContext(AppContext);
   const {register, handleSubmit, setValue, watch, formState: {errors} } = useForm();
 
   // Заполнение формы тест. знач-ми
@@ -34,8 +35,8 @@ const Form = () => {
       ...prev,
       formData: data
     }));
-    
-    sendNewFormData(formActionPath, 'POST', data, setAppState);
+
+    createTask (formActionPath, data, setAppState);
   }
  
  

@@ -5,7 +5,7 @@ import EditFormBody from "../EditFormBody";
 import EditFormHeader from "../EditFormHeader";
 import { formActionPath } from "../../helpers/variables";
 import { formatTaskEdit } from "../../utils/formatters";
-import { removeTask } from "../../utils/taskUtils";
+import { updateTask, deleteTask } from "../../utils/taskUtils";
 import { AppContext } from "../../App/App";
 import Button from "../Button";
 
@@ -20,7 +20,7 @@ import Button from "../Button";
  */
 const EditForm = ({ id }) => {
   const navigate = useNavigate();
-  const { appState, setAppState, sendNewFormData } = useContext(AppContext);
+  const { appState, setAppState} = useContext(AppContext);
   const {
     register,
     handleSubmit,
@@ -45,31 +45,28 @@ const EditForm = ({ id }) => {
       editTask: { ...editTask }, // Храним отформатированные данные
       initialFormData: { ...currentTask }, // Храним оригинальные данные
     }));
-  }, [currentTask, setValue, setAppState]); // изм-е formdata обновляет setValue
+  }, [currentTask, setValue, setAppState]); // если изм-е formdata -  обновляем setValue
 
   // Ф-ция обрабатывает отправку данных на сервер
   const onSubmit = (task) => {
     const { date, ...taskWithoutDate } = task;
-    const updatedAppData = appState.data.map((taskData) => {
+    const updatedStateData = appState.data.map((taskData) => {    
       return taskData.id === +task.id ? {...taskData, ...taskWithoutDate} : taskData;
     });
 
 
     setAppState((prev) => ({
       ...prev,
-      data: updatedAppData,
+      data: updatedStateData,
       editForm: taskWithoutDate,
     }));
 
-    sendNewFormData(
-      formActionPath,
-      "PUT",
-      taskWithoutDate,
-      setAppState,
-      +taskWithoutDate.id
-    );
-    if (sendNewFormData) navigate("/tasks"); // Если ок - возврат к списку задач
+    updateTask( formActionPath, +taskWithoutDate.id, taskWithoutDate, setAppState);
+
+    if (updateTask) navigate("/tasks"); // Если ок - возврат к списку задач
   };
+
+  
 
   return (
     <form
@@ -98,8 +95,8 @@ const EditForm = ({ id }) => {
             text="Удалить"
             type="button"
             onClick={() => {
-              removeTask(id, formActionPath, setAppState, navigate);
-            }}
+              deleteTask(formActionPath, id, setAppState, navigate);
+            }} 
           />
         </div>
       </div>
