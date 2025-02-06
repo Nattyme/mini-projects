@@ -59,6 +59,13 @@ const useAppState = () => {
     data: null,
     status: null,
     products: null,
+  });
+
+  const [editFormState, setEditFormState] = useState({
+    formData: null,
+    initialFormData: null,
+    status: null,
+    products: null
   })
 
   const location = useLocation();
