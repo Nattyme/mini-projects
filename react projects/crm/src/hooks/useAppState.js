@@ -36,13 +36,30 @@ const useAppState = () => {
     status: null,
     products: null,
     initialFormData: null,
+    // users: null,
+    // navData: null,
+    // subNav: STATUS_CONFIG.ALL,
+    // filterData: null,
+    // select: null,
+    // countedField: null
+  });
+
+  const [formState, setFormState] = useState({
+    formData: null,
+    products: null
+  });
+
+  const [tableState, setTableState] = useState({
     users: null,
     navData: null,
     subNav: STATUS_CONFIG.ALL,
     filterData: null,
     select: null,
-    countedField: null
-  });
+    countedField: null,
+    data: null,
+    status: null,
+    products: null,
+  })
 
   const location = useLocation();
 
