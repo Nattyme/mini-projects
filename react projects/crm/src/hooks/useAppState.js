@@ -36,12 +36,12 @@ const useAppState = () => {
     status: null,
     products: null,
     initialFormData: null,
-    // users: null,
-    // navData: null,
-    // subNav: STATUS_CONFIG.ALL,
-    // filterData: null,
-    // select: null,
-    // countedField: null
+    users: null,
+    navData: null,
+    subNav: STATUS_CONFIG.ALL,
+    filterData: null,
+    select: null,
+    countedField: null
   });
 
   const [formState, setFormState] = useState({
@@ -151,7 +151,7 @@ const useAppState = () => {
 
   }, [appState.subNav, appState.select, appState.data]);
 
-  return { appState, setAppState };
+  return { appState, setAppState, editFormState, setEditFormState };
 };
 
 export default useAppState;

@@ -1,11 +1,11 @@
 import { useContext } from "react";
-import { AppContext } from "./../../App/App";
+import { AppContext, FormPageContext } from "./../../App/App";
 import HeaderNav from "../../components/HeaderNav";
 import WhitePlate from "../../components/WhitePlate";
 
 const FormPage = () => {
   const { appState } = useContext(AppContext);
-  
+  const { formState, setFormState} = useContext(FormPageContext);
   const titlesData = appState?.pages?.formPage || {};
   const titleKey = Object.keys(titlesData).find((key)=> key === 'title'); // найдем поле заголовка
   const title = titleKey ? titlesData[titleKey] : null; // получаем знач-е

@@ -11,12 +11,16 @@ import Loader from "../components/Loader";
 import "./style.css";
 
 export const AppContext = createContext(null);
+export const FormPageContext = createContext(null);
+export const TablePageContext = createContext(null);
+export const EditPageContext = createContext(null);
 
 
 const App = () => {
   const location = useLocation();
   useBodyClass(location.pathname); // Установим класс для body в зав-ти от текущей страницы
   const { appState, setAppState } = useAppState();
+  const { formState, setFormState } = useAppState();
 
   return (
     <div className="App">
@@ -43,7 +47,15 @@ const App = () => {
               element={
                 appState.formData &&
                 appState.products &&
-                appState.pages && <FormPage />
+                appState.pages && 
+                <FormPageContext.Provider
+                  value={{
+                    formState, 
+                    setFormState
+                  }}
+                >
+                  <FormPage />
+                </FormPageContext.Provider>
               }
             ></Route>
 
@@ -53,7 +65,10 @@ const App = () => {
               element={
                 appState.products &&
                 appState.users &&
-                appState.pages && <TablePage />
+                appState.pages && 
+                <TablePageContext.Provider>
+                   <TablePage />
+                </TablePageContext.Provider>
               }
             ></Route>
 
@@ -63,7 +78,10 @@ const App = () => {
               element={
                 appState.products &&
                 appState.users &&
-                appState.pages && <EditPage />
+                appState.pages && 
+                <EditPageContext.Provider>
+                  <EditPage />
+                </EditPageContext.Provider>
               }
             ></Route>
           </Routes>

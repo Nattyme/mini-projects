@@ -59,11 +59,12 @@ const EditForm = ({ id }) => {
       ...prev,
       data: updatedStateData,
       editForm: taskWithoutDate,
-    }));
+      })
+    );
 
     updateTask( formActionPath, +taskWithoutDate.id, taskWithoutDate, setAppState);
 
-    if (updateTask) navigate("/tasks"); // Если ок - возврат к списку задач
+    navigate("/tasks"); // Если ок - возврат к списку задач
   };
 
   

@@ -12,7 +12,6 @@ const TablePage = () => {
   
   const title = appState?.data?.length > 0 ? titlesData?.title : titlesData?.titleNoData;
   const admin = appState.users.find((user) => user.isAdmin === true);
-console.log(appState.data);
 
   return (
     <>
