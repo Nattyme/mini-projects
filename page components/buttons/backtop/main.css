@@ -1,0 +1,15 @@
+.backtop-btn {
+  z-index: 100;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  bottom: 15px;
+  right: 10px;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: #fbdc4d;
+  
+  transition: transform 0.2s ease-in;
+}

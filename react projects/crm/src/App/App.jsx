@@ -20,7 +20,6 @@ const App = () => {
   const location = useLocation();
   useBodyClass(location.pathname); // Установим класс для body в зав-ти от текущей страницы
   const { appState, setAppState } = useAppState();
-  const { formState, setFormState } = useAppState();
 
   return (
     <div className="App">
@@ -28,34 +27,19 @@ const App = () => {
       <HeaderNav />
 
       {/* Глобальный контекст приложения */}
-      <AppContext.Provider
-        value={{
-          appState,
-          setAppState
-        }}
-      >
+      <AppContext.Provider value={{ appState, setAppState }} >
 
 
         {/* ===== ROUTER =====*/}
-        {appState.loading ? (
-          <Loader />
-        ) : (
           <Routes>
             {/* Главная страница с формой */}
             <Route
               path="/"
               element={
-                appState.formData &&
                 appState.products &&
-                appState.pages && 
-                <FormPageContext.Provider
-                  value={{
-                    formState, 
-                    setFormState
-                  }}
-                >
-                  <FormPage />
-                </FormPageContext.Provider>
+                appState.pages ? 
+                <FormPage /> :
+                <Loader/>
               }
             ></Route>
 
@@ -85,7 +69,6 @@ const App = () => {
               }
             ></Route>
           </Routes>
-        )}
         {/* ===== ROUTER =====*/}
 
         

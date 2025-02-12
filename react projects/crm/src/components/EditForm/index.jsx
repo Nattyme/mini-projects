@@ -7,7 +7,7 @@ import { formActionPath } from "../../helpers/variables";
 import { formatTaskEdit } from "../../utils/formatters";
 import { updateTask, deleteTask } from "../../utils/taskUtils";
 import { AppContext } from "../../App/App";
-import Button from "../Button";
+import Button from "../../UI/Button";
 
 /**
  * Компонент EditForm (Карточка для редактирования задачи).
@@ -20,7 +20,7 @@ import Button from "../Button";
  */
 const EditForm = ({ id }) => {
   const navigate = useNavigate();
-  const { appState, setAppState} = useContext(AppContext);
+  const { appState, setAppState } = useContext(AppContext);
   const {
     register,
     handleSubmit,
@@ -50,24 +50,27 @@ const EditForm = ({ id }) => {
   // Ф-ция обрабатывает отправку данных на сервер
   const onSubmit = (task) => {
     const { date, ...taskWithoutDate } = task;
-    const updatedStateData = appState.data.map((taskData) => {    
-      return taskData.id === +task.id ? {...taskData, ...taskWithoutDate} : taskData;
+    const updatedStateData = appState.data.map((taskData) => {
+      return taskData.id === +task.id
+        ? { ...taskData, ...taskWithoutDate }
+        : taskData;
     });
-
 
     setAppState((prev) => ({
       ...prev,
       data: updatedStateData,
       editForm: taskWithoutDate,
-      })
-    );
+    }));
 
-    updateTask( formActionPath, +taskWithoutDate.id, taskWithoutDate, setAppState);
+    updateTask(
+      formActionPath,
+      +taskWithoutDate.id,
+      taskWithoutDate,
+      setAppState
+    );
 
     navigate("/tasks"); // Если ок - возврат к списку задач
   };
-
-  
 
   return (
     <form
@@ -97,7 +100,7 @@ const EditForm = ({ id }) => {
             type="button"
             onClick={() => {
               deleteTask(formActionPath, id, setAppState, navigate);
-            }} 
+            }}
           />
         </div>
       </div>

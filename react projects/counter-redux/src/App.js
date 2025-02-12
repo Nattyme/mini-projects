@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addUserAction, deleteUserAction } from './store/usersReducer';
+import {thunk} from 'redux-thunk';
+import { addUserAction, deleteUserAction, addManyUsersAction } from './store/usersReducer';
 import { increaseAction, decreaseAction } from './store/counterReducer';
 import './App.css';
 
@@ -46,6 +47,26 @@ const App = () => {
     })
   }
 
+  const fetchUsers = () => {
+    return function (dispatch) {
+      return fetch('https://jsonplaceholder.org/users')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then((users) => {
+          dispatch(addManyUsersAction(users))
+        })
+        .catch(error => {
+          console.error('There was a problem with the fetch operation:', error);
+        });
+    }
+  }
+
+
+
 	return (
 		<div className='App'>
 			<h1>{counter}</h1>
@@ -53,6 +74,7 @@ const App = () => {
 			<button onClick={() => increase(Number(prompt()))}>Увеличить</button>
       <hr/>
 			<button onClick={() => addUser((prompt()))}>Добавить пользователя</button>
+			<button onClick={() => dispatch(fetchUsers())}>Добавить пользователей из базы</button>
       {users.length > 0 ? showUsers() : <h3>Нет пользователей</h3>}
 		</div>
 	);

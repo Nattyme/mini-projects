@@ -1,4 +1,4 @@
-import Form from '../Form';
+import RequestForm from '../RequestForm';
 import './style.css';
 
 /**
@@ -12,7 +12,7 @@ import './style.css';
  * 
  * @returns {JSX.Element} Разметка для отображения белого блока с заголовком и формой.
 */
-const WhitePlate = ({title}) => {
+const WhitePlate = ({title, formState}) => {
   
   return (
     <div className="white-plate white-plate--payment">
@@ -25,7 +25,7 @@ const WhitePlate = ({title}) => {
         </div>
 
         <div className="white-plate__line-between white-plate__line-between--main"></div>
-        <Form/>
+        <RequestForm formState={formState}/>
       </div>
     </div>
   );

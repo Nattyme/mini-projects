@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { serverPath, STATUS_CONFIG } from "../helpers/variables";
-import getRandomArrayData from "../utils/calcFunctions";
 import { doFilter } from "../utils/filterFunctions";
-import { prepareDisplayData } from "../utils/prepareDisplayData";
 import { useLocation } from "react-router-dom";
 
 
@@ -31,22 +29,15 @@ const useAppState = () => {
   const [appState, setAppState] = useState({
     loading: true,
     error: null,
-    formData: null,
     data: null,
     status: null,
     products: null,
-    initialFormData: null,
     users: null,
     navData: null,
     subNav: STATUS_CONFIG.ALL,
     filterData: null,
     select: null,
     countedField: null
-  });
-
-  const [formState, setFormState] = useState({
-    formData: null,
-    products: null
   });
 
   const [tableState, setTableState] = useState({
@@ -92,32 +83,6 @@ const useAppState = () => {
         });
     });
   };
-
-
-  useEffect(() => {
-    fetch(serverPath + "testData")
-      .then((res) => res.json())
-      .then((data) => {
-        const randomData = getRandomArrayData(data);
-        const { prepareDisplayFormData } = prepareDisplayData();
-        const formNewData = prepareDisplayFormData(randomData);
-
-        // update formData and initialFormData
-        setAppState((prevState) => ({
-          ...prevState,
-          formData: formNewData,
-          initialFormData: formNewData,
-          loading: false,
-        }));
-      })
-      .catch((error) => {
-        setAppState((prevState) => ({
-          ...prevState,
-          error: error,
-          loading: false,
-        }));
-      });
-  }, [appState.data]);
 
   // Получает данные с сервера при измненеии url
   useEffect(() => {
