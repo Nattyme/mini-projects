@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../App/App";
 import {clickedSubNav} from "../../utils/filterFunctions";
 import Dashboard from "../../components/Dashboard";
@@ -12,6 +12,7 @@ const TablePage = () => {
   
   const title = appState?.data?.length > 0 ? titlesData?.title : titlesData?.titleNoData;
   const admin = appState.users.find((user) => user.isAdmin === true);
+
 
   return (
     <>

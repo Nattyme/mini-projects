@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import getRandomArrayData from "../../utils/calcFunctions";
 import { prepareDisplayData } from "../../utils/prepareDisplayData";
-import { serverPath, STATUS_CONFIG } from "../../helpers/variables";
+import { serverPath } from "../../helpers/variables";
 import { AppContext} from "./../../App/App";
 import HeaderNav from "../../components/HeaderNav";
 import WhitePlate from "../../components/WhitePlate";
@@ -9,9 +9,7 @@ import Loader from "../../components/Loader";
 
 const FormPage = () => {
   const { appState } = useContext(AppContext);
-  const [formState, setFormState] = useState({
-    formData: null
-  });
+  const [formState, setFormState] = useState(null);
 
   useEffect(() => {
     fetch(serverPath + "testData")
@@ -38,9 +36,6 @@ const FormPage = () => {
       });
   }, [appState.data]);
 
-
-  
-  
  
   const titlesData = appState?.pages?.formPage || {};
   const titleKey = Object.keys(titlesData).find((key)=> key === 'title'); // найдем поле заголовка

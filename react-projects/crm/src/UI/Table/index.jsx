@@ -1,6 +1,6 @@
 const Table = ({ classNames, children}) => {
   return (
-    <table className={'table' + classNames}>{{children}}</table>
+    <table className={'table ' + classNames}>{children}</table>
   );
 }
 

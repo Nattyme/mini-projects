@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { serverPath, STATUS_CONFIG } from "../helpers/variables";
-import { doFilter } from "../utils/filterFunctions";
 import { useLocation } from "react-router-dom";
 
 
@@ -98,23 +97,23 @@ const useAppState = () => {
     [location.pathname]
   );
 
-  // Изменение фильтра 
-  useEffect(() => {
-    if (appState.data) {
+  // // Изменение фильтра 
+  // useEffect(() => {
+  //   if (appState.data) {
       
-      let filteredData = doFilter('subNav', appState.subNav, appState.data);
+  //     let filteredData = doFilter('subNav', appState.subNav, appState.data);
 
-      if ( appState.select) {
-        filteredData = doFilter('select', appState.select, filteredData);
-      }
+  //     if ( appState.select) {
+  //       filteredData = doFilter('select', appState.select, filteredData);
+  //     }
 
-      setAppState((prev) => ({
-        ...prev,
-        filterData: filteredData,
-      }));
-    }
+  //     setAppState((prev) => ({
+  //       ...prev,
+  //       filterData: filteredData,
+  //     }));
+  //   }
 
-  }, [appState.subNav, appState.select, appState.data]);
+  // }, [appState.subNav, appState.select, appState.data]);
 
   return { appState, setAppState, editFormState, setEditFormState };
 };
