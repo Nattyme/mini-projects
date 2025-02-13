@@ -15,8 +15,8 @@ import TasksTable from "../TasksTable";
  * @param {Function} props.clickedSubNav - Функция, вызываемая при клике на элемент навигации.
  * @returns {JSX.Element} Возвращает разметку с навигацией, выпадающим списком и таблицей данных.
  */
-const Dashboard = ({ clickedSubNav }) => {
-  const { appState, setAppState } = useContext(AppContext);
+const Dashboard = ({ setTableState, clickedSubNav, formattedData, tableState }) => {
+  const { appState } = useContext(AppContext);
 
   return (
     <>
@@ -35,7 +35,7 @@ const Dashboard = ({ clickedSubNav }) => {
               options={appState.products}
               id="productSelect"
               onChange={(e) => {
-                onChangedSelect(e, setAppState);
+                onChangedSelect(e, setTableState);
               }}
               defaultOption="Все продукты"
             />
@@ -43,7 +43,7 @@ const Dashboard = ({ clickedSubNav }) => {
         </div>
       </div>
 
-      {appState?.data && appState.data.length > 0 && <TasksTable />}
+      {appState?.data && appState.data.length > 0 && <TasksTable formattedData={formattedData} tableState={tableState}/>}
     </>
   );
 };

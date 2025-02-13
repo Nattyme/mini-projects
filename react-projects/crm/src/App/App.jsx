@@ -5,7 +5,7 @@ import useAppState from "../hooks/useAppState";
 import { useBodyClass } from "../hooks/useBodyClass";
 import FormPage from "../pages/FormPage";
 import HeaderNav from "../components/HeaderNav";
-import TablePage from "../pages/Table";
+import TablePage from "../pages/TablePage";
 import EditPage from "../pages/Edit";
 import Loader from "../components/Loader";
 import "./style.css";
@@ -14,7 +14,6 @@ export const AppContext = createContext(null);
 export const FormPageContext = createContext(null);
 export const TablePageContext = createContext(null);
 export const EditPageContext = createContext(null);
-
 
 const App = () => {
   const location = useLocation();
@@ -27,56 +26,49 @@ const App = () => {
       <HeaderNav />
 
       {/* Глобальный контекст приложения */}
-      <AppContext.Provider value={{ appState, setAppState }} >
-
-
+      <AppContext.Provider value={{ appState, setAppState }}>
         {/* ===== ROUTER =====*/}
-          <Routes>
-            {/* Главная страница с формой */}
-            <Route
-              path="/"
-              element={
-                appState.products &&
-                appState.pages ? 
-                <FormPage /> :
-                <Loader/>
-              }
-            ></Route>
+        <Routes>
+          {/* Главная страница с формой */}
+          <Route
+            path="/"
+            element={
+              appState.products && appState.pages ? <FormPage /> : <Loader />
+            }
+          ></Route>
 
-            {/* Страница со списком задач */}
-            <Route
-              path="/tasks"
-              element={
-                appState.products &&
-                appState.users &&
-                appState.pages && 
+          {/* Страница со списком задач */}
+          <Route
+            path="/tasks"
+            element={
+              appState.products &&
+              appState.users &&
+              appState.pages && (
                 <TablePageContext.Provider>
-                   <TablePage />
+                  <TablePage />
                 </TablePageContext.Provider>
-              }
-            ></Route>
+              )
+            }
+          ></Route>
 
-            {/* Страница редактирования задачи */}
-            <Route
-              path="/edit/:id"
-              element={
-                appState.products &&
-                appState.users &&
-                appState.pages && 
+          {/* Страница редактирования задачи */}
+          <Route
+            path="/edit/:id"
+            element={
+              appState.products &&
+              appState.users &&
+              appState.pages && (
                 <EditPageContext.Provider>
                   <EditPage />
                 </EditPageContext.Provider>
-              }
-            ></Route>
-          </Routes>
+              )
+            }
+          ></Route>
+        </Routes>
         {/* ===== ROUTER =====*/}
-
-        
-
       </AppContext.Provider>
     </div>
   );
 };
-
 
 export default App;

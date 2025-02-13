@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { NAVIGATION_CONFIG, STATUS_CONFIG } from "./../../helpers/variables";
 import { AppContext } from "./../../App/App";
 import Badge from "../Badge";

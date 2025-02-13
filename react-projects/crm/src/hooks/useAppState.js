@@ -32,22 +32,22 @@ const useAppState = () => {
     status: null,
     products: null,
     users: null,
+    countedField: null,
     navData: null,
     subNav: STATUS_CONFIG.ALL,
     filterData: null,
-    select: null,
-    countedField: null
+    select: null
   });
 
   const [tableState, setTableState] = useState({
     users: null,
     navData: null,
+    select: null,
+    status: null,
     subNav: STATUS_CONFIG.ALL,
     filterData: null,
-    select: null,
     countedField: null,
     data: null,
-    status: null,
     products: null,
   });
 
