@@ -70,7 +70,7 @@ console.log(tableState);
           {appState.data && (
             <SideBar isAdmin={admin} clickedSubNav={clickedSubNav} />
           )}
-          
+
           <div className="main-wrapper">
             <div className="container-fluid">
 

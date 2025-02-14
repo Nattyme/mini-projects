@@ -40,12 +40,12 @@ export const updateFieldValue = (id, value, setAppState) => {
 };
 
 // Ф-ция обрабатывает клик по селекту 
-export const onChangedSelect = (e, setAppState) => {
-  setAppState((prev)=>({
+export const onChangedSelect = (e, setState) => {
+  setState((prev)=>({
     ...prev,
     select: e.target.value
   }));
 
-  return updateFieldValue(e.target.id, e.target.value, setAppState);
+  return updateFieldValue(e.target.id, e.target.value, setState);
 }
 

@@ -29,14 +29,8 @@ const useAppState = () => {
     loading: true,
     error: null,
     data: null,
-    status: null,
     products: null,
-    users: null,
-    countedField: null,
-    navData: null,
-    subNav: STATUS_CONFIG.ALL,
-    filterData: null,
-    select: null
+    users: null
   });
 
   const [tableState, setTableState] = useState({
