@@ -18,7 +18,7 @@ import "./style.css";
  * 
  * @returns {JSX.Element} Разметка для боковой панели.
 */
-const SideBar = ({isAdmin, clickedSubNav}) => {
+const SideBar = ({clickedSubNav}) => {
   const {appState} = useContext(AppContext);
   const {title = '', subtitle = ''}= appState?.logo || {}; // Получаем данные по лого, если нет - пустое знач-е
   
@@ -27,7 +27,7 @@ const SideBar = ({isAdmin, clickedSubNav}) => {
       {appState?.logo && <Logo title={title} subtitle={subtitle}/>}
 
       <div className="left-panel__user clearfix">
-        {isAdmin && <User user = {isAdmin}/>}
+        <User/>
       </div>
 
       {appState?.data && appState.data.length > 0 && (

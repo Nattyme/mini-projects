@@ -22,13 +22,11 @@ const TablePage = () => {
     },
     [appState.data]
   );
-  const titlesData = appState.pages?.tablePage || {};
 console.log(appState);
 console.log(tableState);
  
   const title =
     appState?.data?.length > 0 ? 'Все заявки' : 'Нет заявок';
-  const admin = appState.users.find((user) => user.isAdmin === true);
 
   // Изменение фильтра
   useEffect(() => {
@@ -65,10 +63,10 @@ console.log(tableState);
 
   return (
     <>
-      {appState.data && appState.navData && admin ? (
+      {appState.data && appState.navData ? (
         <>
           {appState.data && (
-            <SideBar isAdmin={admin} clickedSubNav={clickedSubNav} />
+            <SideBar clickedSubNav={clickedSubNav} />
           )}
 
           <div className="main-wrapper">
