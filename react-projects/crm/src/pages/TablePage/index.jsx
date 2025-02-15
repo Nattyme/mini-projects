@@ -25,9 +25,9 @@ const TablePage = () => {
   const titlesData = appState.pages?.tablePage || {};
 console.log(appState);
 console.log(tableState);
-
+ 
   const title =
-    appState?.data?.length > 0 ? titlesData?.title : titlesData?.titleNoData;
+    appState?.data?.length > 0 ? 'Все заявки' : 'Нет заявок';
   const admin = appState.users.find((user) => user.isAdmin === true);
 
   // Изменение фильтра
