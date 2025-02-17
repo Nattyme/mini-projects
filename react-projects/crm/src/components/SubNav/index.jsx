@@ -14,13 +14,14 @@ import "./style.css";
  *
  * @returns {JSX.Element} Элемент списка <ul> с пунктами навигации <li>.
  */
-const SubNav = ({ type, clickedSubNav }) => {
+const SubNav = ({ type, clickedSubNav, tableState, setTableState }) => {
   const { appState, setAppState } = useContext(AppContext);
   const { subNavTop, subNavAside } = NAVIGATION_CONFIG;
   const navType = type === "top" ? subNavTop : subNavAside;
+console.log(tableState);
 
   useEffect(() => {
-    const newCountValue = appState.data.filter(
+    const newCountValue = tableState.filterData.filter(
       (task) => task.status === STATUS_CONFIG.NEW
     ).length;
 
@@ -28,7 +29,7 @@ const SubNav = ({ type, clickedSubNav }) => {
       ...prevState,
       countedField: newCountValue,
     }));
-  }, [appState.data]);
+  }, [tableState.filterData]);
 
   return (
     <ul
@@ -38,7 +39,7 @@ const SubNav = ({ type, clickedSubNav }) => {
       aria-label="..."
     >
       {appState.navData.map((item) => {
-        const isActive = item.value === appState.subNav;
+        const isActive = item.value === tableState.subNav;
         return (
           <li
             key={item.value}
@@ -47,14 +48,14 @@ const SubNav = ({ type, clickedSubNav }) => {
             data-role={navType.liDataRole}
             title={item.title}
             onClick={(e) => {
-              clickedSubNav(e, setAppState);
+              clickedSubNav(e, setTableState);
             }}
           >
             {item.title}
             {navType.badge && item.value === STATUS_CONFIG.NEW && (
               <Badge
                 type={STATUS_CONFIG.DEFAULT}
-                value={appState.countedField}
+                value={tableState.countedField}
               />
             )}
           </li>

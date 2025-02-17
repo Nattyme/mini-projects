@@ -20,17 +20,16 @@ const TablePage = () => {
       users: null,
       countedField: null
     },
-    [appState.data]
+    []
   );
 console.log(appState);
 console.log(tableState);
  
-  const title =
-    appState?.data?.length > 0 ? 'Все заявки' : 'Нет заявок';
+  const title = appState?.data?.length > 0 ? 'Все заявки' : 'Нет заявок';
 
   // Изменение фильтра
   useEffect(() => {
-    if (appState.data) {
+    if (tableState.filterData) {
       let filteredData = doFilter("subNav", tableState.subNav, appState.data);
 
       if (appState.select) {
@@ -66,7 +65,7 @@ console.log(tableState);
       {appState.data && appState.navData ? (
         <>
           {appState.data && (
-            <SideBar clickedSubNav={clickedSubNav} />
+            <SideBar clickedSubNav={clickedSubNav} tableState={tableState} setTableState={setTableState}/>
           )}
 
           <div className="main-wrapper">

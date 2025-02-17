@@ -6,19 +6,7 @@ import User from "../User";
 import "./style.css";
 
 
-/**
- * Компонент SideBar.
- * Рендерит боковую панель с логотипом, информацией о пользователе и навигацией.
- * Компонент отображает элементы в зависимости от состояния приложения и прав пользователя (например, отображение информации о пользователе, если он является администратором).
- * 
- * @component
- * 
- * @param {boolean} isAdmin - Флаг, указывающий, является ли пользователь администратором.
- * @param {Function} clickedSubNav - Функция-обработчик для обработки кликов по элементам навигации.
- * 
- * @returns {JSX.Element} Разметка для боковой панели.
-*/
-const SideBar = ({clickedSubNav}) => {
+const SideBar = ({clickedSubNav, tableState, setTableState}) => {
   const {appState} = useContext(AppContext);
   const {title = '', subtitle = ''}= appState?.logo || {}; // Получаем данные по лого, если нет - пустое знач-е
   
@@ -33,7 +21,7 @@ const SideBar = ({clickedSubNav}) => {
       {appState?.data && appState.data.length > 0 && (
         <div className="left-panel__navigation">
           <div className="left-panel__navigation-title">Заявки</div>
-          <SubNav type="bottom" clickedSubNav={clickedSubNav}/>
+          <SubNav type="bottom" clickedSubNav={clickedSubNav} tableState={tableState} setTableState={setTableState}/>
         </div>
       )}
     </div>

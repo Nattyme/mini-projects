@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { serverPath, STATUS_CONFIG } from "../helpers/variables";
+import { serverPath } from "../helpers/variables";
 import { useLocation } from "react-router-dom";
 
 
@@ -31,18 +31,6 @@ const useAppState = () => {
     data: null,
     products: null,
     users: null
-  });
-
-  const [tableState, setTableState] = useState({
-    users: null,
-    navData: null,
-    select: null,
-    status: null,
-    subNav: STATUS_CONFIG.ALL,
-    filterData: null,
-    countedField: null,
-    data: null,
-    products: null,
   });
 
   const [editFormState, setEditFormState] = useState({
