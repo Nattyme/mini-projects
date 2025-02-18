@@ -8,11 +8,11 @@ import "./style.css";
 
 const SideBar = ({clickedSubNav, tableState, setTableState}) => {
   const {appState} = useContext(AppContext);
-  const {title = '', subtitle = ''}= appState?.logo || {}; // Получаем данные по лого, если нет - пустое знач-е
+  console.log(tableState);
   
   return (
     <div className="left-panel blue-skin">
-      {appState?.logo && <Logo title={title} subtitle={subtitle}/>}
+      {appState?.logo && <Logo title='CRM заявки' subtitle='учебный проект webcademy'/>}
 
       <div className="left-panel__user clearfix">
         <User/>

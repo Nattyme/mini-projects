@@ -8,9 +8,7 @@ import { AppContext } from "../../App/App";
 const EditPage = () => {
   const { id } = useParams();
   const { appState } = useContext(AppContext);
-  const { formState, setFormState } = useContext(AppContext);
-  const titlesData = appState.pages.editPage || {};
-  const title = appState?.data?.length && titlesData?.title;
+  const title = 'Работа с заявкой';
 
 
   return (
