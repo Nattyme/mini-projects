@@ -1,5 +1,6 @@
 const Note =  {
   idCounter : 8,
+  increaseId () {this.idCounter++},
   dragged : null,
   noteHandling (noteElement) {
     noteElement.addEventListener('dblclick', () => {

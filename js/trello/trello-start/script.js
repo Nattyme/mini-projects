@@ -1,44 +1,8 @@
-let columnIdCounter = 4;
-
-
 const columnsContainer = document.querySelector('.columns');
 const columns = document.querySelectorAll('.column');
 const notes = document.querySelectorAll('.note');
 const headers = document.querySelectorAll('.column-header');
 const btnAddColumn = document.querySelector('[data-action-addColumn]');
-
-// Ф-ция обрабатывает колонки
-const columnHandling = (columnElement) => {
-    const spanAction_addNote = columnElement.querySelector('[data-action-addNote');
-  
-    spanAction_addNote.addEventListener('click', () => {
-      const noteElement = document.createElement('div');
-      noteElement.classList.add('note');
-      noteElement.setAttribute('draggable', 'true');
-      noteElement.setAttribute('data-note-id', Note.idCounter);
-      
-      Note.idCounter++;
-  
-      columnElement.querySelector('[data-notes]').append(noteElement)
-
-      // Деалеам новую заметку сразу редактируемый, помещаем в фокус
-      noteElement.setAttribute('contentEditable', true);
-      noteElement.focus();
-
-      // По двойному клику редактируем Note
-      Note.noteHandling(noteElement);
-    });
-    
-    columnElement.addEventListener('dragover', function (event)  {
-      event.preventDefault();
-    });
-    
-    columnElement.addEventListener('drop', function (event)  {
-      if (Note.dragged) {
-        return columnElement.querySelector('[data-notes]').append(Note.dragged);
-      }
-    });
-}
 
 // Ф-ция обрабатывает заголовки
 const headerHandling = (headerElement) => {
@@ -59,8 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const columnElement = document.createElement('div');
     columnElement.classList.add('column');
     columnElement.setAttribute('draggable', true);
-    columnElement.setAttribute('data-column-id', columnIdCounter);
-    columnIdCounter++;
+    columnElement.setAttribute('data-column-id', Column.idCounter);
+    Column.increaseId();
   
     columnElement.innerHTML = 
       `
@@ -79,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   
   // Слушаем клик по кнопке в каждой колонке
-  columns.forEach(column => columnHandling(column));
+  columns.forEach(column => Column.handling(column));
 
   // По двойному клику редактируем Note
   notes.forEach(noteElement => Note.noteHandling(noteElement));
