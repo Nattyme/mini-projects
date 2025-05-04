@@ -1,6 +1,5 @@
-let noteIdCounter = 8;
 let columnIdCounter = 4;
-let draggedNote = null;
+
 
 const columnsContainer = document.querySelector('.columns');
 const columns = document.querySelectorAll('.column');
@@ -8,54 +7,7 @@ const notes = document.querySelectorAll('.note');
 const headers = document.querySelectorAll('.column-header');
 const btnAddColumn = document.querySelector('[data-action-addColumn]');
 
-
-
-// Ф-ция обрабатываем заметки
-const noteHandling = (noteElement) => {
-  noteElement.addEventListener('dblclick', () => {
-    noteElement.setAttribute('contentEditable', true);
-    noteElement.focus();
-  });
-
-  noteElement.addEventListener('blur', () => noteElement.removeAttribute('contentEditable'));
-  const dragstart_noteHandler = function (event)  {
-    // console.log('dragstart_noteHandler', event, this);
-    draggedNote = this;
-    this.classList.add('dragged');
-  }
-  const dragend_noteHandler = function (event)  {
-    // console.log('dragend_noteHandler', event, this);
-    draggedNote = null;
-    this.classList.remove('dragged');
-  }
-  const dragenter_noteHandler = function (event)  {
-    if (this === draggedNote) return;
-    console.log('dragenter_noteHandler', event, this);
-    this.classList.add('under');
-  }
-  const dragover_noteHandler = function (event)  {
-    if (draggedNote === this) return;
-    console.log('dragover_noteHandler', event, this);
-  }
-  const dragleave_noteHandler = function (event)  {
-    if (draggedNote === this) return;
-    console.log('dragleave_noteHandler', event, this);
-    this.classList.remove('under');
-  }
-  const drop_noteHandler = function (event)  {
-    if (draggedNote === this) return;
-    console.log('drop_noteHandler', event, this);
-  }
-
-  noteElement.addEventListener('dragstart', dragstart_noteHandler);
-  noteElement.addEventListener('dragend', dragend_noteHandler);
-  noteElement.addEventListener('dragover', dragover_noteHandler);
-  noteElement.addEventListener('dragenter', dragenter_noteHandler);
-  noteElement.addEventListener('dragleave', dragleave_noteHandler);
-  noteElement.addEventListener('drop', drop_noteHandler);
-}
-
-// Ф-ция обрабатываем колонки
+// Ф-ция обрабатывает колонки
 const columnHandling = (columnElement) => {
     const spanAction_addNote = columnElement.querySelector('[data-action-addNote');
   
@@ -63,18 +15,32 @@ const columnHandling = (columnElement) => {
       const noteElement = document.createElement('div');
       noteElement.classList.add('note');
       noteElement.setAttribute('draggable', 'true');
-      noteElement.setAttribute('data-note-id', noteIdCounter);
+      noteElement.setAttribute('data-note-id', Note.idCounter);
       
-      noteIdCounter++;
+      Note.idCounter++;
   
-      columnElement.querySelector('[data-notes]').append(noteElement);
+      columnElement.querySelector('[data-notes]').append(noteElement)
+
+      // Деалеам новую заметку сразу редактируемый, помещаем в фокус
+      noteElement.setAttribute('contentEditable', true);
+      noteElement.focus();
 
       // По двойному клику редактируем Note
-      noteHandling(noteElement);
+      Note.noteHandling(noteElement);
+    });
+    
+    columnElement.addEventListener('dragover', function (event)  {
+      event.preventDefault();
+    });
+    
+    columnElement.addEventListener('drop', function (event)  {
+      if (Note.dragged) {
+        return columnElement.querySelector('[data-notes]').append(Note.dragged);
+      }
     });
 }
 
-// Ф-ция обрабатываем заголовков
+// Ф-ция обрабатывает заголовки
 const headerHandling = (headerElement) => {
   headerElement.addEventListener('dblclick', () => {
     headerElement.setAttribute('contentEditable', true);
@@ -116,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
   columns.forEach(column => columnHandling(column));
 
   // По двойному клику редактируем Note
-  notes.forEach(noteElement => noteHandling(noteElement));
+  notes.forEach(noteElement => Note.noteHandling(noteElement));
 
   // По двойному клику редактируем заголовок
   headers.forEach(headerElement => headerHandling(headerElement));
